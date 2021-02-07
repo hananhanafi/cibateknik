@@ -1,0 +1,68 @@
+<template>
+    <div class="pt-5">
+        <div class="container-fluid">
+            <div class="bg-white p-4 mx-md-5 my-5 mx-sm-1 shadow">
+                <h2>Kontak</h2>
+
+                <div class="row">
+                    <div class="col">
+                        <h4 class="my-5">Hubungi Kami :</h4>
+                        <button type="button" style="height:60px" class="btn btn-success w-100 mb-4">Whatsapp</button>
+                        <button type="button" style="height:60px" class="btn btn-primary w-100 mb-4">Facebook</button>
+                        <button type="button" style="height:60px" class="btn btn-danger w-100 mb-4">Instagram</button>
+                    </div>
+                    <div class="col-9">
+                        <div class="card shadow-1 p-5">
+                            <h4 class="mb-5">
+                                Ingin mengirim pesan ?
+                            </h4>
+                            <div class="">
+                                
+                                <b-input-group  class="mb-4">
+                                    <b-form-input v-model="Nama" placeholder="Nama"></b-form-input>
+                                </b-input-group>
+                                <b-input-group  class="mb-4">
+                                    <b-form-input v-model="email" placeholder="Email"></b-form-input>
+                                </b-input-group>
+                                <b-input-group  class="mb-4">
+                                    <b-form-textarea
+                                        id="textarea-default"
+                                        placeholder="Masukkan pesan"
+                                        rows="16"
+                                        max-rows="16"
+                                    ></b-form-textarea>
+                                </b-input-group>
+                                
+                                <button type="button" class="btn btn-light border w-50">Kirim</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        middleware: 'notAuthenticated',
+        // page properties go here
+        layout: "user",
+        head() {
+            return {
+                title: "Cibateknik - Kontak",
+                meta: [
+                // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: 'My custom description'
+                }
+                ],
+                
+                // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+            }
+        }
+    }
+</script>

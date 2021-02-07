@@ -1,4 +1,7 @@
+
+import cibateknikrouter from "./router";
 export default {
+  ...cibateknikrouter,
   ssr: false,
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -35,7 +38,7 @@ export default {
       component: 'fa', 
       imports: [{
           set: '@fortawesome/free-solid-svg-icons',
-          icons: ['faLightbulb']
+          icons: ['faLightbulb','faShoppingCart','faHandHoldingUsd','faCoins','faDonate','faUsers','faEye','faEyeSlash','faSearch']
           },
           {set: '@fortawesome/free-brands-svg-icons',
           icons: ['faGithub']

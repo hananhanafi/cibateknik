@@ -18,7 +18,7 @@
                             <b-avatar></b-avatar> Admin
                         </template>
                         <b-dropdown-item href="#">Profile</b-dropdown-item>
-                        <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                        <b-dropdown-item href="#"><button @click="logout">Sign Out</button></b-dropdown-item>
                         </b-nav-item-dropdown>
                 </b-navbar-nav>
             </b-navbar>
@@ -82,7 +82,7 @@
         </div>
         
         
-        <div class="bg-primary-dark">
+        <div class="bg-primary-dark py-3" :style="{minHeight: windowH.height+'px'}">
             <Nuxt />
         </div>
 
@@ -90,10 +90,22 @@
 </template>
 
 <script>
+const Cookie = process.client ? require('js-cookie') : undefined;
     export default {
         data() {
         return {
+            windowH: {
+                    width: 0,
+                    height: 0
+                }
             }
+        },
+        created() {
+            // window.addEventListener('resize', this.handleResize);
+            this.handleResize();
+        },
+        destroyed() {
+            window.removeEventListener('resize', this.handleResize);
         },
         mounted() {
             console.log("routeparams",this.$route.name);
@@ -101,6 +113,16 @@
         methods: {
             isActive(name){
                 return this.$route.name === name;
+            },
+            handleResize() {
+                this.windowH.width = window.innerWidth;
+                this.windowH.height = window.innerHeight;
+            },
+            logout() {
+            // Code will also be required to invalidate the JWT Cookie on external API
+                Cookie.remove('auth')
+                this.$store.commit('setAuth', null);
+                this.$router.push('/admin/login');
             }
         }
     }

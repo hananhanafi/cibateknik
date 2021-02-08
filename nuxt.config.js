@@ -38,7 +38,7 @@ export default {
       component: 'fa', 
       imports: [{
           set: '@fortawesome/free-solid-svg-icons',
-          icons: ['faLightbulb','faShoppingCart','faHandHoldingUsd','faCoins','faDonate','faUsers','faEye','faEyeSlash','faSearch']
+          icons: ['faLightbulb','faShoppingCart','faHandHoldingUsd','faCoins','faDonate','faUsers','faEye','faEyeSlash','faSearch','faBell','faTrash','faPencilAlt']
           },
           {set: '@fortawesome/free-brands-svg-icons',
           icons: ['faGithub']

@@ -189,7 +189,7 @@
         },
         methods: {
             showModal() {
-            this.$refs['my-modal'].show()
+                this.$refs['my-modal'].show()
             },
             hideModal() {
                 this.$refs['my-modal'].hide()

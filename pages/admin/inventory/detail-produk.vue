@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-unused-vars -->
 <template>
     <div class="text-center">
         <b-container fluid>
@@ -15,10 +14,10 @@
                         <b-form-input class="rounded-pill mb-2" placeholder="Cari Nama Barang"></b-form-input>
                     </b-col>
                     <b-col md="2">
-                        <b-form-select class="rounded-pill mb-2" v-model="selectedMonth" :options="optionsMonth"></b-form-select>
+                        <b-form-select v-model="selectedMonth" class="rounded-pill mb-2" :options="optionsMonth"></b-form-select>
                     </b-col>
                     <b-col md="2">
-                        <b-button  class="rounded-pill text-white w-100"  id="show-btn" variant="primary" @click="$router.push({name:'admin-inventory-tambah'})">Tambah</b-button>
+                        <b-button  id="show-btn"  class="rounded-pill text-white w-100" variant="primary" @click="$router.push({name:'admin-inventory-tambah'})">Tambah</b-button>
                     </b-col>
                 </b-row>
                 
@@ -86,6 +85,7 @@
                         </template>
                     </b-table>
                     <b-table  :items="topSellingItems2" :fields="topSellingFields2">
+                        <!-- eslint-disable-next-line vue/no-unused-vars -->
                         <template  #thead-top="data">
                             <b-tr class="text-white">
                                 <b-th sticky-column colspan="32"> 1</b-th>
@@ -96,9 +96,10 @@
                         </template>
 
                         
+                        <!-- eslint-disable-next-line vue/no-unused-vars -->
                         <template #cell(actions)="row">
                             <div class="d-flex flex-row bd-highlight">
-                                <div @click="showModal" class="w-50 bg-success rounded-pill text-center text-white">Catat</div>
+                                <div class="w-50 bg-success rounded-pill text-center text-white" @click="showModal">Catat</div>
                                 <div class="w-50">
                                     <NuxtLink to="/admin/inventory/edit-barang">
                                         <div  class="rounded-pill text-white bg-warning text-center w-100">
@@ -121,7 +122,7 @@
                                 <b-form-select v-model="selected" :options="options"></b-form-select>
                             </div>
 
-                            <div class="mb-3" v-show="selected">
+                            <div v-show="selected" class="mb-3">
                                 <h6>Jumlah Barang</h6>
                                 <b-form-input v-show="selected" v-model="selectedItem" placeholder="Masukkan jumlah"></b-form-input>
                             </div>

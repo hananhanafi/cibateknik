@@ -7,6 +7,9 @@
                 <h3>Alamat Utama</h3>
                 </div>
             </div>
+            <div class="col-lg-2 col-md-12">
+                <a class="btn text-primary" @click="showUserModalSettingAddres" >Tambah Alamat</a>
+            </div>
         </div>
 
     
@@ -49,7 +52,7 @@
                                 <a class="btn btn-light border">Jadikan Utama</a>
                                 <div class="text-center mt-auto flex-grow-1 d-flex align-items-center">
                                     <a class="btn text-warning mx-auto"><fa class="text-warning" :icon="['fas','pencil-alt']" /> Edit</a>
-                                    <a class="btn text-danger mx-auto"><fa class="text-danger" :icon="['fas','trash']" /> Hapus</a>
+                                    <a class="btn text-danger mx-auto" @click="showModalDeleteItem"><fa class="text-danger" :icon="['fas','trash']" /> Hapus</a>
                                 </div>
                             </div>
                         </div>
@@ -57,6 +60,35 @@
                 </div>
             </div>
         </div>
+
+        <!-- <div class="modal d-block" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+            </div>
+        </div> -->
+
+        <UserModalSettingAddres
+            :show="isShowUserModalSettingAddres"
+            :data="dataModal"
+            @close="closeUserModalSettingAddres"
+        />
+        <ModalDeleteItem
+            :show="isShowModalDeleteItem"
+            :data="{}"
+            @close="closeModalDeleteItem"
+        />
 
     </div>
 </template>
@@ -74,11 +106,32 @@ export default {
             day: null,
             month: null,
             year: null,
-            },
+            }
         },
         
-        items: new Array(5)
+        items: new Array(5),
+        dataModal: {
+            title: "Atur Alamat Pengiriman",
+            message: ""
+        },
+            isShowUserModalSettingAddres: false,
+            isShowModalDeleteItem: false,
+            
         }
     },
+    methods: {
+        showUserModalSettingAddres() {
+            this.isShowUserModalSettingAddres = true;
+        },
+        closeUserModalSettingAddres() {
+            this.isShowUserModalSettingAddres = false;
+        },
+        showModalDeleteItem() {
+            this.isShowModalDeleteItem = true;
+        },
+        closeModalDeleteItem() {
+            this.isShowModalDeleteItem = false;
+        }
+    }
 }
 </script>

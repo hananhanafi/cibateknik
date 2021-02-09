@@ -1,35 +1,114 @@
 <template>
-  <svg
-    class="NuxtLogo"
-    width="245"
-    height="180"
-    viewBox="0 0 452 342"
-    xmlns="http://www.w3.org/2000/svg"
+  <div
+    ref="modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    @click="clickOutside"
   >
-    <path
-      d="M139 330l-1-2c-2-4-2-8-1-13H29L189 31l67 121 22-16-67-121c-1-2-9-14-22-14-6 0-15 2-22 15L5 303c-1 3-8 16-2 27 4 6 10 12 24 12h136c-14 0-21-6-24-12z"
-      fill="#00C58E"
-    />
-    <path
-      d="M447 304L317 70c-2-2-9-15-22-15-6 0-15 3-22 15l-17 28v54l39-67 129 230h-49a23 23 0 0 1-2 14l-1 1c-6 11-21 12-23 12h76c3 0 17-1 24-12 3-5 5-14-2-26z"
-      fill="#108775"
-    />
-    <path
-      d="M376 330v-1l1-2c1-4 2-8 1-12l-4-12-102-178-15-27h-1l-15 27-102 178-4 12a24 24 0 0 0 2 15c4 6 10 12 24 12h190c3 0 18-1 25-12zM256 152l93 163H163l93-163z"
-      fill="#2F495E"
-    />
-  </svg>
+    <div
+      class="modal-dialog"
+      :class="{ 
+        'modal-dialog-centered': centered !== undefined,
+        'modal-xl': extralarge !== undefined,
+        'modal-lg': large !== undefined,
+        'modal-sm': small !== undefined,
+        }"
+      role="document"
+    >
+      <div class="modal-content" :style="contentStyle" :class="contentClass">
+        <slot />
+      </div>
+    </div>
+  </div>
 </template>
 
-<style>
-.NuxtLogo {
-  animation: 1s appear;
-  margin: auto;
-}
+<script>
+const BODY_CLASS = "modal-open";
 
-@keyframes appear {
-  0% {
-    opacity: 0;
+export default {
+  name: "Modal",
+  props: {
+    show: {
+      type: Boolean,
+      default: false
+    },
+    centered: {
+      type: Boolean,
+      default: undefined
+    },
+    extralarge: {
+      type: Boolean,
+      default: undefined
+    },
+    large: {
+      type: Boolean,
+      default: undefined
+    },
+    small: {
+      type: Boolean,
+      default: undefined
+    },
+    contentStyle: {
+      type: String,
+      default: null
+    },
+    contentClass: {
+      type: String,
+      default: null
+    },
+    width: {
+      type: String,
+      default: null
+    }
+  },
+  watch: {
+    show() {
+      this.show ? this.showModal() : this.hideModal();
+    }
+  },
+  mounted() {
+    this.show && this.showModal();
+  },
+  destroyed() {
+    document.body.classList.remove(BODY_CLASS);
+    const $backdrop = document.querySelector(".modal-backdrop");
+    $backdrop && $backdrop.remove();
+  },
+  methods: {
+    showModal() {
+      document.body.classList.add(BODY_CLASS);
+      this.setDisplay("block");
+      this.addBackdrop();
+      setTimeout(() => {
+        this.$refs.modal && this.$refs.modal.classList.add("show");
+      }, 0);
+    },
+    hideModal() {
+      document.body.classList.remove(BODY_CLASS);
+      this.$refs.modal.classList.remove("show");
+      this.$nextTick(function() {
+        this.setDisplay("none");
+        document.querySelector(".modal-backdrop").remove();
+      });
+    },
+    setDisplay(value) {
+      this.$refs.modal.style.display = value;
+    },
+    addBackdrop() {
+      if (document.querySelector(".modal-backdrop")) return;
+      const $backdrop = document.createElement("div");
+      $backdrop.className = "modal-backdrop fade";
+      document.body.append($backdrop);
+      setTimeout(() => {
+        $backdrop.classList.add("show");
+      }, 0);
+    },
+    clickOutside(evt) {
+      if (evt.target.classList.contains("modal")) {
+        this.$emit("clickOutside");
+      }
+    }
   }
-}
-</style>
+};
+</script>

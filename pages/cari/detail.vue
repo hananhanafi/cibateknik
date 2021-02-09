@@ -66,7 +66,7 @@
                         <a class="btn bg-main-color text-white flex-fill ml-0"> Masukkan Keranjang </a>
                         <a class="btn bg-main-color text-white flex-fill mx-2"> Beli Langsung </a>
                         <div class="vertical-separator mx-2 d-inline h-100" style="border-color:black"></div>
-                        <a class="btn text-danger"> Whistlist </a>
+                        <a class="btn text-danger"> Wishlist </a>
                     </div>
                 </div>
             </div>

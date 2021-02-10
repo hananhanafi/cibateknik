@@ -15,7 +15,7 @@
                                 </div>
                             </div>
                             <div class="col text-right">
-                                <a class="btn text-primary">Atur Alamat Pengiriman</a>
+                                <a class="btn text-primary" @click="showUserModalSettingAddres">Atur Alamat Pengiriman</a>
                             </div>
                         </div>
                         <div class="row d-flex align-items-center">
@@ -106,6 +106,12 @@
 
             
         </div>
+
+        <UserModalSettingAddres
+            :show="isShowUserModalSettingAddres"
+            :data="dataModal"
+            @close="closeUserModalSettingAddres"
+        />
     </div>
 </template>
 
@@ -118,7 +124,20 @@
             return {
                 items: new Array(5), 
                 productsChecked: false,
+                isShowUserModalSettingAddres: false,
+                dataModal: {
+                    title: "Atur Alamat Pengiriman",
+                    message: ""
+                },
             }
+        },
+        methods: {
+            showUserModalSettingAddres() {
+                this.isShowUserModalSettingAddres = true;
+            },
+            closeUserModalSettingAddres() {
+                this.isShowUserModalSettingAddres = false;
+            },
         },
         head() {
             return {

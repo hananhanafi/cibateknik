@@ -9,7 +9,13 @@
         <div class="shadow-main p-4 text-center mb-4">
             <img src="~/assets/img/person.png" class="img-fluid rounded-circle w-100 mb-2"  alt="Responsive image"> 
             <h3>Hanan Hanafi</h3>
-            <a class="btn btn-light w-100 border">Pilih Gambar</a>
+            
+              <div class="input-group mb-3 d-none">
+                <input type="file" class="form-control" id="inputGroupFile02">
+              </div>
+              <label for="inputGroupFile02">
+                <a class="btn btn-light w-100 border">Pilih Gambar</a>
+              </label>
         </div>
       </div>
       <div class="col-lg-8 col-sm-12">

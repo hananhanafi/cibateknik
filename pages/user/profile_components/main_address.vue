@@ -7,8 +7,8 @@
                 <h3>Alamat Utama</h3>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-12">
-                <a class="btn text-primary" @click="showUserModalSettingAddres" >Tambah Alamat</a>
+            <div class="col-lg-6 col-md-12 text-right">
+                <a class="btn text-primary" @click="showUserModalAddAddres" ><fa :icon="['fas','plus']" /> Tambah Alamat</a>
             </div>
         </div>
 
@@ -39,12 +39,6 @@
                                     <td class="text-center">:</td>
                                     <td class="text-wrap">Jl. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore inventore eius consequuntur molestias eos ducimus, pariatur dolorum quibusdam non rerum ullam nulla nobis sunt sit illum quidem sint libero dolores!</td>
                                 </tr>
-                                <!-- <tr>
-                                    <td>Rumah</td>
-                                    <td>085158722120</td>
-                                    <td>Hanan Hanafi</td>
-                                    <td>Jl. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor provident, autem repellat laudantium nihil odit fuga quos harum, necessitatibus aperiam nisi cumque laborum neque saepe impedit? Quibusdam sunt voluptate fuga.</td>
-                                </tr> -->
                             </table>
                         </div>
                         <div class="col-lg-3 col-md-12">
@@ -61,28 +55,13 @@
             </div>
         </div>
 
-        <!-- <div class="modal d-block" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-                </div>
-            </div>
-        </div> -->
+        
+        <Pagination/>
 
-        <UserModalSettingAddres
-            :show="isShowUserModalSettingAddres"
+        <UserModalAddAddres
+            :show="isShowUserModalAddAddres"
             :data="dataModal"
-            @close="closeUserModalSettingAddres"
+            @close="closeUserModalAddAddres"
         />
         <ModalDeleteItem
             :show="isShowModalDeleteItem"
@@ -114,17 +93,17 @@ export default {
             title: "Atur Alamat Pengiriman",
             message: ""
         },
-            isShowUserModalSettingAddres: false,
-            isShowModalDeleteItem: false,
+        isShowUserModalAddAddres: false,
+        isShowModalDeleteItem: false,
             
         }
     },
     methods: {
-        showUserModalSettingAddres() {
-            this.isShowUserModalSettingAddres = true;
+        showUserModalAddAddres() {
+            this.isShowUserModalAddAddres = true;
         },
-        closeUserModalSettingAddres() {
-            this.isShowUserModalSettingAddres = false;
+        closeUserModalAddAddres() {
+            this.isShowUserModalAddAddres = false;
         },
         showModalDeleteItem() {
             this.isShowModalDeleteItem = true;

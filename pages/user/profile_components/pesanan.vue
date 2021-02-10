@@ -35,7 +35,7 @@
               <td><span class="text-success">Pesan</span></td>
               <td width="20%">
                 <a class="btn btn-sm text-primary mx-auto"><fa class="text-primary" :icon="['fas','eye']" /> Lihat</a>
-                <a class="btn btn-sm text-danger mx-auto"><fa class="text-danger" :icon="['fas','trash']" /> Hapus</a>
+                <a class="btn btn-sm text-danger mx-auto"  @click="showModalDeleteItem" ><fa class="text-danger" :icon="['fas','trash']"/> Hapus</a>
               </td>
             </tr>
           </tbody>
@@ -43,23 +43,14 @@
       </div>
     </div>
 
-    <div class="d-flex align-items-end flex-grow-1">
-      <div class="text-center w-100">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">Next</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
+    
+    <Pagination/>
+
+    <ModalDeleteItem
+        :show="isShowModalDeleteItem"
+        :data="{}"
+        @close="closeModalDeleteItem"
+    />
 
   </div>
 </template>
@@ -80,8 +71,18 @@ export default {
         },
       },
       
-      items: new Array(10)
+      items: new Array(10),
+      isShowModalDeleteItem: false, 
     }
   },
+  methods: {
+      showModalDeleteItem() {
+          this.isShowModalDeleteItem = true;
+      },
+      closeModalDeleteItem() {
+          this.isShowModalDeleteItem = false;
+      }
+
+  }
 }
 </script>

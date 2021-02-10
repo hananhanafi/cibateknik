@@ -12,7 +12,7 @@
         </div>
         <div class="modal-footer border-top-0 d-flex">
             <button type="button" class="btn text-dark flex-fill" data-bs-dismiss="modal" @click="$emit('close')">Batal</button>
-            <button type="button" class="btn btn-danger flex-fill">Hapus</button>
+            <button type="button" class="btn btn-danger flex-fill" @click="$emit('delete')">Hapus</button>
         </div>
 
     </Modal>

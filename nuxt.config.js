@@ -21,7 +21,7 @@ export default {
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
+  plugins: ['~/plugins/vue-swiper.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -38,7 +38,7 @@ export default {
       component: 'fa', 
       imports: [{
           set: '@fortawesome/free-solid-svg-icons',
-          icons: ['faLightbulb','faShoppingCart','faHandHoldingUsd','faCoins','faDonate','faUsers','faEye','faEyeSlash','faSearch','faBell','faTrash','faPencilAlt','faTimes','faPlus','faMinus']
+          icons: ['faLightbulb','faShoppingCart','faHandHoldingUsd','faCoins','faDonate','faUsers','faEye','faEyeSlash','faSearch','faBell','faTrash','faPencilAlt','faTimes','faPlus','faMinus','faArrowLeft','faArrowRight']
           },
           {set: '@fortawesome/free-brands-svg-icons',
           icons: ['faGithub']

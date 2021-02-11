@@ -1,7 +1,7 @@
 <template>
     <div class="pt-5">
-        <div class="container-fluid mt-5">
-            <div class="bg-white p-4 mx-md-5 my-5 mx-sm-1">
+        <div class="container mt-5">
+            <div class="bg-white my-5">
                 <div class="row">
                     <div class="col-lg-4 col-md-12">
                         <img src="~/assets/img/item.png" class="card-img-top" alt="item">
@@ -71,6 +71,35 @@
                 </div>
             </div>
         </div>
+
+        
+        <div class="container my-5 shadow-main p-4">
+            <div class="">
+                <div>
+                <div class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></div>
+                <h3 class="mb-4" >Produk Terkait</h3>
+                </div>
+                <swiper ref="mySwiper" class="swiper" :options="swiperOption">
+                <swiper-slide><ItemCard/></swiper-slide>
+                <swiper-slide><ItemCard/></swiper-slide>
+                <swiper-slide><ItemCard/></swiper-slide>
+                <swiper-slide><ItemCard/></swiper-slide>
+                <swiper-slide><ItemCard/></swiper-slide>
+                <swiper-slide><ItemCard/></swiper-slide>
+                <swiper-slide><ItemCard/></swiper-slide>
+                <swiper-slide><ItemCard/></swiper-slide>
+                <swiper-slide><ItemCard/></swiper-slide>
+                <swiper-slide><ItemCard/></swiper-slide>
+                <div slot="pagination" class="swiper-pagination"></div>
+                <div slot="button-prev" class="swiper-button-prev btn bg-white p-4 rounded-pill" style="width:40px">
+                    <fa class="" :icon="['fas','arrow-left']" />
+                </div>
+                <div slot="button-next" class="swiper-button-next btn bg-white p-4 rounded-pill" style="width:40px">
+                    <fa class="" :icon="['fas','arrow-right']" />
+                </div>
+                </swiper>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -87,7 +116,41 @@
                     last_education: null,
                 },
                 last_educationOptions: [],
-                items: new Array(18)
+                items: new Array(18),
+                swiperOption: {
+                    slidesPerView: 6,
+                    spaceBetween: 10,
+                    autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: true
+                    },
+                    pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true
+                    },
+                    navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev'
+                    },
+                    breakpoints: {
+                    1024: {
+                        slidesPerView: 6,
+                        spaceBetween: 10
+                    },
+                    768: {
+                        slidesPerView: 4,
+                        spaceBetween: 10
+                    },
+                    640: {
+                        slidesPerView: 2,
+                        spaceBetween: 10
+                    },
+                    320: {
+                        slidesPerView: 1,
+                        spaceBetween: 10
+                    }
+                    }
+                },
             }
         },
         head() {
@@ -107,3 +170,15 @@
         }
     }
 </script>
+
+<style>
+
+.swiper-button-prev::after
+{
+    content: '';
+}
+.swiper-button-next::after
+{
+    content: '';
+}
+</style>

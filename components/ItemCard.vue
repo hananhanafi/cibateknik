@@ -1,5 +1,5 @@
 <template>
-<div class="card shadow-main" style="cursor:pointer" @click="$router.push('/cari/detail')">
+<div class="card" style="cursor:pointer" @click="$router.push('/cari/detail')">
     <img src="~/assets/img/item.png" class="card-img-top" alt="item">
     <div class="card-body">
         <h5 class="card-title">Card title</h5>

@@ -11,7 +11,7 @@
             <h3>Hanan Hanafi</h3>
             
               <div class="input-group mb-3 d-none">
-                <input type="file" class="form-control" id="inputGroupFile02">
+                <input id="inputGroupFile02" type="file" class="form-control">
               </div>
               <label for="inputGroupFile02">
                 <a class="btn btn-light w-100 border">Pilih Gambar</a>

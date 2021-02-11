@@ -1,18 +1,29 @@
 <template>
     <div class="pt-5">
-        <div class="container-fluid">
-            <div class="bg-white p-4 mx-md-5 my-5 mx-sm-1 shadow">
+        <div class="container">
+            <div class="bg-white p-4 my-5 shadow">
                 <h2>Kontak</h2>
 
                 <div class="row">
-                    <div class="col">
-                        <h4 class="my-5">Hubungi Kami :</h4>
-                        <button type="button" style="height:60px" class="btn btn-success w-100 mb-4">Whatsapp</button>
-                        <button type="button" style="height:60px" class="btn btn-primary w-100 mb-4">Facebook</button>
-                        <button type="button" style="height:60px" class="btn btn-danger w-100 mb-4">Instagram</button>
+                    <div class="col-12">
+                        <h4 class="mt-5">Hubungi Kami :</h4>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-12">
+                                <button type="button" class="btn btn-success w-100 mb-4"><fa :icon="['fab','whatsapp']" />  Whatsapp</button>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <button type="button" class="btn btn-primary w-100 mb-4"><fa :icon="['fab','facebook']" /> Facebook</button>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <button type="button" class="btn btn-danger w-100 mb-4"><fa :icon="['fab','instagram']" /> Instagram</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-9">
-                        <div class="card shadow-1 p-5">
+                    <div class="col-12 text-center">
+                        <h4>Atau</h4>
+                    </div>
+                    <div class="col-12">
+                        <div class="card shadow-1 p-lg-5 p-3">
                             <h4 class="mb-5">
                                 Ingin mengirim pesan ?
                             </h4>

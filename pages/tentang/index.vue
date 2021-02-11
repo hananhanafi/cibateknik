@@ -1,7 +1,7 @@
 <template>
     <div class="pt-5">
-        <div class="container-fluid">
-            <div class="bg-white p-4 mx-md-5 my-5 mx-sm-1 shadow">
+        <div class="container">
+            <div class="bg-white my-5 p-4 shadow">
                 <h2>Tentang</h2>
 
                 <div class="row">

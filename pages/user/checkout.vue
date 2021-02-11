@@ -1,7 +1,7 @@
 <template>
     <div class="pt-5">
-        <div class="container-fluid">
-            <div class="bg-white mx-md-5 my-5 mx-sm-1">
+        <div class="container">
+            <div class="bg-white my-5">
                 <h2>Checkout</h2>
                 <div>
                     <div class="shadow-main p-3 my-5 ">

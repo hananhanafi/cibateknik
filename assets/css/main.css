@@ -7,16 +7,17 @@
 }
 
 body {
+    height: 100%;
+    margin: 0;
     top: 0;
     left: 0;
     font-family: 'Roboto', sans-serif;
-    color: #1A262B;
     background-color: #efefef;
     box-sizing: border-box;
 }
 
 .bg-primary-dark{
-    background-color: #1A262B;
+    background-color: #0F2027;
 }
 
 .rounded-8{
@@ -24,7 +25,7 @@ body {
 }
 
 .bg-main-color{
-    background-color: #1A262B;
+    background-color: #0F2027;
 }
 
 .shadow-main{

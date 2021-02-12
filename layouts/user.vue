@@ -4,7 +4,7 @@
             <b-navbar toggleable="lg" type="dark" class="bg-main-color">
                 <b-navbar-brand href="/">
                     <div class="bg-white p-1" style="height:40px">
-                        <b-img class="h-100" src="~/assets/img/logo.png" fluid alt="Responsive image"></b-img>
+                        <b-img class="h-100" src="~/assets/img/logov1.png" fluid alt="Responsive image"></b-img>
                     </div>
                 </b-navbar-brand>
                 <div class="vertical-separator"></div>
@@ -70,7 +70,7 @@
                 <div class="row mx-5">
                     <div class="col-4">
                     <div class="bg-white" style="height:40px">
-                        <b-img class="h-100" src="~/assets/img/logo.png" fluid alt="Responsive image"></b-img>
+                        <b-img class="h-100" src="~/assets/img/logov1.png" fluid alt="Responsive image"></b-img>
                     </div>
                     </div>
                 </div>
@@ -130,7 +130,8 @@
             this.handleResize();
         },
         destroyed() {
-            window.removeEventListener('resize', this.handleResize);
+            // window.removeEventListener('resize', this.handleResize);
+            this.handleResize();
         },
         mounted() {
             console.log("routeparams",this.$route.name);

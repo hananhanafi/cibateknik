@@ -1,64 +1,65 @@
 <template>
-  <div class=" ">
-    <div class="h-100 bg" style="min-height:1080px">
-      
-        <div class="align-middle container">
-            <div class="row justify-content-md-center" style="height:1080px">
-                <div class="mx-auto my-auto col"> 
-                  <div class="text-center">
-                      <h1 class="font-weight-bold text-white" >Cari Barang dan Alat Teknikmu di sini</h1>
-                  </div>
-                  <div class="d-flex">
-                    <b-input-group class="d-flex">
-                      <b-form-input class="mb-2 w-100 bg-transparent h-100 text-white search-input" placeholder="Cari ..."  type="text"></b-form-input>
-                    
-                      <div class="float-right position-absolute" style="right:0">
-                          <b-button pill variant="outline">
-                              
-                              <fa class="text-white" :icon="['fas','search']" /> 
-                          </b-button>
-                      </div>
-                      <!-- <b-form-input v-model="email" class="rounded-pill mb-2" placeholder="Email"></b-form-input> -->
-                      <!-- <b-button  class=""  @click="postLogin">Masuk</b-button> -->
-                    </b-input-group>
-
-                    <button type="button" class="btn btn-light px-4 ml-3" @click="searchHandler">Cari</button>
-
-                  </div>
-                  
+  <div class="h-100">
+    <div class="h-100 parallax" :style="{minHeight: windowH.height+'px'}">
+        <div class="container" style="height:100vh">
+          <div class="row h-100 d-flex align-items-center">
+            <div class="col">
+                <div class="text-center">
+                    <h1 class="font-weight-bold text-white" >Cari Barang dan Alat Teknikmu di sini</h1>
+                </div>
+                <div class="d-flex">
+                  <b-input-group class="d-flex">
+                    <b-form-input class="mb-2 w-100 bg-transparent h-100 text-white search-input" placeholder="Cari ..."  type="text"></b-form-input>
+                    <div class="float-right position-absolute" style="right:0">
+                        <b-button pill variant="outline">
+                            <fa class="text-white" :icon="['fas','search']" /> 
+                        </b-button>
+                    </div>
+                  </b-input-group>
+                  <button type="button" class="btn btn-light px-4 ml-3" @click="searchHandler">Cari</button>
                 </div>
             </div>
+          </div>
         </div>
 
-
+        
+    </div>
+    <div class="position-relative">
+      <div class="container shadow-main p-4 position-absolute bg-white" style="top:-80px;left:0;right:0">
+        <div class="">
+          <div>
+            <div class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></div>
+            <h3 class="mb-4" >Rekomendasi</h3>
+          </div>
+          <swiper ref="mySwiper" class="swiper" :options="swiperOption">
+            <swiper-slide><ItemCard/></swiper-slide>
+            <swiper-slide><ItemCard/></swiper-slide>
+            <swiper-slide><ItemCard/></swiper-slide>
+            <swiper-slide><ItemCard/></swiper-slide>
+            <swiper-slide><ItemCard/></swiper-slide>
+            <swiper-slide><ItemCard/></swiper-slide>
+            <swiper-slide><ItemCard/></swiper-slide>
+            <swiper-slide><ItemCard/></swiper-slide>
+            <swiper-slide><ItemCard/></swiper-slide>
+            <swiper-slide><ItemCard/></swiper-slide>
+            <div slot="pagination" class="swiper-pagination"></div>
+            <div slot="button-prev" class="swiper-button-prev btn btn-light rounded-pill" style="width:40px;height:40px">
+              <fa class="" :icon="['fas','chevron-left']" />
+            </div>
+            <div slot="button-next" class="swiper-button-next btn btn-light rounded-pill" style="width:40px;height:40px">
+              <fa class="" :icon="['fas','chevron-right']" />
+            </div>
+          </swiper>
+        </div>
+      </div>
+      
     </div>
 
-    <div class="container my-5 shadow-main p-4">
-      <div class="">
-        <div>
-          <div class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></div>
-          <h3 class="mb-4" >Rekomendasi</h3>
-        </div>
-        <swiper ref="mySwiper" class="swiper" :options="swiperOption">
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <div slot="pagination" class="swiper-pagination"></div>
-          <div slot="button-prev" class="swiper-button-prev btn btn-light rounded-pill" style="width:40px;height:40px">
-            <fa class="" :icon="['fas','chevron-left']" />
-          </div>
-          <div slot="button-next" class="swiper-button-next btn btn-light rounded-pill" style="width:40px;height:40px">
-            <fa class="" :icon="['fas','chevron-right']" />
-          </div>
-        </swiper>
-      </div>
+    <div class="py-5">
+    </div>
+    <div class="py-5">
+    </div>
+    <div class="py-5">
     </div>
     
     <div class="container my-5 shadow-main p-4">
@@ -88,94 +89,6 @@
         </swiper>
       </div>
     </div>
-
-    
-    <!-- <div class="container-fluid my-5">
-      <div class="row bg-white mx-5 p-2 py-5 shadow">
-        <div class="col-12 d-flex">
-            <h2 class="font-weight-bold mb-4" >Rekomendasi</h2>
-            <div class="ml-auto">Lihat semua  <fa :icon="['fas','eye']" /></div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-        
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-        
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-        
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-        
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-        
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <div class="container">
-      <div class="row flex-row flex-nowrap overflow-auto">
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-        
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-        
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-        
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-        
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-        
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-        
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-        
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-        
-        <div class="col-lg-2 col-md-4 col-sm-6">
-          
-          <ItemCard/>
-        </div>
-      </div>
-    </div> -->
 
 
   </div>
@@ -221,7 +134,13 @@
                 spaceBetween: 10
               }
             }
+          
+          
           },
+          windowH: {
+                  width: 0,
+                  height: 0
+              }
         }
       },
       computed: {
@@ -229,15 +148,27 @@
           return this.$refs.mySwiper.$swiper
         },
       },
+      created() {
+          this.handleResize();
+      },
+      destroyed() {
+          window.removeEventListener('resize', this.handleResize);
+      },
       mounted() {
         // console.log('Current Swiper instance object', this.swiper)
         // this.swiper.slideTo(1, 1000, false);
         // this.swiper.
+        window.addEventListener('resize', this.handleResize);
       },
       methods: {
         searchHandler() {
           this.$router.push('/cari');
           
+        },
+        handleResize() {
+          console.log("RESIZE")
+            this.windowH.width = window.innerWidth;
+            this.windowH.height = window.innerHeight;
         },
       }
     }
@@ -259,16 +190,26 @@
       content: '';
     }
     
-    .red {
-    color: red;
+    .parallax {
+      /* The image used */
+      background-image: url("../assets/img/bgv1.png");
+
+      /* Set a specific height */
+      min-height: 100%; 
+
+      /* Create the parallax scrolling effect */
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
     
     .bg {
       /* The image used */
-      background-image: url("../assets/img/new-bg.png");
+      background-image: url("../assets/img/bgv1.png");
 
       /* Full height */
-      height: 100%; 
+      min-height: 100%; 
 
       /* Center and scale the image nicely */
 

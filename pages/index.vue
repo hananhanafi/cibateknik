@@ -51,11 +51,11 @@
           <swiper-slide><ItemCard/></swiper-slide>
           <swiper-slide><ItemCard/></swiper-slide>
           <div slot="pagination" class="swiper-pagination"></div>
-          <div slot="button-prev" class="swiper-button-prev btn bg-white p-4 rounded-pill" style="width:40px">
-            <fa class="" :icon="['fas','arrow-left']" />
+          <div slot="button-prev" class="swiper-button-prev btn btn-light rounded-pill" style="width:40px;height:40px">
+            <fa class="" :icon="['fas','chevron-left']" />
           </div>
-          <div slot="button-next" class="swiper-button-next btn bg-white p-4 rounded-pill" style="width:40px">
-            <fa class="" :icon="['fas','arrow-right']" />
+          <div slot="button-next" class="swiper-button-next btn btn-light rounded-pill" style="width:40px;height:40px">
+            <fa class="" :icon="['fas','chevron-right']" />
           </div>
         </swiper>
       </div>
@@ -79,11 +79,11 @@
           <swiper-slide><ItemCard/></swiper-slide>
           <swiper-slide><ItemCard/></swiper-slide>
           <div slot="pagination" class="swiper-pagination"></div>
-          <div slot="button-prev" class="swiper-button-prev btn bg-white p-4 rounded-pill" style="width:40px">
-            <fa class="" :icon="['fas','arrow-left']" />
+          <div slot="button-prev" class="swiper-button-prev btn btn-light rounded-pill" style="width:40px;height:40px">
+            <fa class="" :icon="['fas','chevron-left']" />
           </div>
-          <div slot="button-next" class="swiper-button-next btn bg-white p-4 rounded-pill" style="width:40px">
-            <fa class="" :icon="['fas','arrow-right']" />
+          <div slot="button-next" class="swiper-button-next btn btn-light rounded-pill" style="width:40px;height:40px">
+            <fa class="" :icon="['fas','chevron-right']" />
           </div>
         </swiper>
       </div>

@@ -29,88 +29,38 @@
                     <b-navbar-nav>
                         <b-nav-item href="/user/register">Daftar</b-nav-item>
                         <b-nav-item href="/user/login">Masuk</b-nav-item>
-                        <!-- <b-nav-form>
-                            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-                            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-                        </b-nav-form> -->
-
-                        <!-- <b-nav-item-dropdown text="Lang" right>
-                            <b-dropdown-item href="#">EN</b-dropdown-item>
-                            <b-dropdown-item href="#">ES</b-dropdown-item>
-                            <b-dropdown-item href="#">RU</b-dropdown-item>
-                            <b-dropdown-item href="#">FA</b-dropdown-item>
-                        </b-nav-item-dropdown> -->
-
-                        <!-- Using 'button-content' slot -->
                     </b-navbar-nav>
                     <b-navbar-nav>
                         <b-nav-item-dropdown right>
                             <template #button-content>
                                 <img src="~/assets/img/person.png" class="img-fluid rounded-circle h-100" style="width:40px" alt="Responsive image"> Hanan Hanafi
                             </template>
-                            <b-dropdown-item href="/user/profile">Profile</b-dropdown-item>
+                            
+                            <!-- <b-dropdown-item>
+                                <nuxt-link :to="{ path: '/user/profile', params: {id: 1}, query: {a: 1, b: 2}}">Pesanan Saya</nuxt-link>
+                            </b-dropdown-item> -->
+                            <!-- <b-dropdown-item href="/user/profile">Profile</b-dropdown-item> -->
+
+                            <router-link class="btn btn-light w-100 text-decoration-none text-dark text-left" :to="{ name: 'user-profile', query: { tab: 'my_account' } }">
+                                Profile
+                            </router-link>
+                            <router-link class="btn btn-light w-100 text-decoration-none text-dark text-left" :to="{ name: 'user-profile', query: { tab: 'my_order' } }">
+                                Pesanan Saya
+                            </router-link>
+                            <router-link class="btn btn-light w-100 text-decoration-none text-dark text-left" :to="{ name: 'user-profile', query: { tab: 'password' } }">
+                                Ubah Password
+                            </router-link>
+
+                            <!-- <b-dropdown-item>
+                                <router-link class="text-decoration-none text-dark" :to="{ name: 'user-profile', params: { tab: 'password' } }">Ubah Password</router-link>
+                            </b-dropdown-item> -->
+                            
                             <b-dropdown-item href="#">Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
                 </b-collapse>
             </b-navbar>
         </div>
-
-        <!-- <div>
-            <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow>
-                <template #default="{ hide }">
-                    <div class="py-3 bg-primary-dark h-100">
-                    
-                        <div class="d-flex bd-highlight py-3">
-                            <div class="p-2 w-100 bd-highlight text-white"><h2>Ciba Teknik</h2></div>
-                            <div class="p-2 flex-shrink-1 bd-highlight"><b-button variant="dark" class="text-danger" block @click="hide"> X </b-button></div>
-                        </div>
-                        <ul class="ml-0 pl-0">
-                            <li>
-                                <div class="w-100 text-white ">
-                                    <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/dashboard"
-                                    :class="{ 'active-menu' : isActive('admin-dashboard') }">
-                                        Dashboard
-                                    </NuxtLink>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="w-100">
-                                    <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/inventory"
-                                    :class="{ 'active-menu' : isActive('admin-inventory') }">
-                                        Inventory
-                                    </NuxtLink>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="w-100">
-                                    <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/post"
-                                    :class="{ 'active-menu' : isActive('admin-post') }">
-                                        Post
-                                    </NuxtLink>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="w-100">
-                                    <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/customer"
-                                    :class="{ 'active-menu' : isActive('admin-customer') }">
-                                        Customer
-                                    </NuxtLink>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="w-100">
-                                    <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/inbox"
-                                    :class="{ 'active-menu' : isActive('admin-inbox') }">
-                                        Inbox
-                                    </NuxtLink>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </template>
-            </b-sidebar>
-        </div> -->
         
         
         <div class="bg-white" :style="{minHeight: windowH.height+'px'}">

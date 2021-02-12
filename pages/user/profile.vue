@@ -7,26 +7,62 @@
                         <div class="shadow-main p-4 text-center mb-4">
                             <img src="~/assets/img/person.png" class="img-fluid rounded-circle w-100 mb-2"  alt="Responsive image"> 
                             <h3>Hanan Hanafi</h3>
-                            <a class="btn text-black-50" @click="change('akun_saya')">Ubah Profile</a>
+                            <a class="btn text-black-50" @click="change('my_account')">Ubah Profile</a>
                         </div>
                         <div class="shadow-main text-left mb-4">
                             <div>
-                                <a class="btn w-100 p-4 text-left" :class="activeComponent === 'akun_saya' ? 'bg-main-color text-white' : '' " @click="change('akun_saya')">Akun Saya</a>
+                                <router-link 
+                                class="btn w-100 p-4 text-left text-decoration-none" 
+                                :class="activeComponent === 'my_account' ? 'bg-main-color text-white' : 'text-dark' "
+                                :to="{ name: 'user-profile', query: { tab: 'my_account' } }"
+                                >
+                                    Akun Saya
+                                </router-link>
                             </div>
                             <div>
-                                <a class="btn w-100 p-4 text-left" :class="activeComponent === 'pesanan' ? 'bg-main-color text-white' : '' "  @click="change('pesanan')">Pesanan</a>
+                                <router-link 
+                                class="btn w-100 p-4 text-left text-decoration-none" 
+                                :class="activeComponent === 'my_order' ? 'bg-main-color text-white' : 'text-dark' "
+                                :to="{ name: 'user-profile', query: { tab: 'my_order' } }"
+                                >
+                                    Pesanan Saya
+                                </router-link>
                             </div>
                             <div>
-                                <a class="btn w-100 p-4 text-left" :class="activeComponent === 'notifikasi' ? 'bg-main-color text-white' : '' "  @click="change('notifikasi')">Notifikasi</a>
+                                <router-link 
+                                class="btn w-100 p-4 text-left text-decoration-none" 
+                                :class="activeComponent === 'notification' ? 'bg-main-color text-white' : 'text-dark' "
+                                :to="{ name: 'user-profile', query: { tab: 'notification' } }"
+                                >
+                                    Notifikasi
+                                </router-link>
                             </div>
                             <div>
-                                <a class="btn w-100 p-4 text-left" :class="activeComponent === 'main_address' ? 'bg-main-color text-white' : '' "  @click="change('main_address')">Alamat utama</a>
+                                <router-link 
+                                class="btn w-100 p-4 text-left text-decoration-none" 
+                                :class="activeComponent === 'main_address' ? 'bg-main-color text-white' : 'text-dark' "
+                                :to="{ name: 'user-profile', query: { tab: 'main_address' } }"
+                                >
+                                    Alamat utama
+                                </router-link>
                             </div>
                             <div>
-                                <a class="btn w-100 p-4 text-left" :class="activeComponent === 'wishlist' ? 'bg-main-color text-white' : '' "  @click="change('wishlist')">Wishlist Saya</a>
+                                <router-link 
+                                class="btn w-100 p-4 text-left text-decoration-none" 
+                                :class="activeComponent === 'wishlist' ? 'bg-main-color text-white' : 'text-dark' "
+                                :to="{ name: 'user-profile', query: { tab: 'wishlist' } }"
+                                >
+                                    Wishlist Saya
+                                </router-link>
                             </div>
                             <div>
-                                <a class="btn w-100 p-4 text-left" :class="activeComponent === 'password' ? 'bg-main-color text-white' : '' "  @click="change('password')">Atur Password</a>
+                                <router-link 
+                                class="btn w-100 p-4 text-left text-decoration-none" 
+                                :class="activeComponent === 'password' ? 'bg-main-color text-white' : 'text-dark' "
+                                :to="{ name: 'user-profile', query: { tab: 'password' } }"
+                                >
+                                    Atur Password
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -50,22 +86,44 @@
                 items: new Array(5), 
                 productsChecked: false,
                 dynamic: null,
-                activeComponent: 'akun_saya'
+                activeComponent: 'my_account',
+                tabList :{
+                    my_account : 'Akun Saya',
+                    my_order : 'Pesanan Saya',
+                    notification : 'Notifikasi',
+                    main_address : 'Alamat Utama',
+                    wishlist : 'Wishlist Saya',
+                    password : 'Atur Password',
+                }
             }
         },
-
-        mounted() {
-            this.dynamic = () => import("./profile_components/akun_saya");
+        computed: {
+            currentTab() {
+                return this.$route.query.tab;
+            }
+        },
+        watch: {
+            currentTab() {
+                this.change(this.currentTab);
+            }
+        },
+        created() {
+            if(this.$route.query.tab){
+                this.change(this.$route.query.tab);
+            }else{
+                this.change(this.activeComponent);
+            }
         },
         methods: {
             change(componentName) {
                 this.dynamic = () => import(`./profile_components/${componentName}`);
                 this.activeComponent = componentName;
+                this.$route.params.tab = componentName;
             }
         },
         head() {
             return {
-                title: "Profile",
+                title: "Profile - " + this.tabList[this.currentTab],
                 meta: [
                 // hid is used as unique identifier. Do not use `vmid` for it as it will not work
                 {
@@ -77,6 +135,6 @@
                 
                 // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
             }
-        }
+        },
     }
 </script>

@@ -44,6 +44,7 @@ body {
 .truncate-paragraph{
     
     /**Major Properties**/
+    
     overflow:hidden;
     -webkit-box-orient: vertical;
     display: block;

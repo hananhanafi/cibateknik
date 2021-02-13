@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="position-fixed w-100 d-md-block" style="z-index:999">
+        <div class="position-fixed w-100 d-md-block d-none" style="z-index:999">
             <b-navbar toggleable="lg" type="dark" class="bg-main-color">
                 <b-navbar-brand href="/">
                     <div class="bg-white p-1" style="height:40px">

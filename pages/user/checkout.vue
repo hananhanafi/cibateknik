@@ -28,7 +28,7 @@
                                 </div>
                             </div>
                             <div class="col text-right">
-                                <a class="btn text-primary">Atur Metode Pembayaran</a>
+                                <a class="btn text-primary" @click="showUserModalChoosePaymentMethod">Atur Metode Pembayaran</a>
                             </div>
                         </div>
                     </div>
@@ -112,6 +112,10 @@
             :data="dataModal"
             @close="closeUserModalSettingAddres"
         />
+        <UserModalChoosePaymentMethod
+            :show="isShowUserModalChoosePaymentMethod"
+            @close="closeUserModalChoosePaymentMethod"
+        />
     </div>
 </template>
 
@@ -125,6 +129,7 @@
                 items: new Array(5), 
                 productsChecked: false,
                 isShowUserModalSettingAddres: false,
+                isShowUserModalChoosePaymentMethod: false,
                 dataModal: {
                     title: "Atur Alamat Pengiriman",
                     message: ""
@@ -137,6 +142,12 @@
             },
             closeUserModalSettingAddres() {
                 this.isShowUserModalSettingAddres = false;
+            },
+            showUserModalChoosePaymentMethod() {
+                this.isShowUserModalChoosePaymentMethod = true;
+            },
+            closeUserModalChoosePaymentMethod() {
+                this.isShowUserModalChoosePaymentMethod = false;
             },
         },
         head() {

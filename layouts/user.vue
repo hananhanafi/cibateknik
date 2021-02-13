@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="position-fixed w-100" style="z-index:999">
+        <div class="position-fixed w-100 d-md-block" style="z-index:999">
             <b-navbar toggleable="lg" type="dark" class="bg-main-color">
                 <b-navbar-brand href="/">
                     <div class="bg-white p-1" style="height:40px">
@@ -8,11 +8,7 @@
                     </div>
                 </b-navbar-brand>
                 <div class="vertical-separator"></div>
-
-
-                <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-                <b-collapse id="nav-collapse" is-nav>
+                
                     <b-navbar-nav>
                         <b-nav-item href="/">Beranda</b-nav-item>
                         <b-nav-item href="/kontak">Kontak</b-nav-item>
@@ -58,8 +54,56 @@
                             <b-dropdown-item href="#">Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
-                </b-collapse>
+
+
+                <!-- <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+                <b-collapse id="nav-collapse" is-nav>
+                </b-collapse> -->
             </b-navbar>
+        </div>
+        <div class="w-100 fixed-bottom d-md-none d-block bg-light" style="z-index:999">
+            <div class="d-flex">
+                <router-link class="w-25 btn btn-light text-decoration-none text-dark" 
+                            :class="{ 'active' : isActive('index') }" 
+                            to="/"
+                >
+                    <fa  :icon="['fas','shopping-cart']"/>
+                    <div>
+                        Home
+                    </div>
+                    
+                </router-link>
+                <router-link class="w-25 btn btn-light text-decoration-none text-dark" 
+                            :class="{ 'active' : isActive('cari') }" 
+                            to="/cari"
+                >
+                    <fa  :icon="['fas','shopping-cart']"/>
+                    <div>
+                        Cari
+                    </div>
+                    
+                </router-link>
+                <router-link class="w-25 btn btn-light text-decoration-none text-dark" 
+                            :class="{ 'active' : isActive('user-keranjang') }" 
+                            to="/user/keranjang"
+                >
+                    <fa  :icon="['fas','shopping-cart']"/>
+                    <div>
+                        Keranjang
+                    </div>
+                    
+                </router-link>
+                
+                <router-link class="w-25 btn btn-light text-decoration-none text-dark" 
+                            :class="{ 'active' : isActive('user-profile') }" 
+                            :to="{ name: 'user-profile', query: { tab: 'my_account' } }">
+                    <fa  :icon="['fas','shopping-cart']"/>
+                    <div>
+                        Profile
+                    </div>
+                </router-link>
+            </div>
         </div>
         
         
@@ -68,14 +112,14 @@
 
             <div class="container-fluid bg-white py-4 border-top mt-5">
                 <div class="row mx-5">
-                    <div class="col-4">
-                    <div class="bg-white" style="height:40px">
-                        <b-img class="h-100" src="~/assets/img/logov1.png" fluid alt="Responsive image"></b-img>
-                    </div>
+                    <div class="col">
+                        <div class="bg-white" style="height:40px">
+                            <b-img class="h-100" src="~/assets/img/logov1.png" fluid alt="Responsive image"></b-img>
+                        </div>
                     </div>
                 </div>
                 <div class="row mx-5">
-                    <div class="col-4">
+                    <div class="col-lg-4 col-md-12">
                     <div class="mb-2">
                         Kontak Kami
                     </div>
@@ -83,7 +127,7 @@
                         081311114228
                     </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-lg-4 col-md-12">
                     <div class="mb-2">
                         Tentang Ciba Teknik
                     </div>
@@ -91,7 +135,7 @@
                         Jelajahi Ciba Teknik
                     </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-lg-4 col-md-12">
                     <div class="mb-2">
                         Ikuti Kami
                     </div>
@@ -137,9 +181,10 @@
             console.log("routeparams",this.$route.name);
         },
         methods: {
-            // isActive(name){
-            //     return this.$route.name === name;
-            // },
+            isActive(name){
+                console.log("route/",this.$route.name)
+                return this.$route.name === name;
+            },
             handleResize() {
                 this.windowH.width = window.innerWidth;
                 this.windowH.height = window.innerHeight;

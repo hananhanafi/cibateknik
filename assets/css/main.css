@@ -28,6 +28,10 @@ body {
     background-color: #0F2027;
 }
 
+.text-main-color{
+    color: #0F2027;
+}
+
 .shadow-main{
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
 }

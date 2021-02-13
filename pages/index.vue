@@ -19,6 +19,11 @@
                   <button type="button" class="btn btn-light px-4 ml-3" @click="searchHandler">Cari</button>
                 </div>
             </div>
+            
+            <!-- <div class="col">
+              <img class="w-50" src="~/assets/img/gear-ornament.png" fluid alt="ornament img"/>
+            </div> -->
+              <img class="position-absolute h-100" style="right:10px" src="~/assets/img/gear-ornamentv2.png" fluid alt="ornament img"/>
           </div>
         </div>
 
@@ -61,8 +66,10 @@
     </div>
     <div class="py-5">
     </div>
+    <div class= "py-sm-0 py-4">
+    </div>
     
-    <div class="container my-5 shadow-main p-4">
+    <div class="container mb-5 mt-sm-5 mt-0 shadow-main p-4">
       <div class="">
         <div>
           <div class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></div>
@@ -125,12 +132,16 @@
                 slidesPerView: 4,
                 spaceBetween: 10
               },
-              640: {
-                slidesPerView: 2,
+              // 576: {
+              //   slidesPerView: 3,
+              //   spaceBetween: 10
+              // },
+              480: {
+                slidesPerView: 3,
                 spaceBetween: 10
               },
-              320: {
-                slidesPerView: 1,
+              0: {
+                slidesPerView: 2,
                 spaceBetween: 10
               }
             }

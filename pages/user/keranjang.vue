@@ -54,7 +54,7 @@
                             <div class="col-2 text-center">
                                 Rp 200.000
                             </div>
-                            <div class="col-1 text-center">
+                            <div class="col-lg-1 col-md-12  text-center">
                                 <a class="btn text-warning">Edit</a>
                                 <a class="btn text-danger">Hapus</a>
                             </div>

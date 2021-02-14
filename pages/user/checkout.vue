@@ -1,7 +1,7 @@
 <template>
-    <div class="pt-5">
+    <div class="py-5">
         <div class="container">
-            <div class="bg-white my-5">
+            <div class="bg-white my-md-5">
                 <h2>Checkout</h2>
                 <div>
                     <div class="shadow-main p-3 my-5 ">

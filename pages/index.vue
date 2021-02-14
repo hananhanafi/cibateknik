@@ -23,7 +23,7 @@
             <!-- <div class="col">
               <img class="w-50" src="~/assets/img/gear-ornament.png" fluid alt="ornament img"/>
             </div> -->
-              <img class="position-absolute h-100" style="right:10px" src="~/assets/img/gear-ornamentv2.png" fluid alt="ornament img"/>
+              <img class="position-absolute h-100 d-md-block d-none" style="right:10px" src="~/assets/img/gear-ornamentv2.png" fluid alt="ornament img"/>
           </div>
         </div>
 

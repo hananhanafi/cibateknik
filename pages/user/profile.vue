@@ -1,7 +1,7 @@
 <template>
     <div class="pt-5">
         <div class="container-fluid">
-            <div class="bg-white mx-md-5 my-5 mx-sm-1">
+            <div class="bg-white mx-md-5 my-md-5 mx-sm-1">
                 <div class="row">
                     <div class="col-lg-2 col-md-12">
                         <div class="shadow-main p-4 text-center mb-4">

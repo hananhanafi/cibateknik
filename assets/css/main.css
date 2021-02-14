@@ -16,6 +16,12 @@ body {
     box-sizing: border-box;
 }
 
+
+a {
+    color: inherit; 
+    text-decoration: inherit; 
+}
+
 .bg-primary-dark{
     background-color: #0F2027;
 }
@@ -42,10 +48,6 @@ body {
 }
 
 .truncate-paragraph{
-    
-    /**Major Properties**/
-    
-    overflow:hidden;
     -webkit-box-orient: vertical;
     display: block;
     display: -webkit-box;

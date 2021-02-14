@@ -1,9 +1,9 @@
 <template>
-    <div class="pt-5">
+    <div class="py-5">
         <div class="container-fluid mt-5">
 
             <div class="row">
-                <div class="col-xl-2  col-lg-3 col-md-4 col-sm-12">
+                <div class="col-xl-2  col-lg-3 col-md-4 col-sm-12 d-md-block d-none">
                     <div class="bg-white p-3 shadow-main sticky-top mb-4" style="top:80px;z-index:900">
                         <div class="border-bottom mb-2">
                             <h4>Filter</h4>
@@ -57,9 +57,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 d-md-none d-flex fixed-top bg-white shadow-main p-4">
+                    <BaseInput
+                        id="Cari"
+                        placeholder="Cari..."
+                        class="mb-0 flex-fill"
+                    >
+                    <div slot="afterInput" class="position-absolute"
+                        style=" right:8px;
+                                top: 50%;
+                                -ms-transform: translateY(-50%);
+                                transform: translateY(-50%);"
+                    >
+                        <fa class="" :icon="['fas','search']" /> 
+                    </div>
+                    </BaseInput>
+                    <button type="button" class="btn bg-main-color text-white px-4 ml-3">Cari</button>
+
+                    <div class="fixed-bottom text-center" style="bottom:80px">
+                        <a type="button" class="btn btn-light px-4">
+                        <fa class="" :icon="['fas','filter']" />  Filter</a>
+                    </div>
+                </div>
                 <div class="col">
                     
-                    <div class="d-flex mb-2 sticky-top" style="top:80px;z-index:900">
+                    <div class="d-md-flex d-none mb-2 sticky-top" style="top:80px;z-index:900">
                         <BaseInput
                             id="Cari"
                             placeholder="Cari..."
@@ -75,11 +97,11 @@
                         </div>
                         </BaseInput>
                         <button type="button" class="btn bg-main-color text-white px-4 ml-3">Cari</button>
-
                     </div>
+                    
                     <div class="bg-white p-3 shadow-main">
                         <div class="row">
-                            <div v-for="(i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <div v-for="(i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-4">
                                 <ItemCard/>
                             </div>
                             <div class="col-12 d-flex">

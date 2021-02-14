@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="position-fixed w-100 d-md-block d-none" style="z-index:999">
-            <b-navbar toggleable="lg" type="dark" class="bg-main-color">
+            <b-navbar toggleable="md" type="dark" class="bg-main-color">
                 <b-navbar-brand href="/">
                     <div class="bg-white p-1" style="height:40px">
                         <b-img class="h-100" src="~/assets/img/logov1.png" fluid alt="Responsive image"></b-img>
@@ -62,30 +62,30 @@
                 </b-collapse> -->
             </b-navbar>
         </div>
-        <div class="w-100 fixed-bottom d-md-none d-block bg-light" style="z-index:999">
+        <div class="w-100 fixed-bottom d-md-none d-block bg-light border-top" style="z-index:999">
             <div class="d-flex">
-                <router-link class="w-25 btn btn-light text-decoration-none text-dark" 
-                            :class="{ 'active' : isActive('index') }" 
+                <router-link class="w-25 text-center text-decoration-none py-2" 
+                            :class="{ 'bg-main-color text-white' : isActive('index') }" 
                             to="/"
                 >
-                    <fa  :icon="['fas','shopping-cart']"/>
+                    <fa  :icon="['fas','home']"/>
                     <div>
                         Home
                     </div>
                     
                 </router-link>
-                <router-link class="w-25 btn btn-light text-decoration-none text-dark" 
-                            :class="{ 'active' : isActive('cari') }" 
+                <router-link class="w-25 text-center text-decoration-none py-2" 
+                            :class="{ 'bg-main-color  text-white' : isActive('cari') }" 
                             to="/cari"
                 >
-                    <fa  :icon="['fas','shopping-cart']"/>
+                    <fa  :icon="['fas','search']"/>
                     <div>
                         Cari
                     </div>
                     
                 </router-link>
-                <router-link class="w-25 btn btn-light text-decoration-none text-dark" 
-                            :class="{ 'active' : isActive('user-keranjang') }" 
+                <router-link class="w-25 text-center text-decoration-none py-2" 
+                            :class="{ 'bg-main-color  text-white' : isActive('user-keranjang') }" 
                             to="/user/keranjang"
                 >
                     <fa  :icon="['fas','shopping-cart']"/>
@@ -95,10 +95,10 @@
                     
                 </router-link>
                 
-                <router-link class="w-25 btn btn-light text-decoration-none text-dark" 
-                            :class="{ 'active' : isActive('user-profile') }" 
+                <router-link class="w-25 text-center text-decoration-none py-2" 
+                            :class="{ 'bg-main-color  text-white' : isActive('user-profile') }" 
                             :to="{ name: 'user-profile', query: { tab: 'my_account' } }">
-                    <fa  :icon="['fas','shopping-cart']"/>
+                    <fa  :icon="['fas','user']"/>
                     <div>
                         Profile
                     </div>
@@ -109,39 +109,37 @@
         
         <div class="bg-white" :style="{minHeight: windowH.height+'px'}">
             <Nuxt />
-
-            <div class="container-fluid bg-white py-4 border-top mt-5">
-                <div class="row mx-5">
+            
+            <div class="border-top d-md-block d-none"></div>
+            <div class="container bg-white py-4 text-md-left text-center  d-md-block d-none">
+                <div class="row">
                     <div class="col">
                         <div class="bg-white" style="height:40px">
                             <b-img class="h-100" src="~/assets/img/logov1.png" fluid alt="Responsive image"></b-img>
                         </div>
                     </div>
                 </div>
-                <div class="row mx-5">
-                    <div class="col-lg-4 col-md-12">
-                    <div class="mb-2">
-                        Kontak Kami
+                <div class="row">
+                    <div class="col-lg-9 col-md-12 my-3">
+                        <a href="/cari" class="mb-2 d-block">
+                            Cari Barang
+                        </a>
+                        <a href="/kontak" class="mb-2 d-block">
+                            Kontak Kami
+                        </a>
+                        <a href="/tentang">
+                            Tentang Kami
+                        </a>
                     </div>
-                    <div>
-                        081311114228
-                    </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                    <div class="mb-2">
-                        Tentang Ciba Teknik
-                    </div>
-                    <div>
-                        Jelajahi Ciba Teknik
-                    </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                    <div class="mb-2">
-                        Ikuti Kami
-                    </div>
-                    <div>
-                        081311114228
-                    </div>
+                    <div class="col-lg-3 col-md-12 my-3">
+                        <div class="mb-2">
+                            Ikuti Kami
+                        </div>
+                        <div>
+                            <img class="mr-3" src="~/assets/img/media-social/whatsapp.png" fluid alt="Responsive image" style="width:40px"/>
+                            <img class="mr-3" src="~/assets/img/media-social/facebook.png" fluid alt="Responsive image" style="width:40px"/>
+                            <img class="mr-3" src="~/assets/img/media-social/instagram.png" fluid alt="Responsive image" style="width:40px"/>
+                        </div>
                     </div>
                 </div>
             </div>

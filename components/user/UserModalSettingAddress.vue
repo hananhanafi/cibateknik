@@ -1,5 +1,5 @@
 <template>
-    <Modal :show="show" large centered>
+    <Modal :show="show" reference="setting_address" large centered>
 
         <div v-if="data.hasOwnProperty('title')" class="modal-header border-bottom-0">
             <h5 id="exampleModalLabel" class="modal-title">{{ data.title }}</h5>
@@ -8,7 +8,7 @@
         <div class="modal-body">
             {{ data.message }}
             <div class="float-right">
-                <a class="btn text-primary" ><fa :icon="['fas','plus']" /> Tambah Alamat</a>
+                <a class="btn text-primary" @click="$emit('add-address')"><fa :icon="['fas','plus']" /> Tambah Alamat</a>
             </div>
             
             <BaseSelect

@@ -1,6 +1,6 @@
 <template>
-    <div class="pt-5">
-        <div class="container mt-5">
+    <div class="pt-md-5">
+        <div class="container mt-md-5">
             <div class="bg-white my-5">
                 <div class="row">
                     <div class="col-lg-4 col-md-12">
@@ -113,10 +113,7 @@
                 formData: {
                     amount: 0,
                     max: null,
-                    last_education: null,
                 },
-                last_educationOptions: [],
-                items: new Array(18),
                 swiperOption: {
                     slidesPerView: 6,
                     spaceBetween: 10,

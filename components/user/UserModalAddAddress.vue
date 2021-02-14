@@ -1,13 +1,11 @@
 <template>
-    <Modal :show="show" large centered>
+    <Modal :show="show" reference="add_address" large centered>
 
-        <div v-if="data.hasOwnProperty('title')" class="modal-header border-bottom-0">
-            <h5 id="exampleModalLabel" class="modal-title">{{ data.title }}</h5>
+        <div class="modal-header border-bottom-0">
+            <h5 id="exampleModalLabel" class="modal-title">Tambah Alamat Pengiriman</h5>
             <button type="button" class="btn-close btn text-danger" data-bs-dismiss="modal" aria-label="Close"  @click="$emit('close')"><fa :icon="['fas','times']" /></button>
         </div>
         <div class="modal-body">
-            {{ data.message }}
-            
             <BaseInput
                 id="addressLabel"
                 v-model="data.addressLabel"

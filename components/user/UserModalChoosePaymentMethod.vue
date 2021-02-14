@@ -85,6 +85,132 @@
                     </div>
                 </div>
             </div>
+            <div v-if="formData.payment == 'card'">
+                <div>
+                    Pilih metode transfer antar bank
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="input-group">
+                            <div class="d-flex align-items-center">
+                                <input id="Debit" v-model="formData.selectPayment" value="Debit" type="radio" aria-label="Radio button for following text input">
+                                <label class="btn w-100 text-left mb-0" for="Debit">Kartu Debit</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="d-flex align-items-center">
+                                <input id="Kredit" v-model="formData.selectPayment" value="Kredit" type="radio" aria-label="Radio button for following text input">
+                                <label class="btn w-100 text-left mb-0" for="Kredit">Kartu Kredit</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card p-2">
+                            <div>
+                                Cara Transfer : 
+                            </div>
+                            <div>
+                                <ol>
+                                    <li>Pergi Ke bank</li>
+                                    <li>Masukkan Pin Anda</li>
+                                    <li>Pilih Transfer</li>
+                                    <li>Masukkan jumlah transfer sesuai dengan jumlah</li>
+                                    <li>Pilih Kirim</li>
+                                    <li>Selesai</li>
+
+                                </ol>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="formData.payment == 'retail'">
+                <div>
+                    Pilih metode transfer antar bank
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="input-group">
+                            <div class="d-flex align-items-center">
+                                <input id="Alfamart" v-model="formData.selectPayment" value="Alfamart" type="radio" aria-label="Radio button for following text input">
+                                <label class="btn w-100 text-left mb-0" for="Alfamart">Alfamart</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="d-flex align-items-center">
+                                <input id="Indomart" v-model="formData.selectPayment" value="Indomart" type="radio" aria-label="Radio button for following text input">
+                                <label class="btn w-100 text-left mb-0" for="Indomart">Indomart</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card p-2">
+                            <div>
+                                Cara Transfer : 
+                            </div>
+                            <div>
+                                <ol>
+                                    <li>Pergi Ke bank</li>
+                                    <li>Masukkan Pin Anda</li>
+                                    <li>Pilih Transfer</li>
+                                    <li>Masukkan jumlah transfer sesuai dengan jumlah</li>
+                                    <li>Pilih Kirim</li>
+                                    <li>Selesai</li>
+
+                                </ol>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="formData.payment == 'e_wallet'">
+                <div>
+                    Pilih metode transfer antar bank
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="input-group">
+                            <div class="d-flex align-items-center">
+                                <input id="GOPAY" v-model="formData.selectPayment" value="GOPAY" type="radio" aria-label="Radio button for following text input">
+                                <label class="btn w-100 text-left mb-0" for="GOPAY">GOPAY</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="d-flex align-items-center">
+                                <input id="OVO" v-model="formData.selectPayment" value="OVO" type="radio" aria-label="Radio button for following text input">
+                                <label class="btn w-100 text-left mb-0" for="OVO">OVO</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="d-flex align-items-center">
+                                <input id="DANA" v-model="formData.selectPayment" value="DANA" type="radio" aria-label="Radio button for following text input">
+                                <label class="btn w-100 text-left mb-0" for="DANA">DANA</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card p-2">
+                            <div>
+                                Cara Transfer : 
+                            </div>
+                            <div>
+                                <ol>
+                                    <li>Pergi Ke bank</li>
+                                    <li>Masukkan Pin Anda</li>
+                                    <li>Pilih Transfer</li>
+                                    <li>Masukkan jumlah transfer sesuai dengan jumlah</li>
+                                    <li>Pilih Kirim</li>
+                                    <li>Selesai</li>
+
+                                </ol>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
             
         </div>
         <div class="modal-footer border-top-0 d-flex">

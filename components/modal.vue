@@ -1,6 +1,6 @@
 <template>
   <div
-    ref="modal"
+    :ref="reference"
     class="modal fade"
     tabindex="-1"
     role="dialog"
@@ -49,6 +49,10 @@ export default {
       type: Boolean,
       default: undefined
     },
+    reference: {
+      type: String,
+      default: "modal"
+    },
     contentStyle: {
       type: String,
       default: null
@@ -81,19 +85,19 @@ export default {
       this.setDisplay("block");
       this.addBackdrop();
       setTimeout(() => {
-        this.$refs.modal && this.$refs.modal.classList.add("show");
+        this.$refs[this.reference] && this.$refs[this.reference].classList.add("show");
       }, 0);
     },
     hideModal() {
       document.body.classList.remove(BODY_CLASS);
-      this.$refs.modal.classList.remove("show");
+      this.$refs[this.reference].classList.remove("show");
       this.$nextTick(function() {
         this.setDisplay("none");
         document.querySelector(".modal-backdrop").remove();
       });
     },
     setDisplay(value) {
-      this.$refs.modal.style.display = value;
+      this.$refs[this.reference].style.display = value;
     },
     addBackdrop() {
       if (document.querySelector(".modal-backdrop")) return;

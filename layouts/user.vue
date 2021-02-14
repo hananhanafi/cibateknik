@@ -19,7 +19,7 @@
 
                     <!-- Right aligned nav items -->
                     <b-navbar-nav class="ml-auto">
-                        <b-nav-item href="/user/keranjang"><fa  :icon="['fas','shopping-cart']"/> Keranjang</b-nav-item>
+                        <b-nav-item href="/keranjang"><fa  :icon="['fas','shopping-cart']"/> Keranjang</b-nav-item>
                     </b-navbar-nav>
                     <div class="vertical-separator mx-2"></div>
                     <b-navbar-nav>
@@ -85,8 +85,8 @@
                     
                 </router-link>
                 <router-link class="w-25 text-center text-decoration-none py-2" 
-                            :class="{ 'bg-main-color  text-white' : isActive('user-keranjang') }" 
-                            to="/user/keranjang"
+                            :class="{ 'bg-main-color  text-white' : isActive('keranjang') }" 
+                            to="/keranjang"
                 >
                     <fa  :icon="['fas','shopping-cart']"/>
                     <div>
@@ -181,7 +181,7 @@
         methods: {
             isActive(name){
                 console.log("route/",this.$route.name)
-                return this.$route.name === name;
+                return this.$route.name.includes(name);
             },
             handleResize() {
                 this.windowH.width = window.innerWidth;

@@ -55,8 +55,8 @@
                                 Rp 200.000
                             </div>
                             <div class="col-lg-1 col-md-12  text-center">
-                                <a class="btn text-warning">Edit</a>
-                                <a class="btn text-danger">Hapus</a>
+                                <a class="btn text-warning" @click="showModalEditItem">Edit</a>
+                                <a class="btn text-danger"  @click="showModalDeleteItem">Hapus</a>
                             </div>
                         </div>
                     </div>
@@ -75,13 +75,22 @@
                 </div>
 
                 <div class="text-right">
-                    <a href="/user/checkout" class="btn btn-primary">Checkout</a>
+                    <a href="/keranjang/checkout" class="btn btn-primary">Checkout</a>
                 </div>
             </div>
             
-
-            
         </div>
+        
+        <ModalDeleteItem
+            :show="isShowModalDeleteItem"
+            :data="{}"
+            @close="closeModalDeleteItem"
+        />
+        <ModalEditItem
+            :show="isShowModalEditItem"
+            :data="{}"
+            @close="closeModalEditItem"
+        />
     </div>
 </template>
 
@@ -94,7 +103,26 @@
             return {
                 items: new Array(5), 
                 productsChecked: false,
+                isShowModalDeleteItem: false, 
+                isShowModalEditItem: false, 
             }
+        },
+        methods: {
+                
+            showModalDeleteItem() {
+                this.isShowModalDeleteItem = true;
+            },
+            closeModalDeleteItem() {
+                this.isShowModalDeleteItem = false;
+            },
+                
+            showModalEditItem() {
+                this.isShowModalEditItem = true;
+            },
+            closeModalEditItem() {
+                this.isShowModalEditItem = false;
+            }
+
         },
         head() {
             return {

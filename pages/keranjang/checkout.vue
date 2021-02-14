@@ -15,7 +15,7 @@
                                 </div>
                             </div>
                             <div class="col text-right">
-                                <a class="btn text-primary" @click="showUserModalSettingAddres">Atur Alamat Pengiriman</a>
+                                <a class="btn text-primary" @click="showUserModalSettingAddress">Atur Alamat Pengiriman</a>
                             </div>
                         </div>
                         <div class="row d-flex align-items-center">
@@ -107,11 +107,20 @@
             
         </div>
 
-        <UserModalSettingAddres
-            :show="isShowUserModalSettingAddres"
+        <UserModalSettingAddress
+            :show="isShowUserModalSettingAddress"
             :data="dataModal"
-            @close="closeUserModalSettingAddres"
+            @close="closeUserModalSettingAddress"
+            @add-address="showUserModalAddAddress()"
         />
+
+        <UserModalAddAddress
+            :show="isShowUserModalAddAddress"
+            :data="dataModal"
+            @close="closeUserModalAddAddress"
+        />
+
+
         <UserModalChoosePaymentMethod
             :show="isShowUserModalChoosePaymentMethod"
             @close="closeUserModalChoosePaymentMethod"
@@ -128,7 +137,8 @@
             return {
                 items: new Array(5), 
                 productsChecked: false,
-                isShowUserModalSettingAddres: false,
+                isShowUserModalSettingAddress: false,
+                isShowUserModalAddAddress: false,
                 isShowUserModalChoosePaymentMethod: false,
                 dataModal: {
                     title: "Atur Alamat Pengiriman",
@@ -137,17 +147,30 @@
             }
         },
         methods: {
-            showUserModalSettingAddres() {
-                this.isShowUserModalSettingAddres = true;
+            showUserModalSettingAddress() {
+                this.isShowUserModalSettingAddress = true;
             },
-            closeUserModalSettingAddres() {
-                this.isShowUserModalSettingAddres = false;
+            closeUserModalSettingAddress() {
+                this.isShowUserModalSettingAddress = false;
+            },
+            async showUserModalAddAddress() {
+                await this.closeUserModalSettingAddress();
+                this.isShowUserModalAddAddress = true;
+            },
+            async closeUserModalAddAddress() {
+                await this.closeAllModal();
+                this.showUserModalSettingAddress();
             },
             showUserModalChoosePaymentMethod() {
                 this.isShowUserModalChoosePaymentMethod = true;
             },
             closeUserModalChoosePaymentMethod() {
                 this.isShowUserModalChoosePaymentMethod = false;
+            },
+            closeAllModal(){
+                this.isShowUserModalSettingAddress= false;
+                this.isShowUserModalAddAddress= false;
+                this.isShowUserModalChoosePaymentMethod= false;
             },
         },
         head() {

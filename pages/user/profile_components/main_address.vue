@@ -8,7 +8,7 @@
                 </div>
             </div>
             <div class="col-lg-6 col-md-12 text-right">
-                <a class="btn text-primary" @click="showUserModalAddAddres" ><fa :icon="['fas','plus']" /> Tambah Alamat</a>
+                <a class="btn text-primary" @click="showUserModalAddAddress" ><fa :icon="['fas','plus']" /> Tambah Alamat</a>
             </div>
         </div>
 
@@ -58,10 +58,10 @@
         
         <Pagination/>
 
-        <UserModalAddAddres
-            :show="isShowUserModalAddAddres"
+        <UserModalAddAddress
+            :show="isShowUserModalAddAddress"
             :data="dataModal"
-            @close="closeUserModalAddAddres"
+            @close="closeUserModalAddAddress"
         />
         <ModalDeleteItem
             :show="isShowModalDeleteItem"
@@ -93,17 +93,17 @@ export default {
             title: "Atur Alamat Pengiriman",
             message: ""
         },
-        isShowUserModalAddAddres: false,
+        isShowUserModalAddAddress: false,
         isShowModalDeleteItem: false,
             
         }
     },
     methods: {
-        showUserModalAddAddres() {
-            this.isShowUserModalAddAddres = true;
+        showUserModalAddAddress() {
+            this.isShowUserModalAddAddress = true;
         },
-        closeUserModalAddAddres() {
-            this.isShowUserModalAddAddres = false;
+        closeUserModalAddAddress() {
+            this.isShowUserModalAddAddress = false;
         },
         showModalDeleteItem() {
             this.isShowModalDeleteItem = true;

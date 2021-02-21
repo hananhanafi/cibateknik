@@ -14,7 +14,7 @@
         ref="input"
         v-bind="$attrs"
         class="form-control"
-        :class="{ 'form-control-sm': small !== undefined }"
+        :class="{ 'form-control-sm': small !== undefined, 'rounded-pill': rounded !== undefined }"
         :style="{ 'text-align': align }"
         :value="value"
         @input="updateInput"
@@ -68,6 +68,10 @@ export default {
       default: undefined
     },
     small: {
+      type: Boolean,
+      default: undefined
+    },
+    rounded: {
       type: Boolean,
       default: undefined
     },

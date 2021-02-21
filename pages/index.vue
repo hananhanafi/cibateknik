@@ -5,25 +5,58 @@
           <div class="row h-100 d-flex align-items-center">
             <div class="col">
                 <div class="text-center">
-                    <h1 class="font-weight-bold text-white" >Cari Barang dan Alat Teknikmu di sini</h1>
+                    <h1 class="font-weight-bold text-white d-md-block d-none" >Cari Barang dan Alat Teknikmu di sini</h1>
+                    
+                    <h2 class="font-weight-bold text-white d-md-none d-block" >Cari Barang dan Alat Teknikmu di sini</h2>
                 </div>
                 <div class="d-flex">
-                  <b-input-group class="d-flex">
-                    <b-form-input class="mb-2 w-100 bg-transparent h-100 text-white search-input" placeholder="Cari ..."  type="text"></b-form-input>
-                    <div class="float-right position-absolute" style="right:0">
-                        <b-button pill variant="outline">
-                            <fa class="text-white" :icon="['fas','search']" /> 
-                        </b-button>
-                    </div>
-                  </b-input-group>
-                  <button type="button" class="btn btn-light px-4 ml-3" @click="searchHandler">Cari</button>
+                  <BaseInput
+                      id="Cari"
+                      placeholder="Cari..."
+                      class="mb-0 flex-fill"
+                      rounded
+                  >
+                  <div slot="afterInput" class="position-absolute"
+                      style=" right:8px;
+                              top: 50%;
+                              -ms-transform: translateY(-50%);
+                              transform: translateY(-50%);"
+                  >
+                      <fa class="" :icon="['fas','search']" /> 
+                  </div>
+                  </BaseInput>
+                  <button class="btn bg-main-color text-white px-4 ml-3 rounded-pill" type="button" @click="searchHandler">Cari</button>
+
                 </div>
             </div>
+            
+            <!-- <div class="col-12 d-md-none d-flex fixed-top bg-white shadow-main p-4">
+                <BaseInput
+                    id="Cari"
+                    placeholder="Cari..."
+                    class="mb-0 flex-fill"
+                >
+                <div slot="afterInput" class="position-absolute"
+                    style=" right:8px;
+                            top: 50%;
+                            -ms-transform: translateY(-50%);
+                            transform: translateY(-50%);"
+                >
+                    <fa class="" :icon="['fas','search']" /> 
+                </div>
+                </BaseInput>
+                <button type="button" class="btn bg-main-color text-white px-4 ml-3">Cari</button>
+
+                <div class="fixed-bottom text-center" style="bottom:80px">
+                    <a type="button" class="btn btn-light px-4">
+                    <fa class="" :icon="['fas','filter']" />  Filter</a>
+                </div>
+            </div> -->
             
             <!-- <div class="col">
               <img class="w-50" src="~/assets/img/gear-ornament.png" fluid alt="ornament img"/>
             </div> -->
-              <img class="position-absolute h-100 d-md-block d-none" style="right:10px" src="~/assets/img/gear-ornamentv2.png" fluid alt="ornament img"/>
+              <!-- <img class="position-absolute h-100 d-md-block d-none" style="right:10px" src="~/assets/img/gear-ornamentv2.png" fluid alt="ornament img"/> -->
           </div>
         </div>
 
@@ -48,12 +81,12 @@
             <swiper-slide><ItemCard/></swiper-slide>
             <swiper-slide><ItemCard/></swiper-slide>
             <div slot="pagination" class="swiper-pagination"></div>
-            <div slot="button-prev" class="swiper-button-prev btn btn-light rounded-pill" style="width:40px;height:40px">
+            <!-- <div slot="button-prev" class="swiper-button-prev btn btn-light rounded-pill" style="width:40px;height:40px">
               <fa class="" :icon="['fas','chevron-left']" />
             </div>
             <div slot="button-next" class="swiper-button-next btn btn-light rounded-pill" style="width:40px;height:40px">
               <fa class="" :icon="['fas','chevron-right']" />
-            </div>
+            </div> -->
           </swiper>
         </div>
       </div>
@@ -87,12 +120,12 @@
           <swiper-slide><ItemCard/></swiper-slide>
           <swiper-slide><ItemCard/></swiper-slide>
           <div slot="pagination" class="swiper-pagination"></div>
-          <div slot="button-prev" class="swiper-button-prev btn btn-light rounded-pill" style="width:40px;height:40px">
+          <!-- <div slot="button-prev" class="swiper-button-prev btn btn-light rounded-pill" style="width:40px;height:40px">
             <fa class="" :icon="['fas','chevron-left']" />
           </div>
           <div slot="button-next" class="swiper-button-next btn btn-light rounded-pill" style="width:40px;height:40px">
             <fa class="" :icon="['fas','chevron-right']" />
-          </div>
+          </div> -->
         </swiper>
       </div>
     </div>

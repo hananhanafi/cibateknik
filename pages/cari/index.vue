@@ -48,44 +48,47 @@
                             </div>
                             <div class="d-flex">
                                 <div class="flex-fill px-2">
-                                    <button type="button" class="btn btn-danger text-white w-100">Hapus</button>
+                                    <button type="button" class="btn btn-danger text-white  rounded-pill w-100">Hapus</button>
                                 </div>
                                 <div class="flex-fill px-2">
-                                    <button type="button" class="btn btn-primary text-white w-100">Terapkan</button>
+                                    <button type="button" class="btn btn-primary text-white w-100  rounded-pill">Terapkan</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 d-md-none d-flex fixed-top bg-white shadow-main p-4">
+                <div class=" d-md-none d-flex fixed-top bg-white p-3 border">
                     <BaseInput
                         id="Cari"
                         placeholder="Cari..."
                         class="mb-0 flex-fill"
+                        rounded
                     >
-                    <div slot="afterInput" class="position-absolute"
-                        style=" right:8px;
-                                top: 50%;
-                                -ms-transform: translateY(-50%);
-                                transform: translateY(-50%);"
-                    >
-                        <fa class="" :icon="['fas','search']" /> 
-                    </div>
+                        <div slot="afterInput" class="position-absolute"
+                            style=" right:8px;
+                                    top: 50%;
+                                    -ms-transform: translateY(-50%);
+                                    transform: translateY(-50%);"
+                        >
+                            <fa class="" :icon="['fas','search']" /> 
+                        </div>
                     </BaseInput>
-                    <button type="button" class="btn bg-main-color text-white px-4 ml-3">Cari</button>
+                    <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-pill">Cari</button>
+                </div>
+                
 
-                    <div class="fixed-bottom text-center" style="bottom:80px">
-                        <a type="button" class="btn btn-light px-4">
-                        <fa class="" :icon="['fas','filter']" />  Filter</a>
-                    </div>
+                <div class="fixed-bottom text-center" style="bottom:80px">
+                    <a class="btn btn-light bg-white border px-4 rounded-pill" type="button" @click="showModalFilterSearchItem">
+                    <fa class="" :icon="['fas','filter']" />  Filter</a>
                 </div>
                 <div class="col">
                     
-                    <div class="d-md-flex d-none mb-2 sticky-top" style="top:80px;z-index:900">
+                    <div class="d-md-flex d-none mb-2 sticky-top border bg-white p-3 " style="top:80px;z-index:900">
                         <BaseInput
                             id="Cari"
                             placeholder="Cari..."
                             class="mb-0 flex-fill"
+                            rounded
                         >
                         <div slot="afterInput" class="position-absolute"
                             style=" right:8px;
@@ -96,10 +99,10 @@
                             <fa class="" :icon="['fas','search']" /> 
                         </div>
                         </BaseInput>
-                        <button type="button" class="btn bg-main-color text-white px-4 ml-3">Cari</button>
+                        <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-pill">Cari</button>
                     </div>
                     
-                    <div class="bg-white p-3 shadow-main">
+                    <div class="bg-white p-3 mt-2 shadow-main">
                         <div class="row">
                             <div v-for="(i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-4">
                                 <ItemCard/>
@@ -109,7 +112,7 @@
                                     Menampilkan 1 - 10 dari 40 item
                                 </div>
                                 <div class="ml-auto">
-                                    <button class="btn btn-primary border w-100">Muat Lagi</button>
+                                    <button class="btn btn-primary border w-100 rounded-pill">Muat Lagi</button>
                                 </div>
                             </div>
                         </div>
@@ -117,6 +120,13 @@
                 </div>
             </div>
         </div>
+
+        <ModalFilterSearchItem
+            :show="isShowModalFilterSearchItem"
+            :data="{}"
+            @close="closeModalFilterSearchItem"
+        />
+
     </div>
 </template>
 
@@ -133,8 +143,17 @@
                     last_education: null,
                 },
                 last_educationOptions: [],
-                items: new Array(18)
+                items: new Array(18),
+                isShowModalFilterSearchItem: false, 
             }
+        },
+        methods: {
+            showModalFilterSearchItem() {
+                this.isShowModalFilterSearchItem = true;
+            },
+            closeModalFilterSearchItem() {
+                this.isShowModalFilterSearchItem = false;
+            },
         },
         head() {
             return {

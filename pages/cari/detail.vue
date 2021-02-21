@@ -1,8 +1,30 @@
 <template>
     <div class="pt-md-5">
-        <div class="container mt-md-5">
+        
+        <div class=" d-md-none d-flex fixed-top bg-white p-3 border">
+            <BaseInput
+                id="Cari"
+                placeholder="Cari..."
+                class="mb-0 flex-fill"
+                rounded
+            >
+                <div slot="afterInput" class="position-absolute"
+                    style=" right:8px;
+                            top: 50%;
+                            -ms-transform: translateY(-50%);
+                            transform: translateY(-50%);"
+                >
+                    <fa class="" :icon="['fas','search']" /> 
+                </div>
+            </BaseInput>
+            <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-pill">Cari</button>
+        </div>
+        <div class="container mt-md-5 pt-md-0 pt-5">
             <div class="bg-white my-5">
                 <div class="row">
+                    <div class="col-12">
+                        <a @click="searchHandler" class="btn mb-2"><fa class="" :icon="['fas','arrow-left']" /> Kembali ke Pencarian </a>
+                    </div>
                     <div class="col-lg-4 col-md-12">
                         <img src="~/assets/img/item.png" class="card-img-top" alt="item">
                         
@@ -91,12 +113,12 @@
                 <swiper-slide><ItemCard/></swiper-slide>
                 <swiper-slide><ItemCard/></swiper-slide>
                 <div slot="pagination" class="swiper-pagination"></div>
-                <div slot="button-prev" class="swiper-button-prev btn btn-light rounded-pill" style="width:40px;height:40px">
+                <!-- <div slot="button-prev" class="swiper-button-prev btn btn-light rounded-pill" style="width:40px;height:40px">
                     <fa class="" :icon="['fas','chevron-left']" />
                 </div>
                 <div slot="button-next" class="swiper-button-next btn btn-light rounded-pill" style="width:40px;height:40px">
                     <fa class="" :icon="['fas','chevron-right']" />
-                </div>
+                </div> -->
                 </swiper>
             </div>
         </div>
@@ -149,6 +171,12 @@
                     }
                 },
             }
+        },
+        methods: {
+            searchHandler() {
+            this.$router.push('/cari');
+            
+            },
         },
         head() {
             return {

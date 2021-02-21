@@ -10,16 +10,15 @@
                 <div class="vertical-separator"></div>
                 
                     <b-navbar-nav>
-                        <b-nav-item href="/">Beranda</b-nav-item>
-                        <b-nav-item href="/kontak">Kontak</b-nav-item>
-                        <b-nav-item href="/tentang">Tentang</b-nav-item>
+                        <b-nav-item href="/"><span :class="{ 'text-white' : isActive('index') }">Beranda</span></b-nav-item>
+                        <b-nav-item href="/kontak"><span :class="{ 'text-white' : isActive('kontak') }">Kontak</span></b-nav-item>
+                        <b-nav-item href="/tentang"><span :class="{ 'text-white' : isActive('tentang') }">Tentang</span></b-nav-item>
                         
-                        <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
                     </b-navbar-nav>
 
                     <!-- Right aligned nav items -->
                     <b-navbar-nav class="ml-auto">
-                        <b-nav-item href="/keranjang"><fa  :icon="['fas','shopping-cart']"/> Keranjang</b-nav-item>
+                        <b-nav-item href="/keranjang"><span :class="{ 'text-white' : isActive('keranjang') }"><fa  :icon="['fas','shopping-cart']"/> Keranjang</span></b-nav-item>
                     </b-navbar-nav>
                     <div class="vertical-separator mx-2"></div>
                     <b-navbar-nav>
@@ -55,17 +54,12 @@
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
 
-
-                <!-- <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-                <b-collapse id="nav-collapse" is-nav>
-                </b-collapse> -->
             </b-navbar>
         </div>
-        <div class="w-100 fixed-bottom d-md-none d-block bg-light border-top" style="z-index:999">
+        <div class="fixed-bottom d-md-none d-block bg-white mx-2 mb-2 rounded-pill border" style="z-index:999;font-size:12px">
             <div class="d-flex">
-                <router-link class="w-25 text-center text-decoration-none py-2" 
-                            :class="{ 'bg-main-color text-white' : isActive('index') }" 
+                <router-link class="flex-fill text-center text-decoration-none py-2" 
+                            :class="{ 'text-primary' : isActive('index') }" 
                             to="/"
                 >
                     <fa  :icon="['fas','home']"/>
@@ -74,8 +68,8 @@
                     </div>
                     
                 </router-link>
-                <router-link class="w-25 text-center text-decoration-none py-2" 
-                            :class="{ 'bg-main-color  text-white' : isActive('cari') }" 
+                <router-link class="flex-fill text-center text-decoration-none py-2" 
+                            :class="{ 'text-primary' : isActive('cari') }" 
                             to="/cari"
                 >
                     <fa  :icon="['fas','search']"/>
@@ -84,8 +78,8 @@
                     </div>
                     
                 </router-link>
-                <router-link class="w-25 text-center text-decoration-none py-2" 
-                            :class="{ 'bg-main-color  text-white' : isActive('keranjang') }" 
+                <router-link class="flex-fill text-center text-decoration-none py-2" 
+                            :class="{ 'text-primary' : isActive('keranjang') }" 
                             to="/keranjang"
                 >
                     <fa  :icon="['fas','shopping-cart']"/>
@@ -95,8 +89,8 @@
                     
                 </router-link>
                 
-                <router-link class="w-25 text-center text-decoration-none py-2" 
-                            :class="{ 'bg-main-color  text-white' : isActive('user-profile') }" 
+                <router-link class="flex-fill text-center text-decoration-none py-2" 
+                            :class="{ 'text-primary' : isActive('user-profile') }" 
                             :to="{ name: 'user-profile', query: { tab: 'my_account' } }">
                     <fa  :icon="['fas','user']"/>
                     <div>

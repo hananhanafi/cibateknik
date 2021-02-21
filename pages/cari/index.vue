@@ -102,7 +102,7 @@
                         <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-pill">Cari</button>
                     </div>
                     
-                    <div class="bg-white p-3 mt-2 shadow-main">
+                    <div class="bg-white mt-md-4 mt-0">
                         <div class="row">
                             <div v-for="(i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-4">
                                 <ItemCard/>
@@ -111,6 +111,8 @@
                                 <div>
                                     Menampilkan 1 - 10 dari 40 item
                                 </div>
+                            </div>
+                            <div class="col-12 d-flex">
                                 <div class="ml-auto">
                                     <button class="btn btn-primary border w-100 rounded-pill">Muat Lagi</button>
                                 </div>

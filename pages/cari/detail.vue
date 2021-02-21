@@ -23,7 +23,7 @@
             <div class="bg-white my-5">
                 <div class="row">
                     <div class="col-12">
-                        <a @click="searchHandler" class="btn mb-2"><fa class="" :icon="['fas','arrow-left']" /> Kembali ke Pencarian </a>
+                        <a class="btn mb-2" @click="searchHandler"><fa class="" :icon="['fas','arrow-left']" /> Kembali ke Pencarian </a>
                     </div>
                     <div class="col-lg-4 col-md-12">
                         <img src="~/assets/img/item.png" class="card-img-top" alt="item">
@@ -88,7 +88,7 @@
                         <a class="btn bg-main-color text-white flex-fill ml-0"> Masukkan Keranjang </a>
                         <a class="btn bg-main-color text-white flex-fill mx-2"> Beli Langsung </a>
                         <div class="vertical-separator mx-2 d-inline h-100" style="border-color:black"></div>
-                        <a class="btn text-danger"><fa class="" :icon="['far','heart']" /> Wishlist </a>
+                        <a class="btn text-danger" @click="wished()"><fa class="" :icon="[ formData.isWished ? 'fas' : 'far','heart']" /> Wishlist </a>
                     </div>
                 </div>
             </div>
@@ -135,6 +135,7 @@
                 formData: {
                     amount: 0,
                     max: null,
+                    isWished: false,
                 },
                 swiperOption: {
                     slidesPerView: 6,
@@ -160,15 +161,21 @@
                         slidesPerView: 4,
                         spaceBetween: 10
                     },
-                    640: {
+                    // 576: {
+                    //   slidesPerView: 3,
+                    //   spaceBetween: 10
+                    // },
+                    480: {
                         slidesPerView: 3,
                         spaceBetween: 10
                     },
-                    320: {
+                    0: {
                         slidesPerView: 2,
                         spaceBetween: 10
                     }
                     }
+                
+                
                 },
             }
         },
@@ -177,6 +184,9 @@
             this.$router.push('/cari');
             
             },
+            wished(){
+                this.formData.isWished = !this.formData.isWished;
+            }
         },
         head() {
             return {

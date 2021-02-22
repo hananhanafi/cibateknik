@@ -43,7 +43,7 @@
                         </div>
                         <div class="col-lg-3 col-md-12">
                             <div class="text-center d-flex flex-column h-100">
-                                <a class="btn btn-light border">Jadikan Utama</a>
+                                <a class="btn btn-light border my-3 rounded-pill">Jadikan Utama</a>
                                 <div class="text-center mt-auto flex-grow-1 d-flex align-items-center">
                                     <a class="btn text-warning mx-auto"><fa class="text-warning" :icon="['fas','pencil-alt']" /> Edit</a>
                                     <a class="btn text-danger mx-auto" @click="showModalDeleteItem"><fa class="text-danger" :icon="['fas','trash']" /> Hapus</a>

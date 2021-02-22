@@ -26,7 +26,7 @@
                   Senin, 8 Februari 2021
                 </div>
               </div>
-              <div class="truncate-paragraph">
+              <div class="truncate-paragraph mb-md-0 mb-2">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque deleniti eveniet pariatur ut, asperiores quas, optio nostrum amet error inventore esse, placeat ipsa architecto quam voluptatum consectetur odio? Tempore nesciunt adipisci beatae culpa, quam repellendus? Deleniti odit itaque, soluta officiis neque et nesciunt nisi beatae a dignissimos amet accusamus quis aperiam molestias earum quae nemo id qui consequatur hic harum laudantium vitae. Voluptatem, vel? Ducimus, nesciunt eaque at voluptatibus eos iusto. Facilis, odit sapiente vero iste autem qui dicta delectus quas maxime illum perferendis accusamus dignissimos at! Incidunt, eum nisi! Delectus magnam, vel dignissimos cumque praesentium voluptatem corporis ut nemo.
               </div>
             </div>

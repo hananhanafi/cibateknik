@@ -14,7 +14,7 @@
                 <input id="inputGroupFile02" type="file" class="form-control">
               </div>
               <label for="inputGroupFile02">
-                <a class="btn btn-light w-100 border">Pilih Gambar</a>
+                <a class="btn btn-light w-100 border rounded-pill">Pilih Gambar</a>
               </label>
         </div>
       </div>
@@ -58,7 +58,7 @@
           </div>
           
           <div class="row">
-            <div class="col">
+            <div class="col-md-4 col-12">
               <BaseSelect
               v-model="formData.date.day"
               label="Tanggal Lahir"
@@ -66,7 +66,7 @@
               placeholder="Pilih Tanggal Lahir"
               dense/>
             </div>
-            <div class="col">
+            <div class="col-md-4 col-12">
               <BaseSelect
               v-model="formData.date.month"
               label="Bulan Lahir"
@@ -74,7 +74,7 @@
               placeholder="Pilih Bulan Lahir"
               dense/>
             </div>
-            <div class="col">
+            <div class="col-md-4 col-12">
               <BaseSelect
               v-model="formData.date.year"
               label="Tahun Lahir"
@@ -102,7 +102,7 @@
         <!-- <a class="btn btn-primary text-white w-50">Simpan</a> -->
         <div class="row justify-content-center">
           <div class="col-lg-4 col-md-12 mt-4">
-            <a class="btn btn-primary text-white w-100">Simpan</a>
+            <a class="btn btn-primary text-white w-100 rounded-pill">Simpan</a>
           </div>
         </div> 
       </div>

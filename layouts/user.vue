@@ -36,7 +36,7 @@
                             </b-dropdown-item> -->
                             <!-- <b-dropdown-item href="/user/profile">Profile</b-dropdown-item> -->
 
-                            <router-link class="btn btn-light w-100 text-decoration-none text-dark text-left" :to="{ name: 'user-profile', query: { tab: 'my_account' } }">
+                            <router-link class="btn btn-light w-100 text-decoration-none text-dark text-left" :to="{ path: '/user/profile' }">
                                 Profile
                             </router-link>
                             <router-link class="btn btn-light w-100 text-decoration-none text-dark text-left" :to="{ name: 'user-profile', query: { tab: 'my_order' } }">
@@ -91,7 +91,7 @@
                 
                 <router-link class="flex-fill text-center text-decoration-none py-2" 
                             :class="{ 'text-primary' : isActive('user-profile') }" 
-                            :to="{ name: 'user-profile', query: { tab: 'my_account' } }">
+                            :to="{ path:'/user/profile'}">
                     <fa  :icon="['fas','user']"/>
                     <div>
                         Profile
@@ -170,11 +170,11 @@
             this.handleResize();
         },
         mounted() {
-            console.log("routeparams",this.$route.name);
+            // console.log("routeparams",this.$route.name);
         },
         methods: {
             isActive(name){
-                console.log("route/",this.$route.name)
+                // console.log("route/",this.$route.name)
                 return this.$route.name.includes(name);
             },
             handleResize() {

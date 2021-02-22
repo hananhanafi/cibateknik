@@ -43,7 +43,7 @@
         <!-- <a class="btn btn-primary text-white w-50">Simpan</a> -->
         <div class="row justify-content-center">
           <div class="col-lg-4 col-md-12 mt-4">
-            <a class="btn btn-primary text-white w-100">Simpan</a>
+            <a class="btn btn-primary text-white w-100 rounded-pill">Simpan</a>
           </div>
         </div> 
       </div>

@@ -19,7 +19,7 @@
   
     <div class="row">
       <div class="col">
-        <table class="table">
+        <table class="table table-responsive-lg">
           <thead>
             <tr>
               <th scope="col">Nomor Invoice</th>

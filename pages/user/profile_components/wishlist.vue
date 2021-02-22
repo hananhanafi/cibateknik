@@ -10,7 +10,7 @@
     </div>
 
     <div class="row">
-        <div v-for="(i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div v-for="(i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6 mb-4">
             <ItemCard/>
         </div>
         <div class="col-12 d-flex">
@@ -18,7 +18,7 @@
                 Menampilkan 1 - 10 dari 40 item
             </div>
             <div class="ml-auto">
-                <button class="btn btn-primary border w-100">Muat Lagi</button>
+                <button class="btn btn-primary border w-100 rounded-pill">Muat Lagi</button>
             </div>
         </div>
     </div>

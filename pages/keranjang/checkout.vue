@@ -1,47 +1,50 @@
 <template>
     <div class="py-5">
         <div class="container">
+            <div class="d-md-none d-flex fixed-top bg-white p-3 border">
+                <h4>Checkout</h4>
+            </div>
             <div class="bg-white my-md-5">
-                <h2>Checkout</h2>
+                <h2 class="d-md-block d-none">Checkout</h2>
                 <div>
                     <div class="shadow-main p-3 my-5 ">
-                        <div class="row d-flex align-items-center mb-3">
-                            <div class="col">
-                                <h5 class="mb-2">
-                                    Alamat Pengiriman
-                                </h5>
-                                <div class="text-muted">
-                                    Belum diatur
-                                </div>
-                            </div>
-                            <div class="col text-right">
-                                <a class="btn text-primary" @click="showUserModalSettingAddress">Atur Alamat Pengiriman</a>
-                            </div>
-                        </div>
                         <div class="row d-flex align-items-center">
                             <div class="col">
-                                <h5 class="mb-2">
-                                    Metode Pembayaran
-                                </h5>
+                                <div class="d-flex">
+                                    <h5 class="mb-2">
+                                        Alamat Pengiriman
+                                    </h5>
+                                </div>
                                 <div class="text-muted">
                                     Belum diatur
                                 </div>
                             </div>
-                            <div class="col text-right">
-                                <a class="btn text-primary" @click="showUserModalChoosePaymentMethod">Atur Metode Pembayaran</a>
+                            <div class="col-12">
+                                <a class="btn text-primary float-right" @click="showUserModalSettingAddress">Atur Alamat Pengiriman</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shadow-main p-3 my-5 ">
+                        <div class="row d-flex align-items-center">
+                            <div class="col">
+                                <div class="d-flex">
+                                    <h5 class="mb-2">
+                                        Metode Pembayaran
+                                    </h5>
+                                </div>
+                                <div class="text-muted">
+                                    Belum diatur
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <a class="btn text-primary float-right" @click="showUserModalChoosePaymentMethod">Atur Metode Pembayaran</a>
                             </div>
                         </div>
                     </div>
 
 
                     <h4>Barang yang dibeli :</h4>
-                    <div class="shadow-main p-3 my-5 ">
-                        <!-- <div class="row d-flex align-items-center mb-3">
-                            <div class="col">
-                                Barang yang dibeli :
-                            </div>
-                        </div> -->
-
+                    <div class="shadow-main p-3 my-5 d-md-block d-none">
                         <div class="row d-flex align-items-center">
                             <div class="col">
                                 Barang
@@ -69,17 +72,23 @@
                                         </div>
                                         <div>
                                             <h5 class="ml-4">Produk Bagus Banget</h5>
+                                            <div class="d-md-none d-block ml-4">
+                                                Rp 100.000
+                                                <div>
+                                                    Jumlah : 2
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-2 text-center">
+                            <div class="col-2 text-center d-md-block d-none">
                                 Rp 100.000
                             </div>
-                            <div class="col-1 text-center">
+                            <div class="col-1 text-center d-md-block d-none">
                                 2
                             </div>
-                            <div class="col-2 text-center">
+                            <div class="col-2 text-center d-md-block d-none">
                                 Rp 200.000
                             </div>
                         </div>

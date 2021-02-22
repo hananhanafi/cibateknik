@@ -1,38 +1,52 @@
 <template>
     <div class="py-5">
         <div class="container">
-            <div class="bg-white my-md-5">
-                <h2>Keranjang</h2>
+            <div class=" d-md-none d-flex fixed-top bg-white p-3 border">
+                <h4>Keranjang</h4>
+            </div>
+            <div class="bg-white my-5">
                 <div>
-                    <div class="shadow-main p-3 my-5 ">
-                        <div class="row d-flex align-items-center">
-                            <div class="col-6">
-                                <div class="form-check">
-                                    <input id="flexCheckDefault" v-model="productsChecked" class="form-check-input" type="checkbox" value="">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Produk
-                                    </label>
+                    <div class="d-md-block d-none">
+                        <h2>Keranjang</h2>
+                        <div class="shadow-main p-3 my-5 ">
+                            <div class="row d-flex align-items-center">
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input id="flexCheckDefault" v-model="productsChecked" class="form-check-input" type="checkbox" value="">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Produk
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-2 text-center">
+                                    Harga Satuan
+                                </div>
+                                <div class="col-2 text-center">
+                                    Kuantitas
+                                </div>
+                                <div class="col-2 text-center">
+                                    Total Harga
+                                </div>
+                                <div class="col-1 text-center">
+                                    Aksi
                                 </div>
                             </div>
-                            <div class="col-2 text-center">
-                                Harga Satuan
-                            </div>
-                            <div class="col-1 text-center">
-                                Kuantitas
-                            </div>
-                            <div class="col-2 text-center">
-                                Total Harga
-                            </div>
-                            <div class="col-1 text-center">
-                                Aksi
-                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-md-none d-block">
+                        <div class="form-check">
+                            <input id="flexCheckDefault" v-model="productsChecked" class="form-check-input" type="checkbox" value="">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Pilih Semua
+                            </label>
                         </div>
                     </div>
 
                     
                     <div v-for="(i) in items" :key="i" class="shadow-main p-3 my-3">
                         <div class="row d-flex align-items-center">
-                            <div class="col-6">
+                            <div class="col-md col-12">
                                 <div class="form-check d-flex align-items-center">
                                     <input id="item1" :checked="productsChecked" class="form-check-input align-self-center my-auto" type="checkbox" value="">
                                     <div class="d-flex align-items-center">
@@ -40,23 +54,55 @@
                                             <img src="~/assets/img/item.png" style="width:80px" class="card-img-top d-inline" alt="item">
                                         </div>
                                         <div>
-                                            <h5 class="ml-2">Produk Bagus Banget</h5>
+                                            <h5 class="ml-2 mb-1">Produk Bagus Banget</h5>
+                                            <div class="d-md-none d-block ml-2">
+                                                Rp 100.000
+                                                <div class="d-flex">
+                                                    <a class="btn btn-sm bg-main-color text-white"> - </a>
+                                                    
+                                                    <BaseInput
+                                                        id="amount"
+                                                        placeholder="0"
+                                                        small
+                                                        dense
+                                                        numberonly
+                                                        class="mb-0 mx-2"
+                                                        style="width:60px"
+                                                    />
+
+                                                    <a class="btn btn-sm bg-main-color text-white"> + </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-2 text-center">
+                            <div class="col-2 text-center d-md-block d-none">
                                 Rp 100.000
                             </div>
-                            <div class="col-1 text-center">
-                                2
+                            <div class="col-2 text-center d-md-block d-none">
+                                <div class="d-flex">
+                                    <a class="btn btn-sm bg-main-color text-white"> - </a>
+                                    
+                                    <BaseInput
+                                        id="amount"
+                                        placeholder="0"
+                                        small
+                                        dense
+                                        numberonly
+                                        class="mb-0 mx-2"
+                                        style="width:60px"
+                                    />
+
+                                    <a class="btn btn-sm bg-main-color text-white"> + </a>
+                                </div>
                             </div>
-                            <div class="col-2 text-center">
+                            <div class="col-2 text-center d-md-block d-none">
                                 Rp 200.000
                             </div>
-                            <div class="col-lg-1 col-md-12  text-center">
-                                <a class="btn text-warning" @click="showModalEditItem">Edit</a>
-                                <a class="btn text-danger"  @click="showModalDeleteItem">Hapus</a>
+                            <div class="col-md-1 col-12  text-right">
+                                <!-- <a class="btn text-warning" @click="showModalEditItem">Edit</a> -->
+                                <a class="btn text-danger"  @click="showModalDeleteItem"><fa class="text-danger" :icon="['fas','trash']" /> Hapus</a>
                             </div>
                         </div>
                     </div>

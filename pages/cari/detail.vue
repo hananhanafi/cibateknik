@@ -9,7 +9,7 @@
                 rounded
             >
                 <div slot="afterInput" class="position-absolute"
-                    style=" right:8px;
+                    style=" right:12px;
                             top: 50%;
                             -ms-transform: translateY(-50%);
                             transform: translateY(-50%);"
@@ -21,7 +21,7 @@
         </div>
         <div class="container mt-md-5 pt-md-0 pt-5">
             <div class="bg-white my-5">
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-12">
                         <a class="btn mb-2" @click="searchHandler"><fa class="" :icon="['fas','arrow-left']" /> Kembali ke Pencarian </a>
                     </div>
@@ -59,36 +59,40 @@
                             </p>
                         </div>
                         
+                        <div class="mb-3 ">
+                            <div class="">
+                                <div class="text-muted mb-2">
+                                    Stock : 100
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <a class="btn btn-sm btn-dark rounded-pill"> <fa :icon="['fas','minus']" /> </a>
+                                    
+                                    <BaseInput
+                                        id="amount"
+                                        v-model="formData.amount"
+                                        placeholder="Jumlah"
+                                        small
+                                        center
+                                        numberonly
+                                        class="mb-0 mx-2 text-center"
+                                        style="width:80px"
+                                    />
 
-                        <div class="mt-auto">
-                            <div class="text-muted mb-2">
-                                Stock : 100
+                                    <a class="btn btn-sm btn-dark rounded-pill"> <fa :icon="['fas','plus']" /> </a>
+                                </div>
                             </div>
-                            <div class="d-flex">
-                                <a class="btn bg-main-color text-white"> - </a>
-                                
-                                <BaseInput
-                                    id="amount"
-                                    v-model="formData.amount"
-                                    placeholder="Jumlah"
-                                    large
-                                    dense
-                                    numberonly
-                                    class="mb-0 mx-2"
-                                    style="width:80px"
-                                />
-
-                                <a class="btn bg-main-color text-white"> + </a>
+                            <div class="row">
+                                <div class="col pr-1 mb-3">
+                                    <a class="btn btn-dark text-white w-100"> <fa :icon="['fas','plus']" /> Keranjang </a>
+                                </div>
+                                <div class="col pl-1 mb-3">
+                                    <a class="btn btn-outline-dark w-100"> Beli Langsung </a>
+                                </div>
+                                <div class="col-md col-12">
+                                    <a class="btn btn-outline-danger w-100" @click="wished()"><fa class="" :icon="[ formData.isWished ? 'fas' : 'far','heart']" /> Wishlist </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row mt-3 d-flex justify-content-end">
-                    <div class=" col-lg-8 col-md-12">
-                        <a class="btn bg-main-color text-white flex-fill ml-0"> Masukkan Keranjang </a>
-                        <a class="btn bg-main-color text-white flex-fill mx-2"> Beli Langsung </a>
-                        <div class="vertical-separator mx-2 d-inline h-100" style="border-color:black"></div>
-                        <a class="btn text-danger" @click="wished()"><fa class="" :icon="[ formData.isWished ? 'fas' : 'far','heart']" /> Wishlist </a>
                     </div>
                 </div>
             </div>

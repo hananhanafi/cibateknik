@@ -8,30 +8,36 @@
                             <img class="w-100 mb-3" src="~/assets/img/logov1.png" fluid alt="Responsive image"/>
                         </div>
                         <div>
+                            <a href="/" class="btn btn-lg">
+                                <fa class="" :icon="['fas','arrow-left']"/>  Kembali ke Beranda
+                            </a>
+                        </div> 
+                        <div>
                             <div class="bg-white shadow" 
                             >
                                 <div class="p-5 text-medium">
-                                    <h2 >Daftar</h2>
+                                    <h2 class="font-weight-bold" >Daftar</h2>
                                     
-                                    <button type="button" class="btn btn-lg bg-main-color btn-dark w-100" >Daftar</button>
+                                    <a href="/user/daftar-akun" type="button" class="btn btn-lg bg-main-color btn-dark w-100" >Daftar Akun</a>
                                     <h4 class="my-3 text-center">
                                         Atau
                                     </h4>
                                     
-                                    <button type="button" class="btn btn-lg bg-white border text-dark w-100" >
+                                    
+                                    <button type="button" class="btn bg-white border text-dark w-100" >
                                         <img class="mr-3 h-100" src="~/assets/img/media-social/google.png" fluid alt="Responsive image"/> Masuk Dengan Google    
                                     </button>
 
                                     <div class="py-2"></div>
 
-                                    <button type="button" class="btn btn-lg text-white w-100"  style="background-color:#4267B2" >
+                                    <button type="button" class="btn text-white w-100"  style="background-color:#4267B2" >
                                         <img class="mr-3" src="~/assets/img/media-social/facebook-square.png" fluid alt="Responsive image"/> Masuk Dengan Facebook    
                                     </button>
                                     
                                     <div class="py-2"></div>
 
                                     <div class="d-flex">
-                                        Sudah mempnyai akun ?   
+                                        Sudah mempunyai akun ?   
                                             <router-link class="text-decoration-none text-dark ml-2" :to="{ name: 'user-login' }">
                                                 Masuk
                                             </router-link>
@@ -40,9 +46,6 @@
 
                                 </div>
                             </div>
-                        </div>
-                        <div class="text-center">
-                            
                         </div>
                     </div>
                 </b-col>

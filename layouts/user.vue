@@ -101,7 +101,7 @@
         </div>
         
         
-        <div class="bg-white" :style="{minHeight: windowH.height+'px'}">
+        <div class="bg-white" >
             <Nuxt />
             
             <div class="border-top d-md-block d-none"></div>

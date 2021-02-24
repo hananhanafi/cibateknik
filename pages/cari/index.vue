@@ -65,7 +65,7 @@
                         rounded
                     >
                         <div slot="afterInput" class="position-absolute"
-                            style=" right:8px;
+                            style=" right:12px;
                                     top: 50%;
                                     -ms-transform: translateY(-50%);
                                     transform: translateY(-50%);"
@@ -91,7 +91,7 @@
                             rounded
                         >
                         <div slot="afterInput" class="position-absolute"
-                            style=" right:8px;
+                            style=" right:12px;
                                     top: 50%;
                                     -ms-transform: translateY(-50%);
                                     transform: translateY(-50%);"

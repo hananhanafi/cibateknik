@@ -1,6 +1,6 @@
 <template>
     <div class="pt-md-5">
-        <div class="container">
+        <div class="container px-0">
             <div class="bg-white p-4 my-md-5 shadow">
                 <h2>Kontak</h2>
 

@@ -58,19 +58,19 @@
                                             <div class="d-md-none d-block ml-2">
                                                 Rp 100.000
                                                 <div class="d-flex">
-                                                    <a class="btn btn-sm bg-main-color text-white"> - </a>
+                                                    <a class="btn btn-sm btn-dark rounded-pill"> <fa :icon="['fas','minus']" /> </a>
                                                     
                                                     <BaseInput
                                                         id="amount"
-                                                        placeholder="0"
+                                                        placeholder="Jumlah"
                                                         small
-                                                        dense
+                                                        center
                                                         numberonly
-                                                        class="mb-0 mx-2"
-                                                        style="width:60px"
+                                                        class="mb-0 mx-2 text-center"
+                                                        style="width:80px"
                                                     />
 
-                                                    <a class="btn btn-sm bg-main-color text-white"> + </a>
+                                                    <a class="btn btn-sm btn-dark rounded-pill"> <fa :icon="['fas','plus']" /> </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -82,19 +82,19 @@
                             </div>
                             <div class="col-2 text-center d-md-block d-none">
                                 <div class="d-flex">
-                                    <a class="btn btn-sm bg-main-color text-white"> - </a>
+                                    <a class="btn btn-sm btn-dark rounded-pill"> <fa :icon="['fas','minus']" /> </a>
                                     
                                     <BaseInput
                                         id="amount"
-                                        placeholder="0"
+                                        placeholder="Jumlah"
                                         small
-                                        dense
+                                        center
                                         numberonly
-                                        class="mb-0 mx-2"
-                                        style="width:60px"
+                                        class="mb-0 mx-2 text-center"
+                                        style="width:80px"
                                     />
 
-                                    <a class="btn btn-sm bg-main-color text-white"> + </a>
+                                    <a class="btn btn-sm btn-dark rounded-pill"> <fa :icon="['fas','plus']" /> </a>
                                 </div>
                             </div>
                             <div class="col-2 text-center d-md-block d-none">

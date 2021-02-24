@@ -1,6 +1,6 @@
 <template>
     <div class="pt-md-5">
-        <div class="container">
+        <div class="container px-0">
             <div class="bg-white my-md-5 p-4 shadow">
                 <h2>Tentang</h2>
 

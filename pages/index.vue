@@ -17,7 +17,7 @@
                       rounded
                   >
                   <div slot="afterInput" class="position-absolute"
-                      style=" right:8px;
+                      style=" right:12px;
                               top: 50%;
                               -ms-transform: translateY(-50%);
                               transform: translateY(-50%);"
@@ -30,33 +30,6 @@
                 </div>
             </div>
             
-            <!-- <div class="col-12 d-md-none d-flex fixed-top bg-white shadow-main p-4">
-                <BaseInput
-                    id="Cari"
-                    placeholder="Cari..."
-                    class="mb-0 flex-fill"
-                >
-                <div slot="afterInput" class="position-absolute"
-                    style=" right:8px;
-                            top: 50%;
-                            -ms-transform: translateY(-50%);
-                            transform: translateY(-50%);"
-                >
-                    <fa class="" :icon="['fas','search']" /> 
-                </div>
-                </BaseInput>
-                <button type="button" class="btn bg-main-color text-white px-4 ml-3">Cari</button>
-
-                <div class="fixed-bottom text-center" style="bottom:80px">
-                    <a type="button" class="btn btn-light px-4">
-                    <fa class="" :icon="['fas','filter']" />  Filter</a>
-                </div>
-            </div> -->
-            
-            <!-- <div class="col">
-              <img class="w-50" src="~/assets/img/gear-ornament.png" fluid alt="ornament img"/>
-            </div> -->
-              <!-- <img class="position-absolute h-100 d-md-block d-none" style="right:10px" src="~/assets/img/gear-ornamentv2.png" fluid alt="ornament img"/> -->
           </div>
         </div>
 
@@ -102,7 +75,7 @@
     <div class= "py-sm-0 py-4">
     </div>
     
-    <div class="container mb-5 mt-sm-5 mt-0 shadow-main p-4">
+    <div class="container mb-5 mt-sm-5 mt-0 p-4 bg-white shadow-main">
       <div class="">
         <div>
           <div class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></div>

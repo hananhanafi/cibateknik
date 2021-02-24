@@ -86,7 +86,7 @@
                             <div class="border-bottom">
                                 <router-link 
                                 class="btn w-100 p-4 text-left text-decoration-none" 
-                                :to="{ name: 'user-profile', query: { tab: 'password' } }"
+                                :to="{ path: '/kontak' }"
                                 >
                                     Kontak
                                     <div class="float-right">
@@ -97,7 +97,7 @@
                             <div class="border-bottom">
                                 <router-link 
                                 class="btn w-100 p-4 text-left text-decoration-none" 
-                                :to="{ name: 'user-profile', query: { tab: 'password' } }"
+                                :to="{ path: '/tentang'  }"
                                 >
                                     Tentang
                                     <div class="float-right">
@@ -171,10 +171,10 @@
                         </div>
 
                     </div>
-                    <div v-if="activeComponent == ''" class="col d-md-block d-none">
+                    <div v-if="activeComponent == ''" class="col px-md-2 px-0 d-md-block d-none">
                         <component :is="profileComponent" ></component>
                     </div>
-                    <div v-else class="col">
+                    <div v-else class="col px-md-2 px-0">
                         <div class="d-md-none d-block">
                             <a href="/user/profile" class="btn btn-lg">
                                 <fa class="" :icon="['fas','arrow-left']"/>  Kembali ke Menu profile

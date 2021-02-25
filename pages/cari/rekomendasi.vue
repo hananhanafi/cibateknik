@@ -104,6 +104,11 @@
                     
                     <div class="bg-white mt-md-4 mt-0">
                         <div class="row">
+                            <div class="col">
+                                <h3 class="mb-4 font-weight-bold" >Rekomendasi</h3>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div v-for="(i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-4">
                                 <ItemCard/>
                             </div>

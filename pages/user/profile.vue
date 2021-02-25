@@ -9,12 +9,12 @@
                     <div class="col-lg-2 col-md-12">
                         
                         <!-- mobile version -->
-                        <div v-if="!currentTab" class="shadow-main p-4 text-center mb-4 d-md-none d-block">
+                        <div v-if="!currentTab && !activeComponent" class="shadow-main p-4 text-center mb-4 d-md-none d-block">
                             <img src="~/assets/img/person.png" class="img-fluid rounded-circle w-100 mb-2"  alt="Responsive image"> 
                             <h3>Hanan Hanafi</h3>
                             <a class="btn text-black-50" @click="change('my_account')">Ubah Profile</a>
                         </div>
-                        <div v-if="!currentTab" class="text-left mb-4 d-md-none d-block">
+                        <div v-if="!currentTab && !activeComponent" class="text-left mb-4 d-md-none d-block">
                             <div class="border-bottom">
                                 <router-link 
                                 class="btn w-100 p-4 text-left text-decoration-none" 
@@ -243,7 +243,7 @@
         },
         head() {
             return {
-                title: "Profile - " + this.tabList[this.currentTab],
+                title: "Profile" + `${ this.tabList[this.currentTab] ? ' - ' + this.tabList[this.currentTab]  : ''}`,
                 meta: [
                 // hid is used as unique identifier. Do not use `vmid` for it as it will not work
                 {

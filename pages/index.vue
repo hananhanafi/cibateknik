@@ -39,7 +39,7 @@
       <div class="container shadow-main p-4 position-absolute bg-white" style="top:-80px;left:0;right:0">
         <div class="">
           <div>
-            <div class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></div>
+            <a href="/cari/rekomendasi" class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></a>
             <h3 class="mb-4" >Rekomendasi</h3>
           </div>
           <swiper ref="mySwiper" class="swiper" :options="swiperOption">
@@ -71,8 +71,6 @@
     <div class="py-5">
     </div>
     <div class="py-5">
-    </div>
-    <div class= "py-sm-0 py-4">
     </div>
     
     <div class="container mb-5 mt-sm-5 mt-0 p-4 bg-white shadow-main">

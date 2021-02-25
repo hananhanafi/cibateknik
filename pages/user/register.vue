@@ -15,7 +15,7 @@
                         <div>
                             <div class="bg-white shadow" 
                             >
-                                <div class="p-5 text-medium">
+                                <div class="p-md-5 p-4 text-medium">
                                     <h2 class="font-weight-bold" >Daftar</h2>
                                     
                                     <a href="/user/daftar-akun" type="button" class="btn btn-lg bg-main-color btn-dark w-100" >Daftar Akun</a>

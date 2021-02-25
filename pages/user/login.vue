@@ -16,7 +16,7 @@
                         <div>
                             <div class="bg-white shadow" 
                             >
-                                <div class="p-5 text-medium">
+                                <div class="p-md-5 p-4 text-medium">
                                     <h2 class="font-weight-bold" >Login</h2>
 
                                     <b-input-group>

@@ -10,9 +10,12 @@
 
 <script>
     export default {
-        middleware: 'authenticated',
+        // middleware: 'authenticated',
         // page properties go here
-        layout: "admin"
+        layout: "admin",
+        created() {
+            this.$router.push('/admin/dashboard');
+        }
     }
 </script>
 

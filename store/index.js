@@ -3,31 +3,30 @@ import Vuex from 'vuex'
 const cookieparser = process.server ? require('cookieparser') : undefined
 
 const createStore = () => {
-    console.log("Wwww");
     return new Vuex.Store({
         state: () => ({
-        auth: null
+            auth: null
         }),
         mutations: {
-        setAuth(state, auth) {
-            state.auth = auth
-        }
+            setAuth(state, auth) {
+                state.auth = auth
+            }
         },
         actions: {
-        nuxtServerInit({ commit }, { req }) {
-            alert("aa");
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            let auth = null
-            if (req.headers.cookie) {
-            const parsed = cookieparser.parse(req.headers.cookie)
-            try {
-                auth = JSON.parse(parsed.auth)
-            } catch (err) {
-                // No valid cookie found
+            nuxtServerInit({ commit }, { req }) {
+                alert("aa");
+                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                let auth = null
+                if (req.headers.cookie) {
+                    const parsed = cookieparser.parse(req.headers.cookie)
+                    try {
+                        auth = JSON.parse(parsed.auth)
+                    } catch (err) {
+                        // No valid cookie found
+                    }
+                }
+                commit('setAuth', auth)
             }
-            }
-            commit('setAuth', auth)
-        }
         }
     })
 }

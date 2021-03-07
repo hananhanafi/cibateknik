@@ -1,9 +1,9 @@
 <template>
     <div class="text-center">
         <!-- <h1 class="red">Dashboard admin</h1> -->
-        <b-container fluid class="px-5">
+        <div class="container-fluid px-md-5">
 
-            <b-row class="mb-3 pt-5">
+            <!-- <b-row class="mb-3 pt-5">
                 <b-col lg="3" md="6">
                     <div style="background: linear-gradient(75.38deg, #1AE3D9 3.3%, #5C7CE9 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 my-2">
                         <b-row class="h-100 align-items-center">
@@ -72,17 +72,88 @@
                         </b-row>
                     </div>
                 </b-col>
-            </b-row>
+            </b-row> -->
+
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div style="background: linear-gradient(75.38deg, #1AE3D9 3.3%, #5C7CE9 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 mb-4">
+                        <div class="row h-100 align-items-center">
+                            <div  class="col text-left">
+                                <div style="font-size:4em">
+                                    100
+                                </div>
+                                <div class="font-weight-bold font-weight-bold">
+                                    <div>Total Pesanan</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <fa  style="font-size:500%" :icon="['fas','shopping-cart']"  />
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div style="background: linear-gradient(75.38deg, #F5509F 3.3%, #FE6F70 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 mb-4">
+                        <div class="row h-100 align-items-center">
+                            <div  class="col text-left">
+                                <div style="font-size:4em">
+                                    100
+                                </div>
+                                <div class="font-weight-bold font-weight-bold">
+                                    <div>Total Pendapatan</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <fa  style="font-size:500%" :icon="['fas','donate']"  />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div style="background: linear-gradient(75.38deg, #41E296 3.3%, #3BB5B5 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 mb-4">
+                        <div class="row h-100 align-items-center">
+                            <div  class="col text-left">
+                                <div style="font-size:4em">
+                                    100
+                                </div>
+                                <div class="font-weight-bold font-weight-bold">
+                                    <div>Total Pengeluaran</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <fa  style="font-size:500%" :icon="['fas','coins']"  />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div style="background: linear-gradient(75.38deg, #FFD941 3.3%, #FF8154 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 mb-4">
+                        <div class="row h-100 align-items-center">
+                            <div  class="col text-left">
+                                <div style="font-size:4em">
+                                    100
+                                </div>
+                                <div class="font-weight-bold font-weight-bold">
+                                    <div>Total Pengguna</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <fa  style="font-size:500%" :icon="['fas','users']"  />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
-            <b-row class="my-3">
+            <!-- <b-row class="my-3">
                 <b-col class="mb-3" md="6" sm="12">
                     <div class="bg-white shadow rounded-8 p-2 text-left pl-4">
                         <h1>Top Selling Item</h1>
 
                         <div class="m-3">
                             <b-table :items="topSellingItems" :fields="topSellingFields">
-                            <!-- <template #table-caption>This is a table caption.</template> -->
+                            <template #table-caption>This is a table caption.</template>
                             </b-table>
                         </div>
                     </div>
@@ -93,14 +164,134 @@
                             <h1>Penjualan Tahun 2020</h1>
                         </div>
                         <div class="m-3 mt-5 h-75">
-                                <!-- <b-img class="w-100 pr-5 pb-5" src="~/assets/img/graph.png" fluid alt="Responsive image"></b-img> -->
-
                                 <line-chart :data="barChartData" :options="barChartOptions" :height="200" />
                         </div>
                     </div>
 
                 </b-col>
-            </b-row>
+            </b-row> -->
+
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <div class="bg-white p-3 text-left rounded-8 h-100">
+                        <h1>Pendapatan</h1>
+
+                        <div class="m-3 mt-5 ">
+                            <line-chart id="revenue-chart" :data="barChartData" :options="barChartOptions" height="140px" class="w-100" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-12 mb-3">
+                    <div class="bg-white p-3 text-left rounded-8 h-100">
+                        <h1 class="mb-3">Top Selling Item</h1>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col">Nomor</th>
+                                <th scope="col">Barang</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Larry</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Mark</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Jacob</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Larry</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Mark</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">8</th>
+                                    <td>Jacob</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">9</th>
+                                    <td>Larry</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">10</th>
+                                    <td>Larry</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-12 mb-3">
+                    <div class="bg-white p-3 text-left rounded-8 h-100">
+                        <div class="d-flex">
+                            <div class="flex-fill">
+                                <h1>Penjualan Tahun 2020</h1>
+                            </div>
+                            <div>
+                                <BaseSelect
+                                :options="['Terbaru', 'Terlama']"
+                                placeholder="Pilih Urutkan"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="m-3 mt-5 ">
+                            <line-chart :data="barChartData" :options="barChartOptions" height="140" class="w-100" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- <div class="row">
+                <div class="col-12 mb-3">
+                    <div class="bg-white p-3 text-left rounded-8 h-100">
+                        <h1 class="mb-3">Daftar Pesanan</h1>
+                        <table class="table w-100 table-responsive-lg">
+                            <thead>
+                                <tr>
+                                <th scope="col" width="40px"></th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Tanggal</th>
+                                <th scope="col">Jumlah</th>
+                                <th scope="col">Metode Pembayaran</th>
+                                <th scope="col" width="300px">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Senin, 21 Desember 2020</td>
+                                    <td>Rp 100.000.000</td>
+                                    <td>Bank Jago</td>
+                                    <td class="d-flex">
+                                        <a class="btn btn-sm text-primary mx-auto"><fa class="text-primary" :icon="['fas','eye']" /> Lihat</a>
+                                        <a class="btn btn-sm text-warning mx-auto"  @click="showModal"><fa class="text-warning" :icon="['fas','pencil-alt']" /> Edit Status</a>
+                                        <a class="btn btn-sm text-danger mx-auto"  ><fa class="text-danger" :icon="['fas','trash']"/> Hapus</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> -->
+
 
 
             <b-row class="mt-3 pb-5">
@@ -122,9 +313,9 @@
                                     show-empty
                                     small
                                     >
-                                        <template #cell(no)="row">
+                                        <!-- <template #cell(no)="row">
                                             {{row}}
-                                        </template>
+                                        </template> -->
 
                                         <template #cell(name)="row">
                                             {{ row.value.first }} {{ row.value.last }}
@@ -139,175 +330,16 @@
                                         </template>
 
                                         <template #cell(actions)="row">
-                                            <b-button class="rounded-pill text-white" variant="success" size="xl"  @click="info(row.item, row.index, $event.target)">
+                                            <b-button class="rounded-pill text-white" variant="success" size="sm"  @click="info(row.item, row.index, $event.target)">
                                             Lihat
                                             </b-button>
                                             
 
-                                            <b-button  id="show-btn"  class="rounded-pill text-white" variant="warning" @click="showModal">Edit Status</b-button>
+                                            <b-button  id="show-btn"  class="rounded-pill text-white" variant="warning"  size="sm" @click="showModal">Edit Status</b-button>
                                         </template>
                                     </b-table>
 
-                                    <!-- Info modal -->
-                                    <b-modal :id="infoModal.id" title="Detail Order" ok-only @hide="resetInfoModal">
-                                        
-                                        <b-row>
-                                            <!-- <b-col>
-                                                
-                                                <b-img class="w-100" src="~/assets/img/person.png" fluid alt="Responsive image"></b-img>
-                                            </b-col> -->
-                                            <b-col>
-                                                <div>
-                                                    <table class="modalInfo">
-                                                        <tr>
-                                                            <td style="width:50%">
-                                                                Nama
-                                                            </td>
-                                                            <td>
-                                                                :
-                                                            </td>
-                                                            <td>
-                                                                {{currentItem ? currentItem.name.first : ''}} {{currentItem ? currentItem.name.first : ''}}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                Email
-                                                            </td>
-                                                            <td>
-                                                                :
-                                                            </td>
-                                                            <td>
-                                                                hanafi@mail.com
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                Nomor HP
-                                                            </td>
-                                                            <td>
-                                                                :
-                                                            </td>
-                                                            <td>
-                                                                081234567890
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                Alamat
-                                                            </td>
-                                                            <td>
-                                                                :
-                                                            </td>
-                                                            <td>
-                                                                Jl. Rawa sawah III RT 06/02 No.5 Jakarta
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                Tanggal Daftar
-                                                            </td>
-                                                            <td>
-                                                                :
-                                                            </td>
-                                                            <td>
-                                                                {{currentItem ? currentItem.date : ''}}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                Terakhir Online
-                                                            </td>
-                                                            <td>
-                                                                :
-                                                            </td>
-                                                            <td>
-                                                                {{currentItem ? currentItem.date : ''}}
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>
-                                                                Nama
-                                                            </td>
-                                                            <td>
-                                                                :
-                                                            </td>
-                                                            <td>
-                                                                {{currentItem ? currentItem.name.first : ''}} {{currentItem ? currentItem.name.first : ''}}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                Tanggal Order
-                                                            </td>
-                                                            <td>
-                                                                :
-                                                            </td>
-                                                            <td>
-                                                                {{currentItem ? currentItem.date : ''}}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                Status Order
-                                                            </td>
-                                                            <td>
-                                                                :
-                                                            </td>
-                                                            <td>
-                                                                {{currentItem ? currentItem.status : ''}}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="vertical-align:top">
-                                                                Pesanan
-                                                            </td>
-                                                            <td style="vertical-align:top">
-                                                                :
-                                                            </td>
-                                                            <td>
-                                                                <ul>
-                                                                    <li>
-                                                                        Endmill 20 buah
-                                                                    </li>
-                                                                    <li>
-                                                                        Endmill 20 buah
-                                                                    </li>
-                                                                    <li>
-                                                                        Endmill 20 buah
-                                                                    </li>
-                                                                </ul>
-                                                            </td>
-                                                        </tr>
-                                                        
-                                                    </table>
-                                                    <!-- <pre>Nama : {{currentItem ? currentItem.name.first : ''}} {{currentItem ? currentItem.name.first : ''}}</pre> -->
-                                                </div>
-                                            </b-col>
-                                        </b-row>
-                                    <!-- <pre>{{ infoModal.content.name }}</pre> -->
-                                    </b-modal>
-
-                                    <b-modal ref="my-modal" hide-footer>
-                                        <div class="d-block text-center">
-                                            <h5>Edit Status Pesanan</h5>
-                                            
-                                            <div class="mb-3">
-                                                <b-form-select v-model="selected" :options="options"></b-form-select>
-                                                <!-- <b-form-select v-model="selected" :options="options" size="sm" class="mt-3"></b-form-select> -->
-                                                <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
-                                            </div>
-                                        </div>
-                                        <b-row>
-                                            <b-col>
-                                                <b-button variant="primary" block @click="hideModal">Batal</b-button>
-                                            </b-col>
-                                            <b-col>
-                                                <b-button variant="success" block @click="toggleModal">Simpan</b-button>
-                                            </b-col>
-                                        </b-row>
-                                    </b-modal>
+                                    
                                 </b-container>
                                 </template>
                         </div>
@@ -325,7 +357,169 @@
                 </b-col>
             </b-row>
 
-        </b-container>
+
+
+            <!-- Info modal -->
+            <b-modal :id="infoModal.id" title="Detail Order" ok-only @hide="resetInfoModal">
+                
+                <b-row>
+                    <!-- <b-col>
+                        
+                        <b-img class="w-100" src="~/assets/img/person.png" fluid alt="Responsive image"></b-img>
+                    </b-col> -->
+                    <b-col>
+                        <div>
+                            <table class="modalInfo">
+                                <tr>
+                                    <td style="width:50%">
+                                        Nama
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        {{currentItem ? currentItem.name.first : ''}} {{currentItem ? currentItem.name.first : ''}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Email
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        hanafi@mail.com
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Nomor HP
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        081234567890
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Alamat
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        Jl. Rawa sawah III RT 06/02 No.5 Jakarta
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Tanggal Daftar
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        {{currentItem ? currentItem.date : ''}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Terakhir Online
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        {{currentItem ? currentItem.date : ''}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Nama
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        {{currentItem ? currentItem.name.first : ''}} {{currentItem ? currentItem.name.first : ''}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Tanggal Order
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        {{currentItem ? currentItem.date : ''}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Status Order
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        {{currentItem ? currentItem.status : ''}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align:top">
+                                        Pesanan
+                                    </td>
+                                    <td style="vertical-align:top">
+                                        :
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            <li>
+                                                Endmill 20 buah
+                                            </li>
+                                            <li>
+                                                Endmill 20 buah
+                                            </li>
+                                            <li>
+                                                Endmill 20 buah
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                
+                            </table>
+                            <!-- <pre>Nama : {{currentItem ? currentItem.name.first : ''}} {{currentItem ? currentItem.name.first : ''}}</pre> -->
+                        </div>
+                    </b-col>
+                </b-row>
+            <!-- <pre>{{ infoModal.content.name }}</pre> -->
+            </b-modal>
+
+            <b-modal ref="my-modal" hide-footer>
+                <div class="d-block text-center">
+                    <h5>Edit Status Pesanan</h5>
+                    
+                    <div class="mb-3">
+                        <b-form-select v-model="selected" :options="options"></b-form-select>
+                        <!-- <b-form-select v-model="selected" :options="options" size="sm" class="mt-3"></b-form-select> -->
+                        <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
+                    </div>
+                </div>
+                <b-row>
+                    <b-col>
+                        <b-button variant="primary" block @click="hideModal">Batal</b-button>
+                    </b-col>
+                    <b-col>
+                        <b-button variant="success" block @click="toggleModal">Simpan</b-button>
+                    </b-col>
+                </b-row>
+            </b-modal>
+        </div>
     </div>
 </template>
 
@@ -333,7 +527,7 @@
     export default {
         // page properties go here
         layout: "admin",
-        middleware: 'authenticated',
+        // middleware: 'authenticated',
         data() {
             return {
 
@@ -365,28 +559,27 @@
                 topSellingPerPage: 3,
                 topSellingCurrentPage: 1,
 
-                orderListFields: [
-                    
-                    {key:'no', label: 'No'},
-                    { key: 'name', label: 'Nama'},
-                    { key: 'date', label: 'Tanggal'},
-                    { key: 'status', label: 'Status'},
-                    { key: 'action', label: 'Aksi'},
-                ],
+                // orderListFields: [
+                //     {key:'no', label: 'No'},
+                //     { key: 'name', label: 'Nama'},
+                //     { key: 'date', label: 'Tanggal'},
+                //     { key: 'status', label: 'Status'},
+                //     { key: 'action', label: 'Aksi'},
+                // ],
 
 
-                orderListItems: [
-                { no: '1', name: 'Macdonald', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                { no: '2', name: 'Shaw', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                { no: '3', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                { no: '4', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                { no: '5', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                { no: '6', name: 'Macdonald', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                { no: '7', name: 'Shaw', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                { no: '8', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                { no: '9', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                { no: '10', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' }
-                ],
+                // orderListItems: [
+                // { no: '1', name: 'Macdonald', date:'Kamis,21 Desember 2020', status:'Pesan' },
+                // { no: '2', name: 'Shaw', date:'Kamis,21 Desember 2020', status:'Pesan' },
+                // { no: '3', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
+                // { no: '4', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
+                // { no: '5', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
+                // { no: '6', name: 'Macdonald', date:'Kamis,21 Desember 2020', status:'Pesan' },
+                // { no: '7', name: 'Shaw', date:'Kamis,21 Desember 2020', status:'Pesan' },
+                // { no: '8', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
+                // { no: '9', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
+                // { no: '10', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' }
+                // ],
                 
                 orderListPerPage: 3,
                 orderListCurrentPage: 1,
@@ -484,7 +677,7 @@
                     {  qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Dick', last: 'Dunlap' } },
                 ],
                 fields: [
-                    {key:'no', label: 'No'},
+                    // {key:'no', label: 'No'},
                     { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
                     { key: 'qty', label: 'Jumlah', sortable: true, sortDirection: 'desc' },
                     { key: 'price', label: 'Harga', sortable: true, sortDirection: 'desc' },
@@ -500,24 +693,24 @@
                         sortByFormatted: true,
                         filterByFormatted: true
                     },
-                { key: 'actions', label: 'Actions' }
+                    { key: 'actions', label: 'Actions', class: 'text-md-center text-left' }
                 ],
                 totalRows: 1,
                 currentPage: 1,
                 perPage: 10,
                 
                 infoModal: {
-                id: 'info-modal',
-                title: '',
-                content: ''
+                    id: 'info-modal',
+                    title: '',
+                    content: ''
                 },
                 currentItem : {
-                        "status": true,
-                        "date": "Kamis,21 Desember 2020",
-                        "name": {
-                            "first": "Dickerson",
-                            "last": "Macdonald"
-                        }
+                    "status": true,
+                    "date": "Kamis,21 Desember 2020",
+                    "name": {
+                        "first": "Dickerson",
+                        "last": "Macdonald"
+                    }
                 }
             }
         },

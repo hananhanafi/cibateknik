@@ -148,7 +148,7 @@
     export default {
         // page properties go here
         layout: "admin",
-        middleware: 'authenticated',
+        middleware: 'adminAuthenticated',
         data() {
             return {
                 selectedMonth: null,

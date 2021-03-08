@@ -16,8 +16,11 @@
                     small
                     >
                     // eslint-disable-next-line vue/no-unused-vars
-                    <template #cell(no)="row">
+                    <!-- <template #cell(no)="row">
                         {{row}}
+                    </template> -->
+                    <template #cell(no)>
+                        1
                     </template>
 
                     <template #cell(name)="row">
@@ -78,7 +81,7 @@
     export default {
         // page properties go here
         layout: "admin",
-        middleware: 'authenticated',
+        middleware: 'adminAuthenticated',
         data() {
             return {
                 items: [

@@ -1,38 +1,41 @@
 <template>
     <div>
-        <div>
-            <b-navbar class="shadow-sm" style="background-color:white">
+
+        <div class="position-fixed w-100" style="z-index:999">
+            <b-navbar toggleable="md" type="dark" class="bg-main-color">
+                <b-navbar-brand href="/">
+                    <div class="bg-white p-1" style="height:40px">
+                        <b-img class="h-100" src="~/assets/img/logov1.png" fluid alt="Responsive image"></b-img>
+                    </div>
+                </b-navbar-brand>
+                <div class="vertical-separator"></div>
                 <b-navbar-nav >
                     <b-nav-item>
-                        
-                        <b-button v-b-toggle.sidebar-no-header class="bg-primary-dark">Menu</b-button>
+                        <b-button v-b-toggle.sidebar-no-header class="bg-primary-dark"><fa :icon="['fas','bars']"/></b-button>
                     </b-nav-item>
-
                 </b-navbar-nav>
-
+                
                 <b-navbar-nav class="ml-auto">
-
                     <b-nav-item-dropdown right>
-                        <!-- Using 'button-content' slot -->
                         <template #button-content>
-                            <b-avatar></b-avatar> Admin
+                            <img src="~/assets/img/person.png" class="img-fluid rounded-circle h-100" style="width:40px" alt="Responsive image"> Hanan Hanafi
                         </template>
-                        <b-dropdown-item href="#">Profile</b-dropdown-item>
-                        <b-dropdown-item href="#"><button @click="logout">Sign Out</button></b-dropdown-item>
-                        </b-nav-item-dropdown>
+                        <b-dropdown-item href="#" @click="logout">Sign Out</b-dropdown-item>
+                    </b-nav-item-dropdown>
                 </b-navbar-nav>
+
             </b-navbar>
         </div>
 
 
-        <div>
+        <div class="Tes w-100">
             <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow>
-                <template #default="{ hide }">
+                <template #default="{ hide }" class="as" >
                     <div class="py-3 bg-primary-dark h-100">
                     
                         <div class="d-flex bd-highlight py-3">
                             <div class="p-2 w-100 bd-highlight text-white"><h2>Ciba Teknik</h2></div>
-                            <div class="p-2 flex-shrink-1 bd-highlight"><b-button variant="dark" class="text-danger" block @click="hide"> X </b-button></div>
+                            <div class="p-2 flex-shrink-1 bd-highlight"><b-button variant="dark" class="text-danger" block @click="hide"> <fa :icon="['fas','times']"/> </b-button></div>
                         </div>
                         <ul class="ml-0 pl-0">
                             <li>
@@ -82,8 +85,10 @@
         </div>
         
         
-        <div class="bg-primary-dark py-3" :style="{minHeight: windowH.height+'px'}">
-            <Nuxt />
+        <div class="py-5" :style="{minHeight: windowH.height+'px'}">
+            <div class="pt-5">
+                <Nuxt />
+            </div>
         </div>
 
     </div>
@@ -135,13 +140,14 @@ const Cookie = process.client ? require('js-cookie') : undefined;
 .menu-item-link:hover{
     text-decoration: none;
     background-color: white;
-    color:#1A262B
+    color:#1A262B;
 }
 .active-menu {
     background-color: white;
     color: #1A262B;
     font-weight: bold;
 }
+
 
 ul {
     list-style-type: none;

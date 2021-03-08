@@ -1,78 +1,6 @@
 <template>
     <div class="text-center">
-        <!-- <h1 class="red">Dashboard admin</h1> -->
         <div class="container-fluid px-md-5">
-
-            <!-- <b-row class="mb-3 pt-5">
-                <b-col lg="3" md="6">
-                    <div style="background: linear-gradient(75.38deg, #1AE3D9 3.3%, #5C7CE9 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 my-2">
-                        <b-row class="h-100 align-items-center">
-                            <b-col  class="text-left">
-                                <div style="font-size:4em" class="h-75">
-                                    100
-                                </div>
-                                <div class="h-25 font-weight-bold font-weight-bold">
-                                    <div>Total Order</div>
-                                </div>
-                            </b-col>
-                            <b-col >
-                                <fa  style="font-size:500%" :icon="['fas','shopping-cart']"  />
-                            </b-col>
-                        </b-row>
-                    </div>
-                </b-col>
-                <b-col  lg="3" md="6">
-                    <div style="background: linear-gradient(75.38deg, #F5509F 3.3%, #FE6F70 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 my-2">
-                        <b-row class="h-100 align-items-center">
-                            <b-col  class="text-left">
-                                <div style="font-size:4em" class="h-75">
-                                    100
-                                </div>
-                                <div class="h-25 font-weight-bold">
-                                    <div>Total Revenue</div>
-                                </div>
-                            </b-col>
-                            <b-col >
-                                <fa  style="font-size:500%" :icon="['fas','donate']"  />
-                            </b-col>
-                        </b-row>
-                    </div>
-                </b-col>
-                <b-col  lg="3" md="6"> 
-                    <div style="background: linear-gradient(75.38deg, #41E296 3.3%, #3BB5B5 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 my-2">
-                        <b-row class="h-100 align-items-center">
-                            <b-col  class="text-left">
-                                <div style="font-size:4em" class="h-75">
-                                    100
-                                </div>
-                                <div class="h-25 font-weight-bold">
-                                    <div>Total Expenses</div>
-                                </div>
-                            </b-col>
-                            <b-col >
-                                <fa  style="font-size:500%" :icon="['fas','coins']"  />
-                            </b-col>
-                        </b-row>
-                    </div>
-                </b-col>
-                <b-col  lg="3" md="6">
-                    <div style="background: linear-gradient(75.38deg, #FFD941 3.3%, #FF8154 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 my-2">
-                        <b-row class="h-100 align-items-center">
-                            <b-col  class="text-left">
-                                <div style="font-size:4em" class="h-75">
-                                    100
-                                </div>
-                                <div class="h-25 font-weight-bold">
-                                    <div>Total Users</div>
-                                </div>
-                            </b-col>
-                            <b-col >
-                                <fa  style="font-size:450%" :icon="['fas','users']"  />
-                            </b-col>
-                        </b-row>
-                    </div>
-                </b-col>
-            </b-row> -->
 
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-12">
@@ -146,38 +74,13 @@
             </div>
 
 
-            <!-- <b-row class="my-3">
-                <b-col class="mb-3" md="6" sm="12">
-                    <div class="bg-white shadow rounded-8 p-2 text-left pl-4">
-                        <h1>Top Selling Item</h1>
-
-                        <div class="m-3">
-                            <b-table :items="topSellingItems" :fields="topSellingFields">
-                            <template #table-caption>This is a table caption.</template>
-                            </b-table>
-                        </div>
-                    </div>
-                </b-col>
-                <b-col class="mb-3" md="6" sm="12">
-                    <div class="bg-white shadow rounded-8 p-2 text-left pl-4 h-100">
-                        <div class="mb-2" style="height:12%">
-                            <h1>Penjualan Tahun 2020</h1>
-                        </div>
-                        <div class="m-3 mt-5 h-75">
-                                <line-chart :data="barChartData" :options="barChartOptions" :height="200" />
-                        </div>
-                    </div>
-
-                </b-col>
-            </b-row> -->
-
             <div class="row">
                 <div class="col-12 mb-3">
                     <div class="bg-white p-3 text-left rounded-8 h-100">
                         <h1>Pendapatan</h1>
 
                         <div class="m-3 mt-5 ">
-                            <line-chart id="revenue-chart" :data="barChartData" :options="barChartOptions" height="140px" class="w-100" />
+                            <line-chart id="revenue-chart" :data="revenueChartData" :options="revenueChartOptions" :height="160" class="w-100" />
                         </div>
                     </div>
                 </div>
@@ -251,47 +154,11 @@
                         </div>
 
                         <div class="m-3 mt-5 ">
-                            <line-chart :data="barChartData" :options="barChartOptions" height="140" class="w-100" />
+                            <line-chart :data="barChartData" :options="barChartOptions" :height="140" class="w-100" />
                         </div>
                     </div>
                 </div>
             </div>
-
-            
-            <!-- <div class="row">
-                <div class="col-12 mb-3">
-                    <div class="bg-white p-3 text-left rounded-8 h-100">
-                        <h1 class="mb-3">Daftar Pesanan</h1>
-                        <table class="table w-100 table-responsive-lg">
-                            <thead>
-                                <tr>
-                                <th scope="col" width="40px"></th>
-                                <th scope="col">Nama</th>
-                                <th scope="col">Tanggal</th>
-                                <th scope="col">Jumlah</th>
-                                <th scope="col">Metode Pembayaran</th>
-                                <th scope="col" width="300px">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Senin, 21 Desember 2020</td>
-                                    <td>Rp 100.000.000</td>
-                                    <td>Bank Jago</td>
-                                    <td class="d-flex">
-                                        <a class="btn btn-sm text-primary mx-auto"><fa class="text-primary" :icon="['fas','eye']" /> Lihat</a>
-                                        <a class="btn btn-sm text-warning mx-auto"  @click="showModal"><fa class="text-warning" :icon="['fas','pencil-alt']" /> Edit Status</a>
-                                        <a class="btn btn-sm text-danger mx-auto"  ><fa class="text-danger" :icon="['fas','trash']"/> Hapus</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> -->
-
 
 
             <b-row class="mt-3 pb-5">
@@ -527,33 +394,39 @@
     export default {
         // page properties go here
         layout: "admin",
-        // middleware: 'authenticated',
+        middleware: 'adminAuthenticated',
         data() {
             return {
 
+                chartHeight : 200,
+
+                windowH: {
+                    width: 0,
+                    height: 0
+                },
                 
                 selected: null,
                 options: [
-                { value: null, text: 'Selesai' },
-                { value: 'a', text: 'Dikirim' },
-                { value: 'b', text: 'Diproses' },
-                // { value: { C: '3PO' }, text: 'This is an option with object value' },
-                // { value: 'd', text: 'This one is disabled', disabled: true }
+                    { value: null, text: 'Selesai' },
+                    { value: 'a', text: 'Dikirim' },
+                    { value: 'b', text: 'Diproses' },
+                    // { value: { C: '3PO' }, text: 'This is an option with object value' },
+                    // { value: 'd', text: 'This one is disabled', disabled: true }
                 ],
                 topSellingFields: ['Nomor', 'Item'],
 
 
                 topSellingItems: [
-                { Nomor: '1', Item: 'Macdonald' },
-                { Nomor: '2', Item: 'Shaw' },
-                { Nomor: '3', Item: 'Wilson' },
-                { Nomor: '4', Item: 'Wilson' },
-                { Nomor: '5', Item: 'Wilson' },
-                { Nomor: '6', Item: 'Macdonald' },
-                { Nomor: '7', Item: 'Shaw' },
-                { Nomor: '8', Item: 'Wilson' },
-                { Nomor: '9', Item: 'Wilson' },
-                { Nomor: '10', Item: 'Wilson' }
+                    { Nomor: '1', Item: 'Macdonald' },
+                    { Nomor: '2', Item: 'Shaw' },
+                    { Nomor: '3', Item: 'Wilson' },
+                    { Nomor: '4', Item: 'Wilson' },
+                    { Nomor: '5', Item: 'Wilson' },
+                    { Nomor: '6', Item: 'Macdonald' },
+                    { Nomor: '7', Item: 'Shaw' },
+                    { Nomor: '8', Item: 'Wilson' },
+                    { Nomor: '9', Item: 'Wilson' },
+                    { Nomor: '10', Item: 'Wilson' }
                 ],
                 
                 topSellingPerPage: 3,
@@ -583,6 +456,74 @@
                 
                 orderListPerPage: 3,
                 orderListCurrentPage: 1,
+
+                revenueChartData: {
+                    labels: ['1 Jan', '2 Jan', '3 Jan', '4 Jan', '5 Jan', '6 Jan', '7 Jan'],
+                    datasets: [
+                        {
+                            label: 'Penjualan',
+                            fill: false,
+                            data: [100000,800000,500000,200000,800000,200000,800000,],
+                            backgroundColor: '#5C7CE9',
+                            borderColor: '#5C7CE9',
+                            // lineTension: 0,
+                            pointBorderWidth: 10,
+                            // borderWidth: .5
+                        },
+                        {
+                            label: 'Pengeluaran',
+                            fill: false,
+                            data: [300000,600000,400000,600000,200000,400000,600000,],
+                            backgroundColor: '#FE6F70',
+                            borderColor: '#FE6F70',
+                            // lineTension: 0,
+                            pointBorderWidth: 10,
+                            // borderWidth: .5
+                        },
+                    ]
+                },
+                revenueChartOptions: {
+                    responsive: true,
+                    scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        barPercentage: 1,
+                        categoryPercentage: 0.6,
+                        ticks: {
+                            fontColor: "#707070",
+                            fontFamily: "Source Sans Pro"
+                        },
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            color: '#AAC93F',
+                            lineWidth: .3,
+                            drawBorder: false,
+                            zeroLineColor: '#AAC93F'
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            // max: 1000,
+                            min: 0,
+                            stepSize: 100000,
+                            fontColor: "#707070",
+                            fontFamily: "Source Sans Pro"
+                        },
+                    }]
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            boxWidth: 12,
+                            fontSize: 14,
+                            fontColor: "#707070",
+                            fontFamily: "Source Sans Pro"
+                        }
+                    }
+                },
 
                 barChartData: {
                     labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
@@ -634,7 +575,7 @@
                             beginAtZero: true,
                             // max: 1000,
                             min: 0,
-                            stepSize: 25,
+                            stepSize: 50,
                             fontColor: "#707070",
                             fontFamily: "Source Sans Pro"
                         },
@@ -717,12 +658,20 @@
 
     computed: {
     },
+    created() {
+        this.handleResize();
+    },
+    destroyed() {
+        window.removeEventListener('resize', this.handleResize);
+    },
     mounted() {
-      // Set the initial number of items
-        this.totalRows = this.items.length;
-        console.log("storr",this.$store);
+        window.addEventListener('resize', this.handleResize);
     },
     methods: {
+        handleResize() {
+            this.windowH.width = window.innerWidth;
+            this.windowH.height = window.innerHeight;
+        },
         showModal() {
             this.$refs['my-modal'].show()
         },

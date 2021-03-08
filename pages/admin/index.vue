@@ -10,7 +10,7 @@
 
 <script>
     export default {
-        // middleware: 'authenticated',
+        middleware: 'adminAuthenticated',
         // page properties go here
         layout: "admin",
         created() {

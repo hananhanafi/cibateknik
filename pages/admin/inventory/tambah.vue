@@ -75,7 +75,7 @@
     export default {
         // page properties go here
         layout: "admin",
-        middleware: 'authenticated',
+        middleware: 'adminAuthenticated',
         data() {
             return {
                 infoCount: 1,

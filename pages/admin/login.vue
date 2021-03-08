@@ -61,7 +61,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://us-central1-cibateknik-api.cloudfunctions.net/api',
+    baseURL: 'http://localhost:5000/cibateknik-dev-api/us-central1/api',
     timeout: 50000
 });
 
@@ -96,7 +96,7 @@ const Cookie = process.client ? require('js-cookie') : undefined;
                 this.windowH.height = window.innerHeight;
             },
             postLogin() {
-                api.post("/login",{email:this.email,password:this.password})
+                api.post("/admin/login",{email:this.email,password:this.password})
                 .then((response)=>{
                     console.log("res",response);
 

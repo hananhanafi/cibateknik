@@ -391,315 +391,326 @@
 </template>
 
 <script>
-    export default {
-        // page properties go here
-        layout: "admin",
-        middleware: 'adminAuthenticated',
-        data() {
-            return {
+import ApiService from '~/apis/api.service';
+export default {
+    // page properties go here
+    layout: "admin",
+    middleware: 'adminAuthenticated',
+    data() {
+        return {
 
-                chartHeight : 200,
+            chartHeight : 200,
 
-                windowH: {
-                    width: 0,
-                    height: 0
-                },
-                
-                selected: null,
-                options: [
-                    { value: null, text: 'Selesai' },
-                    { value: 'a', text: 'Dikirim' },
-                    { value: 'b', text: 'Diproses' },
-                    // { value: { C: '3PO' }, text: 'This is an option with object value' },
-                    // { value: 'd', text: 'This one is disabled', disabled: true }
-                ],
-                topSellingFields: ['Nomor', 'Item'],
-
-
-                topSellingItems: [
-                    { Nomor: '1', Item: 'Macdonald' },
-                    { Nomor: '2', Item: 'Shaw' },
-                    { Nomor: '3', Item: 'Wilson' },
-                    { Nomor: '4', Item: 'Wilson' },
-                    { Nomor: '5', Item: 'Wilson' },
-                    { Nomor: '6', Item: 'Macdonald' },
-                    { Nomor: '7', Item: 'Shaw' },
-                    { Nomor: '8', Item: 'Wilson' },
-                    { Nomor: '9', Item: 'Wilson' },
-                    { Nomor: '10', Item: 'Wilson' }
-                ],
-                
-                topSellingPerPage: 3,
-                topSellingCurrentPage: 1,
-
-                // orderListFields: [
-                //     {key:'no', label: 'No'},
-                //     { key: 'name', label: 'Nama'},
-                //     { key: 'date', label: 'Tanggal'},
-                //     { key: 'status', label: 'Status'},
-                //     { key: 'action', label: 'Aksi'},
-                // ],
+            windowH: {
+                width: 0,
+                height: 0
+            },
+            
+            selected: null,
+            options: [
+                { value: null, text: 'Selesai' },
+                { value: 'a', text: 'Dikirim' },
+                { value: 'b', text: 'Diproses' },
+                // { value: { C: '3PO' }, text: 'This is an option with object value' },
+                // { value: 'd', text: 'This one is disabled', disabled: true }
+            ],
+            topSellingFields: ['Nomor', 'Item'],
 
 
-                // orderListItems: [
-                // { no: '1', name: 'Macdonald', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                // { no: '2', name: 'Shaw', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                // { no: '3', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                // { no: '4', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                // { no: '5', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                // { no: '6', name: 'Macdonald', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                // { no: '7', name: 'Shaw', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                // { no: '8', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                // { no: '9', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-                // { no: '10', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' }
-                // ],
-                
-                orderListPerPage: 3,
-                orderListCurrentPage: 1,
+            topSellingItems: [
+                { Nomor: '1', Item: 'Macdonald' },
+                { Nomor: '2', Item: 'Shaw' },
+                { Nomor: '3', Item: 'Wilson' },
+                { Nomor: '4', Item: 'Wilson' },
+                { Nomor: '5', Item: 'Wilson' },
+                { Nomor: '6', Item: 'Macdonald' },
+                { Nomor: '7', Item: 'Shaw' },
+                { Nomor: '8', Item: 'Wilson' },
+                { Nomor: '9', Item: 'Wilson' },
+                { Nomor: '10', Item: 'Wilson' }
+            ],
+            
+            topSellingPerPage: 3,
+            topSellingCurrentPage: 1,
 
-                revenueChartData: {
-                    labels: ['1 Jan', '2 Jan', '3 Jan', '4 Jan', '5 Jan', '6 Jan', '7 Jan'],
-                    datasets: [
-                        {
-                            label: 'Penjualan',
-                            fill: false,
-                            data: [100000,800000,500000,200000,800000,200000,800000,],
-                            backgroundColor: '#5C7CE9',
-                            borderColor: '#5C7CE9',
-                            // lineTension: 0,
-                            pointBorderWidth: 10,
-                            // borderWidth: .5
-                        },
-                        {
-                            label: 'Pengeluaran',
-                            fill: false,
-                            data: [300000,600000,400000,600000,200000,400000,600000,],
-                            backgroundColor: '#FE6F70',
-                            borderColor: '#FE6F70',
-                            // lineTension: 0,
-                            pointBorderWidth: 10,
-                            // borderWidth: .5
-                        },
-                    ]
-                },
-                revenueChartOptions: {
-                    responsive: true,
-                    scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display: false
-                        },
-                        barPercentage: 1,
-                        categoryPercentage: 0.6,
-                        ticks: {
-                            fontColor: "#707070",
-                            fontFamily: "Source Sans Pro"
-                        },
-                    }],
-                    yAxes: [{
-                        gridLines: {
-                            color: '#AAC93F',
-                            lineWidth: .3,
-                            drawBorder: false,
-                            zeroLineColor: '#AAC93F'
-                        },
-                        ticks: {
-                            beginAtZero: true,
-                            // max: 1000,
-                            min: 0,
-                            stepSize: 100000,
-                            fontColor: "#707070",
-                            fontFamily: "Source Sans Pro"
-                        },
-                    }]
-                    },
-                    legend: {
-                        display: true,
-                        position: 'top',
-                        labels: {
-                            boxWidth: 12,
-                            fontSize: 14,
-                            fontColor: "#707070",
-                            fontFamily: "Source Sans Pro"
-                        }
-                    }
-                },
+            // orderListFields: [
+            //     {key:'no', label: 'No'},
+            //     { key: 'name', label: 'Nama'},
+            //     { key: 'date', label: 'Tanggal'},
+            //     { key: 'status', label: 'Status'},
+            //     { key: 'action', label: 'Aksi'},
+            // ],
 
-                barChartData: {
-                    labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
-                    datasets: [
-                        {
-                            label: 'Penjualan',
-                            fill: false,
-                            data: [100, 135, 159, 115, 200, 175, 135, 215, 175, 135, 215, 175],
-                            backgroundColor: '#DC0C17',
-                            borderColor: '#DC0C17',
-                            lineTension: 0,
-                            pointBorderWidth: 10,
-                            borderWidth: .5
-                        },
-                        // {
-                        //     label: 'Perempuan',
-                        //     fill: false,
-                        //     data: [125, 75, 175, 165, 210, 100, 225, 225, 175, 225, 225, 175],
-                        //     backgroundColor: '#FCAF17',
-                        //     borderColor: '#FCAF17',
-                        //     lineTension: 0,
-                        //     pointBorderWidth: 10,
-                        //     borderWidth: .5
-                        // }
-                    ]
-                },
-                barChartOptions: {
-                    responsive: true,
-                    scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display: false
-                        },
-                        barPercentage: 1,
-                        categoryPercentage: 0.6,
-                        ticks: {
-                            fontColor: "#707070",
-                            fontFamily: "Source Sans Pro"
-                        },
-                    }],
-                    yAxes: [{
-                        gridLines: {
-                            color: '#AAC93F',
-                            lineWidth: .3,
-                            drawBorder: false,
-                            zeroLineColor: '#AAC93F'
-                        },
-                        ticks: {
-                            beginAtZero: true,
-                            // max: 1000,
-                            min: 0,
-                            stepSize: 50,
-                            fontColor: "#707070",
-                            fontFamily: "Source Sans Pro"
-                        },
-                    }]
-                    },
-                    legend: {
-                        display: true,
-                        position: 'top',
-                        labels: {
-                            boxWidth: 12,
-                            fontSize: 14,
-                            fontColor: "#707070",
-                            fontFamily: "Source Sans Pro"
-                        }
-                    }
-                },
 
-                items: [
-                    { qty:5, price:"Rp.100.000", customer:'Hanafi', status: true, date:'Kamis,21 Desember 2020', name: { first: 'Dickerson', last: 'Macdonald' } },
-                    { qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Larsen', last: 'Shaw' } },
+            // orderListItems: [
+            // { no: '1', name: 'Macdonald', date:'Kamis,21 Desember 2020', status:'Pesan' },
+            // { no: '2', name: 'Shaw', date:'Kamis,21 Desember 2020', status:'Pesan' },
+            // { no: '3', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
+            // { no: '4', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
+            // { no: '5', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
+            // { no: '6', name: 'Macdonald', date:'Kamis,21 Desember 2020', status:'Pesan' },
+            // { no: '7', name: 'Shaw', date:'Kamis,21 Desember 2020', status:'Pesan' },
+            // { no: '8', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
+            // { no: '9', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
+            // { no: '10', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' }
+            // ],
+            
+            orderListPerPage: 3,
+            orderListCurrentPage: 1,
+
+            revenueChartData: {
+                labels: ['1 Jan', '2 Jan', '3 Jan', '4 Jan', '5 Jan', '6 Jan', '7 Jan'],
+                datasets: [
                     {
-                        qty:5, price:"Rp.100.000", customer:'Hanafi', status: false,
-                        date:'Kamis,21 Desember 2020',
-                        name: { first: 'Mini', last: 'Navarro' },
-                        // _rowVariant: 'success'
+                        label: 'Penjualan',
+                        fill: false,
+                        data: [100000,800000,500000,200000,800000,200000,800000,],
+                        backgroundColor: '#5C7CE9',
+                        borderColor: '#5C7CE9',
+                        // lineTension: 0,
+                        pointBorderWidth: 10,
+                        // borderWidth: .5
                     },
-                    { qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Geneva', last: 'Wilson' } },
-                    { qty:5, price:"Rp.100.000", customer:'Hanafi', status: true, date:'Kamis,21 Desember 2020', name: { first: 'Jami', last: 'Carney' } },
-                    { qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Essie', last: 'Dunlap' } },
-                    { qty:5, price:"Rp.100.000", customer:'Hanafi', status: true, date:'Kamis,21 Desember 2020', name: { first: 'Thor', last: 'Macdonald' } },
                     {
-                        qty:5, price:"Rp.100.000", customer:'Hanafi', status: true,
-                        date:'Kamis,21 Desember 2020',
-                        name: { first: 'Larsen', last: 'Shaw' },
-                        // _cellVariants: { date: 'danger', status: 'warning' }
+                        label: 'Pengeluaran',
+                        fill: false,
+                        data: [300000,600000,400000,600000,200000,400000,600000,],
+                        backgroundColor: '#FE6F70',
+                        borderColor: '#FE6F70',
+                        // lineTension: 0,
+                        pointBorderWidth: 10,
+                        // borderWidth: .5
                     },
-                    {  qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Mitzi', last: 'Navarro' } },
-                    {  qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Genevieve', last: 'Wilson' } },
-                    {  qty:5, price:"Rp.100.000", customer:'Hanafi', status: true, date:'Kamis,21 Desember 2020', name: { first: 'John', last: 'Carney' } },
-                    {  qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Dick', last: 'Dunlap' } },
-                ],
-                fields: [
-                    // {key:'no', label: 'No'},
-                    { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
-                    { key: 'qty', label: 'Jumlah', sortable: true, sortDirection: 'desc' },
-                    { key: 'price', label: 'Harga', sortable: true, sortDirection: 'desc' },
-                    { key: 'date', label: 'Tanggal Order', sortable: true, class: 'text-center' },
-                    { key: 'customer', label: 'Customer', sortable: true, sortDirection: 'desc' },
-                    {
-                        key: 'status',
-                        label: 'Status',
-                        formatter: (value, _key, _item) => {
-                        return value ? 'Selesai' : 'Dikirim'
-                        },
-                        sortable: true,
-                        sortByFormatted: true,
-                        filterByFormatted: true
+                ]
+            },
+            revenueChartOptions: {
+                responsive: true,
+                scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false
                     },
-                    { key: 'actions', label: 'Actions', class: 'text-md-center text-left' }
-                ],
-                totalRows: 1,
-                currentPage: 1,
-                perPage: 10,
-                
-                infoModal: {
-                    id: 'info-modal',
-                    title: '',
-                    content: ''
+                    barPercentage: 1,
+                    categoryPercentage: 0.6,
+                    ticks: {
+                        fontColor: "#707070",
+                        fontFamily: "Source Sans Pro"
+                    },
+                }],
+                yAxes: [{
+                    gridLines: {
+                        color: '#AAC93F',
+                        lineWidth: .3,
+                        drawBorder: false,
+                        zeroLineColor: '#AAC93F'
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        // max: 1000,
+                        min: 0,
+                        stepSize: 100000,
+                        fontColor: "#707070",
+                        fontFamily: "Source Sans Pro"
+                    },
+                }]
                 },
-                currentItem : {
-                    "status": true,
-                    "date": "Kamis,21 Desember 2020",
-                    "name": {
-                        "first": "Dickerson",
-                        "last": "Macdonald"
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        boxWidth: 12,
+                        fontSize: 14,
+                        fontColor: "#707070",
+                        fontFamily: "Source Sans Pro"
                     }
                 }
-            }
-        },
+            },
 
-    computed: {
-    },
-    created() {
-        this.handleResize();
-    },
-    destroyed() {
-        window.removeEventListener('resize', this.handleResize);
-    },
-    mounted() {
-        window.addEventListener('resize', this.handleResize);
-    },
-    methods: {
-        handleResize() {
-            this.windowH.width = window.innerWidth;
-            this.windowH.height = window.innerHeight;
-        },
-        showModal() {
-            this.$refs['my-modal'].show()
-        },
-        hideModal() {
-            this.$refs['my-modal'].hide()
-        },
-        toggleModal() {
-            // We pass the ID of the button that we want to return focus to
-            // when the modal has hidden
-            this.$refs['my-modal'].toggle('#toggle-btn')
-        },
-        info(item, index, button) {
-            this.infoModal.title = `Row index: ${index}`;
-            this.infoModal.content = JSON.stringify(item, null, 2);
-            this.$root.$emit('bv::show::modal', this.infoModal.id, button);
-            this.currentItem = item;
-        },
-        resetInfoModal() {
-            this.infoModal.title = ''
-            this.infoModal.content = ''
-        },
-        onFiltered(filteredItems) {
-            // Trigger pagination to update the number of buttons/pages due to filtering
-            this.totalRows = filteredItems.length
-            this.currentPage = 1
+            barChartData: {
+                labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                datasets: [
+                    {
+                        label: 'Penjualan',
+                        fill: false,
+                        data: [100, 135, 159, 115, 200, 175, 135, 215, 175, 135, 215, 175],
+                        backgroundColor: '#DC0C17',
+                        borderColor: '#DC0C17',
+                        lineTension: 0,
+                        pointBorderWidth: 10,
+                        borderWidth: .5
+                    },
+                    // {
+                    //     label: 'Perempuan',
+                    //     fill: false,
+                    //     data: [125, 75, 175, 165, 210, 100, 225, 225, 175, 225, 225, 175],
+                    //     backgroundColor: '#FCAF17',
+                    //     borderColor: '#FCAF17',
+                    //     lineTension: 0,
+                    //     pointBorderWidth: 10,
+                    //     borderWidth: .5
+                    // }
+                ]
+            },
+            barChartOptions: {
+                responsive: true,
+                scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false
+                    },
+                    barPercentage: 1,
+                    categoryPercentage: 0.6,
+                    ticks: {
+                        fontColor: "#707070",
+                        fontFamily: "Source Sans Pro"
+                    },
+                }],
+                yAxes: [{
+                    gridLines: {
+                        color: '#AAC93F',
+                        lineWidth: .3,
+                        drawBorder: false,
+                        zeroLineColor: '#AAC93F'
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        // max: 1000,
+                        min: 0,
+                        stepSize: 50,
+                        fontColor: "#707070",
+                        fontFamily: "Source Sans Pro"
+                    },
+                }]
+                },
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        boxWidth: 12,
+                        fontSize: 14,
+                        fontColor: "#707070",
+                        fontFamily: "Source Sans Pro"
+                    }
+                }
+            },
+
+            items: [
+                { qty:5, price:"Rp.100.000", customer:'Hanafi', status: true, date:'Kamis,21 Desember 2020', name: { first: 'Dickerson', last: 'Macdonald' } },
+                { qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Larsen', last: 'Shaw' } },
+                {
+                    qty:5, price:"Rp.100.000", customer:'Hanafi', status: false,
+                    date:'Kamis,21 Desember 2020',
+                    name: { first: 'Mini', last: 'Navarro' },
+                    // _rowVariant: 'success'
+                },
+                { qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Geneva', last: 'Wilson' } },
+                { qty:5, price:"Rp.100.000", customer:'Hanafi', status: true, date:'Kamis,21 Desember 2020', name: { first: 'Jami', last: 'Carney' } },
+                { qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Essie', last: 'Dunlap' } },
+                { qty:5, price:"Rp.100.000", customer:'Hanafi', status: true, date:'Kamis,21 Desember 2020', name: { first: 'Thor', last: 'Macdonald' } },
+                {
+                    qty:5, price:"Rp.100.000", customer:'Hanafi', status: true,
+                    date:'Kamis,21 Desember 2020',
+                    name: { first: 'Larsen', last: 'Shaw' },
+                    // _cellVariants: { date: 'danger', status: 'warning' }
+                },
+                {  qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Mitzi', last: 'Navarro' } },
+                {  qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Genevieve', last: 'Wilson' } },
+                {  qty:5, price:"Rp.100.000", customer:'Hanafi', status: true, date:'Kamis,21 Desember 2020', name: { first: 'John', last: 'Carney' } },
+                {  qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Dick', last: 'Dunlap' } },
+            ],
+            fields: [
+                // {key:'no', label: 'No'},
+                { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
+                { key: 'qty', label: 'Jumlah', sortable: true, sortDirection: 'desc' },
+                { key: 'price', label: 'Harga', sortable: true, sortDirection: 'desc' },
+                { key: 'date', label: 'Tanggal Order', sortable: true, class: 'text-center' },
+                { key: 'customer', label: 'Customer', sortable: true, sortDirection: 'desc' },
+                {
+                    key: 'status',
+                    label: 'Status',
+                    formatter: (value, _key, _item) => {
+                    return value ? 'Selesai' : 'Dikirim'
+                    },
+                    sortable: true,
+                    sortByFormatted: true,
+                    filterByFormatted: true
+                },
+                { key: 'actions', label: 'Actions', class: 'text-md-center text-left' }
+            ],
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 10,
+            
+            infoModal: {
+                id: 'info-modal',
+                title: '',
+                content: ''
+            },
+            currentItem : {
+                "status": true,
+                "date": "Kamis,21 Desember 2020",
+                "name": {
+                    "first": "Dickerson",
+                    "last": "Macdonald"
+                }
+            }
         }
+    },
+
+computed: {
+},
+created() {
+    this.handleResize();
+},
+destroyed() {
+    window.removeEventListener('resize', this.handleResize);
+},
+mounted() {
+    window.addEventListener('resize', this.handleResize);
+    this.loadData();
+},
+methods: {
+    loadData() {
+        ApiService.get('/products')
+        .then((Response)=>{
+            console.log("res",Response);
+        })
+        .catch(err=>{
+            console.log("err",err);
+        })
+    },
+    handleResize() {
+        this.windowH.width = window.innerWidth;
+        this.windowH.height = window.innerHeight;
+    },
+    showModal() {
+        this.$refs['my-modal'].show()
+    },
+    hideModal() {
+        this.$refs['my-modal'].hide()
+    },
+    toggleModal() {
+        // We pass the ID of the button that we want to return focus to
+        // when the modal has hidden
+        this.$refs['my-modal'].toggle('#toggle-btn')
+    },
+    info(item, index, button) {
+        this.infoModal.title = `Row index: ${index}`;
+        this.infoModal.content = JSON.stringify(item, null, 2);
+        this.$root.$emit('bv::show::modal', this.infoModal.id, button);
+        this.currentItem = item;
+    },
+    resetInfoModal() {
+        this.infoModal.title = ''
+        this.infoModal.content = ''
+    },
+    onFiltered(filteredItems) {
+        // Trigger pagination to update the number of buttons/pages due to filtering
+        this.totalRows = filteredItems.length
+        this.currentPage = 1
     }
-    }
+}
+}
 </script>
 
 <style>

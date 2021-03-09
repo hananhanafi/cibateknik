@@ -2,10 +2,13 @@ import Vue from "vue";
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://us-central1-cibateknik-api.cloudfunctions.net/api',
+    baseURL: 'http://localhost:5000/cibateknik-dev-api/us-central1/api',
     timeout: 50000
 });
 
+const Cookie = process.client ? require('js-cookie') : undefined;
+
+console.log("cl",Cookie.get('auth'));
 const ApiService = {
     init() {
         Object.defineProperty(Vue, "$api", {
@@ -17,7 +20,7 @@ const ApiService = {
 
     
     setHeader() {
-        Vue.$api.defaults.headers.common.Authorization = `Bearer ${this.$store.state.auth}`;
+        Vue.$api.defaults.headers.common.Authorization = `Bearer ${Cookie.get('auth')}`;
     },
 
     // init api for guest

@@ -113,7 +113,7 @@ const Cookie = process.client ? require('js-cookie') : undefined;
             window.removeEventListener('resize', this.handleResize);
         },
         mounted() {
-            console.log("routeparams",this.$route.name);
+            window.addEventListener('resize', this.handleResize);
         },
         methods: {
             isActive(name){
@@ -126,7 +126,7 @@ const Cookie = process.client ? require('js-cookie') : undefined;
             logout() {
             // Code will also be required to invalidate the JWT Cookie on external API
                 Cookie.remove('auth')
-                this.$store.commit('setAuth', null);
+                this.$store.commit('purgeAuth');
                 this.$router.push('/admin/login');
             }
         }

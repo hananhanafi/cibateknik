@@ -151,7 +151,7 @@
 </template>
 
 <script>
-// const Cookie = process.client ? require('js-cookie') : undefined;
+const Cookie = process.client ? require('js-cookie') : undefined;
     export default {
         data() {
         return {
@@ -171,6 +171,7 @@
         },
         mounted() {
             // console.log("routeparams",this.$route.name);
+            console.log("cookie",Cookie);
         },
         methods: {
             isActive(name){

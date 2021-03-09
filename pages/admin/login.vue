@@ -27,9 +27,8 @@
                                         </div>
                                     </b-input-group>
 
-                                    <div class="text-center mt-2">
-
-                                        <b-button  class="rounded-pill w-50" style="background: linear-gradient(88.49deg, #41E296 0%, #3BB7B4 100%);" @click="postLogin">Masuk</b-button>
+                                    <div class="text-center my-2">
+                                        <b-button  class="rounded-pill w-50" :disabled="isLoadingSubmit" style="background: linear-gradient(88.49deg, #41E296 0%, #3BB7B4 100%);" @click="postLogin">Masuk</b-button>
                                     </div>
                                     
                                     <div v-if="showError" class="text-danger">{{errorMessage}}</div>
@@ -58,17 +57,13 @@
 
 <script>
 
-import axios from "axios";
+import ApiService from '~/apis/api.service';
 
-const api = axios.create({
-    baseURL: 'http://localhost:5000/cibateknik-dev-api/us-central1/api',
-    timeout: 50000
-});
 
 const Cookie = process.client ? require('js-cookie') : undefined;
 
     export default {
-        middleware: 'notAuthenticated',
+        middleware: 'notAdminAuthenticated',
         // page properties go here
         data() {
             return {
@@ -80,12 +75,14 @@ const Cookie = process.client ? require('js-cookie') : undefined;
                 email: null,
                 password: null,
                 showError: false,
-                errorMessage :null
+                errorMessage :null,
+                isLoadingSubmit: false,
             }
         },
         created() {
             // window.addEventListener('resize', this.handleResize);
             this.handleResize();
+            console.log("aps")
         },
         destroyed() {
             window.removeEventListener('resize', this.handleResize);
@@ -95,38 +92,22 @@ const Cookie = process.client ? require('js-cookie') : undefined;
                 this.windowH.width = window.innerWidth;
                 this.windowH.height = window.innerHeight;
             },
-            postLogin() {
-                api.post("/admin/login",{email:this.email,password:this.password})
+            async postLogin() {
+                this.isLoadingSubmit = true;
+                await ApiService.post("/admin/login",{email:this.email,password:this.password})
                 .then((response)=>{
                     console.log("res",response);
-
-                    
-                    // we simulate the async request with timeout.
-                    // const auth = {
-                    // accessToken: response.data.token
-                    // }
                     const auth = response.data.token;
-                    this.$store.commit('setAuth', auth) // mutating to store for client rendering
+                    this.$store.commit('setAuthAdmin', auth) // mutating to store for client rendering
                     Cookie.set('auth', auth) // saving token in cookie for server rendering
                     this.$router.push('/admin/dashboard');
                 })
                 .catch(({response})=>{
                     console.log("err",response);
                     this.showError = true;
-                    this.errorMessage = response.data.general;
-                    // setTimeout(() => {
-                    //     this.showError = false;
-                    // }, 5000)
+                    this.errorMessage = response.data.message;
                 })
-                // setTimeout(() => {
-                //     // we simulate the async request with timeout.
-                //     const auth = {
-                //     accessToken: 'someStringGotFromApiServiceWithAjax'
-                //     }
-                //     this.$store.commit('setAuth', auth) // mutating to store for client rendering
-                //     Cookie.set('auth', auth) // saving token in cookie for server rendering
-                //     this.$router.push('/admin/dashboard')
-                // }, 1000)
+                this.isLoadingSubmit = false;
             }
         }
     }

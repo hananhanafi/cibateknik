@@ -142,7 +142,7 @@
 
 <script>
     export default {
-        middleware: 'notAuthenticated',
+        middleware: 'authenticated',
         // page properties go here
         layout: "user",
         data() {

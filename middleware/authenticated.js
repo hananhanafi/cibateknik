@@ -5,6 +5,6 @@ export default function ({ store, redirect }) {
     console.log("cookie",Cookie.get('auth'));
     // If the user is not authenticated
     if (!Cookie.get('auth') && store.state.role !== 'user' ) {
-        return redirect('/login')
+        return redirect('/user/login')
     }
 }

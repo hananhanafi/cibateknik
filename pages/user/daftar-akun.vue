@@ -14,16 +14,43 @@
                         <div class="p-3 text-medium">
                             <h2 class="font-weight-bold" >Daftar</h2>
                             <BaseInput
+                                id="username"
+                                v-model="formData.username"
+                                label="Username"
+                                placeholder="Masukkan nama username Anda"
+                                :error="
+                                    submitStatus == 'ERROR'
+                                    ? !$v.formData.username.required
+                                    ? 'Username harus diisi'
+                                    : null
+                                    : null
+                                "
+                            />
+                            <BaseInput
                                 id="firstName"
                                 v-model="formData.firstName"
                                 label="Nama Depan"
                                 placeholder="Masukkan nama depan Anda"
+                                :error="
+                                    submitStatus == 'ERROR'
+                                    ? !$v.formData.firstName.required
+                                    ? 'Nama Depan harus diisi'
+                                    : null
+                                    : null
+                                "
                             />
                             <BaseInput
                                 id="lastName"
                                 v-model="formData.lastName"
                                 label="Nama Akhir"
                                 placeholder="Masukkan nama akhir Anda"
+                                :error="
+                                    submitStatus == 'ERROR'
+                                    ? !$v.formData.lastName.required
+                                    ? 'Nama Akhir harus diisi'
+                                    : null
+                                    : null
+                                "
                             />
                             <BaseInput
                                 id="email"
@@ -31,13 +58,27 @@
                                 label="Email"
                                 type="email"
                                 placeholder="Masukkan email Anda"
+                                :error="
+                                    submitStatus == 'ERROR'
+                                    ? !$v.formData.email.required
+                                    ? 'Email harus diisi'
+                                    : null
+                                    : null
+                                "
                             />
                             
                             <BaseInput
-                                id="phone"
-                                v-model="formData.phone"
+                                id="phoneNumber"
+                                v-model="formData.phoneNumber"
                                 label="No Telepon"
                                 placeholder="Masukkan nomor telepon Anda"
+                                :error="
+                                    submitStatus == 'ERROR'
+                                    ? !$v.formData.phoneNumber.required
+                                    ? 'No Telepon harus diisi'
+                                    : null
+                                    : null
+                                "
                             />
 
                             <BaseTextarea
@@ -45,6 +86,13 @@
                                 label="Alamat"
                                 placeholder="Masukkan alamat"
                                 height="200px"
+                                :error="
+                                    submitStatus == 'ERROR'
+                                    ? !$v.formData.address.required
+                                    ? 'Alamat harus diisi'
+                                    : null
+                                    : null
+                                "
                             />
                             
                             <BaseInput
@@ -53,20 +101,33 @@
                                 label="Password"
                                 placeholder="Masukkan password Anda"
                                 type="password"
+                                :error="
+                                    submitStatus == 'ERROR'
+                                    ? !$v.formData.password.required
+                                    ? 'Password harus diisi'
+                                    : null
+                                    : null
+                                "
                             />
-
                             
                             <BaseInput
-                                id="passwordConfirmation"
-                                v-model="formData.passwordConfirmation"
+                                id="confirmPassword"
+                                v-model="formData.confirmPassword"
                                 label="Konfirmasi Password"
                                 placeholder="Masukkan konfirmasi password"
                                 type="password"
+                                :error="
+                                    submitStatus == 'ERROR'
+                                    ? !$v.formData.confirmPassword.required
+                                    ? 'Konfirmasi Password harus diisi'
+                                    : null
+                                    : null
+                                "
                             />
                             
                             <div class="d-flex mt-5 my-3">
                                 <a href="/user/register" type="button" class="btn btn-outline-dark flex-fill mx-2">Batal</a>
-                                <button type="button" class="btn bg-main-color text-white flex-fill mx-2">Daftar</button>
+                                <button class="btn bg-main-color text-white flex-fill mx-2" type="button" @click="register()">Daftar</button>
                             </div>
 
                         </div>
@@ -81,8 +142,12 @@
 <script>
 
 
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
+import ApiService from '~/apis/api.service'
 
     export default {
+        mixins: [validationMixin],
         middleware: 'notAuthenticated',
         // page properties go here
         data() {
@@ -93,17 +158,31 @@
                     height: 0
                 },
                 formData: {
+                    username: null,
                     firstName: null,
                     lastName: null,
                     email: null,
-                    phone: null,
+                    phoneNumber: null,
                     address: null,
                     password: null,
-                    passwordConfirmation: null,
+                    confirmPassword: null,
                 },
                 showError: false,
-                errorMessage :null
+                errorMessage :null,
+                submitStatus: '',
             }
+        },
+        validations: {
+            formData: {
+                username: {required},
+                firstName: {required},
+                lastName: {required},
+                email: {required},
+                phoneNumber: {required},
+                address: {required},
+                password: {required},
+                confirmPassword: {required},
+            },
         },
         created() {
             this.handleResize();
@@ -119,6 +198,34 @@
                 this.windowH.width = window.innerWidth;
                 this.windowH.height = window.innerHeight;
             },
+            async register(){
+                console.log('submit!')
+                this.$v.$touch()
+                if (this.$v.$invalid) {
+                    console.log("invalid",this.$v);
+                    this.submitStatus = 'ERROR'
+                } else {
+                    // do your submit logic here
+                    // console.log("submit");
+                    this.submitStatus = 'PENDING'
+                    // setTimeout(() => {
+                    // this.submitStatus = 'OK'
+                    // }, 500)
+                    await ApiService.post("/user/signup",this.formData)
+                    .then((response)=>{
+                        console.log("res",response); 
+                        this.$router.push('/');
+                        this.submitStatus = 'SUCCESS'
+                    })
+                    .catch(({response})=>{
+                        console.log("err",response);
+                        this.submitStatus = 'ERROR'
+                        this.showError = true;
+                        this.errorMessage = response.data.message;
+                    })
+                    
+                }
+            }
         },
         head() {
             return {

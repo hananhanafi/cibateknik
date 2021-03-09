@@ -22,10 +22,10 @@
                                     <b-input-group>
                                         <b-form-input v-model="email" class="mb-2" placeholder="Email"></b-form-input>
                                     </b-input-group>
+                                    <div v-if="submitStatus == 'ERROR' && !$v.email.required" class="text-danger mb-2">Email harus diisi</div>
 
                                     
-                                    <b-input-group class="mb-2">
-                                        
+                                    <b-input-group>
                                         <b-form-input v-model="password" class="mb-2 w-100" placeholder="Password" :type="showPassword ? 'text' : 'password' ">
                                         </b-form-input>
                                         
@@ -35,9 +35,10 @@
                                             </b-button>
                                         </div>
                                     </b-input-group>
+                                    <div v-if="submitStatus == 'ERROR' && !$v.password.required" class="text-danger mb-2">Password harus diisi</div>
 
                                     <div class="text-center mt-2">
-                                        <button type="button" class="btn btn-lg bg-main-color btn-dark w-100" >Masuk</button>
+                                        <button :disabled="submitStatus=='PENDING'" class="btn btn-lg bg-main-color btn-dark w-100" type="button" @click="login()" >Masuk</button>
                                     </div>
                                     
                                     <div v-if="showError" class="text-danger">{{errorMessage}}</div>
@@ -80,8 +81,12 @@
 
 
 <script>
-
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
+import ApiService from '~/apis/api.service'
+const Cookie = process.client ? require('js-cookie') : undefined;
     export default {
+        mixins: [validationMixin],
         middleware: 'notAuthenticated',
         // page properties go here
         data() {
@@ -94,7 +99,16 @@
                 email: null,
                 password: null,
                 showError: false,
-                errorMessage :null
+                errorMessage :null,
+                submitStatus: '',
+            }
+        },
+        validations: {
+            email: {
+                required,
+            },
+            password: {
+                required,
             }
         },
         created() {
@@ -111,6 +125,42 @@
                 this.windowH.width = window.innerWidth;
                 this.windowH.height = window.innerHeight;
             },
+            async login(){
+                console.log('submit!')
+                this.$v.$touch()
+                if (this.$v.$invalid) {
+                    console.log("invalid",this.$v);
+                    this.submitStatus = 'ERROR'
+                } else {
+                    // do your submit logic here
+                    // console.log("submit");
+                    this.submitStatus = 'PENDING'
+                    // setTimeout(() => {
+                    // this.submitStatus = 'OK'
+                    // }, 500)
+                    await ApiService.post("/user/login",{email:this.email,password:this.password})
+                    .then( async (response)=>{
+                        console.log("res",response);
+                        const auth = response.data.token;
+                        this.$store.commit('setAuthUser', auth) // mutating to store for client rendering
+                        Cookie.set('auth', auth) // saving token in cookie for server rendering
+                        ApiService.setHeader();
+                        await ApiService.get("/user").then(data=>{
+                            console.log('data',data);
+                            this.$store.commit('setUserInfo', data.data.userCredentials);
+                        })
+                        this.$router.push('/');
+                        this.submitStatus = 'SUCCESS'
+                    })
+                    .catch(({response})=>{
+                        console.log("err",response);
+                        this.submitStatus = 'ERROR'
+                        this.showError = true;
+                        this.errorMessage = response.data.message;
+                    })
+                    
+                }
+            }
         },
         head() {
             return {

@@ -39,6 +39,7 @@
     "vue-awesome-swiper": "^4.1.1",
     "vue-chartjs": "^3.5.1",
     "vue-multiselect": "^2.1.6",
+    "vuelidate": "^0.7.6",
     "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {

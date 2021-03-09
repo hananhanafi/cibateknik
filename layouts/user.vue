@@ -21,14 +21,14 @@
                         <b-nav-item href="/keranjang"><span :class="{ 'text-white' : isActive('keranjang') }"><fa  :icon="['fas','shopping-cart']"/> Keranjang</span></b-nav-item>
                     </b-navbar-nav>
                     <div class="vertical-separator mx-2"></div>
-                    <b-navbar-nav>
+                    <b-navbar-nav v-if="!getUserInfo">
                         <b-nav-item href="/user/register">Daftar</b-nav-item>
                         <b-nav-item href="/user/login">Masuk</b-nav-item>
                     </b-navbar-nav>
-                    <b-navbar-nav>
+                    <b-navbar-nav v-if="getUserInfo">
                         <b-nav-item-dropdown right>
                             <template #button-content>
-                                <img src="~/assets/img/person.png" class="img-fluid rounded-circle h-100" style="width:40px" alt="Responsive image"> Hanan Hanafi
+                                <img src="~/assets/img/person.png" class="img-fluid rounded-circle h-100" style="width:40px" alt="Responsive image"> {{getUserInfo.username}}
                             </template>
                             
                             <!-- <b-dropdown-item>
@@ -50,7 +50,7 @@
                                 <router-link class="text-decoration-none text-dark" :to="{ name: 'user-profile', params: { tab: 'password' } }">Ubah Password</router-link>
                             </b-dropdown-item> -->
                             
-                            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                            <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
 
@@ -151,7 +151,7 @@
 </template>
 
 <script>
-const Cookie = process.client ? require('js-cookie') : undefined;
+    const Cookie = process.client ? require('js-cookie') : undefined;
     export default {
         data() {
         return {
@@ -159,6 +159,11 @@ const Cookie = process.client ? require('js-cookie') : undefined;
                     width: 0,
                     height: 0
                 }
+            }
+        },
+        computed: {
+            getUserInfo(){
+                return this.$store.state.userInfo;
             }
         },
         created() {
@@ -171,7 +176,8 @@ const Cookie = process.client ? require('js-cookie') : undefined;
         },
         mounted() {
             // console.log("routeparams",this.$route.name);
-            console.log("cookie",Cookie);
+            console.log("cookie",Cookie.get('auth'));
+            console.log("state",this.$store.state);
         },
         methods: {
             isActive(name){
@@ -182,12 +188,11 @@ const Cookie = process.client ? require('js-cookie') : undefined;
                 this.windowH.width = window.innerWidth;
                 this.windowH.height = window.innerHeight;
             },
-            // logout() {
-            // // Code will also be required to invalidate the JWT Cookie on external API
-            //     Cookie.remove('auth')
-            //     this.$store.commit('setAuth', null);
-            //     this.$router.push('/admin/login');
-            // }
+            logout() {
+            // Code will also be required to invalidate the JWT Cookie on external API
+                this.$store.commit('purgeAuth');
+                this.$router.push('/');
+            }
         }
     }
 </script>

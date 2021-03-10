@@ -18,6 +18,7 @@ const createStore = () => {
                 console.log("settt",auth);
                 state.auth = auth
                 state.role = 'admin';
+                state.userInfo = null;
             },
             setAuthUser(state, auth) {
                 console.log("settt",auth);

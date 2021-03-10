@@ -114,6 +114,8 @@ const Cookie = process.client ? require('js-cookie') : undefined;
         },
         mounted() {
             window.addEventListener('resize', this.handleResize);
+            console.log("cookie",Cookie.get('auth'));
+            console.log("state",this.$store.state);
         },
         methods: {
             isActive(name){

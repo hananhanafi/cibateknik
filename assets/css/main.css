@@ -57,3 +57,35 @@ a {
     line-clamp: 2;
     -webkit-line-clamp: 2;
 }
+
+.text-12{
+    font-size: 12px;
+}
+
+.text-16{
+    font-size: 16px;
+}
+
+.text-20{
+    font-size: 20px;
+}
+
+.text-24{
+    font-size: 24px;
+}
+
+.text-28{
+    font-size: 28px;
+}
+
+.text-32{
+    font-size: 32px;
+}
+
+.text-36{
+    font-size: 36px;
+}
+
+.text-40{
+    font-size: 40px;
+}

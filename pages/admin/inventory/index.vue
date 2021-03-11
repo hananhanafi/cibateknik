@@ -32,7 +32,7 @@
                     <!-- eslint-disable-next-line vue/no-unused-vars -->
                     <template #cell(actions)="row">
                         <b-button class="rounded-pill text-white" variant="success" size="xl"  @click="$router.push({name:'admin-inventory-detail-produk'})">
-                        Lihat
+                        Lihat Inventaris
                         </b-button>
                     </template>
 
@@ -220,7 +220,7 @@
                     //     sortByFormatted: true,
                     //     filterByFormatted: true
                     // },
-                { key: 'actions', label: 'Actions' }
+                { key: 'actions', label: 'Aksi', class: 'text-md-center text-left' }
                 ],
                 totalRows: 1,
                 currentPage: 1,

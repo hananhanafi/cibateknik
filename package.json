@@ -36,9 +36,12 @@
     "js-cookie": "^2.2.1",
     "nuxt": "^2.14.12",
     "swiper": "^5.4.5",
+    "v-calendar": "^2.2.4",
     "vue-awesome-swiper": "^4.1.1",
     "vue-chartjs": "^3.5.1",
     "vue-multiselect": "^2.1.6",
+    "vue2-datepicker": "^3.9.0",
+    "vue2-daterange-picker": "^0.6.3",
     "vuelidate": "^0.7.6",
     "vuex-persistedstate": "^4.0.0-beta.3"
   },

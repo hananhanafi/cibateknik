@@ -21,97 +21,143 @@
                     </b-col>
                 </b-row>
                 
-                <div class="d-flex flex-row bd-highlight mb-3">
-                    <b-table :items="topSellingItems" :fields="topSellingFields">
-                        
-                        <!-- eslint-disable-next-line vue/no-unused-vars -->
-                        <template  #thead-top="data">
-                            <b-tr class="text-white">
-                                <b-th sticky-column colspan="32"> 1</b-th>
-                            </b-tr>
-                            <b-tr class="text-white" >
-                                <b-th style="border-bottom:'0px'" sticky-column colspan="32">1-</b-th>
-                            </b-tr>
-                        </template>
-                    </b-table>
-                    <!-- <div class="p-2 bd-highlight">
-                    </div> --> 
-                    <b-table responsive :items="items">
-                        <!-- eslint-disable-next-line vue/no-unused-vars -->
-                        <template #thead-top="data">
-                            <b-tr>
-                                <b-th sticky-column colspan="32">Tanggal</b-th>
-                            </b-tr>
-                            <b-tr>
-                                <b-th sticky-column colspan="2">1</b-th>
-                                <b-th sticky-column colspan="2">2</b-th>
-                                <b-th sticky-column colspan="2">3</b-th>
-                                <b-th sticky-column colspan="2">4</b-th>
-                                <b-th sticky-column colspan="2">5</b-th>
-                                <b-th sticky-column colspan="2">6</b-th>
-                                <b-th sticky-column colspan="2">7</b-th>
-                                <b-th sticky-column colspan="2">8</b-th>
-                                <b-th sticky-column colspan="2">9</b-th>
-                                <b-th sticky-column colspan="2">10</b-th>
-                                <b-th sticky-column colspan="2">11</b-th>
-                                <b-th sticky-column colspan="2">12</b-th>
-                            </b-tr>
-                            <b-tr>
-                                <b-th sticky-column>IN</b-th>
-                                <b-th sticky-column>OUT</b-th>
-                                <b-th sticky-column>IN</b-th>
-                                <b-th sticky-column>OUT</b-th>
-                                <b-th sticky-column>IN</b-th>
-                                <b-th sticky-column>OUT</b-th>
-                                <b-th sticky-column>IN</b-th>
-                                <b-th sticky-column>OUT</b-th>
-                                <b-th sticky-column>IN</b-th>
-                                <b-th sticky-column>OUT</b-th>
-                                <b-th sticky-column>IN</b-th>
-                                <b-th sticky-column>OUT</b-th>
-                                <b-th sticky-column>IN</b-th>
-                                <b-th sticky-column>OUT</b-th>
-                                <b-th sticky-column>IN</b-th>
-                                <b-th sticky-column>OUT</b-th>
-                                <b-th sticky-column>IN</b-th>
-                                <b-th sticky-column>OUT</b-th>
-                                <b-th sticky-column>IN</b-th>
-                                <b-th sticky-column>OUT</b-th>
-                                <b-th sticky-column>IN</b-th>
-                                <b-th sticky-column>OUT</b-th>
-                                <b-th sticky-column>IN</b-th>
-                                <b-th sticky-column>OUT</b-th>
-                            </b-tr>
-                        </template>
-                    </b-table>
-                    <b-table  :items="topSellingItems2" :fields="topSellingFields2">
-                        <!-- eslint-disable-next-line vue/no-unused-vars -->
-                        <template  #thead-top="data">
-                            <b-tr class="text-white">
-                                <b-th sticky-column colspan="32"> 1</b-th>
-                            </b-tr>
-                            <b-tr class="text-white" >
-                                <b-th style="border-bottom:'0px'" sticky-column colspan="32">1-</b-th>
-                            </b-tr>
-                        </template>
-
-                        
-                        <!-- eslint-disable-next-line vue/no-unused-vars -->
-                        <template #cell(actions)="row">
-                            <div class="d-flex flex-row bd-highlight">
-                                <div class="w-50 bg-success rounded-pill text-center text-white" @click="showModal">Catat</div>
-                                <div class="w-50">
-                                    <NuxtLink to="/admin/inventory/edit-barang">
-                                        <div  class="rounded-pill text-white bg-warning text-center w-100">
-                                            Edit
-                                        </div>
-                                    </NuxtLink>
-                                </div>
+                <table class="table table-responsive-lg w-100">
+                    <tr class="w-100">
+                        <td class="flex-fill mx-0 px-0">
+                            <div class="flex-fill">
+                                <!-- <table class="w-100 table mb-0">
+                                    <tr>
+                                        <td class="text-white" colspan="3">
+                                            empty
+                                        </td>
+                                    </tr>
+                                </table> -->
+                                <table class="w-100 table">
+                                    <tr>
+                                        <td class="text-white" colspan="3">
+                                            empty
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-white" colspan="3">
+                                            empty
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nama</td>
+                                        <td>Merk</td>
+                                        <td>Tipe</td>
+                                    </tr>
+                                    <tr v-for="item in productItems" :key="item">
+                                        <td width="80px"><div style="min-height:31px">{{item.name}}</div></td>
+                                        <td width="80px">{{item.brand}}</td>
+                                        <td width="80px">{{item.type}}</td>
+                                    </tr>
+                                </table>
                             </div>
-                        </template>
-                    </b-table>
-                </div>
+                        </td>
+                        <td class="mx-0 px-0 w-25" style="max-width:50%">
+                                <!-- <table class="table  table-responsive mb-0 border-top">
+                                    <tr>
+                                        <td>Tanggal</td>
+                                    </tr>
+                                </table> -->
+                                <div class="p-2 border-top" style="min-height:43px">
+                                    Tanggal
+                                </div>
+                                <table class="w-100 table table-responsive" style="max-width:900px">
+                                    <!-- <tr>
+                                        <td colspan="100">Tanggal</td>
+                                    </tr> -->
+                                    <tr>
+                                        <td v-for="date in dates" :key="date"  class="text-center border-right">{{date}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td v-for="date in dates" :key="date" class="border-right">
+                                            <div class="d-flex text-center" style="min-width:160px" >
+                                                <div class="mr-2 w-50">
+                                                    IN
+                                                </div>
+                                                <div class="border-right">
+                                                </div>
+                                                <div class="ml-2 w-50">
+                                                    OUT
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <tr v-for="item in productItems" :key="item">
+                                        <td  v-for="date in dates" :key="date" class="border-right">
+                                            <div class="d-flex" style="min-width:160px">
+                                                <div class="mr-2">
+                                                    <BaseInput
+                                                        id="in"
+                                                        placeholder="IN"
+                                                        small
+                                                        numberonly
+                                                        class="mb-0"
+                                                    />
+                                                </div>
+                                                <div class="ml-2">
+                                                    
+                                                    <BaseInput
+                                                        id="out"
+                                                        placeholder="OUT"
+                                                        small
+                                                        numberonly
+                                                        class="mb-0"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                        </td>
+                        <td class="flex-fill mx-0 px-0">
+                            <div class="flex-fill">
+                                <table class="w-100 table">
+                                    <tr>
+                                        <td class="text-white" colspan="4">
+                                            empty
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-white" colspan="4">
+                                            empty
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="80px">Keluar</td>
+                                        <td width="80px">Masuk</td>
+                                        <td width="80px">Stok</td>
+                                        <td width="200px">Aksi</td>
+                                    </tr>
+                                    <tr v-for="item in productItems" :key="item">
+                                        <td><div style="min-height:31px">5</div></td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>
+                                            <div class="d-flex flex-row bd-highlight">
+                                                <div class="w-50 bg-success rounded-pill text-center text-white" @click="showModal">Catat</div>
+                                                <div class="w-50">
+                                                    <NuxtLink to="/admin/inventory/edit-barang">
+                                                        <div  class="rounded-pill text-white bg-warning text-center w-100">
+                                                            Edit
+                                                        </div>
+                                                    </NuxtLink>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
+
+
                 <b-modal ref="my-modal" hide-footer>
                     <div class="d-block text-center">
                         <h5>Tambahkan Catatan Hari ini</h5>
@@ -151,6 +197,40 @@
         middleware: 'adminAuthenticated',
         data() {
             return {
+                dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
+                productItems: [
+                    { name:"McDonald",
+                    brand:"Mitutoyo",
+                    type:"Type 2" },
+                    { name:"McDonald",
+                    brand:"Mitutoyo",
+                    type:"Type 2" },
+                    { name:"McDonald",
+                    brand:"Mitutoyo",
+                    type:"Type 2" },
+                    { name:"McDonald",
+                    brand:"Mitutoyo",
+                    type:"Type 2" },
+                    { name:"McDonald",
+                    brand:"Mitutoyo",
+                    type:"Type 2" },
+                    { name:"McDonald",
+                    brand:"Mitutoyo",
+                    type:"Type 2" },
+                    { name:"McDonald",
+                    brand:"Mitutoyo",
+                    type:"Type 2" },
+                    { name:"McDonald",
+                    brand:"Mitutoyo",
+                    type:"Type 2" },
+                    { name:"McDonald",
+                    brand:"Mitutoyo",
+                    type:"Type 2" },
+                    { name:"McDonald",
+                    brand:"Mitutoyo",
+                    type:"Type 2" },
+                ],
+
                 selectedMonth: null,
                 optionsMonth: [
                     { value: null, text: 'Pilih Bulan' },
@@ -173,280 +253,7 @@
                     { value: 'a', text: 'Barang 1' },
                     { value: 'b', text: 'Barang 2' },
                 ],
-
-                topSellingFields: ['Nomor', 'Nama', 'Merk', 'Tipe'],
-
-
-                topSellingItems: [
-                { Nomor: '1', Nama: 'Macdonald', Merk: 'Merk 1', Tipe: 'Tipe 1' },
-                { Nomor: '2', Nama: 'Shaw', Merk: 'Merk 1', Tipe: 'Tipe 1'  },
-                { Nomor: '3', Nama: 'Wilson', Merk: 'Merk 1', Tipe: 'Tipe 1'  },
-                { Nomor: '4', Nama: 'Wilson', Merk: 'Merk 1', Tipe: 'Tipe 1'  },
-                { Nomor: '5', Nama: 'Wilson', Merk: 'Merk 1', Tipe: 'Tipe 1'  },
-                { Nomor: '6', Nama: 'Macdonald', Merk: 'Merk 1', Tipe: 'Tipe 1'  },
-                { Nomor: '7', Nama: 'Shaw', Merk: 'Merk 1', Tipe: 'Tipe 1'  },
-                { Nomor: '8', Nama: 'Wilson', Merk: 'Merk 1', Tipe: 'Tipe 1'  },
-                { Nomor: '9', Nama: 'Wilson', Merk: 'Merk 1', Tipe: 'Tipe 1'  },
-                { Nomor: '10', Nama: 'Wilson', Merk: 'Merk 1', Tipe: 'Tipe 1'  }
-                ],
-
-                
-
-                topSellingFields2: ['Keluar', 'Masuk', 'Stock', 'actions'],
-
-
-                topSellingItems2: [
-                { Keluar: '1', Masuk: '1', Stock: '1'},
-                { Keluar: '2', Masuk: '2', Stock: '1' },
-                { Keluar: '3', Masuk: '3', Stock: '1' },
-                { Keluar: '4', Masuk: '1', Stock: '1' },
-                { Keluar: '5', Masuk: '1', Stock: '1' },
-                { Keluar: '6', Masuk: '2', Stock: '1' },
-                { Keluar: '7', Masuk: '3', Stock: '1' },
-                { Keluar: '8', Masuk: '4', Stock: '1' },
-                { Keluar: '9', Masuk: '1', Stock: '1' },
-                { Keluar: '10', Masuk: '1', Stock: '1' }
-                ],
-                
-                topSellingPerPage: 3,
-                topSellingCurrentPage: 1,
-                items: [
-                            {
-                                1: '1',
-                                2: '2',
-                                3: '3',
-                                4: '4',
-                                5: '5',
-                                6: '6',
-                                7: '7',
-                                8: '8',
-                                9: '9',
-                                10: '10',
-                                11: '11',
-                                12: '12',
-                                13: '0',
-                                14: '0',
-                                15: '0',
-                                16: '0',
-                                17: '0',
-                                18: '0',
-                                19: '0',
-                                20: '0',
-                                21: '0',
-                                22: '0',
-                                23: '0',
-                                24: '0',
-                            },
-                            {
-                                1: '0',
-                                2: '0',
-                                3: '0',
-                                4: '0',
-                                5: '0',
-                                6: '0',
-                                7: '0',
-                                8: '0',
-                                9: '0',
-                                10: '0',
-                                11: '0',
-                                12: '0',
-                                13: '0',
-                                14: '0',
-                                15: '0',
-                                16: '0',
-                                17: '0',
-                                18: '0',
-                                19: '0',
-                                20: '0',
-                                21: '0',
-                                22: '0',
-                                23: '0',
-                                24: '0',
-                            },
-                            {
-                                1: '0',
-                                2: '0',
-                                3: '0',
-                                4: '0',
-                                5: '0',
-                                6: '0',
-                                7: '0',
-                                8: '0',
-                                9: '0',
-                                10: '0',
-                                11: '0',
-                                12: '0',
-                                13: '0',
-                                14: '0',
-                                15: '0',
-                                16: '0',
-                                17: '0',
-                                18: '0',
-                                19: '0',
-                                20: '0',
-                                21: '0',
-                                22: '0',
-                                23: '0',
-                                24: '0',
-                            },
-                            {
-                                1: '0',
-                                2: '0',
-                                3: '0',
-                                4: '0',
-                                5: '0',
-                                6: '0',
-                                7: '0',
-                                8: '0',
-                                9: '0',
-                                10: '0',
-                                11: '0',
-                                12: '0',
-                                13: '0',
-                                14: '0',
-                                15: '0',
-                                16: '0',
-                                17: '0',
-                                18: '0',
-                                19: '0',
-                                20: '0',
-                                21: '0',
-                                22: '0',
-                                23: '0',
-                                24: '0',
-                            },
-                            {
-                                1: '0',
-                                2: '0',
-                                3: '0',
-                                4: '0',
-                                5: '0',
-                                6: '0',
-                                7: '0',
-                                8: '0',
-                                9: '0',
-                                10: '0',
-                                11: '0',
-                                12: '0',
-                                13: '0',
-                                14: '0',
-                                15: '0',
-                                16: '0',
-                                17: '0',
-                                18: '0',
-                                19: '0',
-                                20: '0',
-                                21: '0',
-                                22: '0',
-                                23: '0',
-                                24: '0',
-                            },
-                            {
-                                1: '0',
-                                2: '0',
-                                3: '0',
-                                4: '0',
-                                5: '0',
-                                6: '0',
-                                7: '0',
-                                8: '0',
-                                9: '0',
-                                10: '0',
-                                11: '0',
-                                12: '0',
-                                13: '0',
-                                14: '0',
-                                15: '0',
-                                16: '0',
-                                17: '0',
-                                18: '0',
-                                19: '0',
-                                20: '0',
-                                21: '0',
-                                22: '0',
-                                23: '0',
-                                24: '0',
-                            },
-                            {
-                                1: '0',
-                                2: '0',
-                                3: '0',
-                                4: '0',
-                                5: '0',
-                                6: '0',
-                                7: '0',
-                                8: '0',
-                                9: '0',
-                                10: '0',
-                                11: '0',
-                                12: '0',
-                                13: '0',
-                                14: '0',
-                                15: '0',
-                                16: '0',
-                                17: '0',
-                                18: '0',
-                                19: '0',
-                                20: '0',
-                                21: '0',
-                                22: '0',
-                                23: '0',
-                                24: '0',
-                            },
-                            {
-                                1: '0',
-                                2: '0',
-                                3: '0',
-                                4: '0',
-                                5: '0',
-                                6: '0',
-                                7: '0',
-                                8: '0',
-                                9: '0',
-                                10: '0',
-                                11: '0',
-                                12: '0',
-                                13: '0',
-                                14: '0',
-                                15: '0',
-                                16: '0',
-                                17: '0',
-                                18: '0',
-                                19: '0',
-                                20: '0',
-                                21: '0',
-                                22: '0',
-                                23: '0',
-                                24: '0',
-                            },
-                            {
-                                1: '0',
-                                2: '0',
-                                3: '0',
-                                4: '0',
-                                5: '0',
-                                6: '0',
-                                7: '0',
-                                8: '0',
-                                9: '0',
-                                10: '0',
-                                11: '0',
-                                12: '0',
-                                13: '0',
-                                14: '0',
-                                15: '0',
-                                16: '0',
-                                17: '0',
-                                18: '0',
-                                19: '0',
-                                20: '0',
-                                21: '0',
-                                22: '0',
-                                23: '0',
-                                24: '0',
-                            }
-                        ]
-                    }
+            }
         },
         
         mounted() {

@@ -198,7 +198,7 @@
                     //     sortByFormatted: true,
                     //     filterByFormatted: true
                     // },
-                { key: 'actions', label: 'Actions' }
+                { key: 'actions', label: 'Aksi', class: 'text-md-center text-left' }
                 ],
                 totalRows: 1,
                 currentPage: 1,

@@ -35,13 +35,13 @@
                         <b-button  id="show-btn"  class="rounded-pill text-white" variant="danger" @click="showModal">Hapus</b-button>
                     </template>
 
-                    <template #row-details="row">
+                    <!-- <template #row-details="row">
                         <b-card>
                         <ul>
                             <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
                         </ul>
                         </b-card>
-                    </template>
+                    </template> -->
                     </b-table>
 
                     <!-- Info modal -->
@@ -143,7 +143,7 @@
                     //     sortByFormatted: true,
                     //     filterByFormatted: true
                     // },
-                { key: 'actions', label: 'Actions' }
+                    { key: 'actions', label: 'Aksi', class: 'text-md-center text-left'  }
                 ],
                 totalRows: 1,
                 currentPage: 1,

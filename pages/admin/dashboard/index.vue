@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div style="background: linear-gradient(75.38deg, #F5509F 3.3%, #FE6F70 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 mb-4">
+                    <div style="background: linear-gradient(75.38deg, #41E296 3.3%, #3BB5B5 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
                             <div  class="col text-left">
                                 <div style="font-size:4em">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div style="background: linear-gradient(75.38deg, #41E296 3.3%, #3BB5B5 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 mb-4">
+                    <div style="background: linear-gradient(75.38deg, #F5509F 3.3%, #FE6F70 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
                             <div  class="col text-left">
                                 <div style="font-size:4em">
@@ -75,18 +75,91 @@
 
 
             <div class="row">
-                <div class="col-12 mb-3">
+                <div class="col-lg-8 col-12 mb-3">
                     <div class="bg-white p-3 text-left rounded-8 h-100">
-                        <h1>Pendapatan</h1>
+                        <div class="d-flex">
+                            <div class="flex-fill">
+                                <h2>Pendapatan</h2>
+                            </div>
+                            <div class="w-50">
+
+                                <!-- <v-calendar />
+                                <v-date-picker v-model="date_today" /> -->
+                                <vue2-datepicker v-model="date_range" class="w-100" placeholder="Pilih rentang waktu" range @change="datePickerRangeChangedHandler($event)"></vue2-datepicker>
+                                <!-- <vue2-daterangepicker
+                                ref="picker" v-model="dateRange"  class="w-100" placeholder="Pilih rentang waktu">
+                                    <template v-slot:input="picker" style="min-width: 350px;">
+                                            aaaaa
+                                        {{ picker.startDate  }} - {{ picker.endDate  }}
+                                    </template>
+                                </vue2-daterangepicker> -->
+                            </div>
+                        </div>
+
+                        <div>
+                        </div>
 
                         <div class="m-3 mt-5 ">
-                            <line-chart id="revenue-chart" :data="revenueChartData" :options="revenueChartOptions" :height="160" class="w-100" />
+                            <line-chart id="revenue-chart" :data="revenueChartData" :options="revenueChartOptions" class="w-100" />
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-4 col-12 mb-3">
+                    <div class="bg-white p-3 rounded-8">
+                        <h2>Hari Ini</h2>
+                        <div class="mb-3">
+                            Senin, 21 Desember 2021
+                        </div>
+                        <!-- <table class="text-left w-100">
+                            <tr>
+                                <td class="w-50 text-20 text-primary"><fa :icon="['fas','shopping-cart']"/>Pesanan</td>
+                                <td>:</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 text-20 text-success"><fa :icon="['fas','donate']"/>Pendapatan</td>
+                                <td>:</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 text-20 text-danger"><fa :icon="['fas','coins']"/>Pengeluaran</td>
+                                <td>:</td>
+                                <td>2</td>
+                            </tr>
+                        </table> -->
+                        <div class="row text-left">
+                            <div class="col-12 text-20 text-primary">
+                                <fa :icon="['fas','shopping-cart']"  /> Pesanan 
+                                <div class="text-28 font-weight-bold text-right border-bottom mb-2">
+                                    10
+                                </div>
+                            </div>
+                            <div class="col-12 text-20 text-success">
+                                <fa :icon="['fas','donate']"  /> Pemasukan 
+                                <div class="text-28 font-weight-bold text-right  border-bottom mb-2" >
+                                    Rp 1.000.000
+                                </div>
+                            </div>
+                            <div class="col-12 text-20 text-danger">
+                                <fa :icon="['fas','coins']"  /> Penjualan 
+                                <div class="text-28 font-weight-bold text-right  border-bottom mb-2" >
+                                    Rp 500.000
+                                </div>
+                            </div>
+                            <!-- <div class="col">
+                                :
+                            </div>
+                            <div class="col">
+                                1
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="col-lg-3 col-12 mb-3">
                     <div class="bg-white p-3 text-left rounded-8 h-100">
-                        <h1 class="mb-3">Top Selling Item</h1>
+                        <h2 class="mb-3">Top Selling Item</h2>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -143,18 +216,19 @@
                     <div class="bg-white p-3 text-left rounded-8 h-100">
                         <div class="d-flex">
                             <div class="flex-fill">
-                                <h1>Penjualan Tahun 2020</h1>
+                                <h2>Grafik Penjualan</h2>
                             </div>
-                            <div>
-                                <BaseSelect
+                            <div class="w-50">
+                                <!-- <BaseSelect
                                 :options="['Terbaru', 'Terlama']"
                                 placeholder="Pilih Urutkan"
-                                />
+                                /> -->
+                                <vue2-datepicker v-model="date_range" class="w-100" placeholder="Pilih rentang waktu" range @change="datePickerRangeChangedHandler($event)"></vue2-datepicker>
                             </div>
                         </div>
 
                         <div class="m-3 mt-5 ">
-                            <line-chart :data="barChartData" :options="barChartOptions" :height="140" class="w-100" />
+                            <line-chart :data="barChartData" :options="barChartOptions" class="w-100" />
                         </div>
                     </div>
                 </div>
@@ -164,7 +238,7 @@
             <b-row class="mt-3 pb-5">
                 <b-col>
                     <div class="bg-white shadow rounded-8 p-2 text-left pl-4">
-                        <h1>Daftar Pesanan</h1>
+                        <h2>Daftar Pesanan</h2>
 
                         <div class="m-3">
                             <template>
@@ -196,7 +270,7 @@
                                             </span>
                                         </template>
 
-                                        <template #cell(actions)="row">
+                                        <template #cell(aksi)="row">
                                             <b-button class="rounded-pill text-white" variant="success" size="sm"  @click="info(row.item, row.index, $event.target)">
                                             Lihat
                                             </b-button>
@@ -398,6 +472,12 @@ export default {
     middleware: 'adminAuthenticated',
     data() {
         return {
+            date_range: null,
+            dateRange: {
+                startDate: null,
+                endDate: null,
+            },
+            
 
             chartHeight : 200,
 
@@ -462,11 +542,11 @@ export default {
                 labels: ['1 Jan', '2 Jan', '3 Jan', '4 Jan', '5 Jan', '6 Jan', '7 Jan'],
                 datasets: [
                     {
-                        label: 'Penjualan',
+                        label: 'Pemasukan',
                         fill: false,
                         data: [100000,800000,500000,200000,800000,200000,800000,],
-                        backgroundColor: '#5C7CE9',
-                        borderColor: '#5C7CE9',
+                        backgroundColor: '#41E296',
+                        borderColor: '#41E296',
                         // lineTension: 0,
                         pointBorderWidth: 10,
                         // borderWidth: .5
@@ -485,6 +565,7 @@ export default {
             },
             revenueChartOptions: {
                 responsive: true,
+                maintainAspectRatio:false,
                 scales: {
                 xAxes: [{
                     gridLines: {
@@ -527,12 +608,14 @@ export default {
             },
 
             barChartData: {
-                labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                // labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                
+                labels: ['1 Jan', '2 Jan', '3 Jan', '4 Jan', '5 Jan', '6 Jan', '7 Jan'],
                 datasets: [
                     {
                         label: 'Penjualan',
                         fill: false,
-                        data: [100, 135, 159, 115, 200, 175, 135, 215, 175, 135, 215, 175],
+                        data: [10, 13, 15, 11, 20, 17, 13],
                         backgroundColor: '#DC0C17',
                         borderColor: '#DC0C17',
                         lineTension: 0,
@@ -553,6 +636,7 @@ export default {
             },
             barChartOptions: {
                 responsive: true,
+                maintainAspectRatio:false,
                 scales: {
                 xAxes: [{
                     gridLines: {
@@ -576,7 +660,7 @@ export default {
                         beginAtZero: true,
                         // max: 1000,
                         min: 0,
-                        stepSize: 50,
+                        stepSize: 10,
                         fontColor: "#707070",
                         fontFamily: "Source Sans Pro"
                     },
@@ -635,7 +719,7 @@ export default {
                     sortByFormatted: true,
                     filterByFormatted: true
                 },
-                { key: 'actions', label: 'Actions', class: 'text-md-center text-left' }
+                { key: 'aksi', label: 'Aksi', class: 'text-md-center text-left' }
             ],
             totalRows: 1,
             currentPage: 1,
@@ -682,6 +766,18 @@ methods: {
     handleResize() {
         this.windowH.width = window.innerWidth;
         this.windowH.height = window.innerHeight;
+    },
+    datePickerRangeChangedHandler(e){
+        // console.log("eeee",this.dateDiffInDays(new Date(e[1])-new Date(e[0])));
+        console.log("eeee",e[0]);
+    },
+    dateDiffInDays(a, b) {
+        const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+        // Discard the time and time-zone information.
+        const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+        const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
     },
     showModal() {
         this.$refs['my-modal'].show()

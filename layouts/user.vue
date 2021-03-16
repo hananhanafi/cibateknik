@@ -155,24 +155,12 @@
     export default {
         data() {
         return {
-            windowH: {
-                    width: 0,
-                    height: 0
-                }
             }
         },
         computed: {
             getUserInfo(){
                 return this.$store.state.userInfo;
             }
-        },
-        created() {
-            // window.addEventListener('resize', this.handleResize);
-            this.handleResize();
-        },
-        destroyed() {
-            // window.removeEventListener('resize', this.handleResize);
-            this.handleResize();
         },
         mounted() {
             // console.log("routeparams",this.$route.name);
@@ -184,14 +172,10 @@
                 // console.log("route/",this.$route.name)
                 return this.$route.name.includes(name);
             },
-            handleResize() {
-                this.windowH.width = window.innerWidth;
-                this.windowH.height = window.innerHeight;
-            },
             logout() {
             // Code will also be required to invalidate the JWT Cookie on external API
                 this.$store.commit('purgeAuth');
-                this.$router.push('/');
+                this.$router.push('/user/login');
             }
         }
     }

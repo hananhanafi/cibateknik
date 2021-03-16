@@ -19,29 +19,34 @@
                                 <div class="p-md-5 p-4 text-medium">
                                     <h2 class="font-weight-bold" >Login</h2>
 
-                                    <b-input-group>
-                                        <b-form-input v-model="email" class="mb-2" placeholder="Email"></b-form-input>
-                                    </b-input-group>
-                                    <div v-if="submitStatus == 'ERROR' && !$v.email.required" class="text-danger mb-2">Email harus diisi</div>
+                                    <form>
+                                        <b-input-group>
+                                            <b-form-input v-model="email" type="email" class="mb-2" :class="submitStatus == 'ERROR' && !$v.email.required ? 'is-invalid' : ''"  placeholder="Email"></b-form-input>
+                                        </b-input-group>
+                                        <div v-if="submitStatus == 'ERROR' && !$v.email.required" class="text-danger mb-2">Email harus diisi</div>
 
-                                    
-                                    <b-input-group>
-                                        <b-form-input v-model="password" class="mb-2 w-100" placeholder="Password" :type="showPassword ? 'text' : 'password' ">
-                                        </b-form-input>
                                         
-                                        <div class="float-right position-absolute" style="right:0">
-                                            <b-button pill variant="outline-lighr" @click="showPassword=!showPassword">
-                                                <fa  :icon="['fas',showPassword ? 'eye-slash': 'eye']"  />
-                                            </b-button>
-                                        </div>
-                                    </b-input-group>
-                                    <div v-if="submitStatus == 'ERROR' && !$v.password.required" class="text-danger mb-2">Password harus diisi</div>
+                                        <b-input-group>
+                                            <b-form-input v-model="password" class="mb-2 w-100" :class="submitStatus == 'ERROR' && !$v.password.required ? 'is-invalid' : ''" placeholder="Password" :type="showPassword ? 'text' : 'password' ">
+                                            </b-form-input>
+                                            
+                                            <div class="float-right position-absolute" style="right:0;z-index:999">
+                                                <b-button pill variant="outline-lighr" @click="showPassword=!showPassword">
+                                                    <fa  :icon="['fas',showPassword ? 'eye-slash': 'eye']"  />
+                                                </b-button>
+                                            </div>
+                                        </b-input-group>
+                                        <div v-if="submitStatus == 'ERROR' && !$v.password.required" class="text-danger mb-2">Password harus diisi</div>
 
-                                    <div class="text-center mt-2">
-                                        <button :disabled="submitStatus=='PENDING'" class="btn btn-lg bg-main-color btn-dark w-100" type="button" @click="login()" >Masuk</button>
-                                    </div>
-                                    
-                                    <div v-if="showError" class="text-danger">{{errorMessage}}</div>
+                                        <div class="text-center mt-2 mb-2">
+                                            <ButtonLoading v-if="submitStatus=='PENDING'" class="btn btn-lg bg-main-color btn-dark w-100"/>
+
+                                            <button v-else type="submit" class="btn btn-lg bg-main-color btn-dark w-100" @click.prevent="login()" >Masuk</button>
+                                        </div>
+                                        
+                                        <div v-if="showError" class="text-danger">{{errorMessage}}</div>
+
+                                    </form>
 
                                     <div class="py-2"></div>
 
@@ -81,9 +86,9 @@
 
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { required } from 'vuelidate/lib/validators'
-import ApiService from '~/apis/api.service'
+import { validationMixin } from 'vuelidate';
+import { required } from 'vuelidate/lib/validators';
+import ApiService from '~/apis/api.service';
 const Cookie = process.client ? require('js-cookie') : undefined;
     export default {
         mixins: [validationMixin],
@@ -132,12 +137,7 @@ const Cookie = process.client ? require('js-cookie') : undefined;
                     console.log("invalid",this.$v);
                     this.submitStatus = 'ERROR'
                 } else {
-                    // do your submit logic here
-                    // console.log("submit");
                     this.submitStatus = 'PENDING'
-                    // setTimeout(() => {
-                    // this.submitStatus = 'OK'
-                    // }, 500)
                     await ApiService.post("/user/login",{email:this.email,password:this.password})
                     .then( async (response)=>{
                         console.log("res",response);
@@ -168,9 +168,9 @@ const Cookie = process.client ? require('js-cookie') : undefined;
                 meta: [
                 // hid is used as unique identifier. Do not use `vmid` for it as it will not work
                 {
-                    hid: 'description',
-                    name: 'description',
-                    content: 'My custom description'
+                    hid: 'Login',
+                    name: 'Login',
+                    content: 'Login'
                 }
                 ],
                 

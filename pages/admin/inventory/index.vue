@@ -5,149 +5,76 @@
             <div class="bg-white shadow rounded-8 p-2 text-left ">
                 <div class="d-flex flex-row bd-highlight mb-3">
                     <div class="p-2 bd-highlight"><h1>Daftar Produk</h1></div>
-                    <div class="p-2 bd-highlight float-right ml-auto "><b-button id="show-btn"  size="xl"  class="rounded-pill text-white w-100" variant="primary" @click="showModal">Tambah</b-button></div>
+                    <!-- <div class="p-2 bd-highlight float-right ml-auto "><b-button id="show-btn"  size="xl"  class="rounded-pill text-white w-100" variant="primary" @click="isShowModalAddProduct">Tambah</b-button></div> -->
                     <!-- <div class="p-2 bd-highlight">Flex item 3</div> -->
                 </div>
-                
-                <b-container fluid>
-                    <!-- Main table element -->
-                    <b-table
-                    :items="items"
-                    :fields="fields"
-                    :current-page="currentPage"
-                    :per-page="perPage"
-                    stacked="md"
-                    show-empty
-                    small
-                    >
-                    
-                    <template #cell(no)>
-                        1
-                    </template>
 
-                    <template #cell(name)="row">
-                        {{ row.value.first }} {{ row.value.last }}
-                    </template>
-
-                    <!-- eslint-disable-next-line vue/no-unused-vars -->
-                    <template #cell(actions)="row">
-                        <b-button class="rounded-pill text-white" variant="success" size="xl"  @click="$router.push({name:'admin-inventory-detail-produk'})">
-                        Lihat Inventaris
-                        </b-button>
-                    </template>
-
-                    <template #row-details="row">
-                        <b-card>
-                        <ul>
-                            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-                        </ul>
-                        </b-card>
-                    </template>
-                    </b-table>
-
-                    <!-- Info modal -->
-                    <b-modal :id="infoModal.id" title="Detail Customer" ok-only @hide="resetInfoModal">
-                    <b-row>
-                        <b-col>
-                            
-                            <b-img class="w-100" src="~/assets/img/person.png" fluid alt="Responsive image"></b-img>
-                        </b-col>
-                        <b-col md="8">
-                            <div>
-                                <table class="modalInfo">
-                                    <tr>
-                                        <td>
-                                            Nama
-                                        </td>
-                                        <td>
-                                            :
-                                        </td>
-                                        <td>
-                                            {{currentItem ? currentItem.name.first : ''}} {{currentItem ? currentItem.name.first : ''}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Email
-                                        </td>
-                                        <td>
-                                            :
-                                        </td>
-                                        <td>
-                                            hanafi@mail.com
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Nomor HP
-                                        </td>
-                                        <td>
-                                            :
-                                        </td>
-                                        <td>
-                                            081234567890
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Alamat
-                                        </td>
-                                        <td>
-                                            :
-                                        </td>
-                                        <td>
-                                            Jl. Rawa sawah III RT 06/02 No.5 Jakarta
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Tanggal Daftar
-                                        </td>
-                                        <td>
-                                            :
-                                        </td>
-                                        <td>
-                                            {{currentItem ? currentItem.date : ''}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Terakhir Online
-                                        </td>
-                                        <td>
-                                            :
-                                        </td>
-                                        <td>
-                                            {{currentItem ? currentItem.date : ''}}
-                                        </td>
-                                    </tr>
-                                </table>
-                                <!-- <pre>Nama : {{currentItem ? currentItem.name.first : ''}} {{currentItem ? currentItem.name.first : ''}}</pre> -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-md-flex mb-3">
+                                <div class="flex-fill mb-2 mr-2">
+                                    <BaseInput
+                                        id="Cari"
+                                        placeholder="Cari Produk..."
+                                        class="mb-0"
+                                        
+                                    >
+                                        <div slot="afterInput" class="position-absolute"
+                                            style=" right:12px;
+                                                    top: 50%;
+                                                    -ms-transform: translateY(-50%);
+                                                    transform: translateY(-50%);
+                                                    z-index:99"
+                                        >
+                                            <fa class="" :icon="['fas','search']" /> 
+                                        </div>
+                                    </BaseInput>
+                                </div>
+                                <div class="ml-auto mb-2 mr-2" style="width:160px">
+                                    <BaseSelect
+                                    v-model="formData.sort"
+                                    :options="['Terbaru', 'Terlama']"
+                                    placeholder="Pilih Urutkan"
+                                    dense
+                                    />
+                                </div>
+                                <div class="ml-auto mb-2 text-right">
+                                    <button class="btn btn-primary" type="button" @click="showModalAddProduct">Tambah Produk</button>
+                                </div>
                             </div>
-                        </b-col>
-                    </b-row>
-                    <!-- <pre>{{ infoModal.content.name }}</pre> -->
-                    </b-modal>
-                </b-container>
-            </div>
-            
-            <b-modal ref="my-modal" hide-footer>
-                <div class="d-block text-center">
-                    <h5>Edit Status Pesanan</h5>
-                    
-                    <div class="mb-3">
-                        <b-form-input class="rounded-pill mb-2" placeholder="Masukkan nama produk"></b-form-input>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">ID Produk</th>
+                                    <th scope="col">Nama Produk</th>
+                                    <th scope="col" width="300px">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item,i) in items" :key="i">
+                                        <th scope="row">ITEMID{{i+1}}</th>
+                                        <td>Mark</td>
+                                        <td>
+                                            <b-button variant="success" size="sm"  @click="$router.push({name:'admin-inventory-detail-produk'})">
+                                            Lihat Inventaris
+                                            </b-button>
+                                            <b-button variant="outline-primary" size="sm"  @click="$router.push({name:'admin-inventory-tambah'})">
+                                            Tambah Barang
+                                            </b-button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <Pagination/>
+                        </div>
                     </div>
                 </div>
-                <b-row>
-                    <b-col>
-                        <b-button variant="primary" block @click="hideModal">Batal</b-button>
-                    </b-col>
-                    <b-col>
-                        <b-button variant="success" block @click="toggleModal">Simpan</b-button>
-                    </b-col>
-                </b-row>
-            </b-modal>
+            </div>
+
+            <ModalAddProduct :show="isShowModalAddProduct" :data="{title:'Tambah Produk'}" @close="closeModalAddProduct"/>
+            
             
         </b-container>
     </div>
@@ -160,128 +87,28 @@
         middleware: 'adminAuthenticated',
         data() {
             return {
-                items: [
-                    { isActive: true, id:122, name: { first: 'Dickerson', last: 'Macdonald' } },
-                    { isActive: false, id:122, name: { first: 'Larsen', last: 'Shaw' } },
-                    {
-                        isActive: false,
-                        id:122,
-                        name: { first: 'Mini', last: 'Navarro' },
-                        // _rowVariant: 'success'
-                    },
-                    { isActive: false, id:122, name: { first: 'Geneva', last: 'Wilson' } },
-                    { isActive: true, id:122, name: { first: 'Jami', last: 'Carney' } },
-                    { isActive: false, id:122, name: { first: 'Essie', last: 'Dunlap' } },
-                    { isActive: true, id:122, name: { first: 'Thor', last: 'Macdonald' } },
-                    {
-                        isActive: true,
-                        id:122,
-                        name: { first: 'Larsen', last: 'Shaw' },
-                        // _cellVariants: { date: 'danger', isActive: 'warning' }
-                    },
-                    { isActive: false, id:122, name: { first: 'Mitzi', last: 'Navarro' } },
-                    { isActive: false, id:122, name: { first: 'Genevieve', last: 'Wilson' } },
-                    { isActive: true, id:122, name: { first: 'John', last: 'Carney' } },
-                    { isActive: false, id:122, name: { first: 'Dick', last: 'Dunlap' } },
-                    
-                    { isActive: false, id:122, name: { first: 'Mitzi', last: 'Navarro' } },
-                    { isActive: false, id:122, name: { first: 'Genevieve', last: 'Wilson' } },
-                    { isActive: true, id:122, name: { first: 'John', last: 'Carney' } },
-                    { isActive: false, id:122, name: { first: 'Dick', last: 'Dunlap' } },
-                    
-                    { isActive: false, id:122, name: { first: 'Mitzi', last: 'Navarro' } },
-                    { isActive: false, id:122, name: { first: 'Genevieve', last: 'Wilson' } },
-                    { isActive: true, id:122, name: { first: 'John', last: 'Carney' } },
-                    { isActive: false, id:122, name: { first: 'Dick', last: 'Dunlap' } },
-                    
-                    { isActive: false, id:122, name: { first: 'Mitzi', last: 'Navarro' } },
-                    { isActive: false, id:122, name: { first: 'Genevieve', last: 'Wilson' } },
-                    { isActive: true, id:122, name: { first: 'John', last: 'Carney' } },
-                    { isActive: false, id:122, name: { first: 'Dick', last: 'Dunlap' } },
-                    
-                    { isActive: false, id:122, name: { first: 'Mitzi', last: 'Navarro' } },
-                    { isActive: false, id:122, name: { first: 'Genevieve', last: 'Wilson' } },
-                    { isActive: true, id:122, name: { first: 'John', last: 'Carney' } },
-                    { isActive: false, id:122, name: { first: 'Dick', last: 'Dunlap' } },
-                ],
-                fields: [
-                    {key:'no', label: 'No'},
-                    { key: 'id', label: 'ID Produk', sortable: true, sortDirection: 'desc' },
-                    { key: 'name', label: 'Nama Produk', sortable: true, sortDirection: 'desc' },
-                    // { key: 'date', label: 'Tanggal Daftar', sortable: true, class: 'text-center' },
-                    // { key: 'lastOnline', label: 'Terakhir Online', sortable: true, class: 'text-center' },
-                    // {
-                    //     key: 'isActive',
-                    //     label: 'Status',
-                    //     formatter: (value, key, item) => {
-                    //     return value ? 'Yes' : 'No'
-                    //     },
-                    //     sortable: true,
-                    //     sortByFormatted: true,
-                    //     filterByFormatted: true
-                    // },
-                { key: 'actions', label: 'Aksi', class: 'text-md-center text-left' }
-                ],
+                formData: {
+                    sort: null,
+                },
                 totalRows: 1,
                 currentPage: 1,
                 perPage: 20,
+                items: new Array(10),
+
+                isShowModalAddProduct: false,
                 
-                infoModal: {
-                id: 'info-modal',
-                title: '',
-                content: ''
-                },
-                currentItem : {
-                        "isActive": true,
-                        "date": "Kamis,21 Desember 2020",
-                        "name": {
-                            "first": "Dickerson",
-                            "last": "Macdonald"
-                        }
-                }
             }
         },
         
         mounted() {
-            // Set the initial number of items
-            this.totalRows = this.items.length
         },
         methods: {
-            showModal() {
-                this.$refs['my-modal'].show()
+            showModalAddProduct() {
+                this.isShowModalAddProduct = true;
             },
-            hideModal() {
-                this.$refs['my-modal'].hide()
+            closeModalAddProduct() {
+                this.isShowModalAddProduct = false;
             },
-            toggleModal() {
-                // We pass the ID of the button that we want to return focus to
-                // when the modal has hidden
-                this.$refs['my-modal'].toggle('#toggle-btn')
-            },
-            info(item, index, button) {
-                this.infoModal.title = `Row index: ${index}`;
-                this.infoModal.content = JSON.stringify(item, null, 2);
-                this.$root.$emit('bv::show::modal', this.infoModal.id, button);
-                this.currentItem = item;
-            },
-            resetInfoModal() {
-                this.infoModal.title = ''
-                this.infoModal.content = ''
-            },
-            onFiltered(filteredItems) {
-                // Trigger pagination to update the number of buttons/pages due to filtering
-                this.totalRows = filteredItems.length
-                this.currentPage = 1
-            }
         }
     }
 </script>
-
-<style>
-    .red {
-    color: red;
-    }
-    table.modalInfo>tr>td{
-        vertical-align: top;
-    }
-</style>

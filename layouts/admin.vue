@@ -119,7 +119,7 @@ const Cookie = process.client ? require('js-cookie') : undefined;
         },
         methods: {
             isActive(name){
-                return this.$route.name === name;
+                return this.$route.name.includes(name);
             },
             handleResize() {
                 this.windowH.width = window.innerWidth;

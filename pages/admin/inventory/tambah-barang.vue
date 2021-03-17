@@ -3,16 +3,20 @@
         <b-container>
             <!-- <h1 class="red">Customer admin</h1> -->
             <div class="bg-white shadow rounded-8 p-3 text-left ">
-                <h1>Edit Barang</h1>
+                <h2>Tambah Barang</h2>
 
                 <div class="form-group">
                     <div class="mb-3">
-                        <h6>Nama Produk</h6>
+                        <label>Nama Produk</label>
                         <b-form-input disabled class=" mb-2" placeholder="Masukkan nama produk" value="Produk 1"></b-form-input>
                     </div>
                     <div class="mb-3">
-                        <h6>Nama Barang</h6>
-                        <b-form-input v-model="barang.nama" class=" mb-2" placeholder="Masukkan nama barang"></b-form-input>
+                        <BaseInput
+                            id="name"
+                            label="Nama Barang"
+                            placeholder="Masukkan nama barang"
+                            large
+                        />
                     </div>
                     <div class="mb-3">
                         <h6>Informasi Barang</h6>
@@ -25,7 +29,6 @@
                                     </div>
                                     <div class="flex-fill">
                                         <BaseInput
-                                            v-model="info.name"
                                             placeholder="Masukkan keterangan informasi barang"
                                             large
                                         />
@@ -37,7 +40,6 @@
                     <div class="mb-3">
                         <BaseInput
                             id="stock"
-                            v-model="barang.stock"
                             label="Stock Barang"
                             placeholder="Masukkan stock barang"
                             large
@@ -46,7 +48,6 @@
                     <div class="mb-3">
                         <BaseInput
                             id="minimumStock"
-                            v-model="barang.minimumStock"
                             label="Minimum Stock Barang"
                             placeholder="Masukkan minimum stock barang"
                             large
@@ -55,7 +56,6 @@
                     <div class="mb-3">
                         <BaseInput
                             id="price"
-                            v-model="barang.harga"
                             label="Harga"
                             placeholder="Masukkan harga"
                             large
@@ -65,7 +65,7 @@
                         <h6>Foto Barang</h6>
                         
                         <div class="row">
-                            <div v-for="(photo,i) in photos" :key="i" class="col-md-2 col-12 position-relative mb-2 mr-2" >
+                            <div v-for="(photo,i) in photos" :key="i" class="col-md-2 col-12 position-relative mb-2 mr-2">
                                 <div class="btn btn-danger position-absolute"
                                     style=" right:12px;
                                             top: 12px;"
@@ -121,16 +121,6 @@
         middleware: 'adminAuthenticated',
         data() {
             return {
-                barang: {
-                    nama: 'Endmill',
-                    addInfo : {
-                        title: 'Type',
-                        value: 'Endas'
-                    },
-                    stock: 10,
-                    minimumStock: 5,
-                    harga: '100.000'
-                },
                 infoCount: [
                     {name:'Type'},
                     {name:'Ukuran'},
@@ -138,16 +128,12 @@
                     {name:'Jenis'},
                 ],
                 errorsPhoto: null,
-                photos: [
-                    {
-                        objectURL: process.env.baseUrl+"/_nuxt/assets/img/item.png"
-                    }
-                ],
+                photos: [],
+                files: [],
 
             }
         },
         methods: {
-            
             addPhoto(files) {
                 files.forEach(file => {
                     this.photos.push({
@@ -174,6 +160,7 @@
                 this.photos.splice(index,1)
             }
         }
+        
     }
 </script>
 

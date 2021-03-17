@@ -16,9 +16,10 @@
                 />
 
                 <label>Informasi Tambahan</label>
-                <div v-for="(info,i) in infoCount" :key="i" class="d-flex">
+                <div v-for="(info,i) in additionalInformations" :key="i" class="d-flex">
                     <BaseInput
                         id="name"
+                        v-model="info.name"
                         placeholder="Informasi tambahan"
                         class="mr-2 flex-fill"
                         large
@@ -28,7 +29,7 @@
                         <button type="button"  class="btn btn-primary" @click="addInfo()"><fa :icon="['fas','plus']" /></button>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-danger" @click="minInfo()"><fa :icon="['fas','minus']" /></button>
+                        <button type="button" class="btn btn-danger" @click="minInfo(i)"><fa :icon="['fas','minus']" /></button>
                     </div>
                 </div>
             </div>
@@ -53,7 +54,9 @@ export default {
     },
     data() {
         return {
-            infoCount: 1,
+            additionalInformations: [{
+                name: null,
+            }],
 
         }
     },
@@ -61,11 +64,13 @@ export default {
     },
     methods: {
         addInfo(){
-            this.infoCount = this.infoCount+1;
+            // this.additionalInformations = this.additionalInformations+1;
+            this.additionalInformations.push({name:null})
         },
-        minInfo(){
-            if(this.infoCount>1){
-                this.infoCount = this.infoCount-1;
+        minInfo(index){
+            if(this.additionalInformations.length>1){
+                // this.additionalInformations = this.additionalInformations-1;
+                this.additionalInformations.splice(index,1);
             }
         },
     }

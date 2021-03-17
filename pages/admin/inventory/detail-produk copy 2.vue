@@ -5,7 +5,7 @@
             <div class="bg-white shadow rounded-8 p-3 text-left "> 
                 <div class="d-flex flex-row bd-highlight mb-3">
                     <div class="p-2 bd-highlight"><h1>Produk</h1></div>
-                    <div class="p-2 bd-highlight float-right ml-auto "><b-button id="show-btn"  size="xl"  class="rounded-pill text-white w-100" variant="primary" @click="$router.push({name:'admin-inventory-tambah'})">Tambah</b-button></div>
+                    <div class="p-2 bd-highlight float-right ml-auto "><b-button id="show-btn"  size="xl"  class="rounded-pill text-white w-100" variant="primary" @click="$router.push({name:'admin-inventory-tambah-barang'})">Tambah</b-button></div>
                     <!-- <div class="p-2 bd-highlight">Flex item 3</div> -->
                 </div>
                 <div>

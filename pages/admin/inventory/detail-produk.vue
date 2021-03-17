@@ -9,7 +9,7 @@
                 </div>
 
                 
-                <b-row>
+                <!-- <b-row>
                     <b-col md="8">
                         <b-form-input class="rounded-pill mb-2" placeholder="Cari Nama Barang"></b-form-input>
                     </b-col>
@@ -17,10 +17,40 @@
                         <b-form-select v-model="selectedMonth" class="rounded-pill mb-2" :options="optionsMonth"></b-form-select>
                     </b-col>
                     <b-col md="2">
-                        <b-button  id="show-btn"  class="rounded-pill text-white w-100" variant="primary" @click="$router.push({name:'admin-inventory-tambah'})">Tambah</b-button>
+                        <b-button  id="show-btn"  class="rounded-pill text-white w-100" variant="primary" @click="$router.push({name:'admin-inventory-tambah-barang'})">Tambah</b-button>
                     </b-col>
-                </b-row>
-                
+                </b-row> -->
+                <div class="d-md-flex mb-3">
+                    <div class="flex-fill mb-2 mr-2">
+                        <BaseInput
+                            id="Cari"
+                            placeholder="Cari Produk..."
+                            class="mb-0"
+                            
+                        >
+                            <div slot="afterInput" class="position-absolute"
+                                style=" right:12px;
+                                        top: 50%;
+                                        -ms-transform: translateY(-50%);
+                                        transform: translateY(-50%);
+                                        z-index:99"
+                            >
+                                <fa class="" :icon="['fas','search']" /> 
+                            </div>
+                        </BaseInput>
+                    </div>
+                    <div class="ml-auto mb-2 mr-2" style="width:160px">
+                        <BaseSelect
+                        :options="['Terbaru', 'Terlama']"
+                        placeholder="Pilih Urutkan"
+                        dense
+                        class="rounded-pill"
+                        />
+                    </div>
+                    <div class="ml-auto mb-2 text-right">
+                        <button class="btn btn-primary" type="button" @click="$router.push({name:'admin-inventory-tambah-barang'})">Tambah Barang</button>
+                    </div>
+                </div>
                 <table class="table table-responsive-lg w-100">
                     <tr class="w-100">
                         <td class="flex-fill mx-0 px-0">
@@ -139,11 +169,11 @@
                                         <td>3</td>
                                         <td>
                                             <div class="d-flex flex-row bd-highlight">
-                                                <div class="w-50 bg-success rounded-pill text-center text-white" @click="showModal">Catat</div>
+                                                <div class="w-50 btn btn-success btn-sm text-white mr-2" @click="showModal">Catat Barang</div>
                                                 <div class="w-50">
                                                     <NuxtLink to="/admin/inventory/edit-barang">
-                                                        <div  class="rounded-pill text-white bg-warning text-center w-100">
-                                                            Edit
+                                                        <div  class="btn btn-outline-warning btn-sm w-100">
+                                                            Edit Barang
                                                         </div>
                                                     </NuxtLink>
                                                 </div>

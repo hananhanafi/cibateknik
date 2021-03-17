@@ -59,7 +59,7 @@
                                             <b-button variant="success" size="sm"  @click="$router.push({name:'admin-inventory-detail-produk'})">
                                             Lihat Inventaris
                                             </b-button>
-                                            <b-button variant="outline-primary" size="sm"  @click="$router.push({name:'admin-inventory-tambah'})">
+                                            <b-button variant="outline-primary" size="sm"  @click="$router.push({name:'admin-inventory-tambah-barang'})">
                                             Tambah Barang
                                             </b-button>
                                         </td>

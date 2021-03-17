@@ -40,7 +40,7 @@
                                     />
                                 </div>
                                 <div class="ml-auto mb-2 text-right">
-                                    <button class="btn btn-primary" type="button" @click="showModalAddProduct">Tambah Produk</button>
+                                    <button class="btn btn-primary  mt-1" type="button" @click="showModalAddProduct">Tambah Produk</button>
                                 </div>
                             </div>
                             <table class="table">

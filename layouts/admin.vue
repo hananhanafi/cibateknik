@@ -35,14 +35,14 @@
                     
                         <div class="d-flex bd-highlight py-3">
                             <div class="p-2 w-100 bd-highlight text-white"><h2>Ciba Teknik</h2></div>
-                            <div class="p-2 flex-shrink-1 bd-highlight"><b-button variant="dark" class="text-danger" block @click="hide"> <fa :icon="['fas','times']"/> </b-button></div>
+                            <div class="p-2 flex-shrink-1 bd-highlight"><a  class="btn btn-danger" block @click="hide"> <fa :icon="['fas','times']"/> </a></div>
                         </div>
                         <ul class="ml-0 pl-0">
                             <li>
                                 <div class="w-100 text-white ">
                                     <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/dashboard"
                                     :class="{ 'active-menu' : isActive('admin-dashboard') }">
-                                        Dashboard
+                                        <fa :icon="['fas','chart-bar']"/> Dashboard
                                     </NuxtLink>
                                 </div>
                             </li>
@@ -50,7 +50,7 @@
                                 <div class="w-100">
                                     <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/inventory"
                                     :class="{ 'active-menu' : isActive('admin-inventory') }">
-                                        Inventory
+                                        <fa :icon="['fas','boxes']"/> Inventory
                                     </NuxtLink>
                                 </div>
                             </li>
@@ -58,7 +58,7 @@
                                 <div class="w-100">
                                     <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/post"
                                     :class="{ 'active-menu' : isActive('admin-post') }">
-                                        Post
+                                        <fa :icon="['fas','columns']"/> Katalog
                                     </NuxtLink>
                                 </div>
                             </li>
@@ -66,7 +66,7 @@
                                 <div class="w-100">
                                     <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/customer"
                                     :class="{ 'active-menu' : isActive('admin-customer') }">
-                                        Customer
+                                        <fa :icon="['fas','users']"/> Customer
                                     </NuxtLink>
                                 </div>
                             </li>
@@ -74,7 +74,7 @@
                                 <div class="w-100">
                                     <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/inbox"
                                     :class="{ 'active-menu' : isActive('admin-inbox') }">
-                                        Inbox
+                                        <fa :icon="['fas','inbox']"/> Inbox
                                     </NuxtLink>
                                 </div>
                             </li>

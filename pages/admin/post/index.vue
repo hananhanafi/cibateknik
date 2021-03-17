@@ -1,167 +1,70 @@
 <template>
     <div class="text-center">
-        <b-container>
+        <div class="container">
             <!-- <h1 class="red">Customer admin</h1> -->
             <div class="bg-white shadow rounded-8 p-4 text-left ">
                 <h1>Katalog Barang</h1>
-                <b-row>
-                    <b-col md="8">
-                        <b-form-input class="rounded-pill mb-2" placeholder="Cari Nama Barang"></b-form-input>
-                    </b-col>
-                    <b-col md="2">
-                        <b-form-select v-model="selected" class="rounded-pill mb-2" :options="options"></b-form-select>
-                    </b-col>
-                    <b-col md="2">
-                        <b-button  id="show-btn"  class="rounded-pill text-white w-100" variant="danger" @click="showModal">Tambah</b-button>
-                    </b-col>
-                </b-row>
 
-                <b-row>
-                    <b-col md="3">
-                        <b-card title="Title" img-src="https://ecs7.tokopedia.net/img/cache/700/product-1/2017/5/1/178052659/178052659_01cb8620-13b5-468f-a065-f6e0ecbbef43_2048_0.jpg" img-alt="Image" img-top>
-                            <b-card-text>
-                                This is a wider card with supporting text below as a natural lead-in to additional content.
-                                This content is a little bit longer.
-                            </b-card-text>
-                            <template #footer>
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </template>
-                        </b-card>
-                    </b-col>
-                    <b-col md="3">
-                        <b-card title="Title" img-src="https://ecs7.tokopedia.net/img/cache/700/product-1/2017/5/1/178052659/178052659_01cb8620-13b5-468f-a065-f6e0ecbbef43_2048_0.jpg" img-alt="Image" img-top>
-                            <b-card-text>
-                                This is a wider card with supporting text below as a natural lead-in to additional content.
-                                This content is a little bit longer.
-                            </b-card-text>
-                            <template #footer>
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </template>
-                        </b-card>
-                    </b-col>
-                    <b-col md="3">
-                        <b-card title="Title" img-src="https://ecs7.tokopedia.net/img/cache/700/product-1/2017/5/1/178052659/178052659_01cb8620-13b5-468f-a065-f6e0ecbbef43_2048_0.jpg" img-alt="Image" img-top>
-                            <b-card-text>
-                                This is a wider card with supporting text below as a natural lead-in to additional content.
-                                This content is a little bit longer.
-                            </b-card-text>
-                            <template #footer>
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </template>
-                        </b-card>
-                    </b-col>
-                    <b-col md="3">
-                        <b-card title="Title" img-src="https://ecs7.tokopedia.net/img/cache/700/product-1/2017/5/1/178052659/178052659_01cb8620-13b5-468f-a065-f6e0ecbbef43_2048_0.jpg" img-alt="Image" img-top>
-                            <b-card-text>
-                                This is a wider card with supporting text below as a natural lead-in to additional content.
-                                This content is a little bit longer.
-                            </b-card-text>
-                            <template #footer>
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </template>
-                        </b-card>
-                    </b-col>
-
-                    
-                    <b-col md="3">
-                        <b-card title="Title" img-src="https://ecs7.tokopedia.net/img/cache/700/product-1/2017/5/1/178052659/178052659_01cb8620-13b5-468f-a065-f6e0ecbbef43_2048_0.jpg" img-alt="Image" img-top>
-                            <b-card-text>
-                                This is a wider card with supporting text below as a natural lead-in to additional content.
-                                This content is a little bit longer.
-                            </b-card-text>
-                            <template #footer>
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </template>
-                        </b-card>
-                    </b-col>
-                    
-                    <b-col md="3">
-                        <b-card title="Title" img-src="https://ecs7.tokopedia.net/img/cache/700/product-1/2017/5/1/178052659/178052659_01cb8620-13b5-468f-a065-f6e0ecbbef43_2048_0.jpg" img-alt="Image" img-top>
-                            <b-card-text>
-                                This is a wider card with supporting text below as a natural lead-in to additional content.
-                                This content is a little bit longer.
-                            </b-card-text>
-                            <template #footer>
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </template>
-                        </b-card>
-                    </b-col>
-                    
-                    <b-col md="3">
-                        <b-card title="Title" img-src="https://ecs7.tokopedia.net/img/cache/700/product-1/2017/5/1/178052659/178052659_01cb8620-13b5-468f-a065-f6e0ecbbef43_2048_0.jpg" img-alt="Image" img-top>
-                            <b-card-text>
-                                This is a wider card with supporting text below as a natural lead-in to additional content.
-                                This content is a little bit longer.
-                            </b-card-text>
-                            <template #footer>
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </template>
-                        </b-card>
-                    </b-col>
-                    
-                    <b-col md="3">
-                        <b-card title="Title" img-src="https://ecs7.tokopedia.net/img/cache/700/product-1/2017/5/1/178052659/178052659_01cb8620-13b5-468f-a065-f6e0ecbbef43_2048_0.jpg" img-alt="Image" img-top>
-                            <b-card-text>
-                                This is a wider card with supporting text below as a natural lead-in to additional content.
-                                This content is a little bit longer.
-                            </b-card-text>
-                            <template #footer>
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </template>
-                        </b-card>
-                    </b-col>
-                </b-row>
-                <div class="w-50 mx-auto mt-3">
-                    <b-pagination
-                    v-model="currentPage"
-                    :total-rows="totalRows"
-                    :per-page="perPage"
-                    align="fill"
-                    size="sm"
-                    class="my-0"
-                    ></b-pagination>
+                <div class="d-md-flex mb-3">
+                    <div class="flex-fill mb-2 mr-2">
+                        <BaseInput
+                            id="Cari"
+                            placeholder="Cari Produk..."
+                            class="mb-0"
+                            
+                        >
+                            <div slot="afterInput" class="position-absolute"
+                                style=" right:12px;
+                                        top: 50%;
+                                        -ms-transform: translateY(-50%);
+                                        transform: translateY(-50%);
+                                        z-index:99"
+                            >
+                                <fa class="" :icon="['fas','search']" /> 
+                            </div>
+                        </BaseInput>
+                    </div>
+                    <div class="ml-auto mb-2 mr-2" style="width:160px">
+                        <BaseSelect
+                        v-model="formData.product"
+                        :options="['Produk 1', 'Produk 2']"
+                        placeholder="Pilih Produk"
+                        dense
+                        />
+                    </div>
+                    <div class="ml-auto mb-2 mr-2" style="width:160px">
+                        <BaseSelect
+                        v-model="formData.sort"
+                        :options="['Terbaru', 'Terlama']"
+                        placeholder="Pilih Urutkan"
+                        dense
+                        />
+                    </div>
+                    <div class="ml-auto mb-2 text-right">
+                        <button class="btn btn-primary mt-1" type="button" @click="showModalAddPostItem">Tambah Barang</button>
+                    </div>
                 </div>
 
-            </div>
-        </b-container>
-
-        <b-modal ref="my-modal" hide-footer>
-            <div class="d-block text-center">
-                <h5>Tambahkan barang ke dalam katalog</h5>
-                
-                <div class="mb-3 text-left">
-                    <div class="mb-3">
-                        <h6>Pilih Produk</h6>
-                        <b-form-select v-model="selected" :options="options"></b-form-select>
+                <div class="row">
+                    <div v-for="(i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-4">
+                        <ItemCard/>
                     </div>
-
-                    <div v-show="selected" class="mb-3">
-                        <h6>Pilih Barang</h6>
-                        <b-form-select v-show="selected" v-model="selectedItem" :options="optionsItem"></b-form-select>
+                    <div class="col-12 d-flex">
+                        <div>
+                            Menampilkan 1 - 10 dari 40 item
+                        </div>
                     </div>
-                    <div v-show="selectedItem">
-                        <h6>Informasi Tambahan Barang</h6>
-                        <b-form-textarea
-                        id="textarea"
-                        v-model="text"
-                        placeholder="Masukkan Informasi Tambahan Barang"
-                        rows="3"
-                        max-rows="6"
-                        ></b-form-textarea>
+                    <div class="col-12 d-flex">
+                        <div class="ml-auto">
+                            <button class="btn btn-primary border w-100">Muat Lagi</button>
+                        </div>
                     </div>
-                    <!-- <b-form-select v-model="selected" :options="options" size="sm" class="mt-3"></b-form-select> -->
-                    <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
                 </div>
             </div>
-            <b-row>
-                <b-col>
-                    <b-button variant="primary" block @click="hideModal">Batal</b-button>
-                </b-col>
-                <b-col>
-                    <b-button variant="success" block @click="toggleModal">Simpan</b-button>
-                </b-col>
-            </b-row>
-        </b-modal>
+        </div>
+
+        
+        <ModalAddPostItem :show="isShowModalAddPostItem" :data="{title:'Tambah Barang ke Katalog'}" @close="closeModalAddPostItem"/>
     </div>
 </template>
 
@@ -172,32 +75,20 @@
         data() {
             return {
                 
-                text: '',
-                selected: null,
-                options: [
-                    { value: null, text: 'Pilih Produk' },
-                    { value: 'a', text: 'Produk 1' },
-                    { value: 'b', text: 'Produk 2' },
-                ],
-                selectedItem: null,
-                optionsItem: [
-                    { value: null, text: 'Pilih Barang' },
-                    { value: 'a', text: 'Barang 1' },
-                    { value: 'b', text: 'Barang 2' },
-                ]
+                items: new Array(18),
+                formData: {
+                    sort: null,
+                    product: null,
+                },
+                isShowModalAddPostItem: false,
             }
         },
         methods: {
-            showModal() {
-                this.$refs['my-modal'].show()
+            showModalAddPostItem() {
+                this.isShowModalAddPostItem = true;
             },
-            hideModal() {
-                this.$refs['my-modal'].hide()
-            },
-            toggleModal() {
-                // We pass the ID of the button that we want to return focus to
-                // when the modal has hidden
-                this.$refs['my-modal'].toggle('#toggle-btn')
+            closeModalAddPostItem() {
+                this.isShowModalAddPostItem = false;
             },
         }
     }

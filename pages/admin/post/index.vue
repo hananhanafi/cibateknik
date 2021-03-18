@@ -1,11 +1,11 @@
 <template>
     <div class="text-center">
         <div class="container">
-            <!-- <h1 class="red">Customer admin</h1> -->
-            <div class="bg-white shadow rounded-8 p-4 text-left ">
-                <h1>Katalog Barang</h1>
-
-                <div class="d-md-flex mb-3">
+            <div class="bg-white shadow rounded-8 p-2 text-left ">
+                <div class="mb-3 p-2">
+                    <h1>Katalog Barang</h1>
+                </div>
+                <div class="d-md-flex mb-3 px-2">
                     <div class="flex-fill mb-2 mr-2">
                         <BaseInput
                             id="Cari"
@@ -45,7 +45,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row px-2">
                     <div v-for="(i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-4">
                         <ItemCard/>
                     </div>
@@ -93,9 +93,3 @@
         }
     }
 </script>
-
-<style>
-    .red {
-    color: red;
-    }
-</style>

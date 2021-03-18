@@ -1,18 +1,16 @@
 <template>
     <div class="text-center">
-        <b-container>
+        <div class="container">
             <!-- <h1 class="red">Customer admin</h1> -->
             <div class="bg-white shadow rounded-8 p-2 text-left ">
-                <div class="d-flex flex-row bd-highlight mb-3">
-                    <div class="p-2 bd-highlight"><h1>Daftar Produk</h1></div>
-                    <!-- <div class="p-2 bd-highlight float-right ml-auto "><b-button id="show-btn"  size="xl"  class="rounded-pill text-white w-100" variant="primary" @click="isShowModalAddProduct">Tambah</b-button></div> -->
-                    <!-- <div class="p-2 bd-highlight">Flex item 3</div> -->
+                <div class="mb-3 p-2">
+                    <h1>Daftar Produk</h1>
                 </div>
 
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col">
-                            <div class="d-md-flex mb-3">
+                            <div class="d-md-flex">
                                 <div class="flex-fill mb-2 mr-2">
                                     <BaseInput
                                         id="Cari"
@@ -48,14 +46,14 @@
                                     <tr>
                                     <th scope="col">ID Produk</th>
                                     <th scope="col">Nama Produk</th>
-                                    <th scope="col" width="300px">Aksi</th>
+                                    <th scope="col" class="text-center" width="300px">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="(item,i) in items" :key="i">
                                         <th scope="row">ITEMID{{i+1}}</th>
                                         <td>Mark</td>
-                                        <td>
+                                        <td class="text-center">
                                             <b-button variant="success" size="sm"  @click="$router.push({name:'admin-inventory-detail-produk'})">
                                             Lihat Inventaris
                                             </b-button>
@@ -76,7 +74,7 @@
             <ModalAddProduct :show="isShowModalAddProduct" :data="{title:'Tambah Produk'}" @close="closeModalAddProduct"/>
             
             
-        </b-container>
+        </div>
     </div>
 </template>
 

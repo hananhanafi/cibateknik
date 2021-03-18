@@ -152,25 +152,11 @@ export default {
     },
     data() {
         return {
-            additionalInformations: [{
-                name: null,
-            }],
-
         }
     },
     mounted() {
     },
     methods: {
-        addInfo(){
-            // this.additionalInformations = this.additionalInformations+1;
-            this.additionalInformations.push({name:null})
-        },
-        minInfo(index){
-            if(this.additionalInformations.length>1){
-                // this.additionalInformations = this.additionalInformations-1;
-                this.additionalInformations.splice(index,1);
-            }
-        },
     }
 };
 </script>

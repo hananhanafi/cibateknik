@@ -1,134 +1,75 @@
 <template>
     <div class="text-center">
-        <b-container>
-            <!-- <h1 class="red">Customer admin</h1> -->
+        <div class="container">
             <div class="bg-white shadow rounded-8 p-2 text-left ">
-                <h1>Daftar Customer</h1>
-                <b-container fluid>
-                    <!-- Main table element -->
-                    <b-table
-                    :items="items"
-                    :fields="fields"
-                    :current-page="currentPage"
-                    :per-page="perPage"
-                    stacked="md"
-                    show-empty
-                    small
-                    >
-                    <template #cell(no)>
-                        1
-                    </template>
-
-                    <template #cell(name)="row">
-                        {{ row.value.first }} {{ row.value.last }}
-                    </template>
-
-                    <template #cell(actions)="row">
-                        <b-button class="rounded-pill text-white" variant="success" size="xl"  @click="info(row.item, row.index, $event.target)">
-                        Lihat
-                        </b-button>
-                        <b-button class="rounded-pill text-white" variant="warning" size="xl"  @click="$router.push({name:'admin-customer-history'})">
-                        History
-                        </b-button>
-                    </template>
-
-                    <template #row-details="row">
-                        <b-card>
-                        <ul>
-                            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-                        </ul>
-                        </b-card>
-                    </template>
-                    </b-table>
-
-                    <!-- Info modal -->
-                    <b-modal :id="infoModal.id" title="Detail Customer" ok-only @hide="resetInfoModal">
-                    <b-row>
-                        <b-col>
-                            
-                            <b-img class="w-100" src="~/assets/img/person.png" fluid alt="Responsive image"></b-img>
-                        </b-col>
-                        <b-col md="8">
-                            <div>
-                                <table class="modalInfo">
-                                    <tr>
-                                        <td>
-                                            Nama
-                                        </td>
-                                        <td>
-                                            :
-                                        </td>
-                                        <td>
-                                            {{currentItem ? currentItem.name.first : ''}} {{currentItem ? currentItem.name.first : ''}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Email
-                                        </td>
-                                        <td>
-                                            :
-                                        </td>
-                                        <td>
-                                            hanafi@mail.com
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Nomor HP
-                                        </td>
-                                        <td>
-                                            :
-                                        </td>
-                                        <td>
-                                            081234567890
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Alamat
-                                        </td>
-                                        <td>
-                                            :
-                                        </td>
-                                        <td>
-                                            Jl. Rawa sawah III RT 06/02 No.5 Jakarta
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Tanggal Daftar
-                                        </td>
-                                        <td>
-                                            :
-                                        </td>
-                                        <td>
-                                            {{currentItem ? currentItem.date : ''}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Terakhir Online
-                                        </td>
-                                        <td>
-                                            :
-                                        </td>
-                                        <td>
-                                            {{currentItem ? currentItem.date : ''}}
-                                        </td>
-                                    </tr>
-                                </table>
-                                <!-- <pre>Nama : {{currentItem ? currentItem.name.first : ''}} {{currentItem ? currentItem.name.first : ''}}</pre> -->
+                <div class="mb-3 p-2">
+                    <h1>Daftar Customer</h1>
+                </div>
+                <div class="container-fluid">
+                    <div class="col">
+                        <div class="d-md-flex">
+                            <div class="flex-fill mb-2 mr-2">
+                                <BaseInput
+                                    id="Cari"
+                                    placeholder="Cari Produk..."
+                                    class="mb-0"
+                                    
+                                >
+                                    <div slot="afterInput" class="position-absolute"
+                                        style=" right:12px;
+                                                top: 50%;
+                                                -ms-transform: translateY(-50%);
+                                                transform: translateY(-50%);
+                                                z-index:99"
+                                    >
+                                        <fa class="" :icon="['fas','search']" /> 
+                                    </div>
+                                </BaseInput>
                             </div>
-                        </b-col>
-                    </b-row>
-                    <!-- <pre>{{ infoModal.content.name }}</pre> -->
-                    </b-modal>
-                </b-container>
+                            <div class="ml-auto mb-2 mr-2" style="width:160px">
+                                <BaseSelect
+                                :options="['Terbaru', 'Terlama']"
+                                placeholder="Pilih Urutkan"
+                                dense
+                                />
+                            </div>
+                        </div>
+                        <table class="table table-responsive-md">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Tanggal Order</th>
+                                    <th scope="col">Tanggal Terakhir Online</th>
+                                    <th scope="col" class="text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(customer,i) in customers" :key="i">
+                                    <th scope="row">{{i}}</th>
+                                    <td>Mark</td>
+                                    <td>Kamis, 21 Desember 2021</td>
+                                    <td>Kamis, 21 Desember 2021</td>
+                                    
+                                    <td class="text-center">
+                                        <button class="btn btn-primary btn-sm" @click="showModaldDetailCustomer" >
+                                            Detail Customer
+                                        </button>
+                                        <button class="btn btn-outline-warning btn-sm" @click="$router.push({name:'admin-customer-history'})" >
+                                            Riwayat Pesanan
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <Pagination/>
+                    </div>
+                </div>
             </div>
             
+            <ModalDetailCustomer :show="isShowModaldDetailCustomer" :data="{...currentItem}" @close="closeModaldDetailCustomer"/>
             
-        </b-container>
+        </div>
     </div>
 </template>
 
@@ -139,76 +80,7 @@
         middleware: 'adminAuthenticated',
         data() {
             return {
-                items: [
-                    { isActive: true, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Dickerson', last: 'Macdonald' } },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Larsen', last: 'Shaw' } },
-                    {
-                        isActive: false,
-                        date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020',
-                        name: { first: 'Mini', last: 'Navarro' },
-                        // _rowVariant: 'success'
-                    },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Geneva', last: 'Wilson' } },
-                    { isActive: true, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Jami', last: 'Carney' } },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Essie', last: 'Dunlap' } },
-                    { isActive: true, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Thor', last: 'Macdonald' } },
-                    {
-                        isActive: true,
-                        date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020',
-                        name: { first: 'Larsen', last: 'Shaw' },
-                        // _cellVariants: { date: 'danger', isActive: 'warning' }
-                    },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Mitzi', last: 'Navarro' } },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Genevieve', last: 'Wilson' } },
-                    { isActive: true, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'John', last: 'Carney' } },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Dick', last: 'Dunlap' } },
-                    
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Mitzi', last: 'Navarro' } },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Genevieve', last: 'Wilson' } },
-                    { isActive: true, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'John', last: 'Carney' } },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Dick', last: 'Dunlap' } },
-                    
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Mitzi', last: 'Navarro' } },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Genevieve', last: 'Wilson' } },
-                    { isActive: true, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'John', last: 'Carney' } },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Dick', last: 'Dunlap' } },
-                    
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Mitzi', last: 'Navarro' } },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Genevieve', last: 'Wilson' } },
-                    { isActive: true, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'John', last: 'Carney' } },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Dick', last: 'Dunlap' } },
-                    
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Mitzi', last: 'Navarro' } },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Genevieve', last: 'Wilson' } },
-                    { isActive: true, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'John', last: 'Carney' } },
-                    { isActive: false, date:'Kamis,21 Desember 2020', lastOnline:'Kamis,21 Desember 2020', name: { first: 'Dick', last: 'Dunlap' } },
-                ],
-                fields: [
-                    {key:'no', label: 'No'},
-                    { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
-                    { key: 'date', label: 'Tanggal Daftar', sortable: true, class: 'text-center' },
-                    { key: 'lastOnline', label: 'Terakhir Online', sortable: true, class: 'text-center' },
-                    // {
-                    //     key: 'isActive',
-                    //     label: 'Status',
-                    //     formatter: (value, key, item) => {
-                    //     return value ? 'Yes' : 'No'
-                    //     },
-                    //     sortable: true,
-                    //     sortByFormatted: true,
-                    //     filterByFormatted: true
-                    // },
-                { key: 'actions', label: 'Aksi', class: 'text-md-center text-left' }
-                ],
-                totalRows: 1,
-                currentPage: 1,
-                perPage: 20,
-                
-                infoModal: {
-                id: 'info-modal',
-                title: '',
-                content: ''
-                },
+                customers : new Array(10),
                 currentItem : {
                         "isActive": true,
                         "date": "Kamis,21 Desember 2020",
@@ -216,39 +88,21 @@
                             "first": "Dickerson",
                             "last": "Macdonald"
                         }
-                }
+                },
+                isShowModaldDetailCustomer: false,
             }
         },
         
         mounted() {
             // Set the initial number of items
-            this.totalRows = this.items.length
         },
         methods: {
-            info(item, index, button) {
-                this.infoModal.title = `Row index: ${index}`;
-                this.infoModal.content = JSON.stringify(item, null, 2);
-                this.$root.$emit('bv::show::modal', this.infoModal.id, button);
-                this.currentItem = item;
+            showModaldDetailCustomer() {
+                this.isShowModaldDetailCustomer = true;
             },
-            resetInfoModal() {
-                this.infoModal.title = ''
-                this.infoModal.content = ''
+            closeModaldDetailCustomer() {
+                this.isShowModaldDetailCustomer = false;
             },
-            onFiltered(filteredItems) {
-                // Trigger pagination to update the number of buttons/pages due to filtering
-                this.totalRows = filteredItems.length
-                this.currentPage = 1
-            }
         }
     }
 </script>
-
-<style>
-    .red {
-    color: red;
-    }
-    table.modalInfo>tr>td{
-        vertical-align: top;
-    }
-</style>

@@ -1,10 +1,11 @@
 <template>
     <div class="text-center">
-        <b-container>
+        <div class="container">
             <!-- <h1 class="red">Customer admin</h1> -->
             <div class="bg-white shadow rounded-8 p-3 text-left ">
-                <h2>Tambah Barang</h2>
-
+                <div class="mb-3 p-2">
+                    <h1>Tambah Barang</h1>
+                </div>
                 <div class="form-group">
                     <div class="mb-3">
                         <label>Nama Produk</label>
@@ -20,8 +21,8 @@
                     </div>
                     <div class="mb-3">
                         <h6>Informasi Barang</h6>
-                        <b-row>
-                            <b-col>
+                        <div class="row">
+                            <div class="col">
                                 <!-- eslint-disable-next-line vue/no-template-shadow -->
                                 <div v-for="(info,i) in infoCount" :key="i" class="d-md-flex d-block">
                                     <div class="mr-2 col-md-1 col-12">
@@ -34,8 +35,8 @@
                                         />
                                     </div>
                                 </div>
-                            </b-col>
-                        </b-row>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <BaseInput
@@ -110,7 +111,7 @@
             </div>
             
             
-        </b-container>
+        </div>
     </div>
 </template>
 
@@ -163,12 +164,3 @@
         
     }
 </script>
-
-<style>
-    .red {
-    color: red;
-    }
-    table.modalInfo>tr>td{
-        vertical-align: top;
-    }
-</style>

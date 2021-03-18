@@ -8,10 +8,20 @@
         <div class="modal-body">
             <div class="w-100 text-left">
                 <BaseSelect
-                    v-model="formData.status"
-                    label="Status"
-                    :options="['Pesan', 'Terkirim', 'Selesai']"
-                    placeholder="Pilih Status"
+                    v-model="formData.category"
+                    label="Kategori"
+                    :options="['Keluar', 'Masuk']"
+                    placeholder="Pilih Kategori"
+                    dense
+                />
+                <BaseInput
+                    v-show="formData.category"
+                    id="ammount"
+                    v-model="formData.ammount"
+                    label="Jumlah Barang"
+                    placeholder="Jumlah Barang"
+                    class="mr-2 flex-fill"
+                    large
                     dense
                 />
             </div>
@@ -37,7 +47,8 @@ export default {
     data() {
         return {
             formData: [{
-                status: null,
+                category: null,
+                ammount: null,
             }],
 
         }

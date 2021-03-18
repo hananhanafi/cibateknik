@@ -204,10 +204,6 @@
                                 <h2>Grafik Penjualan</h2>
                             </div>
                             <div class="w-50">
-                                <!-- <BaseSelect
-                                :options="['Terbaru', 'Terlama']"
-                                placeholder="Pilih Urutkan"
-                                /> -->
                                 <vue2-datepicker v-model="date_range" class="w-100" placeholder="Pilih rentang waktu" range @change="datePickerRangeChangedHandler($event)"></vue2-datepicker>
                             </div>
                         </div>
@@ -220,8 +216,8 @@
             </div>
 
 
-            <b-row class="mt-3 pb-5">
-                <b-col>
+            <div class="row mt-3 pb-5">
+                <div class="col">
                     <div class="bg-white shadow rounded-8 p-2 text-left pl-4">
                         <h2>Daftar Pesanan</h2>
 
@@ -253,7 +249,7 @@
                             </div>
                         </div>
                         
-                        <table class="table">
+                        <table class="table table-responsive-md">
                             <thead>
                                 <tr>
                                     <th scope="col">Nomor</th>
@@ -440,8 +436,8 @@
                         </table>
                         <Pagination/>
                     </div>
-                </b-col>
-            </b-row>
+                </div>
+            </div>
 
             <ModalDetailOrder :show="isShowModaldDetailOrder" :data="{...currentItem}" @close="closeModaldDetailOrder"/>
             <ModalEditStatusOrder :show="isShowModalEditStatusOrder" :data="{...currentItem}" @close="closeModalEditStatusOrder"/>

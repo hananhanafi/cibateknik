@@ -110,48 +110,33 @@
                         <div class="mb-3">
                             Senin, 21 Desember 2021
                         </div>
-                        <!-- <table class="text-left w-100">
-                            <tr>
-                                <td class="w-50 text-20 text-primary"><fa :icon="['fas','shopping-cart']"/>Pesanan</td>
-                                <td>:</td>
-                                <td>2</td>
-                            </tr>
-                            <tr>
-                                <td class="w-50 text-20 text-success"><fa :icon="['fas','donate']"/>Pendapatan</td>
-                                <td>:</td>
-                                <td>2</td>
-                            </tr>
-                            <tr>
-                                <td class="w-50 text-20 text-danger"><fa :icon="['fas','coins']"/>Pengeluaran</td>
-                                <td>:</td>
-                                <td>2</td>
-                            </tr>
-                        </table> -->
                         <div class="row text-left">
                             <div class="col-12 text-20 text-primary">
-                                <fa :icon="['fas','shopping-cart']"  /> Pesanan 
-                                <div class="text-28 font-weight-bold text-right border-bottom mb-2">
+                                <div class="border-bottom">
+                                    <fa :icon="['fas','shopping-cart']"  /> Pesanan 
+                                </div>
+                                <div class="text-28 font-weight-bold text-right mb-2">
                                     10
                                 </div>
                             </div>
                             <div class="col-12 text-20 text-success">
-                                <fa :icon="['fas','donate']"  /> Pemasukan 
-                                <div class="text-28 font-weight-bold text-right  border-bottom mb-2" >
+                                <div class="border-bottom">
+                                    <fa :icon="['fas','donate']"  /> Pemasukan 
+                                </div>
+                                
+                                <div class="text-28 font-weight-bold text-right  mb-2" >
                                     Rp 1.000.000
                                 </div>
                             </div>
                             <div class="col-12 text-20 text-danger">
-                                <fa :icon="['fas','coins']"  /> Penjualan 
-                                <div class="text-28 font-weight-bold text-right  border-bottom mb-2" >
+                                <div class="border-bottom">
+                                    <fa :icon="['fas','coins']"  /> Penjualan 
+                                </div>
+                                
+                                <div class="text-28 font-weight-bold text-right  mb-2" >
                                     Rp 500.000
                                 </div>
                             </div>
-                            <!-- <div class="col">
-                                :
-                            </div>
-                            <div class="col">
-                                1
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -240,226 +225,227 @@
                     <div class="bg-white shadow rounded-8 p-2 text-left pl-4">
                         <h2>Daftar Pesanan</h2>
 
-                        <div class="m-3">
-                            <template>
-                                <b-container fluid>
-
-                                    <!-- Main table element -->
-                                    <b-table
-                                    :items="items"
-                                    :fields="fields"
-                                    :current-page="currentPage"
-                                    :per-page="perPage"
-                                    stacked="md"
-                                    show-empty
-                                    small
-                                    >
-                                        <!-- <template #cell(no)="row">
-                                            {{row}}
-                                        </template> -->
-
-                                        <template #cell(name)="row">
-                                            {{ row.value.first }} {{ row.value.last }}
-                                        </template>
-                                        <template #cell(status)="row">
-                                            <span v-if="row.item.status" class="text-success">
-                                                Selesai
-                                            </span>
-                                            <span v-else class="text-warning">
-                                                Terkirim
-                                            </span>
-                                        </template>
-
-                                        <template #cell(aksi)="row">
-                                            <b-button class="rounded-pill text-white" variant="success" size="sm"  @click="info(row.item, row.index, $event.target)">
-                                            Lihat
-                                            </b-button>
-                                            
-
-                                            <b-button  id="show-btn"  class="rounded-pill text-white" variant="warning"  size="sm" @click="showModal">Edit Status</b-button>
-                                        </template>
-                                    </b-table>
-
+                        <div class="d-md-flex">
+                            <div class="flex-fill mb-2 mr-2">
+                                <BaseInput
+                                    id="Cari"
+                                    placeholder="Cari Pesanan..."
+                                    class="mb-0"
                                     
-                                </b-container>
-                                </template>
+                                >
+                                    <div slot="afterInput" class="position-absolute"
+                                        style=" right:12px;
+                                                top: 50%;
+                                                -ms-transform: translateY(-50%);
+                                                transform: translateY(-50%);
+                                                z-index:99"
+                                    >
+                                        <fa class="" :icon="['fas','search']" /> 
+                                    </div>
+                                </BaseInput>
+                            </div>
+                            <div class="ml-auto mb-2 mr-2" style="width:160px">
+                                <BaseSelect
+                                :options="['Terbaru', 'Terlama']"
+                                placeholder="Pilih Urutkan"
+                                dense
+                                />
+                            </div>
                         </div>
-                        <div class="w-50 mx-auto">
-                            <b-pagination
-                            v-model="currentPage"
-                            :total-rows="totalRows"
-                            :per-page="perPage"
-                            align="fill"
-                            size="sm"
-                            class="my-0"
-                            ></b-pagination>
-                        </div>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nomor</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Jumlah</th>
+                                    <th scope="col">Harga</th>
+                                    <th scope="col">Tanggal Order</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col" class="text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>5</td>
+                                    <td>Rp 500.000</td>
+                                    <td>Kamis, 21 Desember 2021</td>
+                                    
+                                    <td><span class="text-success">Selesai</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-primary btn-sm" @click="showModaldDetailOrder" >
+                                            Detail Pesanan
+                                        </button>
+                                        <button class="btn btn-outline-warning btn-sm" @click="showModalEditStatusOrder" >
+                                            Edit Status
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>5</td>
+                                    <td>Rp 500.000</td>
+                                    <td>Kamis, 21 Desember 2021</td>
+                                    
+                                    <td><span class="text-success">Selesai</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-primary btn-sm" @click="showModaldDetailOrder" >
+                                            Detail Pesanan
+                                        </button>
+                                        <button class="btn btn-outline-warning btn-sm" @click="showModalEditStatusOrder" >
+                                            Edit Status
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Larry</td>
+                                    <td>5</td>
+                                    <td>Rp 500.000</td>
+                                    <td>Kamis, 21 Desember 2021</td>
+                                    
+                                    <td><span class="text-success">Selesai</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-primary btn-sm" @click="showModaldDetailOrder" >
+                                            Detail Pesanan
+                                        </button>
+                                        <button class="btn btn-outline-warning btn-sm" @click="showModalEditStatusOrder" >
+                                            Edit Status
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Mark</td>
+                                    <td>5</td>
+                                    <td>Rp 500.000</td>
+                                    <td>Kamis, 21 Desember 2021</td>
+                                    
+                                    <td><span class="text-success">Selesai</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-primary btn-sm" @click="showModaldDetailOrder" >
+                                            Detail Pesanan
+                                        </button>
+                                        <button class="btn btn-outline-warning btn-sm" @click="showModalEditStatusOrder" >
+                                            Edit Status
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Jacob</td>
+                                    <td>5</td>
+                                    <td>Rp 500.000</td>
+                                    <td>Kamis, 21 Desember 2021</td>
+                                    
+                                    <td><span class="text-success">Selesai</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-primary btn-sm" @click="showModaldDetailOrder" >
+                                            Detail Pesanan
+                                        </button>
+                                        <button class="btn btn-outline-warning btn-sm" @click="showModalEditStatusOrder" >
+                                            Edit Status
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Larry</td>
+                                    <td>5</td>
+                                    <td>Rp 500.000</td>
+                                    <td>Kamis, 21 Desember 2021</td>
+                                    
+                                    <td><span class="text-success">Selesai</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-primary btn-sm" @click="showModaldDetailOrder" >
+                                            Detail Pesanan
+                                        </button>
+                                        <button class="btn btn-outline-warning btn-sm" @click="showModalEditStatusOrder" >
+                                            Edit Status
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Mark</td>
+                                    <td>5</td>
+                                    <td>Rp 500.000</td>
+                                    <td>Kamis, 21 Desember 2021</td>
+                                    
+                                    <td><span class="text-success">Selesai</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-primary btn-sm" @click="showModaldDetailOrder" >
+                                            Detail Pesanan
+                                        </button>
+                                        <button class="btn btn-outline-warning btn-sm" @click="showModalEditStatusOrder" >
+                                            Edit Status
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">8</th>
+                                    <td>Jacob</td>
+                                    <td>5</td>
+                                    <td>Rp 500.000</td>
+                                    <td>Kamis, 21 Desember 2021</td>
+                                    
+                                    <td><span class="text-success">Selesai</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-primary btn-sm" @click="showModaldDetailOrder" >
+                                            Detail Pesanan
+                                        </button>
+                                        <button class="btn btn-outline-warning btn-sm" @click="showModalEditStatusOrder" >
+                                            Edit Status
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">9</th>
+                                    <td>Larry</td>
+                                    <td>5</td>
+                                    <td>Rp 500.000</td>
+                                    <td>Kamis, 21 Desember 2021</td>
+                                    
+                                    <td><span class="text-success">Selesai</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-primary btn-sm" @click="showModaldDetailOrder" >
+                                            Detail Pesanan
+                                        </button>
+                                        <button class="btn btn-outline-warning btn-sm" @click="showModalEditStatusOrder" >
+                                            Edit Status
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">10</th>
+                                    <td>Larry</td>
+                                    <td>5</td>
+                                    <td>Rp 500.000</td>
+                                    <td>Kamis, 21 Desember 2021</td>
+                                    
+                                    <td><span class="text-success">Selesai</span></td>
+                                    <td class="text-center">
+                                        <a class="btn btn-primary btn-sm" @click="showModaldDetailOrder" >
+                                            Detail Pesanan
+                                        </a>
+                                        <button class="btn btn-outline-warning btn-sm" @click="showModalEditStatusOrder" >
+                                            Edit Status
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <Pagination/>
                     </div>
                 </b-col>
             </b-row>
 
+            <ModalDetailOrder :show="isShowModaldDetailOrder" :data="{...currentItem}" @close="closeModaldDetailOrder"/>
+            <ModalEditStatusOrder :show="isShowModalEditStatusOrder" :data="{...currentItem}" @close="closeModalEditStatusOrder"/>
 
-
-            <!-- Info modal -->
-            <b-modal :id="infoModal.id" title="Detail Order" ok-only @hide="resetInfoModal">
-                
-                <b-row>
-                    <!-- <b-col>
-                        
-                        <b-img class="w-100" src="~/assets/img/person.png" fluid alt="Responsive image"></b-img>
-                    </b-col> -->
-                    <b-col>
-                        <div>
-                            <table class="modalInfo">
-                                <tr>
-                                    <td style="width:50%">
-                                        Nama
-                                    </td>
-                                    <td>
-                                        :
-                                    </td>
-                                    <td>
-                                        {{currentItem ? currentItem.name.first : ''}} {{currentItem ? currentItem.name.first : ''}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Email
-                                    </td>
-                                    <td>
-                                        :
-                                    </td>
-                                    <td>
-                                        hanafi@mail.com
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Nomor HP
-                                    </td>
-                                    <td>
-                                        :
-                                    </td>
-                                    <td>
-                                        081234567890
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Alamat
-                                    </td>
-                                    <td>
-                                        :
-                                    </td>
-                                    <td>
-                                        Jl. Rawa sawah III RT 06/02 No.5 Jakarta
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Tanggal Daftar
-                                    </td>
-                                    <td>
-                                        :
-                                    </td>
-                                    <td>
-                                        {{currentItem ? currentItem.date : ''}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Terakhir Online
-                                    </td>
-                                    <td>
-                                        :
-                                    </td>
-                                    <td>
-                                        {{currentItem ? currentItem.date : ''}}
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        Nama
-                                    </td>
-                                    <td>
-                                        :
-                                    </td>
-                                    <td>
-                                        {{currentItem ? currentItem.name.first : ''}} {{currentItem ? currentItem.name.first : ''}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Tanggal Order
-                                    </td>
-                                    <td>
-                                        :
-                                    </td>
-                                    <td>
-                                        {{currentItem ? currentItem.date : ''}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Status Order
-                                    </td>
-                                    <td>
-                                        :
-                                    </td>
-                                    <td>
-                                        {{currentItem ? currentItem.status : ''}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="vertical-align:top">
-                                        Pesanan
-                                    </td>
-                                    <td style="vertical-align:top">
-                                        :
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                Endmill 20 buah
-                                            </li>
-                                            <li>
-                                                Endmill 20 buah
-                                            </li>
-                                            <li>
-                                                Endmill 20 buah
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                
-                            </table>
-                            <!-- <pre>Nama : {{currentItem ? currentItem.name.first : ''}} {{currentItem ? currentItem.name.first : ''}}</pre> -->
-                        </div>
-                    </b-col>
-                </b-row>
-            <!-- <pre>{{ infoModal.content.name }}</pre> -->
-            </b-modal>
-
-            <b-modal ref="my-modal" hide-footer>
-                <div class="d-block text-center">
-                    <h5>Edit Status Pesanan</h5>
-                    
-                    <div class="mb-3">
-                        <b-form-select v-model="selected" :options="options"></b-form-select>
-                        <!-- <b-form-select v-model="selected" :options="options" size="sm" class="mt-3"></b-form-select> -->
-                        <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
-                    </div>
-                </div>
-                <b-row>
-                    <b-col>
-                        <b-button variant="primary" block @click="hideModal">Batal</b-button>
-                    </b-col>
-                    <b-col>
-                        <b-button variant="success" block @click="toggleModal">Simpan</b-button>
-                    </b-col>
-                </b-row>
-            </b-modal>
         </div>
     </div>
 </template>
@@ -478,14 +464,11 @@ export default {
                 endDate: null,
             },
             
+            isShowModaldDetailOrder: false,
+            isShowModalEditStatusOrder: false,
 
             chartHeight : 200,
 
-            windowH: {
-                width: 0,
-                height: 0
-            },
-            
             selected: null,
             options: [
                 { value: null, text: 'Selesai' },
@@ -494,49 +477,6 @@ export default {
                 // { value: { C: '3PO' }, text: 'This is an option with object value' },
                 // { value: 'd', text: 'This one is disabled', disabled: true }
             ],
-            topSellingFields: ['Nomor', 'Item'],
-
-
-            topSellingItems: [
-                { Nomor: '1', Item: 'Macdonald' },
-                { Nomor: '2', Item: 'Shaw' },
-                { Nomor: '3', Item: 'Wilson' },
-                { Nomor: '4', Item: 'Wilson' },
-                { Nomor: '5', Item: 'Wilson' },
-                { Nomor: '6', Item: 'Macdonald' },
-                { Nomor: '7', Item: 'Shaw' },
-                { Nomor: '8', Item: 'Wilson' },
-                { Nomor: '9', Item: 'Wilson' },
-                { Nomor: '10', Item: 'Wilson' }
-            ],
-            
-            topSellingPerPage: 3,
-            topSellingCurrentPage: 1,
-
-            // orderListFields: [
-            //     {key:'no', label: 'No'},
-            //     { key: 'name', label: 'Nama'},
-            //     { key: 'date', label: 'Tanggal'},
-            //     { key: 'status', label: 'Status'},
-            //     { key: 'action', label: 'Aksi'},
-            // ],
-
-
-            // orderListItems: [
-            // { no: '1', name: 'Macdonald', date:'Kamis,21 Desember 2020', status:'Pesan' },
-            // { no: '2', name: 'Shaw', date:'Kamis,21 Desember 2020', status:'Pesan' },
-            // { no: '3', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-            // { no: '4', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-            // { no: '5', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-            // { no: '6', name: 'Macdonald', date:'Kamis,21 Desember 2020', status:'Pesan' },
-            // { no: '7', name: 'Shaw', date:'Kamis,21 Desember 2020', status:'Pesan' },
-            // { no: '8', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-            // { no: '9', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' },
-            // { no: '10', name: 'Wilson', date:'Kamis,21 Desember 2020', status:'Pesan' }
-            // ],
-            
-            orderListPerPage: 3,
-            orderListCurrentPage: 1,
 
             revenueChartData: {
                 labels: ['1 Jan', '2 Jan', '3 Jan', '4 Jan', '5 Jan', '6 Jan', '7 Jan'],
@@ -678,58 +618,6 @@ export default {
                 }
             },
 
-            items: [
-                { qty:5, price:"Rp.100.000", customer:'Hanafi', status: true, date:'Kamis,21 Desember 2020', name: { first: 'Dickerson', last: 'Macdonald' } },
-                { qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Larsen', last: 'Shaw' } },
-                {
-                    qty:5, price:"Rp.100.000", customer:'Hanafi', status: false,
-                    date:'Kamis,21 Desember 2020',
-                    name: { first: 'Mini', last: 'Navarro' },
-                    // _rowVariant: 'success'
-                },
-                { qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Geneva', last: 'Wilson' } },
-                { qty:5, price:"Rp.100.000", customer:'Hanafi', status: true, date:'Kamis,21 Desember 2020', name: { first: 'Jami', last: 'Carney' } },
-                { qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Essie', last: 'Dunlap' } },
-                { qty:5, price:"Rp.100.000", customer:'Hanafi', status: true, date:'Kamis,21 Desember 2020', name: { first: 'Thor', last: 'Macdonald' } },
-                {
-                    qty:5, price:"Rp.100.000", customer:'Hanafi', status: true,
-                    date:'Kamis,21 Desember 2020',
-                    name: { first: 'Larsen', last: 'Shaw' },
-                    // _cellVariants: { date: 'danger', status: 'warning' }
-                },
-                {  qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Mitzi', last: 'Navarro' } },
-                {  qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Genevieve', last: 'Wilson' } },
-                {  qty:5, price:"Rp.100.000", customer:'Hanafi', status: true, date:'Kamis,21 Desember 2020', name: { first: 'John', last: 'Carney' } },
-                {  qty:5, price:"Rp.100.000", customer:'Hanafi', status: false, date:'Kamis,21 Desember 2020', name: { first: 'Dick', last: 'Dunlap' } },
-            ],
-            fields: [
-                // {key:'no', label: 'No'},
-                { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
-                { key: 'qty', label: 'Jumlah', sortable: true, sortDirection: 'desc' },
-                { key: 'price', label: 'Harga', sortable: true, sortDirection: 'desc' },
-                { key: 'date', label: 'Tanggal Order', sortable: true, class: 'text-center' },
-                { key: 'customer', label: 'Customer', sortable: true, sortDirection: 'desc' },
-                {
-                    key: 'status',
-                    label: 'Status',
-                    formatter: (value, _key, _item) => {
-                    return value ? 'Selesai' : 'Dikirim'
-                    },
-                    sortable: true,
-                    sortByFormatted: true,
-                    filterByFormatted: true
-                },
-                { key: 'aksi', label: 'Aksi', class: 'text-md-center text-left' }
-            ],
-            totalRows: 1,
-            currentPage: 1,
-            perPage: 10,
-            
-            infoModal: {
-                id: 'info-modal',
-                title: '',
-                content: ''
-            },
             currentItem : {
                 "status": true,
                 "date": "Kamis,21 Desember 2020",
@@ -743,14 +631,7 @@ export default {
 
 computed: {
 },
-created() {
-    this.handleResize();
-},
-destroyed() {
-    window.removeEventListener('resize', this.handleResize);
-},
 mounted() {
-    window.addEventListener('resize', this.handleResize);
     this.loadData();
 },
 methods: {
@@ -762,10 +643,6 @@ methods: {
         .catch(err=>{
             console.log("err",err);
         })
-    },
-    handleResize() {
-        this.windowH.width = window.innerWidth;
-        this.windowH.height = window.innerHeight;
     },
     datePickerRangeChangedHandler(e){
         // console.log("eeee",this.dateDiffInDays(new Date(e[1])-new Date(e[0])));
@@ -779,32 +656,18 @@ methods: {
 
         return Math.floor((utc2 - utc1) / _MS_PER_DAY);
     },
-    showModal() {
-        this.$refs['my-modal'].show()
+    showModaldDetailOrder() {
+        this.isShowModaldDetailOrder = true;
     },
-    hideModal() {
-        this.$refs['my-modal'].hide()
+    closeModaldDetailOrder() {
+        this.isShowModaldDetailOrder = false;
     },
-    toggleModal() {
-        // We pass the ID of the button that we want to return focus to
-        // when the modal has hidden
-        this.$refs['my-modal'].toggle('#toggle-btn')
+    showModalEditStatusOrder() {
+        this.isShowModalEditStatusOrder = true;
     },
-    info(item, index, button) {
-        this.infoModal.title = `Row index: ${index}`;
-        this.infoModal.content = JSON.stringify(item, null, 2);
-        this.$root.$emit('bv::show::modal', this.infoModal.id, button);
-        this.currentItem = item;
+    closeModalEditStatusOrder() {
+        this.isShowModalEditStatusOrder = false;
     },
-    resetInfoModal() {
-        this.infoModal.title = ''
-        this.infoModal.content = ''
-    },
-    onFiltered(filteredItems) {
-        // Trigger pagination to update the number of buttons/pages due to filtering
-        this.totalRows = filteredItems.length
-        this.currentPage = 1
-    }
 }
 }
 </script>

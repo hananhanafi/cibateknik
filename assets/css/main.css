@@ -13,7 +13,7 @@ body {
     left: 0;
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
-    background-color: #efefef;
+    /* background-color: #efefef; */
     box-sizing: border-box;
 }
 
@@ -34,6 +34,14 @@ a, a:hover, a:focus, a:active {
 
 .rounded-8{
     border-radius: 8px;
+}
+
+.bg-main-light{
+    background-color: #f8fafc;;
+}
+
+.shadow-light{
+    box-shadow: 0 -25px 37.7px 11.3px rgba(8, 143, 220, 0.07);
 }
 
 .bg-main-color{

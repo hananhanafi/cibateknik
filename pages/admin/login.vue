@@ -1,60 +1,44 @@
 <template>
-    <div>
-        <b-container class="align-middle">
-            <b-row class="justify-content-md-center" :style="{height: windowH.height+'px'}">
-                <b-col cols="12" lg="6" md="8"  sm="10" class="mx-auto my-auto"> 
-                    <div >
-                        <div>
-                            <div class="py-2" style="box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);border-radius:40px">
-                                <div class="my-5 mx-5 text-medium">
-                                    <h2 class="font-weight-bold text-" >Login</h2>
-                                    <form>
-                                        <b-input-group>
-                                            <b-form-input v-model="email" type="email" class="rounded-pill mb-2" :class="submitStatus == 'ERROR' && !$v.email.required ? 'is-invalid' : ''" placeholder="Email"></b-form-input>
-                                            </b-input-group>
-                                        <div v-if="submitStatus == 'ERROR' && !$v.email.required" class="text-danger mb-2">Email harus diisi</div>
-                                        
-                                        <b-input-group>
-                                            <b-form-input v-model="password" class="rounded-pill mb-2 w-100"  :class="submitStatus == 'ERROR' && !$v.password.required ? 'is-invalid' : ''" placeholder="Password" :type="showPassword ? 'text' : 'password' ">
-                                            </b-form-input>
-                                            
-                                            <div class="float-right position-absolute" style="right:0;z-index:999">
-                                                <b-button pill variant="outline-lighr" @click="showPassword=!showPassword">
-                                                    <fa  :icon="['fas',showPassword ? 'eye-slash': 'eye']"  />
-                                                </b-button>
-                                            </div>
-                                        </b-input-group>
-                                        <div v-if="submitStatus == 'ERROR' && !$v.password.required" class="text-danger mb-2">Password harus diisi</div>
+    <div class="container-fluid align-middle bg-main-light">
+        <div class="container">
+            <div class="row justify-content-md-center" :style="{height: windowH.height+'px'}">
+                <div class="col-lg-6 col-md-8 col-sm-10 col-12 mx-auto my-auto"> 
+                    <div class="py-2 bg-white shadow-light">
+                        <div class="my-5 mx-5 text-medium">
+                            <h2 class="font-weight-bold text-" >Login Admin</h2>
+                            <form>
+                                <b-input-group>
+                                    <b-form-input v-model="email" type="email" class="mb-2" :class="submitStatus == 'ERROR' && !$v.email.required ? 'is-invalid' : ''" placeholder="Email"></b-form-input>
+                                    </b-input-group>
+                                <div v-if="submitStatus == 'ERROR' && !$v.email.required" class="text-danger mb-2">Email harus diisi</div>
+                                
+                                <b-input-group>
+                                    <b-form-input v-model="password" class="mb-2 w-100"  :class="submitStatus == 'ERROR' && !$v.password.required ? 'is-invalid' : ''" placeholder="Password" :type="showPassword ? 'text' : 'password' ">
+                                    </b-form-input>
+                                    
+                                    <div class="float-right position-absolute" style="right:0;z-index:999">
+                                        <b-button pill variant="outline-lighr" @click="showPassword=!showPassword">
+                                            <fa  :icon="['fas',showPassword ? 'eye-slash': 'eye']"  />
+                                        </b-button>
+                                    </div>
+                                </b-input-group>
+                                <div v-if="submitStatus == 'ERROR' && !$v.password.required" class="text-danger mb-2">Password harus diisi</div>
 
-                                        <div class="text-center my-2">
-                                            <b-button v-if="!isLoadingSubmit" type="submit"  class="rounded-pill w-50" style="background: linear-gradient(88.49deg, #41E296 0%, #3BB7B4 100%);" @click.prevent="postLogin">Masuk</b-button>
-                                            
-                                            <ButtonLoading v-else class="rounded-pill w-50 text-white" style="background: linear-gradient(88.49deg, #41E296 0%, #3BB7B4 100%);"/>
-                                        </div>
-                                        
-                                        <div v-if="showError" class="text-danger">{{errorMessage}}</div>
-                                    </form>
-
+                                <div class="text-center my-2">
+                                    <b-button v-if="!isLoadingSubmit" type="submit"  class="w-50" style="background: linear-gradient(88.49deg, #41E296 0%, #3BB7B4 100%);" @click.prevent="postLogin">Masuk</b-button>
+                                    
+                                    <ButtonLoading v-else class="w-50 text-white" style="background: linear-gradient(88.49deg, #41E296 0%, #3BB7B4 100%);"/>
                                 </div>
-                            </div>
+                                
+                                <div v-if="showError" class="text-danger">{{errorMessage}}</div>
+                            </form>
+
                         </div>
                     </div>
-                </b-col>
-            </b-row>
-        </b-container>
-
-        <!-- <section class="section has-text-centered">
-            <h1 class="title is-1">
-                Your Window
-            </h1>
-            <h3 class="title is-3">
-                Width: {{ windowH.width }} px<br/>
-                Height: {{ windowH.height }} px
-            </h3>
-        </section> -->
-        
+                </div>
+            </div>
+        </div>
     </div>
-    
 </template>
 
 <script>
@@ -152,9 +136,3 @@ const Cookie = process.client ? require('js-cookie') : undefined;
         }
     }
 </script>
-
-<style>
-    .form-control{
-        background-color: #efefef;
-    }
-</style>

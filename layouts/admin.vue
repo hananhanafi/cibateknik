@@ -28,7 +28,7 @@
         </div>
 
 
-        <div class="Tes w-100">
+        <div class="w-100">
             <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow>
                 <template #default="{ hide }" class="as" >
                     <div class="py-3 bg-primary-dark h-100">
@@ -85,7 +85,7 @@
         </div>
         
         
-        <div class="py-5" :style="{minHeight: windowH.height+'px'}">
+        <div class="py-5 bg-main-light" :style="{minHeight: windowH.height+'px'}">
             <div class="pt-5">
                 <Nuxt />
             </div>

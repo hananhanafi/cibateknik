@@ -56,7 +56,7 @@
                                         <td>Merk</td>
                                         <td>Tipe</td>
                                     </tr>
-                                    <tr v-for="item in productItems" :key="item">
+                                    <tr v-for="(item,i) in productItems" :key="i">
                                         <td width="80px"><div style="min-height:31px">{{item.name}}</div></td>
                                         <td width="80px">{{item.brand}}</td>
                                         <td width="80px">{{item.type}}</td>
@@ -70,10 +70,10 @@
                             </div>
                             <table class="w-100 table table-responsive" style="max-width:900px">
                                 <tr>
-                                    <td v-for="date in dates" :key="date"  class="text-center border-right">{{date}}</td>
+                                    <td v-for="(date,i) in dates" :key="i"  class="text-center border-right">{{date}}</td>
                                 </tr>
                                 <tr>
-                                    <td v-for="date in dates" :key="date" class="border-right">
+                                    <td v-for="(date,i) in dates" :key="i" class="border-right">
                                         <div class="d-flex text-center" style="min-width:160px" >
                                             <div class="mr-2 w-50">
                                                 IN
@@ -87,8 +87,8 @@
                                     </td>
 
                                 </tr>
-                                <tr v-for="item in productItems" :key="item">
-                                    <td  v-for="date in dates" :key="date" class="border-right">
+                                <tr v-for="(item,i) in productItems" :key="i">
+                                    <td  v-for="(date,i) in dates" :key="i" class="border-right">
                                         <div class="d-flex" style="min-width:160px">
                                             <div class="mr-2">
                                                 <BaseInput
@@ -133,7 +133,7 @@
                                         <td width="80px">Stok</td>
                                         <td style="min-width:300px">Aksi</td>
                                     </tr>
-                                    <tr v-for="item in productItems" :key="item">
+                                    <tr v-for="(item,i) in productItems" :key="i">
                                         <td><div style="min-height:31px">5</div></td>
                                         <td>2</td>
                                         <td>3</td>
@@ -165,7 +165,11 @@
 
 <script>
     export default {
-        // page properties go here
+        // page properties go hereexport default {
+        asyncData ({ params, redirect }) {
+            console.log("async",redirect);
+            return { id: params.id }
+        },
         layout: "admin",
         middleware: 'adminAuthenticated',
         data() {

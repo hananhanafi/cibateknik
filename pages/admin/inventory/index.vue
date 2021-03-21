@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="ml-auto mb-2 mr-2" style="width:160px">
                                     <BaseSelect
-                                    v-model="formData.sort"
+                                    v-model="formData.order"
                                     :options="['Terbaru', 'Terlama']"
                                     placeholder="Pilih Urutkan"
                                     dense
@@ -41,37 +41,48 @@
                                     <button class="btn btn-primary  mt-1" type="button" @click="showModalAddProduct">Tambah Produk</button>
                                 </div>
                             </div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">ID Produk</th>
-                                    <th scope="col">Nama Produk</th>
-                                    <th scope="col" class="text-center" width="300px">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(item,i) in items" :key="i">
-                                        <th scope="row">ITEMID{{i+1}}</th>
-                                        <td>Mark</td>
-                                        <td class="text-center">
-                                            <b-button variant="success" size="sm"  @click="$router.push({name:'admin-inventory-detail-produk'})">
-                                            Lihat Inventaris
-                                            </b-button>
-                                            <b-button variant="outline-primary" size="sm"  @click="$router.push({name:'admin-inventory-tambah-barang'})">
-                                            Tambah Barang
-                                            </b-button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div v-if="products.length>0">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">ID Produk</th>
+                                        <th scope="col">Nama Produk</th>
+                                        <th scope="col" class="text-center" width="300px">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item,i) in products" :key="i">
+                                            <th scope="row">{{item.productID}}</th>
+                                            <td>{{item.name}}</td>
+                                            <td class="text-center">
+                                                <b-button variant="success" size="sm"  @click="$router.push({name:'admin-inventory-detail-produk-id',params:{id:item.productID}})">
+                                                Lihat Inventaris
+                                                </b-button>
+                                                <b-button variant="outline-primary" size="sm"  @click="$router.push({name:'admin-inventory-tambah-barang-id',params:{id:item.productID}})">
+                                                Tambah Barang
+                                                </b-button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
-                            <Pagination/>
+                                <Pagination/>
+                            </div>
+
+                            <LoadingSpinner v-else-if="isLoadingData" :show="isLoadingData"/>
+
+                            <div v-else class="text-center my-5 py-5">
+                                <div class="text-40 text-warning">
+                                    <fa :icon="['fas','exclamation-circle']"/>
+                                </div>
+                                <h3>Produk tidak ditemukan.</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <ModalAddProduct :show="isShowModalAddProduct" :data="{title:'Tambah Produk'}" @close="closeModalAddProduct"/>
+            <ModalAddProduct :show="isShowModalAddProduct" :data="{title:'Tambah Produk'}" @close="closeModalAddProduct" @update="loadData"/>
             
             
         </div>
@@ -79,6 +90,7 @@
 </template>
 
 <script>
+import ApiService from '~/apis/api.service';
     export default {
         // page properties go here
         layout: "admin",
@@ -86,21 +98,34 @@
         data() {
             return {
                 formData: {
-                    sort: null,
+                    order: null,
                 },
                 totalRows: 1,
                 currentPage: 1,
                 perPage: 20,
-                items: new Array(10),
+                products: [],
 
                 isShowModalAddProduct: false,
-                
+                isLoadingData: false,
             }
         },
         
         mounted() {
+            this.loadData();
         },
         methods: {
+            async loadData() {
+                this.isLoadingData = true;
+                await ApiService.get('/products')
+                .then((Response)=>{
+                    console.log("res",Response);
+                    this.products = Response.data;
+                })
+                .catch(err=>{
+                    console.log("err",err);
+                })
+                this.isLoadingData = false;
+            },
             showModalAddProduct() {
                 this.isShowModalAddProduct = true;
             },

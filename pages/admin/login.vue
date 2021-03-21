@@ -85,8 +85,18 @@ const Cookie = process.client ? require('js-cookie') : undefined;
         },
         mounted() {
             window.addEventListener('resize', this.handleResize);
+            this.loadData();
         },
         methods: {
+            loadData() {
+                ApiService.get('/products')
+                .then((Response)=>{
+                    console.log("res",Response);
+                })
+                .catch(err=>{
+                    console.log("err",err);
+                })
+            },
             handleResize() {
                 this.windowH.width = window.innerWidth;
                 this.windowH.height = window.innerHeight;
@@ -105,7 +115,6 @@ const Cookie = process.client ? require('js-cookie') : undefined;
                         console.log("res",response);
                         const auth = response.data.token;
                         this.$store.commit('setAuthAdmin', auth) // mutating to store for client rendering
-                        Cookie.set('auth', auth) // saving token in cookie for server rendering
                         this.$router.push('/admin/dashboard');
                         this.submitStatus = 'SUCCESS'
                     })

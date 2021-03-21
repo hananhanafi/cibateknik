@@ -16,5 +16,6 @@ module.exports = {
   rules: {
     'prettier/prettier': 0,
     "no-console": "off",
+    'vue/attribute-hyphenation': 'never'
   },
 }

@@ -2,13 +2,12 @@ import Vue from "vue";
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'http://localhost:5000/cibateknik-dev-api/us-central1/api',
+    baseURL: 'https://us-central1-cibateknik-dev-api.cloudfunctions.net/api',
     timeout: 50000
 });
 
 const Cookie = process.client ? require('js-cookie') : undefined;
 
-console.log("cl",Cookie.get('auth'));
 const ApiService = {
     init() {
         Object.defineProperty(Vue, "$api", {

@@ -624,18 +624,8 @@ export default {
 computed: {
 },
 mounted() {
-    this.loadData();
 },
 methods: {
-    loadData() {
-        ApiService.get('/products')
-        .then((Response)=>{
-            console.log("res",Response);
-        })
-        .catch(err=>{
-            console.log("err",err);
-        })
-    },
     datePickerRangeChangedHandler(e){
         // console.log("eeee",this.dateDiffInDays(new Date(e[1])-new Date(e[0])));
         console.log("eeee",e[0]);

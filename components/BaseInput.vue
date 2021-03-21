@@ -18,7 +18,7 @@
                   'form-control-sm': small !== undefined, 
                   'rounded-pill': rounded !== undefined ,
                   'text-center': center !== undefined ,
-                  'is-invalid': error !== undefined ,
+                  'is-invalid': error !== undefined && error !== null ,
                 }"
         :style="{ 'text-align': align }"
         :value="value"

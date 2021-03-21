@@ -2,7 +2,6 @@
 export default function ({ store, redirect }) {
     
     const Cookie = process.client ? require('js-cookie') : undefined;
-    console.log("cookie",Cookie.get('auth'));
     // If the user is not authenticated
     if (!Cookie.get('auth') || store.state.role !== 'admin' ) {
         return redirect('/admin/login')

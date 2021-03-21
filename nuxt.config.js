@@ -44,13 +44,13 @@ export default {
       component: 'fa', 
       imports: [{
           set: '@fortawesome/free-solid-svg-icons',
-          icons: ['faLightbulb','faShoppingCart','faHandHoldingUsd','faCoins','faDonate','faUsers','faEye','faEyeSlash','faSearch','faBell','faTrash','faPencilAlt','faTimes','faPlus','faMinus','faArrowLeft','faArrowRight','faChevronRight','faChevronLeft','faAngleRight','faAngleLeft','faHeart','faUniversity','faCreditCard','faStore','faWallet','faHome','faUser','faFilter','faBars','faUpload','faFileUpload','faCloudUploadAlt','faColumns','faBoxes','faChartBar','faInbox']
+          icons: ['faLightbulb','faShoppingCart','faHandHoldingUsd','faCoins','faDonate','faUsers','faEye','faEyeSlash','faSearch','faBell','faTrash','faPencilAlt','faTimes','faPlus','faMinus','faArrowLeft','faArrowRight','faChevronRight','faChevronLeft','faAngleRight','faAngleLeft','faHeart','faUniversity','faCreditCard','faStore','faWallet','faHome','faUser','faFilter','faBars','faUpload','faFileUpload','faCloudUploadAlt','faColumns','faBoxes','faChartBar','faInbox','faCheckCircle','faTimesCircle','faExclamation','faExclamationCircle','faExclamationTriangle']
           },
           {set: '@fortawesome/free-brands-svg-icons',
           icons: ['faGithub','faWhatsapp','faWhatsappSquare','faInstagram','faInstagramSquare','faFacebook','faFacebookSquare','faFacebookF']
           },
           {set: '@fortawesome/free-regular-svg-icons',
-          icons: ['faLightbulb','faHeart']
+          icons: ['faLightbulb','faHeart','faCheckCircle','faTimesCircle']
           },
       ]
     }]

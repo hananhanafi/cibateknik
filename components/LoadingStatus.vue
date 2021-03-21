@@ -4,7 +4,10 @@
     class="text-center text-small my-4"
   >
     <div v-if="props.isLoading">
-      <div class="loading-spinner mb-2"></div>
+      <!-- <div class="loading-spinner mb-2"></div> -->
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
       <!-- <div>Memuat data..</div> -->
     </div>
     <div v-if="props.isError">

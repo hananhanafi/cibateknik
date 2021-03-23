@@ -2,7 +2,7 @@ import Vue from "vue";
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://us-central1-cibateknik-dev-api.cloudfunctions.net/api',
+    baseURL: 'http://localhost:5000/cibateknik-dev-api/us-central1/api',
     timeout: 50000
 });
 

@@ -12,22 +12,25 @@
                         <div class="col">
                             <div class="d-md-flex">
                                 <div class="flex-fill mb-2 mr-2">
-                                    <BaseInput
-                                        id="Cari"
-                                        placeholder="Cari Produk..."
-                                        class="mb-0"
-                                        
-                                    >
-                                        <div slot="afterInput" class="position-absolute"
-                                            style=" right:12px;
-                                                    top: 50%;
-                                                    -ms-transform: translateY(-50%);
-                                                    transform: translateY(-50%);
-                                                    z-index:99"
+                                    <form v-on:submit.prevent="loadData">
+                                        <BaseInput
+                                            id="Cari"
+                                            v-model="formData.search"
+                                            placeholder="Cari Produk..."
+                                            class="mb-0"
+                                            
                                         >
-                                            <fa class="" :icon="['fas','search']" /> 
-                                        </div>
-                                    </BaseInput>
+                                            <div @click="loadData" slot="afterInput" class="position-absolute"
+                                                style=" right:12px;
+                                                        top: 50%;
+                                                        -ms-transform: translateY(-50%);
+                                                        transform: translateY(-50%);
+                                                        z-index:99"
+                                            >
+                                                <fa class="" :icon="['fas','search']" /> 
+                                            </div>
+                                        </BaseInput>
+                                    </form>
                                 </div>
                                 <div class="ml-auto mb-2 mr-2" style="width:160px">
                                     <BaseSelect
@@ -35,6 +38,7 @@
                                     :options="['Terbaru', 'Terlama']"
                                     placeholder="Pilih Urutkan"
                                     dense
+                                    @input="orderSelectHandler($event)"
                                     />
                                 </div>
                                 <div class="ml-auto mb-2 text-right">
@@ -66,7 +70,7 @@
                                     </tbody>
                                 </table>
 
-                                <Pagination/>
+                                <PaginationData :data="metaData" @page-update="pageUpdateHandler($event)"/>
                             </div>
 
                             <LoadingSpinner v-else-if="isLoadingData" :show="isLoadingData"/>
@@ -97,29 +101,59 @@ import ApiService from '~/apis/api.service';
         middleware: 'adminAuthenticated',
         data() {
             return {
+                products: [],
                 formData: {
+                    search: null,
                     order: null,
                 },
-                totalRows: 1,
-                currentPage: 1,
-                perPage: 20,
-                products: [],
+                metaData: {
+                    first_index: 0,
+                    last_index: 0,
+                    current_page: 1,
+                    first_page: 1,
+                    last_page: 1,
+                    total: 0,
+                },
 
                 isShowModalAddProduct: false,
                 isLoadingData: false,
             }
         },
-        
+        computed: {
+            params() {
+                return {
+                    search: this.formData.search || null, 
+                    page: this.metaData.current_page, 
+                    order: this.formData.order ? (this.formData.order == 'Terbaru' ? 'desc' : 'asc') : null, 
+                }
+            }
+        },
         mounted() {
             this.loadData();
         },
         methods: {
+            orderSelectHandler(value){
+                if(value){
+                    this.loadData();
+                }
+            },
+            pageUpdateHandler(page){
+                this.metaData.current_page = page;
+                this.loadData();
+                console.log("Ganti",this.metaData);
+            },
             async loadData() {
                 this.isLoadingData = true;
-                await ApiService.get('/products')
+                await ApiService.query('/products',this.params)
                 .then((Response)=>{
-                    console.log("res",Response);
-                    this.products = Response.data;
+                    this.products = Response.data.data;
+                    this.metaData = Response.data.meta
+                    // this.first_index = this.meta.first_index;
+                    // this.last_index = this.meta.last_index;
+                    // this.current_page = this.meta.current_page;
+                    // this.first_page = this.meta.first_page;
+                    // this.last_page = this.meta.last_page;
+                    // this.total = this.meta.total;
                 })
                 .catch(err=>{
                     console.log("err",err);

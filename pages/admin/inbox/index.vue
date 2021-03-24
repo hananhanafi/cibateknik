@@ -1,7 +1,8 @@
 <template>
     <div class="text-center">
         <div class="container">
-            <div class="bg-white shadow rounded-8 p-2 text-left ">
+            <Breadcrumb :data="breadCrumbList"/>
+            <div class="bg-white shadow-light rounded-8 p-2 text-left ">
                 <div class="mb-3 p-2 d-flex">
                     <h1>Pesan</h1>
                     <div class="ml-auto d-flex align-items-center">
@@ -58,6 +59,9 @@
         middleware: 'adminAuthenticated',
         data() {
             return {
+                breadCrumbList: [
+                    {name:"Inbox",link:"/admin/inbox"}
+                ],
                 items : new Array(10),
                 currentItem : {
                         "isActive": true,
@@ -88,6 +92,21 @@
             closeModaldDeleteItem() {
                 this.isShowModalDeleteItem = false;
             },
+        },
+        head() {
+            return {
+                title: "Cibateknik Admin - Inbox",
+                meta: [
+                // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: 'My custom description'
+                }
+                ],
+                
+                // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+            }
         }
     }
 </script>

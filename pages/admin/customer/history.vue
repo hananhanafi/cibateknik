@@ -1,8 +1,9 @@
 <template>
     <div class="text-center">
         <div class="container">
+            <Breadcrumb :data="breadCrumbList"/>
             <!-- <h1 class="red">Customer admin</h1> -->
-            <div class="bg-white shadow rounded-8 p-3 text-left ">
+            <div class="bg-white shadow-light rounded-8 p-3 text-left ">
                 <div class="mb-3 p-2">
                     <h1>Riwayat Customer</h1>
                 </div>
@@ -159,6 +160,10 @@
         middleware: 'adminAuthenticated',
         data() {
             return {
+                breadCrumbList: [
+                    {name:"Daftar Customer",link:"/admin/customer"},
+                    {name:"History Customer",link:""}
+                ],
                 customers : new Array(10),
                 isShowModaldDetailOrder: false,
 
@@ -182,6 +187,21 @@
             closeModaldDetailOrder() {
                 this.isShowModaldDetailOrder = false;
             },
+        },
+        head() {
+            return {
+                title: "Cibateknik Admin - History Customer",
+                meta: [
+                // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: 'My custom description'
+                }
+                ],
+                
+                // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+            }
         }
     }
 </script>

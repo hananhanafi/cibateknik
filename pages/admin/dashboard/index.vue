@@ -1,9 +1,12 @@
 <template>
     <div class="text-center">
         <div class="container-fluid px-md-5">
+            
+            <Breadcrumb :data="breadCrumbList"/>
+            
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div style="background: linear-gradient(75.38deg, #1AE3D9 3.3%, #5C7CE9 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 mb-4">
+                    <div style="background: linear-gradient(75.38deg, #1AE3D9 3.3%, #5C7CE9 100%);height:200px" class="w-100 shadow-light text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
                             <div  class="col text-left">
                                 <div style="font-size:4em">
@@ -20,7 +23,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div style="background: linear-gradient(75.38deg, #41E296 3.3%, #3BB5B5 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 mb-4">
+                    <div style="background: linear-gradient(75.38deg, #41E296 3.3%, #3BB5B5 100%);height:200px" class="w-100 shadow-light text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
                             <div  class="col text-left">
                                 <div style="font-size:4em">
@@ -37,7 +40,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div style="background: linear-gradient(75.38deg, #F5509F 3.3%, #FE6F70 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 mb-4">
+                    <div style="background: linear-gradient(75.38deg, #F5509F 3.3%, #FE6F70 100%);height:200px" class="w-100 shadow-light text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
                             <div  class="col text-left">
                                 <div style="font-size:4em">
@@ -54,7 +57,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div style="background: linear-gradient(75.38deg, #FFD941 3.3%, #FF8154 100%);height:200px" class="w-100 shadow text-white rounded-8 p-3 mb-4">
+                    <div style="background: linear-gradient(75.38deg, #FFD941 3.3%, #FF8154 100%);height:200px" class="w-100 shadow-light text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
                             <div  class="col text-left">
                                 <div style="font-size:4em">
@@ -74,7 +77,7 @@
 
             <div class="row">
                 <div class="col-lg-8 col-12 mb-4">
-                    <div class="bg-white p-3 text-left rounded-8 h-100 shadow">
+                    <div class="bg-white p-3 text-left rounded-8 h-100 shadow-light">
                         <div class="d-flex">
                             <div class="flex-fill">
                                 <h2>Pendapatan</h2>
@@ -101,7 +104,7 @@
                 </div>
 
                 <div class="col-lg-4 col-12 mb-4">
-                    <div class="bg-white p-3 rounded-8 shadow">
+                    <div class="bg-white p-3 rounded-8 shadow-light">
                         <h2>Hari Ini</h2>
                         <div class="mb-3">
                             Senin, 21 Desember 2021
@@ -139,7 +142,7 @@
 
 
                 <div class="col-lg-3 col-12 mb-4">
-                    <div class="bg-white p-3 text-left rounded-8 h-100 shadow">
+                    <div class="bg-white p-3 text-left rounded-8 h-100 shadow-light">
                         <h2 class="mb-3">Top Selling Item</h2>
                         <table class="table">
                             <thead>
@@ -194,7 +197,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-12 mb-4">
-                    <div class="bg-white p-3 text-left rounded-8 h-100 shadow">
+                    <div class="bg-white p-3 text-left rounded-8 h-100 shadow-light">
                         <div class="d-flex">
                             <div class="flex-fill">
                                 <h2>Grafik Penjualan</h2>
@@ -212,7 +215,7 @@
 
                 
                 <div class="col-12">
-                    <div class="bg-white shadow rounded-8 p-2 text-left pl-4">
+                    <div class="bg-white shadow-light rounded-8 p-2 text-left pl-4">
                         <h2>Daftar Pesanan</h2>
 
                         <div class="d-md-flex">
@@ -450,6 +453,10 @@ export default {
     middleware: 'adminAuthenticated',
     data() {
         return {
+            breadCrumbList: [
+                {name:"Dashboard",link:"/admin/dashboard"}
+            ],
+
             date_range: null,
             dateRange: {
                 startDate: null,
@@ -621,36 +628,51 @@ export default {
         }
     },
 
-computed: {
-},
-mounted() {
-},
-methods: {
-    datePickerRangeChangedHandler(e){
-        // console.log("eeee",this.dateDiffInDays(new Date(e[1])-new Date(e[0])));
-        console.log("eeee",e[0]);
+    computed: {
     },
-    dateDiffInDays(a, b) {
-        const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-        // Discard the time and time-zone information.
-        const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-        const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+    mounted() {
+    },
+    methods: {
+        datePickerRangeChangedHandler(e){
+            // console.log("eeee",this.dateDiffInDays(new Date(e[1])-new Date(e[0])));
+            console.log("eeee",e[0]);
+        },
+        dateDiffInDays(a, b) {
+            const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+            // Discard the time and time-zone information.
+            const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+            const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
 
-        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+            return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+        },
+        showModaldDetailOrder() {
+            this.isShowModaldDetailOrder = true;
+        },
+        closeModaldDetailOrder() {
+            this.isShowModaldDetailOrder = false;
+        },
+        showModalEditStatusOrder() {
+            this.isShowModalEditStatusOrder = true;
+        },
+        closeModalEditStatusOrder() {
+            this.isShowModalEditStatusOrder = false;
+        },
     },
-    showModaldDetailOrder() {
-        this.isShowModaldDetailOrder = true;
-    },
-    closeModaldDetailOrder() {
-        this.isShowModaldDetailOrder = false;
-    },
-    showModalEditStatusOrder() {
-        this.isShowModalEditStatusOrder = true;
-    },
-    closeModalEditStatusOrder() {
-        this.isShowModalEditStatusOrder = false;
-    },
-}
+    head() {
+        return {
+            title: "Cibateknik Admin - Dashboard",
+            meta: [
+            // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+            {
+                hid: 'description',
+                name: 'description',
+                content: 'My custom description'
+            }
+            ],
+            
+            // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+        }
+    }
 }
 </script>
 

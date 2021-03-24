@@ -1,7 +1,9 @@
 <template>
     <div class="text-center">
+        
         <div class="container">
-            <div class="bg-white shadow rounded-8 p-2 text-left ">
+            <Breadcrumb :data="breadCrumbList"/>
+            <div class="bg-white shadow-light rounded-8 p-2 text-left ">
                 <div class="mb-3 p-2">
                     <h1>Daftar Customer</h1>
                 </div>
@@ -80,6 +82,9 @@
         middleware: 'adminAuthenticated',
         data() {
             return {
+                breadCrumbList: [
+                    {name:"Daftar Customer",link:"/admin/customer"}
+                ],
                 customers : new Array(10),
                 currentItem : {
                         "isActive": true,
@@ -103,6 +108,21 @@
             closeModaldDetailCustomer() {
                 this.isShowModaldDetailCustomer = false;
             },
+        },
+        head() {
+            return {
+                title: "Cibateknik Admin - Customer",
+                meta: [
+                // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: 'My custom description'
+                }
+                ],
+                
+                // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+            }
         }
     }
 </script>

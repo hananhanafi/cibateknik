@@ -1,7 +1,8 @@
 <template>
     <div class="text-center">
         <div class="container-fluid">
-            <div class="bg-white shadow rounded-8 p-3 text-left "> 
+            <Breadcrumb :data="breadCrumbList"/>
+            <div class="bg-white shadow-light rounded-8 p-3 text-left "> 
                 <div class="mb-3 p-2">
                     <h1>Produk</h1>
                 </div>
@@ -33,7 +34,7 @@
                         />
                     </div>
                     <div class="ml-auto mb-2 text-right">
-                        <button class="btn btn-primary" type="button" @click="$router.push({name:'admin-inventory-tambah-barang'})">Tambah Barang</button>
+                        <button class="btn btn-primary" type="button" @click="$router.push({name:'admin-inventory-tambah-barang-id',params:{id:$route.params.id}})">Tambah Barang</button>
                     </div>
                 </div>
                 <table class="table table-responsive w-100">
@@ -174,6 +175,10 @@
         middleware: 'adminAuthenticated',
         data() {
             return {
+                breadCrumbList: [
+                    {name:"Inventory",link:"/admin/inventory"},
+                    {name:"Inventaris Produk",link:""},
+                ],
                 dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
                 productItems: [
                     { name:"McDonald",
@@ -220,6 +225,21 @@
             closeModalNoteInventory() {
                 this.isShowModalNoteInventory = false;
             },
+        },
+        head() {
+            return {
+                title: "Cibateknik Admin - Inventaris Produk",
+                meta: [
+                // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: 'My custom description'
+                }
+                ],
+                
+                // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+            }
         }
     }
 </script>

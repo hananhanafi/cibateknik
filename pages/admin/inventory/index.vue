@@ -1,8 +1,8 @@
 <template>
     <div class="text-center">
         <div class="container">
-            <!-- <h1 class="red">Customer admin</h1> -->
-            <div class="bg-white shadow rounded-8 p-2 text-left ">
+            <Breadcrumb :data="breadCrumbList"/>
+            <div class="bg-white shadow-light rounded-8 p-2 text-left ">
                 <div class="mb-3 p-2">
                     <h1>Daftar Produk</h1>
                 </div>
@@ -20,7 +20,7 @@
                                             class="mb-0"
                                             
                                         >
-                                            <div @click="loadData" slot="afterInput" class="position-absolute"
+                                            <div @click.prevent="loadData" slot="afterInput" class="position-absolute"
                                                 style=" right:12px;
                                                         top: 50%;
                                                         -ms-transform: translateY(-50%);
@@ -42,11 +42,11 @@
                                     />
                                 </div>
                                 <div class="ml-auto mb-2 text-right">
-                                    <button class="btn btn-primary  mt-1" type="button" @click="showModalAddProduct">Tambah Produk</button>
+                                    <button class="btn btn-primary  mt-1" type="button" @click.prevent="showModalAddProduct">Tambah Produk</button>
                                 </div>
                             </div>
                             <div v-if="products.length>0">
-                                <table class="table">
+                                <table class="table table-responsive-md">
                                     <thead>
                                         <tr>
                                         <th scope="col">ID Produk</th>
@@ -55,15 +55,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(item,i) in products" :key="i">
-                                            <th scope="row">{{item.productID}}</th>
-                                            <td>{{item.name}}</td>
+                                        <tr v-for="(product,i) in products" :key="i">
+                                            <th scope="row">{{product.productID}}</th>
+                                            <td>{{product.name}}</td>
                                             <td class="text-center">
-                                                <b-button variant="success" size="sm"  @click="$router.push({name:'admin-inventory-detail-produk-id',params:{id:item.productID}})">
-                                                Lihat Inventaris
+                                                <b-button variant="success" size="sm"  @click.prevent="$router.push({name:'admin-inventory-detail-produk-id',params:{id:product.productID}})">
+                                                    <fa :icon="['fas','pencil-alt']"/> Inventaris
                                                 </b-button>
-                                                <b-button variant="outline-primary" size="sm"  @click="$router.push({name:'admin-inventory-tambah-barang-id',params:{id:item.productID}})">
-                                                Tambah Barang
+                                                <b-button variant="outline-danger" size="sm"  @click.prevent="showModaldeleteProduct(product)">
+                                                    <fa :icon="['fas','trash']"/> Hapus
                                                 </b-button>
                                             </td>
                                         </tr>
@@ -87,6 +87,7 @@
             </div>
 
             <ModalAddProduct :show="isShowModalAddProduct" :data="{title:'Tambah Produk'}" @close="closeModalAddProduct" @update="loadData"/>
+            <ModalDeleteProduct :show="isShowModaldeleteProduct" :data="deletedProduct" @close="closeModaldeleteProduct" @update="loadData"/>
             
             
         </div>
@@ -101,6 +102,9 @@ import ApiService from '~/apis/api.service';
         middleware: 'adminAuthenticated',
         data() {
             return {
+                breadCrumbList: [
+                    {name:"Inventory",link:"/admin/inventory"}
+                ],
                 products: [],
                 formData: {
                     search: null,
@@ -116,6 +120,8 @@ import ApiService from '~/apis/api.service';
                 },
 
                 isShowModalAddProduct: false,
+                isShowModaldeleteProduct: false,
+                deletedProduct:null,
                 isLoadingData: false,
             }
         },
@@ -166,6 +172,29 @@ import ApiService from '~/apis/api.service';
             closeModalAddProduct() {
                 this.isShowModalAddProduct = false;
             },
+            showModaldeleteProduct(product) {
+                this.deletedProduct = product;
+                this.isShowModaldeleteProduct = true;
+            },
+            closeModaldeleteProduct() {
+                this.deletedProduct = null;
+                this.isShowModaldeleteProduct = false;
+            },
+        },
+        head() {
+            return {
+                title: "Cibateknik Admin - Inventory",
+                meta: [
+                // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: 'My custom description'
+                }
+                ],
+                
+                // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+            }
         }
     }
 </script>

@@ -1,8 +1,8 @@
 <template>
     <div class="text-center">
         <div class="container">
-            <!-- <h1 class="red">Customer admin</h1> -->
-            <div class="bg-white shadow rounded-8 p-3 text-left ">
+            <Breadcrumb :data="breadCrumbList"/>
+            <div class="bg-white shadow-light rounded-8 p-3 text-left ">
                 <div class="mb-3 p-2">
                     <h1>Tambah Barang</h1>
                 </div>
@@ -122,6 +122,11 @@
         middleware: 'adminAuthenticated',
         data() {
             return {
+                breadCrumbList: [
+                    {name:"Inventory",link:"/admin/inventory"},
+                    {name:"Inventaris Produk",link:""},
+                    {name:"Tambah Barang",link:""},
+                ],
                 infoCount: [
                     {name:'Type'},
                     {name:'Ukuran'},
@@ -159,6 +164,21 @@
             },
             deletePhoto(index){
                 this.photos.splice(index,1)
+            }
+        },
+        head() {
+            return {
+                title: "Cibateknik Admin - Tambah Barang",
+                meta: [
+                // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: 'My custom description'
+                }
+                ],
+                
+                // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
             }
         }
         

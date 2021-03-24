@@ -44,7 +44,7 @@ export default {
       component: 'fa', 
       imports: [{
           set: '@fortawesome/free-solid-svg-icons',
-          icons: ['faLightbulb','faShoppingCart','faHandHoldingUsd','faCoins','faDonate','faUsers','faEye','faEyeSlash','faSearch','faBell','faTrash','faPencilAlt','faTimes','faPlus','faMinus','faArrowLeft','faArrowRight','faChevronRight','faChevronLeft','faAngleRight','faAngleLeft','faHeart','faUniversity','faCreditCard','faStore','faWallet','faHome','faUser','faFilter','faBars','faUpload','faFileUpload','faCloudUploadAlt','faColumns','faBoxes','faChartBar','faInbox','faCheckCircle','faTimesCircle','faExclamation','faExclamationCircle','faExclamationTriangle']
+          icons: ['faLightbulb','faShoppingCart','faHandHoldingUsd','faCoins','faDonate','faUsers','faEye','faEyeSlash','faSearch','faBell','faTrash','faPencilAlt','faTimes','faPlus','faMinus','faArrowLeft','faArrowRight','faChevronRight','faChevronLeft','faAngleRight','faAngleLeft','faHeart','faUniversity','faCreditCard','faStore','faWallet','faHome','faUser','faFilter','faBars','faUpload','faFileUpload','faCloudUploadAlt','faColumns','faBoxes','faChartBar','faInbox','faCheckCircle','faTimesCircle','faExclamation','faExclamationCircle','faExclamationTriangle','faDatabase']
           },
           {set: '@fortawesome/free-brands-svg-icons',
           icons: ['faGithub','faWhatsapp','faWhatsappSquare','faInstagram','faInstagramSquare','faFacebook','faFacebookSquare','faFacebookF']

@@ -2,7 +2,7 @@
     <div class="text-center">
         <div class="container">
             <Breadcrumb :data="breadCrumbList"/>
-            <div class="bg-white shadow-light rounded-8 p-2 text-left ">
+            <div class="bg-white shadow-sm rounded-8 p-2 text-left ">
                 <div class="mb-3 p-2 d-flex">
                     <h1>Pesan</h1>
                     <div class="ml-auto d-flex align-items-center">

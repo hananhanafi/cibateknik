@@ -3,7 +3,7 @@
         <div class="container">
             <Breadcrumb :data="breadCrumbList"/>
             <!-- <h1 class="red">Customer admin</h1> -->
-            <div class="bg-white shadow-light rounded-8 p-3 text-left ">
+            <div class="bg-white shadow-sm rounded-8 p-3 text-left ">
                 <div class="mb-3 p-2">
                     <h1>Riwayat Customer</h1>
                 </div>

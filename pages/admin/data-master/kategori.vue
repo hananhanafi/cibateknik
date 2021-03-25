@@ -5,7 +5,7 @@
             <Breadcrumb :data="breadCrumbList"/>
             <div class="bg-white shadow-sm rounded-8 p-2 text-left ">
                 <div class="mb-3 p-2">
-                    <h1>Daftar Customer</h1>
+                    <h1>Daftar Kategori</h1>
                 </div>
                 <div class="container-fluid">
                     <div class="col">
@@ -13,7 +13,7 @@
                             <div class="flex-fill mb-2 mr-2">
                                 <BaseInput
                                     id="Cari"
-                                    placeholder="Cari Produk..."
+                                    placeholder="Cari Kategori..."
                                     class="mb-0"
                                     
                                 >
@@ -35,30 +35,25 @@
                                 dense
                                 />
                             </div>
+                            <div class="ml-auto mb-2 text-right">
+                                <button class="btn btn-primary  mt-1" type="button">Tambah Kategori</button>
+                            </div>
                         </div>
                         <table class="table table-responsive-md">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
-                                    <th scope="col">Nama</th>
-                                    <th scope="col">Tanggal Order</th>
-                                    <th scope="col">Tanggal Terakhir Online</th>
-                                    <th scope="col" class="text-center">Aksi</th>
+                                    <th scope="col">Nama Kategori</th>
+                                    <th scope="col" class="text-center" width="300px">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(customer,i) in customers" :key="i">
+                                <tr v-for="(category,i) in categories" :key="i">
                                     <th scope="row">{{i}}</th>
                                     <td>Mark</td>
-                                    <td>Kamis, 21 Desember 2021</td>
-                                    <td>Kamis, 21 Desember 2021</td>
-                                    
                                     <td class="text-center">
-                                        <button class="btn btn-primary btn-sm" @click="showModaldDetailCustomer" >
-                                            Detail Customer
-                                        </button>
-                                        <button class="btn btn-outline-warning btn-sm" @click="$router.push({name:'admin-customer-history'})" >
-                                            Riwayat Pesanan
+                                        <button class="btn btn-danger btn-sm" @click="showModalDeleteItem" >
+                                            Hapus Kategori
                                         </button>
                                     </td>
                                 </tr>
@@ -69,7 +64,7 @@
                 </div>
             </div>
             
-            <ModalDetailCustomer :show="isShowModaldDetailCustomer" :data="{...currentItem}" @close="closeModaldDetailCustomer"/>
+            <ModalDeleteItem :show="isShowModalDeleteItem" @close="closeModalDeleteItem"/>
             
         </div>
     </div>
@@ -83,9 +78,9 @@
         data() {
             return {
                 breadCrumbList: [
-                    {name:"Daftar Customer",link:"/admin/customer"}
+                    {name:"Daftar Kategori",link:"/admin/data-master/kategori"}
                 ],
-                customers : new Array(10),
+                categories : new Array(10),
                 currentItem : {
                         "isActive": true,
                         "date": "Kamis,21 Desember 2020",
@@ -94,7 +89,7 @@
                             "last": "Macdonald"
                         }
                 },
-                isShowModaldDetailCustomer: false,
+                isShowModalDeleteItem: false,
             }
         },
         
@@ -102,16 +97,16 @@
             // Set the initial number of items
         },
         methods: {
-            showModaldDetailCustomer() {
-                this.isShowModaldDetailCustomer = true;
+            showModalDeleteItem() {
+                this.isShowModalDeleteItem = true;
             },
-            closeModaldDetailCustomer() {
-                this.isShowModaldDetailCustomer = false;
+            closeModalDeleteItem() {
+                this.isShowModalDeleteItem = false;
             },
         },
         head() {
             return {
-                title: "Cibateknik Admin - Customer",
+                title: "Cibateknik Admin - Data Master Kategori",
                 meta: [
                 // hid is used as unique identifier. Do not use `vmid` for it as it will not work
                 {

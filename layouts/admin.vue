@@ -56,26 +56,27 @@
                             </li>
                             <li>
                                 <div v-b-toggle.collapse-1 class="w-100 text-white" style="outline: none;box-shadow: none;" >
-                                    <a class="btn btn-block text-left menu-item-link py-3" :class="{ 'active-menu' : isActive('admin-data-master') }">
-                                        <a v-b-toggle.collapse-1 class="w-100" ><fa :icon="['fas','database']"/> Data Master</a>
+                                    <a class="btn btn-block text-left menu-item-link py-3 w-100" :class="{ 'active-menu' : isActive('admin-data-master') }">
+                                        <fa :icon="['fas','database']"/> Data Master 
+                                        <fa class="ml-2" :icon="['fas','chevron-down']"/>
                                     </a>
                                 </div>
 
-                                <b-collapse id="collapse-1" class="mt-2 ml-5 mb-2">
+                                <b-collapse id="collapse-1" class="ml-5 mb-2">
                                     <div class="w-100">
-                                        <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/post"
+                                        <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/data-master/brand"
                                         :class="{ 'active-menu' : isActive('admin-data-master-brand') }">
                                             Data Brand/Merk <span class="float-right"><fa :icon="['fas','arrow-right']"/></span>
                                         </NuxtLink>
                                     </div>
                                     <div class="w-100">
-                                        <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/post"
+                                        <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/data-master/kategori"
                                         :class="{ 'active-menu' : isActive('admin-data-master-kategori') }">
                                             Data Kategori <span class="float-right"><fa :icon="['fas','arrow-right']"/></span>
                                         </NuxtLink>
                                     </div>
                                     <div class="w-100">
-                                        <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/post"
+                                        <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/data-master/supplier"
                                         :class="{ 'active-menu' : isActive('admin-data-master-supplier') }">
                                             Supplier <span class="float-right"><fa :icon="['fas','arrow-right']"/></span>
                                         </NuxtLink>

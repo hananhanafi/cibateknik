@@ -1,9 +1,9 @@
 <template>
-    <div class="container-fluid align-middle bg-main-light">
+    <div class="container-fluid align-middle bg-main-sm">
         <div class="container">
             <div class="row justify-content-md-center" :style="{height: windowH.height+'px'}">
                 <div class="col-lg-6 col-md-8 col-sm-10 col-12 mx-auto my-auto"> 
-                    <div class="py-2 bg-white shadow-light">
+                    <div class="py-2 bg-white shadow-sm">
                         <div class="my-5 mx-5 text-medium">
                             <h2 class="font-weight-bold text-" >Login Admin</h2>
                             <form>
@@ -30,7 +30,9 @@
                                     <ButtonLoading v-else class="w-50 text-white" style="background: linear-gradient(88.49deg, #41E296 0%, #3BB7B4 100%);"/>
                                 </div>
                                 
-                                <div v-if="showError" class="text-danger">{{errorMessage}}</div>
+                                <div v-if="showError" class="alert alert-danger" role="alert">
+                                    {{ errorMessage }}
+                                </div>
                             </form>
 
                         </div>

@@ -6,7 +6,7 @@
             
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div style="background: linear-gradient(75.38deg, #1AE3D9 3.3%, #5C7CE9 100%);height:200px" class="w-100 shadow-light text-white rounded-8 p-3 mb-4">
+                    <div style="background: linear-gradient(75.38deg, #1AE3D9 3.3%, #5C7CE9 100%);height:200px" class="w-100 shadow-sm text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
                             <div  class="col text-left">
                                 <div style="font-size:4em">
@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div style="background: linear-gradient(75.38deg, #41E296 3.3%, #3BB5B5 100%);height:200px" class="w-100 shadow-light text-white rounded-8 p-3 mb-4">
+                    <div style="background: linear-gradient(75.38deg, #41E296 3.3%, #3BB5B5 100%);height:200px" class="w-100 shadow-sm text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
                             <div  class="col text-left">
                                 <div style="font-size:4em">
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div style="background: linear-gradient(75.38deg, #F5509F 3.3%, #FE6F70 100%);height:200px" class="w-100 shadow-light text-white rounded-8 p-3 mb-4">
+                    <div style="background: linear-gradient(75.38deg, #F5509F 3.3%, #FE6F70 100%);height:200px" class="w-100 shadow-sm text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
                             <div  class="col text-left">
                                 <div style="font-size:4em">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div style="background: linear-gradient(75.38deg, #FFD941 3.3%, #FF8154 100%);height:200px" class="w-100 shadow-light text-white rounded-8 p-3 mb-4">
+                    <div style="background: linear-gradient(75.38deg, #FFD941 3.3%, #FF8154 100%);height:200px" class="w-100 shadow-sm text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
                             <div  class="col text-left">
                                 <div style="font-size:4em">
@@ -77,7 +77,7 @@
 
             <div class="row">
                 <div class="col-lg-8 col-12 mb-4">
-                    <div class="bg-white p-3 text-left rounded-8 h-100 shadow-light">
+                    <div class="bg-white p-3 text-left rounded-8 h-100 shadow-sm">
                         <div class="d-flex">
                             <div class="flex-fill">
                                 <h2>Pendapatan</h2>
@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="col-lg-4 col-12 mb-4">
-                    <div class="bg-white p-3 rounded-8 shadow-light">
+                    <div class="bg-white p-3 rounded-8 shadow-sm">
                         <h2>Hari Ini</h2>
                         <div class="mb-3">
                             Senin, 21 Desember 2021
@@ -142,7 +142,7 @@
 
 
                 <div class="col-lg-3 col-12 mb-4">
-                    <div class="bg-white p-3 text-left rounded-8 h-100 shadow-light">
+                    <div class="bg-white p-3 text-left rounded-8 h-100 shadow-sm">
                         <h2 class="mb-3">Top Selling Item</h2>
                         <table class="table">
                             <thead>
@@ -197,7 +197,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-12 mb-4">
-                    <div class="bg-white p-3 text-left rounded-8 h-100 shadow-light">
+                    <div class="bg-white p-3 text-left rounded-8 h-100 shadow-sm">
                         <div class="d-flex">
                             <div class="flex-fill">
                                 <h2>Grafik Penjualan</h2>
@@ -215,7 +215,7 @@
 
                 
                 <div class="col-12">
-                    <div class="bg-white shadow-light rounded-8 p-2 text-left pl-4">
+                    <div class="bg-white shadow-sm rounded-8 p-2 text-left pl-4">
                         <h2>Daftar Pesanan</h2>
 
                         <div class="d-md-flex">

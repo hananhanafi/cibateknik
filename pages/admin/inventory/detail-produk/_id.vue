@@ -2,7 +2,7 @@
     <div class="text-center">
         <div class="container-fluid">
             <Breadcrumb :data="breadCrumbList"/>
-            <div class="bg-white shadow-light rounded-8 p-3 text-left "> 
+            <div class="bg-white shadow-sm rounded-8 p-3 text-left "> 
                 <div class="mb-3 p-2">
                     <h1>Produk</h1>
                 </div>

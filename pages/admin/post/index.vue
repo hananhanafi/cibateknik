@@ -2,7 +2,7 @@
     <div class="text-center">
         <div class="container">
             <Breadcrumb :data="breadCrumbList"/>
-            <div class="bg-white shadow-light rounded-8 p-2 text-left ">
+            <div class="bg-white shadow-sm rounded-8 p-2 text-left ">
                 <div class="mb-3 p-2">
                     <h1>Katalog Barang</h1>
                 </div>

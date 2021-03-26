@@ -62,6 +62,9 @@
                                                 <b-button variant="success" size="sm"  @click.prevent="$router.push({name:'admin-inventory-detail-produk-id',params:{id:product.productID}})">
                                                     <fa :icon="['fas','pencil-alt']"/> Inventaris
                                                 </b-button>
+                                                <b-button variant="outline-warning" size="sm"  @click.prevent="showAdminModalEditProduct(product)">
+                                                    <fa :icon="['fas','pencil-alt']"/> Edit
+                                                </b-button>
                                                 <b-button variant="outline-danger" size="sm"  @click.prevent="showModaldeleteProduct(product)">
                                                     <fa :icon="['fas','trash']"/> Hapus
                                                 </b-button>
@@ -87,7 +90,10 @@
             </div>
 
             <ModalAddProduct :show="isShowModalAddProduct" :data="{title:'Tambah Produk'}" @close="closeModalAddProduct" @update="loadData"/>
-            <ModalDeleteProduct :show="isShowModaldeleteProduct" :data="deletedProduct" @close="closeModaldeleteProduct" @update="loadData"/>
+            
+            <AdminModalEditProduct :show="isShowAdminModalEditProduct" :data="currentProduct" @close="closeAdminModalEditProduct" @update="loadData"/>
+
+            <ModalDeleteProduct :show="isShowModaldeleteProduct" :data="currentProduct" @close="closeModaldeleteProduct" @update="loadData"/>
             
             
         </div>
@@ -120,8 +126,9 @@ import ApiService from '~/apis/api.service';
                 },
 
                 isShowModalAddProduct: false,
+                isShowAdminModalEditProduct: false,
                 isShowModaldeleteProduct: false,
-                deletedProduct:null,
+                currentProduct:null,
                 isLoadingData: false,
             }
         },
@@ -172,12 +179,20 @@ import ApiService from '~/apis/api.service';
             closeModalAddProduct() {
                 this.isShowModalAddProduct = false;
             },
+            showAdminModalEditProduct(product) {
+                this.currentProduct = product;
+                this.isShowAdminModalEditProduct = true;
+            },
+            closeAdminModalEditProduct() {
+                this.currentProduct = null;
+                this.isShowAdminModalEditProduct = false;
+            },
             showModaldeleteProduct(product) {
-                this.deletedProduct = product;
+                this.currentProduct = product;
                 this.isShowModaldeleteProduct = true;
             },
             closeModaldeleteProduct() {
-                this.deletedProduct = null;
+                this.currentProduct = null;
                 this.isShowModaldeleteProduct = false;
             },
         },

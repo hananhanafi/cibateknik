@@ -52,7 +52,7 @@
                                     <th scope="row">{{i}}</th>
                                     <td>Mark</td>
                                     <td class="text-center">
-                                        <button class="btn btn-danger btn-sm" @click="showModalDeleteItem" >
+                                        <button class="btn btn-danger btn-sm" @click="showAdminModalDeleteItem" >
                                             Hapus Supplier
                                         </button>
                                     </td>
@@ -64,7 +64,7 @@
                 </div>
             </div>
             
-            <ModalDeleteItem :show="isShowModalDeleteItem" @close="closeModalDeleteItem"/>
+            <AdminModalDeleteItem :show="isShowAdminModalDeleteItem" @close="closeAdminModalDeleteItem"/>
             
         </div>
     </div>
@@ -89,7 +89,7 @@
                             "last": "Macdonald"
                         }
                 },
-                isShowModalDeleteItem: false,
+                isShowAdminModalDeleteItem: false,
             }
         },
         
@@ -97,11 +97,11 @@
             // Set the initial number of items
         },
         methods: {
-            showModalDeleteItem() {
-                this.isShowModalDeleteItem = true;
+            showAdminModalDeleteItem() {
+                this.isShowAdminModalDeleteItem = true;
             },
-            closeModalDeleteItem() {
-                this.isShowModalDeleteItem = false;
+            closeAdminModalDeleteItem() {
+                this.isShowAdminModalDeleteItem = false;
             },
         },
         head() {

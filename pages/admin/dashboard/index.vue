@@ -453,9 +453,7 @@ export default {
     middleware: 'adminAuthenticated',
     data() {
         return {
-            breadCrumbList: [
-                {name:"Dashboard",link:"/admin/dashboard"}
-            ],
+            breadCrumbList: [],
 
             date_range: null,
             dateRange: {

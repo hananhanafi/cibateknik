@@ -446,7 +446,6 @@
 </template>
 
 <script>
-import ApiService from '~/apis/api.service';
 export default {
     // page properties go here
     layout: "admin",

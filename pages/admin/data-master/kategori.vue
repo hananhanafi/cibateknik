@@ -11,32 +11,38 @@
                     <div class="col">
                         <div class="d-md-flex">
                             <div class="flex-fill mb-2 mr-2">
-                                <BaseInput
-                                    id="Cari"
-                                    placeholder="Cari Kategori..."
-                                    class="mb-0"
-                                    
-                                >
-                                    <div slot="afterInput" class="position-absolute"
-                                        style=" right:12px;
-                                                top: 50%;
-                                                -ms-transform: translateY(-50%);
-                                                transform: translateY(-50%);
-                                                z-index:99"
+                                <form @submit.prevent="loadData">
+                                    <BaseInput
+                                        id="Cari"    
+                                        v-model="formData.search"
+                                        placeholder="Cari Kategori..."
+                                        class="mb-0"
                                     >
-                                        <fa class="" :icon="['fas','search']" /> 
-                                    </div>
-                                </BaseInput>
+                                        <div slot="afterInput" class="position-absolute" style=" right:12px;
+                                                    top: 50%;
+                                                    -ms-transform: translateY(-50%);
+                                                    transform: translateY(-50%);
+                                                    z-index:99"
+                                            @click.prevent="loadData"
+                                        >
+                                            <fa class="" :icon="['fas','search']" /> 
+                                        </div>
+                                    </BaseInput>
+
+                                </form>
                             </div>
                             <div class="ml-auto mb-2 mr-2" style="width:160px">
                                 <BaseSelect
+                                v-model="formData.order"
                                 :options="['Terbaru', 'Terlama']"
                                 placeholder="Pilih Urutkan"
                                 dense
+                                @input="orderSelectHandler($event)"
                                 />
                             </div>
+                            
                             <div class="ml-auto mb-2 text-right">
-                                <button class="btn btn-primary  mt-1" type="button">Tambah Kategori</button>
+                                <a class="btn btn-primary  mt-1" type="button" @click.prevent="showModalAddCategory">Tambah Kategori</a>
                             </div>
                         </div>
                         <table class="table table-responsive-md">
@@ -49,28 +55,38 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(category,i) in categories" :key="i">
-                                    <th scope="row">{{i}}</th>
-                                    <td>Mark</td>
+                                    <th scope="row">{{ category.categoryUID || '-' }}</th>
+                                    <td>{{category.name || '-'}}</td>
                                     <td class="text-center">
-                                        <button class="btn btn-danger btn-sm" @click="showAdminModalDeleteItem" >
+                                        <button class="btn btn-warning btn-sm" @click="showModalEditCategory(category)" >
+                                            Edit Kategori
+                                        </button>
+                                        <button class="btn btn-outline-danger btn-sm" @click="showModalDeleteCategory(category)" >
                                             Hapus Kategori
                                         </button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <Pagination/>
+                            <PaginationData :data="metaData" @page-update="pageUpdateHandler($event)"/>
                     </div>
                 </div>
             </div>
+
             
-            <AdminModalDeleteItem :show="isShowAdminModalDeleteItem" @close="closeAdminModalDeleteItem"/>
+            <ModalAddCategory :show="isShowModalAddCategory" :data="{title:'Tambah Produk'}" @close="closeModalAddCategory" @update="loadData"/>
+
+            <ModalEditCategory :show="isShowModalEditCategory" :data="currentCategory" @close="closeModalEditCategory" @update="loadData"/>
+
+            <ModalDeleteCategory :show="isShowModalDeleteCategory" :data="currentCategory" @close="closeModalDeleteCategory" @update="loadData"/>
+            
             
         </div>
     </div>
 </template>
 
 <script>
+import ApiService from '~/apis/api.service';
     export default {
         // page properties go here
         layout: "admin",
@@ -80,28 +96,87 @@
                 breadCrumbList: [
                     {name:"Daftar Kategori",link:"/admin/data-master/kategori"}
                 ],
-                categories : new Array(10),
-                currentItem : {
-                        "isActive": true,
-                        "date": "Kamis,21 Desember 2020",
-                        "name": {
-                            "first": "Dickerson",
-                            "last": "Macdonald"
-                        }
+                categories : [],
+                formData: {
+                    search: null,
+                    order: null,
                 },
-                isShowAdminModalDeleteItem: false,
+                metaData: {
+                    first_index: 0,
+                    last_index: 0,
+                    current_page: 1,
+                    first_page: 1,
+                    last_page: 1,
+                    total: 0,
+                },
+
+
+                isShowModalAddCategory: false,
+                isShowModalEditCategory: false,
+                isShowModalDeleteCategory: false,
+                currentCategory:null,
+                isLoadingData: false,
             }
+        },
+        computed: {
+            params() {
+                return {
+                    search: this.formData.search || null, 
+                    page: this.metaData.current_page, 
+                    order: this.formData.order ? (this.formData.order === 'Terbaru' ? 'desc' : 'asc') : null, 
+                }
+            }
+
         },
         
         mounted() {
             // Set the initial number of items
+            this.loadData();
         },
         methods: {
-            showAdminModalDeleteItem() {
-                this.isShowAdminModalDeleteItem = true;
+            async loadData() {
+                this.isLoadingData = true;
+                await ApiService.query('/categories',this.params)
+                .then((Response)=>{
+                    this.categories = Response.data.data;
+                    this.metaData = Response.data.meta
+                })
+                .catch(err=>{
+                    console.log("err",err);
+                })
+                this.isLoadingData = false;
             },
-            closeAdminModalDeleteItem() {
-                this.isShowAdminModalDeleteItem = false;
+            orderSelectHandler(value){
+                if(value){
+                    this.loadData();
+                }
+            },
+            pageUpdateHandler(page){
+                this.metaData.current_page = page;
+                this.loadData();
+                console.log("Ganti",this.metaData);
+            },
+            showModalAddCategory() {
+                this.isShowModalAddCategory = true;
+            },
+            closeModalAddCategory() {
+                this.isShowModalAddCategory = false;
+            },
+            showModalEditCategory(category) {
+                this.currentCategory = Object.assign({},category);
+                this.isShowModalEditCategory = true;
+            },
+            closeModalEditCategory() {
+                this.currentCategory = null;
+                this.isShowModalEditCategory = false;
+            },
+            showModalDeleteCategory(category) {
+                this.currentCategory = Object.assign({},category);
+                this.isShowModalDeleteCategory = true;
+            },
+            closeModalDeleteCategory() {
+                this.currentCategory = null;
+                this.isShowModalDeleteCategory = false;
             },
         },
         head() {

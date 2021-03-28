@@ -2,7 +2,7 @@
     <Modal :show="show" centered>
         <div v-if="isSubmitStatus=='' || isSubmitStatus == submitStatus.pending">
             <div class="modal-header border-bottom-0">
-                <h5 id="modalAddProduct" class="modal-title">Edit Produk</h5>
+                <h5 id="modalAddProduct" class="modal-title">Tambah Supplier</h5>
                 <button data-bs-dismiss="modal" class="btn-close btn text-danger" type="button" aria-label="Close" @click="closeModal"><fa :icon="['fas','times']" /></button>
             </div>
             <div class="modal-body">
@@ -10,36 +10,32 @@
                     <BaseInput
                         id="name"
                         v-model="formData.name"
-                        label="Nama Produk"
-                        placeholder="Nama Produk"
+                        label="Nama Supplier"
+                        placeholder="Nama Supplier"
                         large
                         dense
                         :error="
                             isSubmitStatus == submitStatus.pending
                             ? !$v.formData.name.required 
-                                ? 'Nama produk harus diisi'
+                                ? 'Nama Supplier harus diisi'
                                 : null
                             : null
                         "
                     />
-
-                    <label>Informasi Tambahan</label>
-                    <div v-for="(info,i) in formData.additionalData" :key="i" class="d-flex">
-                        <BaseInput
-                            id="name"
-                            v-model="formData.additionalData[i]"
-                            placeholder="Informasi tambahan"
-                            class="mr-2 flex-fill"
-                            large
-                            dense
-                        />
-                        <div class="mr-2">
-                            <button type="button"  class="btn btn-primary" @click="addInfo()"><fa :icon="['fas','plus']" /></button>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-danger" @click="minInfo(i)"><fa :icon="['fas','minus']" /></button>
-                        </div>
-                    </div>
+                    
+                    <BaseTextarea
+                        v-model="formData.address"
+                        label="Alamat"
+                        placeholder="Masukkan Alamat"
+                        height="200px"
+                        :error="
+                            isSubmitStatus == submitStatus.pending
+                            ? !$v.formData.address.required 
+                                ? 'Alamat Supplier harus diisi'
+                                : null
+                            : null
+                        "
+                    />
                 </div>
             </div>
             <div class="modal-footer border-top-0 d-flex">
@@ -57,7 +53,7 @@
                 <fa :icon="['fas','check-circle']"/>
             </div>
             <div class="text-20">
-                Berhasil Memperbarui data produk.
+                Berhasil menambahkan data Supplier.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -71,7 +67,7 @@
                 <fa :icon="['fas','times-circle']"/>
             </div>
             <div class="text-20">
-                Gagal Memperbarui data produk.
+                Gagal menambahkan data Supplier.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -87,12 +83,6 @@ import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
 import { SUBMIT_STATUS } from '../../store/constants';
 import ApiService from '~/apis/api.service';
-
-const emptyData ={
-                name :null,
-                additionalData: [],
-            };
-
 export default {
     mixins: [validationMixin],
     props: {
@@ -106,53 +96,27 @@ export default {
         return {
             formData: {
                 name :null,
-                additionalData: [],
+                address: null,
             },
             isSubmitStatus: '',
-            submitStatus: SUBMIT_STATUS,
-
-            deletedAddditionalData: null,
-            newAdditionalData: null,
+            submitStatus: SUBMIT_STATUS
 
         }
     },
     validations: {
         formData :{
-            name :{ required }
-        }
-    },
-    watch: {
-        data(){
-            if(!this.data){
-                this.formData = emptyData;
-            }else{
-                this.formData = this.data;
-                if(this.formData.additionalData.length<1){
-                    this.formData.additionalData.push('');
-                }
-            }
-            console.log("watch form data",this.data);
+            name :{ required },
+            address :{ required },
         }
     },
     mounted() {
+        console.log("SUBMIT_STATUS",this.submitStatus);
     },
     methods: {
-        addInfo(){
-            this.formData.additionalData.push('');
-        },
-        minInfo(index){
-            if(this.formData.additionalData.length>1){
-                this.formData.additionalData.splice(index,1);
-            }
-        },
         formatFormData(data) {
             const resultData = {
                 name: data.name ? data.name : null,
-                additionalData: data.additionalData
-                .filter(item=>item!=='')
-                .map(function(item){
-                    return item;
-                })
+                address: data.address ? data.address : null,
             }
 
             return resultData;
@@ -164,7 +128,7 @@ export default {
             } else {
                 this.isSubmitStatus = SUBMIT_STATUS.loading;
                 const formattedFormData = this.formatFormData(this.formData);
-                await ApiService.put(`/product/${this.data.productID}`,formattedFormData)
+                await ApiService.post("/supplier",formattedFormData)
                 .then(data=>{
                     this.isSubmitStatus = SUBMIT_STATUS.success;
                     console.log("success",data);
@@ -178,6 +142,8 @@ export default {
         },
         closeModal(){
             // reset data
+            this.formData.name = null;
+            this.formData.address = null;
             this.isSubmitStatus = '';
             this.$emit('close');
         }

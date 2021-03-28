@@ -4,6 +4,9 @@
     <textarea
       v-bind="$attrs"
       class="form-control"
+        :class="{ 
+                  'is-invalid': error !== undefined && error !== null ,
+                }"
       :value="value"
       :style="{ height: height }"
       @input="updateInput"

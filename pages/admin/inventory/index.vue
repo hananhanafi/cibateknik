@@ -12,7 +12,7 @@
                         <div class="col">
                             <div class="d-md-flex">
                                 <div class="flex-fill mb-2 mr-2">
-                                    <form v-on:submit.prevent="loadData">
+                                    <form @submit.prevent="loadData">
                                         <BaseInput
                                             id="Cari"
                                             v-model="formData.search"
@@ -20,12 +20,12 @@
                                             class="mb-0"
                                             
                                         >
-                                            <div @click.prevent="loadData" slot="afterInput" class="position-absolute"
-                                                style=" right:12px;
+                                            <div slot="afterInput" style=" right:12px;
                                                         top: 50%;
                                                         -ms-transform: translateY(-50%);
                                                         transform: translateY(-50%);
-                                                        z-index:99"
+                                                        z-index:99" class="position-absolute"
+                                                @click.prevent="loadData"
                                             >
                                                 <fa class="" :icon="['fas','search']" /> 
                                             </div>
@@ -137,7 +137,7 @@ import ApiService from '~/apis/api.service';
                 return {
                     search: this.formData.search || null, 
                     page: this.metaData.current_page, 
-                    order: this.formData.order ? (this.formData.order == 'Terbaru' ? 'desc' : 'asc') : null, 
+                    order: this.formData.order ? (this.formData.order === 'Terbaru' ? 'desc' : 'asc') : null, 
                 }
             }
         },

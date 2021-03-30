@@ -95,7 +95,6 @@
 
             <ModalDeleteProduct :show="isShowModaldeleteProduct" :data="currentProduct" @close="closeModaldeleteProduct" @update="loadData"/>
             
-            
         </div>
     </div>
 </template>
@@ -153,7 +152,6 @@ import ApiService from '~/apis/api.service';
             pageUpdateHandler(page){
                 this.metaData.current_page = page;
                 this.loadData();
-                console.log("Ganti",this.metaData);
             },
             async loadData() {
                 this.isLoadingData = true;
@@ -180,7 +178,7 @@ import ApiService from '~/apis/api.service';
                 this.isShowModalAddProduct = false;
             },
             showAdminModalEditProduct(product) {
-                this.currentProduct = product;
+                this.currentProduct = Object.assign({},product);
                 this.isShowAdminModalEditProduct = true;
             },
             closeAdminModalEditProduct() {
@@ -188,7 +186,7 @@ import ApiService from '~/apis/api.service';
                 this.isShowAdminModalEditProduct = false;
             },
             showModaldeleteProduct(product) {
-                this.currentProduct = product;
+                this.currentProduct = Object.assign({},product);
                 this.isShowModaldeleteProduct = true;
             },
             closeModaldeleteProduct() {

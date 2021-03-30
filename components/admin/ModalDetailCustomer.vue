@@ -2,7 +2,7 @@
     <Modal :show="show" centered>
 
         <div class="modal-header border-bottom-0">
-            <h5 id="exampleModalLabel" class="modal-title">{{ data.title || 'Detail Pesanan' }}</h5>
+            <h5 id="exampleModalLabel" class="modal-title">Detail Customer</h5>
             <button data-bs-dismiss="modal" class="btn-close btn text-danger" type="button" aria-label="Close" @click="$emit('close')"><fa :icon="['fas','times']" /></button>
         </div>
         <div class="modal-body">
@@ -21,7 +21,7 @@
                                     :
                                 </td>
                                 <td>
-                                    Hanan Hanafi
+                                    {{ data && data.firstName + " " +  data && data.lastName }}
                                 </td>
                             </tr>
                             <tr>
@@ -32,7 +32,7 @@
                                     :
                                 </td>
                                 <td>
-                                    hanafi@mail.com
+                                    {{ data && data.email }}
                                 </td>
                             </tr>
                             <tr>
@@ -43,7 +43,7 @@
                                     :
                                 </td>
                                 <td>
-                                    081234567890
+                                    {{ data && data.phoneNumber }}
                                 </td>
                             </tr>
                             <tr>
@@ -54,7 +54,7 @@
                                     :
                                 </td>
                                 <td>
-                                    Jl. Rawa sawah III RT 06/02 No.5 Jakarta
+                                    {{ data && data.address }}
                                 </td>
                             </tr>
                             <tr>
@@ -65,7 +65,7 @@
                                     :
                                 </td>
                                 <td>
-                                    Kamis, 21 Desember 2021
+                                    {{ data && data.createdAt }}
                                 </td>
                             </tr>
                             <tr>
@@ -76,7 +76,7 @@
                                     :
                                 </td>
                                 <td>
-                                    Kamis, 21 Desember 2021
+                                    {{ data && data.createdAt }}
                                 </td>
                             </tr>
                         </table>

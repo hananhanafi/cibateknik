@@ -50,7 +50,7 @@ import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
 import ApiService from '~/apis/api.service';
 
-const Cookie = process.client ? require('js-cookie') : undefined;
+// const Cookie = process.client ? require('js-cookie') : undefined;
 
     export default {
         mixins: [validationMixin],

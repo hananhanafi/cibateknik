@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { toNumber, toFormatedNumber } from "./helpers";
+import { toNumber, toFormatedNumber } from "../store/helpers";
 export default {
   inheritAttrs: false,
   props: {

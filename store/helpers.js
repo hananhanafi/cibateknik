@@ -1,4 +1,17 @@
-// import { MONTH_NAMES } from "./constants";
+import { MONTH_NAMES, DAY_NAMES } from "./constants";
+
+export const formatDate = function(dateParams){
+    const date = new Date(dateParams*1000);
+    
+    const day = date.getDay();
+    const dateNumb = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+    console.log("Ddd",date);
+
+    
+    return DAY_NAMES[day] + ", " + dateNumb  + " " + MONTH_NAMES[month+1] + " " + year;
+};
 
 export const toNumber = str => {
   return String(str).replace(/\D/gi, "");

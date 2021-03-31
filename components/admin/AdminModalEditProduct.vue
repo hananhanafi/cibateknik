@@ -8,7 +8,6 @@
             <div class="modal-body">
                 <div class="w-100 text-left">
                     <BaseInput
-                        id="name"
                         v-model="formData.name"
                         label="Nama Produk"
                         placeholder="Nama Produk"
@@ -22,11 +21,24 @@
                             : null
                         "
                     />
+                    <BaseSelect
+                    v-model="formData.category"
+                    :options="categoryOptions"
+                    label="Kategori"
+                    placeholder="Pilih Kategori"
+                    dense
+                    :error="
+                        isSubmitStatus == submitStatus.pending
+                        ? !$v.formData.category.required 
+                            ? 'Nama Kategori harus diisi'
+                            : null
+                        : null
+                    "
+                    />
 
                     <label>Informasi Tambahan</label>
                     <div v-for="(info,i) in formData.additionalData" :key="i" class="d-flex">
                         <BaseInput
-                            id="name"
                             v-model="formData.additionalData[i]"
                             placeholder="Informasi tambahan"
                             class="mr-2 flex-fill"
@@ -90,6 +102,7 @@ import ApiService from '~/apis/api.service';
 
 const emptyData ={
                 name :null,
+                category :null,
                 additionalData: [],
             };
 
@@ -100,12 +113,19 @@ export default {
         data: {
             type: Object,
             default: null
+        },
+        categoryOptions: {
+            type: Array,
+            default() {
+                return []
+            }
         }
     },
     data() {
         return {
             formData: {
                 name :null,
+                category: null,
                 additionalData: [],
             },
             isSubmitStatus: '',
@@ -118,7 +138,8 @@ export default {
     },
     validations: {
         formData :{
-            name :{ required }
+            name :{ required },
+            category :{ required },
         }
     },
     watch: {
@@ -126,12 +147,17 @@ export default {
             if(!this.data){
                 this.formData = emptyData;
             }else{
-                this.formData = this.data;
-                if(this.formData.additionalData.length<1){
+                this.formData = Object.assign({},this.data);
+                if(this.data.additionalData.length<1){
                     this.formData.additionalData.push('');
                 }
+                if(this.data.category){
+                    this.formData.category = {
+                        label: this.data.category.name,
+                        value: this.data.category.id,
+                    }
+                }
             }
-            console.log("watch form data",this.data);
         }
     },
     mounted() {
@@ -148,6 +174,7 @@ export default {
         formatFormData(data) {
             const resultData = {
                 name: data.name ? data.name : null,
+                category: data.category ? {id:data.category.value,name:data.category.label} : null,
                 additionalData: data.additionalData
                 .filter(item=>item!=='')
                 .map(function(item){

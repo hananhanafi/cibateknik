@@ -8,7 +8,6 @@
             <div class="modal-body">
                 <div class="w-100 text-left">
                     <BaseInput
-                        id="name"
                         v-model="formData.name"
                         label="Nama Produk"
                         placeholder="Nama Produk"
@@ -22,11 +21,24 @@
                             : null
                         "
                     />
+                    <BaseSelect
+                    v-model="formData.category"
+                    :options="categoryOptions"
+                    label="Kategori"
+                    placeholder="Pilih Kategori"
+                    dense
+                    :error="
+                        isSubmitStatus == submitStatus.pending
+                        ? !$v.formData.category.required 
+                            ? 'Nama Kategori harus diisi'
+                            : null
+                        : null
+                    "
+                    />
 
                     <label>Informasi Tambahan</label>
                     <div v-for="(info,i) in formData.additionalData" :key="i" class="d-flex">
                         <BaseInput
-                            id="name"
                             v-model="info.name"
                             placeholder="Informasi tambahan"
                             class="mr-2 flex-fill"
@@ -94,12 +106,19 @@ export default {
         data: {
             type: Object,
             default: null
+        },
+        categoryOptions: {
+            type: Array,
+            default() {
+                return []
+            }
         }
     },
     data() {
         return {
             formData: {
                 name :null,
+                category: null,
                 additionalData: [{
                     name: null,
                 }],
@@ -111,7 +130,8 @@ export default {
     },
     validations: {
         formData :{
-            name :{ required }
+            name :{ required },
+            category :{ required },
         }
     },
     mounted() {
@@ -129,6 +149,7 @@ export default {
         formatFormData(data) {
             const resultData = {
                 name: data.name ? data.name : null,
+                category: data.category ? {id:data.category.value,name:data.category.label} : null,
                 additionalData: data.additionalData
                 .filter(item=>item.name!=null)
                 .map(function(item){
@@ -160,6 +181,7 @@ export default {
         closeModal(){
             // reset data
             this.formData.name = null;
+            this.formData.category = null;
             this.formData.additionalData = [
                 {name:null}
             ];

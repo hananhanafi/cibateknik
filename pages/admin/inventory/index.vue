@@ -41,6 +41,15 @@
                                     @input="orderSelectHandler($event)"
                                     />
                                 </div>
+                                <div class="ml-auto mb-2 mr-2" style="width:160px">
+                                    <BaseSelect
+                                    v-model="formData.category"
+                                    :options="categoryOptions"
+                                    placeholder="Pilih Kategori"
+                                    dense
+                                    @input="categorySelectHandler($event)"
+                                    />
+                                </div>
                                 <div class="ml-auto mb-2 text-right">
                                     <button class="btn btn-primary  mt-1" type="button" @click.prevent="showModalAddProduct">Tambah Produk</button>
                                 </div>
@@ -51,6 +60,7 @@
                                         <tr>
                                         <th scope="col">ID Produk</th>
                                         <th scope="col">Nama Produk</th>
+                                        <th scope="col">Kategori Produk</th>
                                         <th scope="col" class="text-center" width="300px">Aksi</th>
                                         </tr>
                                     </thead>
@@ -58,9 +68,10 @@
                                         <tr v-for="(product,i) in products" :key="i">
                                             <th scope="row">{{product.productID}}</th>
                                             <td>{{product.name}}</td>
+                                            <td>{{product.category ? product.category.name : '-'}}</td>
                                             <td class="text-center">
                                                 <b-button variant="success" size="sm"  @click.prevent="$router.push({name:'admin-inventory-detail-produk-id',params:{id:product.productID}})">
-                                                    <fa :icon="['fas','pencil-alt']"/> Inventaris
+                                                    <fa :icon="['fas','eye']"/> Inventaris
                                                 </b-button>
                                                 <b-button variant="outline-warning" size="sm"  @click.prevent="showAdminModalEditProduct(product)">
                                                     <fa :icon="['fas','pencil-alt']"/> Edit
@@ -89,9 +100,9 @@
                 </div>
             </div>
 
-            <ModalAddProduct :show="isShowModalAddProduct" :data="{title:'Tambah Produk'}" @close="closeModalAddProduct" @update="loadData"/>
+            <ModalAddProduct :show="isShowModalAddProduct" :data="{title:'Tambah Produk'}" :categoryOptions="categoryOptions" @close="closeModalAddProduct" @update="loadData"/>
             
-            <AdminModalEditProduct :show="isShowAdminModalEditProduct" :data="currentProduct" @close="closeAdminModalEditProduct" @update="loadData"/>
+            <AdminModalEditProduct :show="isShowAdminModalEditProduct" :data="currentProduct" :categoryOptions="categoryOptions" @close="closeAdminModalEditProduct" @update="loadData"/>
 
             <ModalDeleteProduct :show="isShowModaldeleteProduct" :data="currentProduct" @close="closeModaldeleteProduct" @update="loadData"/>
             
@@ -114,6 +125,7 @@ import ApiService from '~/apis/api.service';
                 formData: {
                     search: null,
                     order: null,
+                    category: null,
                 },
                 metaData: {
                     first_index: 0,
@@ -129,22 +141,31 @@ import ApiService from '~/apis/api.service';
                 isShowModaldeleteProduct: false,
                 currentProduct:null,
                 isLoadingData: false,
+
+                categoryOptions:[]
             }
         },
         computed: {
             params() {
                 return {
                     search: this.formData.search || null, 
+                    category: this.formData.category ? this.formData.category.value : null, 
                     page: this.metaData.current_page, 
                     order: this.formData.order ? (this.formData.order === 'Terbaru' ? 'desc' : 'asc') : null, 
                 }
             }
         },
         mounted() {
+            this.loadCategoriesOption();
             this.loadData();
         },
         methods: {
             orderSelectHandler(value){
+                if(value){
+                    this.loadData();
+                }
+            },
+            categorySelectHandler(value){
                 if(value){
                     this.loadData();
                 }
@@ -170,6 +191,21 @@ import ApiService from '~/apis/api.service';
                     console.log("err",err);
                 })
                 this.isLoadingData = false;
+            },
+            async loadCategoriesOption() {
+                await ApiService.get('/categories')
+                .then((Response)=>{
+                    console.log("catrespon",Response);
+                    this.categoryOptions = Response.data.data.map(function(category){
+                        return {
+                            label: category.name,
+                            value: category.categoryID,
+                        }
+                    });
+                })
+                .catch(err=>{
+                    console.log("err",err);
+                })
             },
             showModalAddProduct() {
                 this.isShowModalAddProduct = true;

@@ -6,6 +6,7 @@
                     <div class="bg-white p-1" style="height:40px">
                         <b-img class="h-100" src="~/assets/img/logov1.png" fluid alt="Responsive image"></b-img>
                     </div>
+                    
                 </b-navbar-brand>
                 <div class="vertical-separator"></div>
                 
@@ -28,7 +29,7 @@
                     <b-navbar-nav v-if="getUserInfo">
                         <b-nav-item-dropdown right>
                             <template #button-content>
-                                <img src="~/assets/img/person.png" class="img-fluid rounded-circle h-100" style="width:40px" alt="Responsive image"> {{getUserInfo.username}}
+                                <img class="img-fluid rounded-pill" :src="photoURL" style="width:40px;height:40px"> {{getUserInfo.firstName + " " + getUserInfo.lastName }}
                             </template>
                             
                             <!-- <b-dropdown-item>
@@ -151,6 +152,7 @@
 </template>
 
 <script>
+import ApiService from '~/apis/api.service';
     const Cookie = process.client ? require('js-cookie') : undefined;
     export default {
         data() {
@@ -160,14 +162,36 @@
         computed: {
             getUserInfo(){
                 return this.$store.state.userInfo;
+            },
+            photoURL() {
+                const url = this.getUserInfo.imageUrl || process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+                return url;
             }
+        },
+        created() {
+            // eslint-disable-next-line nuxt/no-globals-in-created
+            window.addEventListener('beforeunload', e => this.beforeunloadFn(e))
         },
         mounted() {
             // console.log("routeparams",this.$route.name);
             console.log("cookie",Cookie.get('auth'));
             console.log("state",this.$store.state);
+            // this.$nextTick(function () {
+            // this.getRefreshToken();
+            // window.setInterval(() => {
+            //         this.getRefreshToken();
+            //     },3000000);
+            // })
+        },
+        destroyed() {
+            window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
         },
         methods: {
+            beforeunloadFn(e) {
+                console.log("refresh or close",e);
+                alert("close");
+            // ...
+            },
             isActive(name){
                 // console.log("route/",this.$route.name)
                 return this.$route.name.includes(name);
@@ -176,6 +200,15 @@
             // Code will also be required to invalidate the JWT Cookie on external API
                 this.$store.commit('purgeAuth');
                 this.$router.push('/user/login');
+            },
+            getRefreshToken() {
+                ApiService.get("/user/token")
+                .then((response)=>{
+                    const token = response.data.token;
+                    this.$store.commit('setAuthUser', token) // mutating to store for client rendering
+                    Cookie.set('auth', token.token) // saving token in cookie for server rendering
+                    ApiService.setHeader();
+                })
             }
         }
     }

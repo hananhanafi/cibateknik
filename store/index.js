@@ -9,6 +9,7 @@ const Cookie = process.client ? require('js-cookie') : undefined;
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
+            token: null,
             auth: null,
             role: '',
             userInfo: null,
@@ -24,9 +25,10 @@ const createStore = () => {
                 Cookie.set('auth', auth)
                 ApiService.setHeader();
             },
-            setAuthUser(state, auth) {
-                console.log("settt",auth);
-                state.auth = auth
+            setAuthUser(state, token) {
+                console.log("settt",token);
+                state.token = token;
+                state.auth = token.token;
                 state.role = 'user';
             },
             purgeAuth(state){

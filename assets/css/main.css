@@ -107,3 +107,21 @@ a, a:hover, a:focus, a:active {
 .text-40{
     font-size: 40px;
 }
+
+.img-container {
+    position: relative;
+}
+
+.img-container::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.img-container img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    left: 0;
+}

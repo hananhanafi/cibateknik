@@ -10,7 +10,7 @@
                         
                         <!-- mobile version -->
                         <div v-if="!currentTab && !activeComponent" class="shadow-main p-4 text-center mb-4 d-md-none d-block">
-                            <img src="~/assets/img/person.png" class="img-fluid rounded-circle w-100 mb-2"  alt="Responsive image"> 
+                            <img :src="photoURL" class="img-fluid rounded-circle w-100 mb-2"  alt="Responsive image"> 
                             <h3>Hanan Hanafi</h3>
                             <a class="btn text-black-50" @click="change('my_account')">Ubah Profile</a>
                         </div>
@@ -109,7 +109,7 @@
 
                         <!-- desktop version -->
                         <div class="shadow-main p-4 text-center mb-4 d-md-block d-none">
-                            <img src="~/assets/img/person.png" class="img-fluid rounded-circle w-100 mb-2"  alt="Responsive image"> 
+                            <img :src="photoURL" class="img-fluid rounded-circle w-100 mb-2"  alt="Responsive image"> 
                             <h3>Hanan Hanafi</h3>
                             <a class="btn text-black-50" @click="change('my_account')">Ubah Profile</a>
                         </div>
@@ -214,6 +214,13 @@
         computed: {
             currentTab() {
                 return this.$route.query.tab;
+            },
+            getUserInfo(){
+                return this.$store.state.userInfo;
+            },
+            photoURL() {
+                const url = this.getUserInfo.imageUrl || process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+                return url;
             }
         },
         watch: {
@@ -224,7 +231,7 @@
                     this.dynamic = null;
                     this.activeComponent = '';
                 }
-            }
+            },
         },
         mounted() {
         },

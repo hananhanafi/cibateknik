@@ -10,6 +10,9 @@
     <div class="input-group">
       <slot name="beforeInput" />
       <Multiselect
+        :class="{ 
+                  'border border-danger': error !== undefined && error !== null ,
+                }"
         :value="value"
         :label="isArrayOfString ? null : 'label'"
         v-bind="$attrs"

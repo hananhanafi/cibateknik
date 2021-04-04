@@ -141,9 +141,9 @@ const Cookie = process.client ? require('js-cookie') : undefined;
                     await ApiService.post("/user/login",{email:this.email,password:this.password})
                     .then( async (response)=>{
                         console.log("res",response);
-                        const auth = response.data.token;
-                        this.$store.commit('setAuthUser', auth) // mutating to store for client rendering
-                        Cookie.set('auth', auth) // saving token in cookie for server rendering
+                        const token = response.data.token;
+                        this.$store.commit('setAuthUser', token) // mutating to store for client rendering
+                        Cookie.set('auth', token.token) // saving token in cookie for server rendering
                         ApiService.setHeader();
                         await ApiService.get("/user").then(data=>{
                             console.log('data',data);

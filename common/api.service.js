@@ -8,6 +8,7 @@ const api = axios.create({
 
 const Cookie = process.client ? require('js-cookie') : undefined;
 
+console.log("storage",window.localStorage.getItem("token"));
 const ApiService = {
     init() {
         Object.defineProperty(Vue, "$api", {

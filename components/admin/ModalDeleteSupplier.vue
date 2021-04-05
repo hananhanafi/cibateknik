@@ -59,7 +59,7 @@
 
 <script>
 import { SUBMIT_STATUS } from '../../store/constants';
-import ApiService from '~/apis/api.service';
+import ApiService from '~/common/api.service';
 export default {
     props: {
         show: Boolean,

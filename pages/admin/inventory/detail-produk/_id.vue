@@ -3,8 +3,10 @@
         <div class="container-fluid">
             <Breadcrumb :data="breadCrumbList"/>
             <div class="bg-white shadow-sm rounded-8 p-3 text-left "> 
-                <div class="mb-3 p-2">
+                <div class="mb-3">
+                    <vue2-datepicker v-model="date" class="h-100 float-right" placeholder="Pilih rentang waktu" type="month" @change="datePickerHandler($event)" ></vue2-datepicker>
                     <h1>Produk</h1>
+                    
                 </div>
                 <div class="d-md-flex mb-3">
                     <div class="flex-fill mb-2 mr-2">
@@ -25,18 +27,13 @@
                             </div>
                         </BaseInput>
                     </div>
-                    <div class="ml-auto mb-2 mr-2" style="width:160px">
-                        <BaseSelect
-                        :options="['Januari', 'Februari']"
-                        placeholder="Pilih Bulan"
-                        dense
-                        class="rounded-pill"
-                        />
-                    </div>
+                    
+
                     <div class="ml-auto mb-2 text-right">
                         <button class="btn btn-primary" type="button" @click="$router.push({name:'admin-inventory-tambah-barang-id',params:{id:$route.params.id}})">Tambah Barang</button>
                     </div>
                 </div>
+                
                 <table class="table table-responsive w-100">
                     <tr class="w-100">
                         <td class="flex-fill mx-0 px-0">
@@ -213,6 +210,7 @@
                     type:"Type 2" },
                 ],
                 isShowModalNoteInventory: false,
+                date: null,
             }
         },
         
@@ -225,6 +223,9 @@
             closeModalNoteInventory() {
                 this.isShowModalNoteInventory = false;
             },
+            datePickerHandler(value){
+                console.log("val",value);
+            }
         },
         head() {
             return {

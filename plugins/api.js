@@ -1,3 +1,3 @@
-import ApiService from "~/apis/api.service"
+import ApiService from "~/common/api.service"
 
 ApiService.init();

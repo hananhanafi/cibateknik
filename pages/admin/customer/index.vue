@@ -87,7 +87,7 @@
 
 <script>
 import { formatDate } from '../../../store/helpers';
-import ApiService from '~/apis/api.service';
+import ApiService from '~/common/api.service';
     export default {
         // page properties go here
         layout: "admin",

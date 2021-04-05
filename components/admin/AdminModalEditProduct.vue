@@ -98,7 +98,7 @@
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
 import { SUBMIT_STATUS } from '../../store/constants';
-import ApiService from '~/apis/api.service';
+import ApiService from '~/common/api.service';
 
 const emptyData ={
                 name :null,

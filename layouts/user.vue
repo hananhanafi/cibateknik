@@ -152,7 +152,7 @@
 </template>
 
 <script>
-import ApiService from '~/apis/api.service';
+import ApiService from '~/common/api.service';
     const Cookie = process.client ? require('js-cookie') : undefined;
     export default {
         data() {

@@ -88,8 +88,7 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
-import ApiService from '~/apis/api.service';
-const Cookie = process.client ? require('js-cookie') : undefined;
+import ApiService from '~/common/api.service';
     export default {
         mixins: [validationMixin],
         middleware: 'notAuthenticated',
@@ -143,7 +142,6 @@ const Cookie = process.client ? require('js-cookie') : undefined;
                         console.log("res",response);
                         const token = response.data.token;
                         this.$store.commit('setAuthUser', token) // mutating to store for client rendering
-                        Cookie.set('auth', token.token) // saving token in cookie for server rendering
                         ApiService.setHeader();
                         await ApiService.get("/user").then(data=>{
                             console.log('data',data);

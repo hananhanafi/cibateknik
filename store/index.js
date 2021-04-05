@@ -1,6 +1,6 @@
 import Vuex from 'vuex';
 import createPersistedState from "vuex-persistedstate";
-import ApiService from '~/apis/api.service';
+import ApiService from '~/common/api.service';
 
 
 const cookieparser = process.server ? require('cookieparser') : undefined
@@ -29,6 +29,7 @@ const createStore = () => {
                 console.log("settt",token);
                 state.token = token;
                 state.auth = token.token;
+                Cookie.set('auth', token.token) // saving token in cookie for server rendering
                 state.role = 'user';
             },
             purgeAuth(state){

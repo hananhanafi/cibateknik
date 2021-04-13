@@ -53,6 +53,10 @@ a, a:hover, a:focus, a:active {
     background-color: #0F2027;
 }
 
+.bg-main-dark{
+    background-color: #0F2027;
+}
+
 .text-main-color{
     color: #0F2027;
 }

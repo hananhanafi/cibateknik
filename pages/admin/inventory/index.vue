@@ -15,7 +15,7 @@
                                     <form @submit.prevent="loadData">
                                         <BaseInput
                                             id="Cari"
-                                            v-model="formData.search"
+                                            v-model="filters.search"
                                             placeholder="Cari Produk..."
                                             class="mb-0"
                                             
@@ -34,21 +34,25 @@
                                 </div>
                                 <div class="ml-auto mb-2 mr-2" style="width:160px">
                                     <BaseSelect
-                                    v-model="formData.order"
+                                    v-model="filters.order"
                                     :options="['Terbaru', 'Terlama']"
                                     placeholder="Pilih Urutkan"
                                     dense
                                     @input="orderSelectHandler($event)"
                                     />
                                 </div>
-                                <div class="ml-auto mb-2 mr-2" style="width:160px">
+                                <!-- <div class="ml-auto mb-2 mr-2" style="width:160px">
                                     <BaseSelect
-                                    v-model="formData.category"
-                                    :options="categoryOptions"
+                                    v-model="filters.category"
+                                    :options="options.category"
                                     placeholder="Pilih Kategori"
                                     dense
                                     @input="categorySelectHandler($event)"
                                     />
+                                </div> -->
+                                
+                                <div class="ml-auto mb-2 text-right">
+                                    <button class="btn btn-outline-primary  mt-1 mr-2" type="button" @click.prevent="showModalFilterSearchProduct">Filter</button>
                                 </div>
                                 <div class="ml-auto mb-2 text-right">
                                     <button class="btn btn-primary  mt-1" type="button" @click.prevent="showModalAddProduct">Tambah Produk</button>
@@ -61,6 +65,8 @@
                                         <th scope="col">ID Produk</th>
                                         <th scope="col">Nama Produk</th>
                                         <th scope="col">Kategori Produk</th>
+                                        <th scope="col">Brand/Merk</th>
+                                        <th scope="col">Supplier</th>
                                         <th scope="col" class="text-center" width="300px">Aksi</th>
                                         </tr>
                                     </thead>
@@ -69,8 +75,10 @@
                                             <th scope="row">{{product.productID}}</th>
                                             <td>{{product.name}}</td>
                                             <td>{{product.category ? product.category.name : '-'}}</td>
+                                            <td>{{product.brand ? product.brand.name : '-'}}</td>
+                                            <td>{{product.supplier ? product.supplier.name : '-'}}</td>
                                             <td class="text-center">
-                                                <b-button variant="success" size="sm"  @click.prevent="$router.push({name:'admin-inventory-detail-produk-id',params:{id:product.productID}})">
+                                                <b-button variant="success" size="sm"  @click.prevent="$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:product.productID}})">
                                                     <fa :icon="['fas','eye']"/> Inventaris
                                                 </b-button>
                                                 <b-button variant="outline-warning" size="sm"  @click.prevent="showAdminModalEditProduct(product)">
@@ -100,11 +108,13 @@
                 </div>
             </div>
 
-            <ModalAddProduct :show="isShowModalAddProduct" :data="{title:'Tambah Produk'}" :categoryOptions="categoryOptions" @close="closeModalAddProduct" @update="loadData"/>
+            <ModalAddProduct :show="isShowModalAddProduct" :data="{title:'Tambah Produk'}" :options="options" @close="closeModalAddProduct" @update="loadData"/>
             
-            <AdminModalEditProduct :show="isShowAdminModalEditProduct" :data="currentProduct" :categoryOptions="categoryOptions" @close="closeAdminModalEditProduct" @update="loadData"/>
+            <AdminModalEditProduct :show="isShowAdminModalEditProduct" :data="currentProduct" :options="options" @close="closeAdminModalEditProduct" @update="loadData"/>
 
-            <ModalDeleteProduct :show="isShowModaldeleteProduct" :data="currentProduct" @close="closeModaldeleteProduct" @update="loadData"/>
+            <ModalDeleteProduct :show="isShowModalDeleteProduct" :data="currentProduct" @close="closeModalDeleteProduct" @update="loadData"/>
+
+            <ModalFilterSearchProduct :show="isShowModalFilterSearchProduct" :data="currentProduct" :options="options" @close="closeModalFilterSearchProduct" @update="filterHandler($event)"/>
             
         </div>
     </div>
@@ -122,10 +132,12 @@ import ApiService from '~/common/api.service';
                     {name:"Inventory",link:"/admin/inventory"}
                 ],
                 products: [],
-                formData: {
+                filters: {
                     search: null,
                     order: null,
                     category: null,
+                    supplier: null,
+                    brand: null,
                 },
                 metaData: {
                     first_index: 0,
@@ -138,26 +150,37 @@ import ApiService from '~/common/api.service';
 
                 isShowModalAddProduct: false,
                 isShowAdminModalEditProduct: false,
-                isShowModaldeleteProduct: false,
+                isShowModalDeleteProduct: false,
+                isShowModalFilterSearchProduct: false,
                 currentProduct:null,
                 isLoadingData: false,
 
-                categoryOptions:[]
+                options:{
+                    category: [],
+                    brand: [],
+                    supplier: []
+                }
             }
         },
         computed: {
             params() {
                 return {
-                    search: this.formData.search || null, 
-                    category: this.formData.category ? this.formData.category.value : null, 
+                    search: this.filters.search || null, 
+                    category: this.filters.category ? this.filters.category : null, 
+                    supplier: this.filters.supplier ? this.filters.supplier : null, 
+                    brand: this.filters.brand ? this.filters.brand : null, 
                     page: this.metaData.current_page, 
-                    order: this.formData.order ? (this.formData.order === 'Terbaru' ? 'desc' : 'asc') : null, 
+                    order: this.filters.order ? (this.filters.order === 'Terbaru' ? 'desc' : 'asc') : null, 
                 }
             }
         },
-        mounted() {
-            this.loadCategoriesOption();
-            this.loadData();
+        created() {
+            this.loadOptions();
+        },
+        async mounted() {
+            await this.loadData();
+            console.log("opt",this.options);
+            console.log("products",this.products);
         },
         methods: {
             orderSelectHandler(value){
@@ -165,10 +188,12 @@ import ApiService from '~/common/api.service';
                     this.loadData();
                 }
             },
-            categorySelectHandler(value){
-                if(value){
-                    this.loadData();
-                }
+            filterHandler(value){
+                console.log("filt",value);
+                this.filters.category = value.category ? value.category.value : null;
+                this.filters.supplier = value.supplier ? value.supplier.value : null;
+                this.filters.brand = value.brand ? value.brand.value : null;
+                this.loadData();
             },
             pageUpdateHandler(page){
                 this.metaData.current_page = page;
@@ -192,14 +217,37 @@ import ApiService from '~/common/api.service';
                 })
                 this.isLoadingData = false;
             },
-            async loadCategoriesOption() {
+            async loadOptions() {
                 await ApiService.get('/categories')
                 .then((Response)=>{
-                    console.log("catrespon",Response);
-                    this.categoryOptions = Response.data.data.map(function(category){
+                    this.options.category = Response.data.data.map(function(category){
                         return {
                             label: category.name,
                             value: category.categoryID,
+                        }
+                    });
+                })
+                .catch(err=>{
+                    console.log("err",err);
+                })
+                await ApiService.get('/brands')
+                .then((Response)=>{
+                    this.options.brand = Response.data.data.map(function(brand){
+                        return {
+                            label: brand.name,
+                            value: brand.brandID,
+                        }
+                    });
+                })
+                .catch(err=>{
+                    console.log("err",err);
+                })
+                await ApiService.get('/suppliers')
+                .then((Response)=>{
+                    this.options.supplier = Response.data.data.map(function(supplier){
+                        return {
+                            label: supplier.name,
+                            value: supplier.supplierID,
                         }
                     });
                 })
@@ -223,11 +271,17 @@ import ApiService from '~/common/api.service';
             },
             showModaldeleteProduct(product) {
                 this.currentProduct = Object.assign({},product);
-                this.isShowModaldeleteProduct = true;
+                this.isShowModalDeleteProduct = true;
             },
-            closeModaldeleteProduct() {
+            closeModalDeleteProduct() {
                 this.currentProduct = null;
-                this.isShowModaldeleteProduct = false;
+                this.isShowModalDeleteProduct = false;
+            },
+            showModalFilterSearchProduct() {
+                this.isShowModalFilterSearchProduct = true;
+            },
+            closeModalFilterSearchProduct() {
+                this.isShowModalFilterSearchProduct = false;
             },
         },
         head() {

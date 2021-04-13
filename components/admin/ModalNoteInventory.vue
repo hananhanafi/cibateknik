@@ -1,61 +1,179 @@
 <template>
     <Modal :show="show" centered>
-
-        <div class="modal-header border-bottom-0">
-            <h5 id="exampleModalLabel" class="modal-title">{{ data.title || 'Edit Status Order' }}</h5>
-            <button data-bs-dismiss="modal" class="btn-close btn text-danger" type="button" aria-label="Close" @click="$emit('close')"><fa :icon="['fas','times']" /></button>
-        </div>
-        <div class="modal-body">
-            <div class="w-100 text-left">
-                <BaseSelect
-                    v-model="formData.category"
-                    label="Kategori"
-                    :options="['Keluar', 'Masuk']"
-                    placeholder="Pilih Kategori"
-                    dense
-                />
-                <BaseInput
-                    v-show="formData.category"
-                    id="ammount"
-                    v-model="formData.ammount"
-                    label="Jumlah Barang"
-                    placeholder="Jumlah Barang"
-                    class="mr-2 flex-fill"
-                    large
-                    dense
-                />
+        <LoadingSpinner v-if="isSubmitStatus==submitStatuses.loading"/>
+        <!-- success -->
+        <div v-show="isSubmitStatus==submitStatuses.success" class="px-2">
+            <div class="text-40 text-success">
+                <fa :icon="['fas','check-circle']"/>
+            </div>
+            <div class="text-20">
+                Berhasil mencatat barang.
             </div>
             
-        </div>
-        <div class="modal-footer border-top-0 d-flex">
-            <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="$emit('close')">Batal</button>
-            <button type="button" class="btn btn-primary flex-fill" @click="$emit('delete')">Simpan</button>
+            <div class="modal-footer border-top-0 d-flex">
+                <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="close">Tutup</button>
+            </div>
         </div>
 
+        <!-- error -->
+        <div v-show="isSubmitStatus==submitStatuses.error" class="px-2">
+            <div class="text-40 text-danger">
+                <fa :icon="['fas','times-circle']"/>
+            </div>
+            <div class="text-20">
+                Gagal mencatat barang.
+            </div>
+            
+            <div class="modal-footer border-top-0 d-flex">
+                <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="close">Tutup</button>
+            </div>
+        </div>
+        <div v-if="isSubmitStatus=='' || isSubmitStatus == submitStatuses.pending">
+            <div class="modal-header border-bottom-0">
+                <h5 id="exampleModalLabel" class="modal-title">Catat Barang</h5>
+                <button data-bs-dismiss="modal" class="btn-close btn text-danger" type="button" aria-label="Close" @click="close"><fa :icon="['fas','times']" /></button>
+            </div>
+            <div class="modal-body">
+                <div class="w-100 text-left">
+                    <div class="mb-3">
+                        <div>Tanggal</div>
+                        <vue2-datepicker v-model="formData.selectedDate" class="w-100" placeholder="Pilih Bulan Tanggal"
+                        :disabled-date="(date) => date > disabledAfter || date < disabledBefore"></vue2-datepicker>
+                    </div>
+                    <BaseInput
+                        id="in"
+                        v-model="formData.in"
+                        label="Jumlah Barang Masuk"
+                        placeholder="Jumlah Barang Masuk"
+                        class="mr-2 flex-fill"
+                        large
+                        dense
+                        numberonly
+                    />
+
+                    
+                    <BaseInput
+                        id="out"
+                        v-model="formData.out"
+                        label="Jumlah Barang Keluar"
+                        placeholder="Jumlah Barang Keluar"
+                        class="mr-2 flex-fill"
+                        large
+                        dense
+                        numberonly
+                    />
+                            
+                    <BaseTextarea
+                        v-model="formData.note"
+                        label="Catatan"
+                        placeholder="Masukkan Catatan"
+                        height="200px"
+                    />
+                </div>
+                <div v-show="isSubmitStatus == submitStatuses.pending && !$v.formData.inAndOut.required " class="alert alert-danger">
+                    Jumlah barang masuk atau barang keluar tidak boleh kosong
+                </div>
+                
+            </div>
+            <div class="modal-footer border-top-0 d-flex">
+                <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="close">Batal</button>
+                <button type="button" class="btn btn-primary flex-fill" @click="onSubmit">Simpan</button>
+            </div>
+        </div>
     </Modal>
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate';
+import { required } from 'vuelidate/lib/validators';
+import { SUBMIT_STATUS } from '~/store/constants';
+import ApiService from '~/common/api.service';
 export default {
+    mixins: [validationMixin],
     props: {
         show: Boolean,
         data: {
             type: Object,
-            default: null
+            default: null,
         }
     },
     data() {
         return {
-            formData: [{
-                category: null,
-                ammount: null,
-            }],
+            formData: {
+                in: '',
+                out: '',
+                note: "",
+                selectedDate: new Date(),
+            },
+            disabledAfter: new Date(),
+            disabledBefore: new Date(2020,12,1),
+            isSubmitStatus: '',
+            submitStatuses: SUBMIT_STATUS
 
         }
     },
+    validations: {
+        formData :{
+            selectedDate: {required},
+            inAndOut: {
+                required() {
+                    return (
+                        (this.formData.in !== "" || this.formData.out !== "") && ( this.formData.in !== 0 && this.formData.out !== 0 )
+                    );
+                }
+            }
+        }
+    },
     mounted() {
+        console.log("Submitstatuses",this.submitStatuses);
     },
     methods: {
+        close() {
+            this.formData= {
+                in: '',
+                out: '',
+                note: "",
+                selectedDate: new Date(),
+            }
+            this.isSubmitStatus = '';
+            this.$emit('close');
+        },
+        formatFormData(formData){
+            const resultData = {
+                date: formData.selectedDate.getDate(),
+                month: formData.selectedDate.getMonth()+1,
+                year: formData.selectedDate.getFullYear(),
+                in: formData.in ? formData.in : 0,
+                out: formData.out ? formData.out : 0,
+                note: formData.note ? formData.note : '',
+            }
+
+            return resultData;
+
+        },
+        async onSubmit(){
+            this.$v.$touch();
+            console.log("VVV",this.$v);
+            if (this.$v.$invalid) {
+                this.isSubmitStatus = SUBMIT_STATUS.pending;
+            } else {
+                this.isSubmitStatus = SUBMIT_STATUS.loading;
+                const formattedFormData = this.formatFormData(this.formData);
+                console.log("formattedFormData",formattedFormData);
+                await ApiService.post(`/product/${this.$route.params.produk_id}/item/${this.data.id}/stock/update`,formattedFormData)
+                .then(data=>{
+                    this.isSubmitStatus = SUBMIT_STATUS.success;
+                    console.log("success",data);
+                    // this.$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:this.$route.params.produk_id}})
+                    this.$emit('update');
+                })
+                .catch(err=>{
+                    this.isSubmitStatus = SUBMIT_STATUS.error;
+                    console.log("error",err);
+                })
+            }
+            console.log("formdata",this.formData.selectedDate.getMonth());
+        },
     }
 };
 </script>

@@ -13,6 +13,15 @@ export const formatDate = function(dateParams){
     return DAY_NAMES[day] + ", " + dateNumb  + " " + MONTH_NAMES[month+1] + " " + year;
 };
 
+export const toMonthYearDate = function(dateParams){
+  const date = new Date(dateParams);
+  
+  const month = date.getMonth();
+  const year = date.getFullYear();
+  
+  return MONTH_NAMES[month] + " " + year;
+};
+
 export const toNumber = str => {
   return String(str).replace(/\D/gi, "");
 };

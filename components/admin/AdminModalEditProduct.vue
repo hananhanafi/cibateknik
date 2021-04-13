@@ -23,17 +23,25 @@
                     />
                     <BaseSelect
                     v-model="formData.category"
-                    :options="categoryOptions"
+                    :options="options.category"
                     label="Kategori"
                     placeholder="Pilih Kategori"
                     dense
-                    :error="
-                        isSubmitStatus == submitStatus.pending
-                        ? !$v.formData.category.required 
-                            ? 'Nama Kategori harus diisi'
-                            : null
-                        : null
-                    "
+                    />
+                    <BaseSelect
+                    v-model="formData.brand"
+                    :options="options.brand"
+                    label="Brand/Merk"
+                    placeholder="Pilih Brand/Merk"
+                    dense
+                    />
+
+                    <BaseSelect
+                    v-model="formData.supplier"
+                    :options="options.supplier"
+                    label="Supplier"
+                    placeholder="Pilih Supplier"
+                    dense
                     />
 
                     <label>Informasi Tambahan</label>
@@ -114,10 +122,14 @@ export default {
             type: Object,
             default: null
         },
-        categoryOptions: {
-            type: Array,
+        options: {
+            type: Object,
             default() {
-                return []
+                return {
+                    category: [],
+                    brand: [],
+                    supplier: []
+                }
             }
         }
     },
@@ -126,6 +138,8 @@ export default {
             formData: {
                 name :null,
                 category: null,
+                brand: null,
+                supplier: null,
                 additionalData: [],
             },
             isSubmitStatus: '',
@@ -139,7 +153,6 @@ export default {
     validations: {
         formData :{
             name :{ required },
-            category :{ required },
         }
     },
     watch: {
@@ -155,6 +168,18 @@ export default {
                     this.formData.category = {
                         label: this.data.category.name,
                         value: this.data.category.id,
+                    }
+                }
+                if(this.data.brand){
+                    this.formData.brand = {
+                        label: this.data.brand.name,
+                        value: this.data.brand.id,
+                    }
+                }
+                if(this.data.supplier){
+                    this.formData.supplier = {
+                        label: this.data.supplier.name,
+                        value: this.data.supplier.id,
                     }
                 }
             }
@@ -175,6 +200,8 @@ export default {
             const resultData = {
                 name: data.name ? data.name : null,
                 category: data.category ? {id:data.category.value,name:data.category.label} : null,
+                brand: data.brand ? {id:data.brand.value,name:data.brand.label} : null,
+                supplier: data.supplier ? {id:data.supplier.value,name:data.supplier.label} : null,
                 additionalData: data.additionalData
                 .filter(item=>item!=='')
                 .map(function(item){

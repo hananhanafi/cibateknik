@@ -1,6 +1,14 @@
 <template>
     <nav aria-label="breadcrumb">
-        <div class="w-100 bg-white text-left mb-3 shadow-sm" style="overflow-x:auto">
+        
+        <ol class="breadcrumb bg-white shadow-sm">
+            <li class="breadcrumb-item"><a href="/admin/dashboard" class="font-weight-bold">Dashboard</a></li>
+            <li v-for="(item,i) in data" :key="i" class="breadcrumb-item" aria-current="page">
+                <NuxtLink v-if="i+1<data.length" :to="item.link" class="font-weight-bold"> {{ item.name }}</NuxtLink>
+                <span v-else class="text-primary">{{ item.name }}</span>
+            </li>
+        </ol>
+        <!-- <div class="w-100 bg-white text-left mb-3 shadow-sm" style="overflow-x:auto">
             <div class="btn-group btn-breadcrumb">
                 <a href="/admin/dashboard" class="btn btn-lg btn-default bg-white border">Dashboard</a>
                 <a v-for="(item,i) in data" :key="i" class="btn btn-lg btn-default bg-white border">
@@ -8,7 +16,7 @@
                     <span v-else style="overflow:hidden; white-space: nowrap;">{{ item.name }}</span>
                 </a>
             </div>
-        </div>
+        </div> -->
     </nav>
 </template>
 

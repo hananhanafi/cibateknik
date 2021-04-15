@@ -1,6 +1,7 @@
 <template>
     <div class="text-center">
         <div class="container">
+            <Breadcrumb :data="breadCrumbList"/>
             <!-- <h1 class="red">Customer admin</h1> -->
             <div v-if="isDataReady" class="bg-white shadow rounded-8 p-3 text-left ">
                 <div class="mb-3 p-2">
@@ -105,15 +106,15 @@
                         <h6>Foto Barang</h6>
                         
                         <div class="row">
-                            <div v-for="(photo,i) in photos" :key="i" class="col-md-2 col-12 position-relative mb-2 mr-2" >
+                            <div v-for="(image,i) in images" :key="i" class="col-md-2 col-12 position-relative mb-2 mr-2" >
                                 <div class="btn btn-danger position-absolute"
                                     style=" right:12px;
                                             top: 12px;"
-                                    @click="deletePhoto(i)"
+                                    @click="deleteImage(image,i)"
                                 >
                                     <fa class="" :icon="['fas','times']" /> 
                                 </div>
-                                <img :src="photo.objectURL" alt="photo-placeholder" class="card-img-top h-100" >
+                                <img :src="image.imageUrl" alt="photo-placeholder" class="card-img-top h-100" >
                             </div>
                         </div>
                         <label v-cloak class="c-pointer" @drop.prevent="addFile" @dragover.prevent>
@@ -139,6 +140,9 @@
                         </label>
                     </div>
 
+                    <div v-if="isSubmitStatus==submitStatuses.error" class="alert alert-danger">
+                        {{errorMessage || 'error'}}
+                    </div>
                     
                     <div class="w-100 text-right">
                         <ButtonLoading v-if="isSubmitStatus==submitStatuses.loading"/>
@@ -165,7 +169,6 @@ import ApiService from '~/common/api.service';
         // page properties go hereexport default {
         async asyncData ({ params, redirect }) {
             console.log("redirect",redirect);
-            console.log("params",params);
             const postItem = await ApiService.get(`/product/${params.produk_id}/item/${params.barang_id}`);
             
             return {postItem};
@@ -175,35 +178,23 @@ import ApiService from '~/common/api.service';
         middleware: 'adminAuthenticated',
         data() {
             return {
-                barang: {
-                    nama: 'Endmill',
-                    addInfo : {
-                        title: 'Type',
-                        value: 'Endas'
-                    },
-                    stock: 10,
-                    minimumStock: 5,
-                    harga: '100.000'
-                },
-                infoCount: [
-                    {name:'Type'},
-                    {name:'Ukuran'},
-                    {name:'Diameter'},
-                    {name:'Jenis'},
+                breadCrumbList: [
+                    {name:"Inventory",link:"/admin/inventory"},
+                    {name:"Inventaris Produk",link:"/admin/inventory"},
+                    {name:"Edit Barang",link:""},
                 ],
                 errorsPhoto: null,
-                photos: [
-                    {
-                        objectURL: process.env.baseUrl+"/_nuxt/assets/img/item.png"
-                    }
-                ],
+                images: [],
+                deleted_images: [],
+                new_images: [],
 
                 formData: this.initFormData,
                 dataItem:null,
                 dataProduct:null,
                 isDataReady: false,
                 isSubmitStatus: '',
-                submitStatuses: SUBMIT_STATUS
+                submitStatuses: SUBMIT_STATUS,
+                errorMessage: null,
 
             }
         },
@@ -215,18 +206,17 @@ import ApiService from '~/common/api.service';
                     stock :{ required },
                     minimumStock :{ required },
                     price :{ required },
-                    additionalData : {},
+                    additionalData : {required},
                 }
             }
             
-            // this.formData.additionalData.forEach( additional => {
-            //     // form.additionalData.push(additional,null);
+            // this.dataProduct.additionalData.forEach(function(additional){
             //     validate.formData.additionalData[additional] = { required };
-            // } )
-
-            Object.keys(this.formData.additionalData).forEach(function(key) {
-                validate.formData.additionalData[key] = { required };
-            });
+            // })
+            
+            // Object.keys(this.formData.additionalData).forEach(function(key) {
+            //     validate.formData.additionalData[key] = { required };
+            // });
             return {
                 ...validate
             }
@@ -234,17 +224,39 @@ import ApiService from '~/common/api.service';
 
         computed: {
             initFormData(){ 
-                let form = {
-                    name: null,
-                    stock: null,
-                    minimumStock: null,
-                    price: null,
-                    note: null,
-                    additionalData: {},
-                };
-                if(this.dataItem){
-                    form = this.dataItem;
-                }
+                const {
+                    name,
+                    stock,
+                    minimumStock,
+                    price,
+                    note,
+                    additionalData,
+                } = this.dataItem;
+
+                const form = {
+                    name,
+                    stock,
+                    minimumStock,
+                    price,
+                    note,
+                    additionalData,}
+                // if(this.dataItem){
+                //     form = this.dataItem;
+                // }
+                // if(this.dataProduct.additionalData){
+                //     this.dataProduct.additionalData.forEach(data => {
+                //         if(!form.additionalData[data]){
+                //             form.additionalData[data] = null;
+                //         }
+                //     })
+                // }
+                this.dataProduct.additionalData.forEach(additional => {
+                    if(!form.additionalData[additional]){
+                        form.additionalData[additional] = null;
+                    }
+                })
+
+                console.log("form",form);
 
                 return form;
             }
@@ -253,9 +265,7 @@ import ApiService from '~/common/api.service';
             this.dataItem = this.postItem.data.item;
             this.dataProduct = this.postItem.data.product;
             this.formData = this.initFormData;
-            console.log("dataProduct",this.dataProduct);
-            console.log("dataItem",this.dataItem);
-            console.log("formData",this.formData);
+            this.images = this.formData.imagesItem || [];
             this.isDataReady = true;
         },
         methods: {
@@ -267,8 +277,6 @@ import ApiService from '~/common/api.service';
                     price: data.price ? data.price : null,
                     note: data.note ? data.note : null,
                     additionalData: data.additionalData ? data.additionalData : null,
-                    brandID : '37CSNNIjyTMXyvrylQWL',
-                    supplierID : 'D7DgyN5PnBsXypHJEY6Z'
                 }
 
                 return resultData;
@@ -276,29 +284,82 @@ import ApiService from '~/common/api.service';
             },
             async onSubmit(){
                 this.$v.$touch();
+                console.log("formdata",this.formData);
                 console.log("VVV",this.$v);
                 if (this.$v.$invalid) {
                     this.isSubmitStatus = SUBMIT_STATUS.pending;
-                } else {
+                } 
+                else {
+                    const promises = [];
                     this.isSubmitStatus = SUBMIT_STATUS.loading;
                     const formattedFormData = this.formatFormData(this.formData);
-                    console.log("formattedFormData",formattedFormData);
-                    await ApiService.put(`/product/${this.$route.params.produk_id}/item/${this.$route.params.barang_id}`,formattedFormData)
-                    .then(data=>{
+                    promises.push(
+                        ApiService.put(`/product/${this.$route.params.produk_id}/item/${this.$route.params.barang_id}`,formattedFormData)
+                        .then(data=>{
+                            console.log("success",data);
+                        })
+                        .catch(err=>{
+                            console.log("error",err);
+                            this.isSubmitStatus = SUBMIT_STATUS.error;
+                            const response = {...err};
+                            this.errorMessage = response.response.data.message;
+                        })
+                    )
+
+                    if(this.new_images.length>0){
+                        const dataImage = new FormData();
+                        this.images.forEach((image,i) => {
+                            dataImage.append(`images[${i}]`, image.file);
+                        });
+
+                        promises.push (
+                            ApiService.postMultiform(`/product/${this.$route.params.produk_id}/item/${this.$route.params.barang_id}/images`,dataImage)
+                            .then((response)=>{
+                                console.log("success",response);
+                            })
+                            .catch(err=>{
+                                this.isSubmitStatus = SUBMIT_STATUS.error;
+                                const response = {...err};
+                                this.errorMessage = response.response.data.message;
+                                console.log("error",err);
+                            })
+                        )
+                    }
+
+                    if(this.deleted_images.length>0){
+                        const deletedImages = { deleted_images: this.deleted_images };
+                        promises.push (
+                            ApiService.post(`/product/${this.$route.params.produk_id}/item/${this.$route.params.barang_id}/images/delete`,deletedImages)
+                            .then((response)=>{
+                                console.log("success",response);
+                            })
+                            .catch(err=>{
+                                this.isSubmitStatus = SUBMIT_STATUS.error;
+                                const response = {...err};
+                                this.errorMessage = response.response.data.message;
+                                console.log("error",err);
+                            })
+                        )
+                    }
+
+                    try {
+                        await Promise.all(promises);
                         this.isSubmitStatus = SUBMIT_STATUS.success;
-                        console.log("success",data);
                         this.$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:this.$route.params.produk_id}})
-                    })
-                    .catch(err=>{
+
+                    }catch {
                         this.isSubmitStatus = SUBMIT_STATUS.error;
-                        console.log("error",err);
-                    })
+                    }
                 }
             },
             addPhoto(files) {
                 files.forEach(file => {
-                    this.photos.push({
-                        objectURL: URL.createObjectURL(file),
+                    this.images.push({
+                        imageUrl: URL.createObjectURL(file),
+                        file,
+                    });
+                    this.new_images.push({
+                        imageUrl: URL.createObjectURL(file),
                         file,
                     });
                 });
@@ -310,15 +371,22 @@ import ApiService from '~/common/api.service';
                 ([...droppedFiles]).forEach(file => {
                     // this.files.push(f);
                     
-                    this.photos.push({
-                        objectURL: URL.createObjectURL(file),
+                    this.images.push({
+                        imageUrl: URL.createObjectURL(file),
+                        file,
+                    });
+                    this.new_images.push({
+                        imageUrl: URL.createObjectURL(file),
                         file,
                     });
                 });
 
             },
-            deletePhoto(index){
-                this.photos.splice(index,1)
+            deleteImage(image,index){
+                this.images.splice(index,1);
+                if(image.imageName){
+                    this.deleted_images.push(image);
+                }
             }
         }
     }

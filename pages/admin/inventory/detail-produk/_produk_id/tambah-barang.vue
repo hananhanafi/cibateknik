@@ -30,7 +30,7 @@
                     <div class="mb-3">
                         <h6>Informasi Barang</h6>
                         <div class="row">
-                            <div class="col">
+                            <div v-if="formData.additionalData" class="col">
                                 <!-- eslint-disable-next-line vue/no-template-shadow -->
                                 <div v-for="(additional,i) in formData.additionalData" :key="i" class="d-md-flex d-block">
                                     <div class="mr-2 col-md-2 col-12">
@@ -50,6 +50,11 @@
                                             "
                                         />
                                     </div>
+                                </div>
+                            </div>
+                            <div v-else class="col">
+                                <div class="ml-3">
+                                    Tidak ada informasi tambahan
                                 </div>
                             </div>
                         </div>
@@ -114,7 +119,7 @@
                         <h6>Foto Barang</h6>
                         
                         <div class="row">
-                            <div v-for="(photo,i) in photos" :key="i" class="col-md-2 col-12 position-relative mb-2 mr-2">
+                            <div v-for="(photo,i) in images" :key="i" class="col-md-2 col-12 position-relative mb-2 mr-2">
                                 <div class="btn btn-danger position-absolute"
                                     style=" right:12px;
                                             top: 12px;"
@@ -148,6 +153,10 @@
                         </label>
                     </div>
 
+
+                    <div v-if="isSubmitStatus==submitStatuses.error" class="alert alert-danger">
+                        {{errorMessage || 'error'}}
+                    </div>
                     
                     <div class="w-100 text-right">
                         <ButtonLoading v-if="isSubmitStatus==submitStatuses.loading"/>
@@ -156,6 +165,7 @@
                             <b-button id="show-btn"  size="xl"  class=" text-white ml-auto" variant="primary" @click.prevent="onSubmit">Simpan</b-button>
                         </div>
                     </div>
+                    
                 </div>
             </div>
             
@@ -172,7 +182,7 @@ import ApiService from '~/common/api.service';
         mixins: [validationMixin],
         // page properties go hereexport default {
         async asyncData ({ params, redirect }) {
-            console.log("async",redirect);
+            console.log("redirect",redirect);
             const product = await ApiService.get(`/product/${params.produk_id}`);
             // return { id: params.produk_id }
             return {product};
@@ -184,16 +194,16 @@ import ApiService from '~/common/api.service';
             return {
                 breadCrumbList: [
                     {name:"Inventory",link:"/admin/inventory"},
-                    {name:"Inventaris Produk",link:""},
+                    {name:"Inventaris Produk",link:"/admin/inventory"},
                     {name:"Tambah Barang",link:""},
                 ],
                 errorsPhoto: null,
-                photos: [],
-                files: [],
+                images: [],
                 formData: this.initFormData,
                 isFormDataReady: false,
                 isSubmitStatus: '',
-                submitStatuses: SUBMIT_STATUS
+                submitStatuses: SUBMIT_STATUS,
+                errorMessage: null,
 
             }
         },
@@ -210,7 +220,6 @@ import ApiService from '~/common/api.service';
             }
             
             this.product.data.additionalData.forEach( additional => {
-                // form.additionalData.push(additional,null);
                 validate.formData.additionalData[additional] = { required };
             } )
             return {
@@ -231,15 +240,13 @@ import ApiService from '~/common/api.service';
                     // form.additionalData.push(additional,null);
                     form.additionalData[additional] = null;
                 } )
-
+                console.log("form",form);
                 return form;
             }
         },
         mounted() {
             this.formData = this.initFormData;
             this.isFormDataReady = true;
-            console.log("formdata",this.formData);
-            console.log("product",this.product);
         },
         methods: {
             formatFormData(data){
@@ -250,8 +257,7 @@ import ApiService from '~/common/api.service';
                     price: data.price ? data.price : null,
                     note: data.note ? data.note : null,
                     additionalData: data.additionalData ? data.additionalData : null,
-                    brandID : '37CSNNIjyTMXyvrylQWL',
-                    supplierID : 'D7DgyN5PnBsXypHJEY6Z'
+                    // images : this.images.map(item=>{ return item.file })
                 }
 
                 return resultData;
@@ -265,22 +271,58 @@ import ApiService from '~/common/api.service';
                 } else {
                     this.isSubmitStatus = SUBMIT_STATUS.loading;
                     const formattedFormData = this.formatFormData(this.formData);
-                    console.log("formattedFormData",formattedFormData);
-                    await ApiService.post(`/product/${this.$route.params.produk_id}/item`,formattedFormData)
+                    
+                    const responseItem = await ApiService.post(`/product/${this.$route.params.produk_id}/item`,formattedFormData)
                     .then(data=>{
-                        this.isSubmitStatus = SUBMIT_STATUS.success;
+                        // this.isSubmitStatus = SUBMIT_STATUS.success;
                         console.log("success",data);
-                        this.$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:this.$route.params.produk_id}})
+                        return data.data;
+                        // this.$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:this.$route.params.produk_id}})
                     })
                     .catch(err=>{
                         this.isSubmitStatus = SUBMIT_STATUS.error;
+                        const response = {...err};
+                        this.errorMessage = response.response.data.message;
+                        this.reset();
                         console.log("error",err);
+                        console.log("res",response);
                     })
+
+                    if(responseItem){
+                        const dataImage = new FormData();
+                        if(this.images.length>0){
+                            this.images.forEach((image,i) => {
+                                dataImage.append(`images[${i}]`, image.file);
+                            });
+                            await ApiService.postMultiform(`/product/${this.$route.params.produk_id}/item/${responseItem.id}/images`,dataImage)
+                            .then((response)=>{
+                                console.log("success",response);
+                                this.isSubmitStatus = SUBMIT_STATUS.success;
+                                this.$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:this.$route.params.produk_id}});
+                            })
+                            .catch(err=>{
+                                this.isSubmitStatus = SUBMIT_STATUS.error;
+                                const response = {...err};
+                                this.errorMessage = response.response.data.message;
+                                console.log("error",err);
+                            })
+                        }else {
+                            this.isSubmitStatus = SUBMIT_STATUS.success;
+                            this.$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:this.$route.params.produk_id}});
+
+                        }
+                    }
                 }
+            },
+            reset() {
+                setTimeout(() => {
+                    this.isSubmitStatus = '';
+                    this.errorMessage = null;
+                }, 5000 );
             },
             addPhoto(files) {
                 files.forEach(file => {
-                    this.photos.push({
+                    this.images.push({
                         objectURL: URL.createObjectURL(file),
                         file,
                     });
@@ -293,7 +335,7 @@ import ApiService from '~/common/api.service';
                 ([...droppedFiles]).forEach(file => {
                     // this.files.push(f);
                     
-                    this.photos.push({
+                    this.images.push({
                         objectURL: URL.createObjectURL(file),
                         file,
                     });
@@ -301,7 +343,7 @@ import ApiService from '~/common/api.service';
 
             },
             deletePhoto(index){
-                this.photos.splice(index,1)
+                this.images.splice(index,1)
             }
         },
         head() {

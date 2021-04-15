@@ -66,22 +66,22 @@
                             <div class="flex-fill">
                                 <table class="w-100 table table-bordered">
                                     <tr>
-                                        <td colspan="3">
+                                        <td :colspan="dataProduct.additionalData.length+1">
                                             Barang
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="text-white border-top-0" colspan="3">
+                                        <td class="text-white border-top-0" :colspan="dataProduct.additionalData.length+1">
                                             empty
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Nama</td>
-                                        <td v-for="(additionalLabel,i) in dataProduct.additionalData" :key="i">{{additionalLabel}}</td>
+                                        <td v-for="(additionalLabel,i) in dataProduct.additionalData" :key="i" class="text-center">{{additionalLabel}}</td>
                                     </tr>
                                     <tr v-for="(item,i) in dataItem" :key="i">
                                         <td><div style="min-height:18px;white-space:nowrap">{{item.name}}</div></td>
-                                        <td v-for="(additional,j) in dataProduct.additionalData" :key="j">{{item.additionalData[additional] || '-'}}</td>
+                                        <td v-for="(additional,j) in dataProduct.additionalData" :key="j" class="text-center">{{item.additionalData[additional] || '-'}}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -152,13 +152,14 @@
                                         <td class="p-1">
                                             <div class="d-flex flex-row bd-highlight">
                                                 <div class="btn btn-success btn-sm text-white mr-2" @click="showModalNoteInventory(item)">Catat</div>
-                                                <div class="">
+                                                <div class="mr-2">
                                                     <a @click="$router.push({name:'admin-inventory-detail-produk-produk_id-edit-barang-barang_id',params:{produk_id:$route.params.produk_id,barang_id:item.id}})">
                                                         <div  class="btn btn-outline-warning btn-sm w-100">
                                                             Edit
                                                         </div>
                                                     </a>
                                                 </div>
+                                                <div class="btn btn-danger btn-sm text-white" @click="showModalDeleteItem(item)">Hapus</div>
                                             </div>
                                         </td>
                                     </tr>
@@ -171,6 +172,10 @@
             </div>
 
             <ModalNoteInventory :show="isShowModalNoteInventory" :data="currentItem" @close="closeModalNoteInventory" @update="loadData"/>
+
+            
+            <AdminModalDeleteItem :show="isShowModalDeleteItem" :data="currentItem" @close="closeModalDeleteItem" @update="loadData"/>
+
             
         </div>
     </div>
@@ -182,7 +187,7 @@ import ApiService from '~/common/api.service';
     export default {
         // page properties go hereexport default {
         async asyncData ({ params, redirect }) {
-            console.log("async",redirect);
+            console.log("redirect",redirect);
             const dateNow = new Date();
             const month = dateNow.getMonth()+1;
             const year = dateNow.getFullYear();
@@ -204,6 +209,7 @@ import ApiService from '~/common/api.service';
                 dateArray : [],
 
                 isShowModalNoteInventory: false,
+                isShowModalDeleteItem: false,
                 disabledAfter: new Date(),
                 disabledBefore: new Date(2020,12,1),
                 dataItem: null,
@@ -246,8 +252,6 @@ import ApiService from '~/common/api.service';
             this.dataProduct = this.postProductItems.data.data.product;
             this.dataItemMonthlyStock = this.postProductItems.data.data.items_monthly_stock;
             this.dataItemDailyStock = this.postProductItems.data.data.items_daily_stock;
-            console.log("this.dataItemMonthlyStock111",this.dataItemMonthlyStock)
-            console.log("this.dataItemDailyStock",this.dataItemDailyStock)
             this.isDataReady = true;
         },
         methods: {
@@ -273,13 +277,9 @@ import ApiService from '~/common/api.service';
                 }else {
                     this.selectedDate = new Date();
                 }
-                console.log("Slet",this.selectedDate);
                 this.firstDate = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), 1);
                 this.lastDate = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth() + 1, 0);
                 this.dateArray = new Array(this.lastDate.getDate());
-                console.log("this.dateArray",this.dateArray);
-                console.log("this.firstDate",this.firstDate);
-                console.log("this.lastDate",this.lastDate.getDate());
 
             },
             getMonthlyStockItem(itemID) {
@@ -298,11 +298,18 @@ import ApiService from '~/common/api.service';
                 this.currentItem = null;
                 this.isShowModalNoteInventory = false;
             },
+            showModalDeleteItem(item) {
+                this.currentItem = Object.assign({},item);
+                this.isShowModalDeleteItem = true;
+            },
+            closeModalDeleteItem() {
+                this.currentItem = null;
+                this.isShowModalDeleteItem = false;
+            },
             async datePickerHandler(value){
-                console.log("val",value);
                 this.isDataReady = false;
                 await this.setDate(value);
-                this.loadData();
+                await this.loadData();
                 this.isDataReady = true;
             },
             // helpers

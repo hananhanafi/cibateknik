@@ -146,9 +146,6 @@ export default {
             name :{ required },
         }
     },
-    mounted() {
-        console.log("SUBMIT_STATUS",this.submitStatus);
-    },
     methods: {
         addInfo(){
             this.formData.additionalData.push({name:null})

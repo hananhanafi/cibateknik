@@ -181,8 +181,7 @@ import ApiService from '~/common/api.service';
     export default {
         mixins: [validationMixin],
         // page properties go hereexport default {
-        async asyncData ({ params, redirect }) {
-            console.log("redirect",redirect);
+        async asyncData ({ params }) {
             const product = await ApiService.get(`/product/${params.produk_id}`);
             // return { id: params.produk_id }
             return {product};
@@ -265,7 +264,6 @@ import ApiService from '~/common/api.service';
             },
             async onSubmit(){
                 this.$v.$touch();
-                console.log("VVV",this.$v);
                 if (this.$v.$invalid) {
                     this.isSubmitStatus = SUBMIT_STATUS.pending;
                 } else {
@@ -285,7 +283,6 @@ import ApiService from '~/common/api.service';
                         this.errorMessage = response.response.data.message;
                         this.reset();
                         console.log("error",err);
-                        console.log("res",response);
                     })
 
                     if(responseItem){

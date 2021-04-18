@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <Breadcrumb :data="breadCrumbList"/>
             <LoadingSpinner v-if="!isDataReady" />
-            <div v-else class="bg-white shadow-sm rounded-8 p-3 text-left "> 
+            <div v-else class="bg-white shadow-sm rounded-8 p-3 text-left"> 
                 <div class="mb-3">
                     <vue2-datepicker v-model="selectedDate" class="h-100 float-right" placeholder="Pilih Bulan"
                     type="month"  
@@ -151,7 +151,7 @@
                                         <td>{{getMonthlyStockItem(item.id).stock}}</td>
                                         <td class="p-1">
                                             <div class="d-flex flex-row bd-highlight">
-                                                <div class="btn btn-success btn-sm text-white mr-2" @click="showModalNoteInventory(item)">Catat</div>
+                                                <!-- <div class="btn btn-success btn-sm text-white mr-2" @click="showModalNoteInventory(item)">Catat</div>
                                                 <div class="mr-2">
                                                     <a @click="$router.push({name:'admin-inventory-detail-produk-produk_id-edit-barang-barang_id',params:{produk_id:$route.params.produk_id,barang_id:item.id}})">
                                                         <div  class="btn btn-outline-warning btn-sm w-100">
@@ -159,7 +159,32 @@
                                                         </div>
                                                     </a>
                                                 </div>
-                                                <div class="btn btn-danger btn-sm text-white" @click="showModalDeleteItem(item)">Hapus</div>
+                                                <div class="btn btn-danger btn-sm text-white mr-2" @click="showModalDeleteItem(item)">Hapus</div> -->
+                                                <div>
+                                                    <b-dropdown id="dropdown-1" variant="primary" size="sm" text="Aksi">
+                                                        <b-dropdown-item>
+                                                            <div class="btn btn-success btn-sm text-white w-100" @click="showModalNoteInventory(item)">Catat</div>
+                                                        </b-dropdown-item>
+                                                        <b-dropdown-item>
+                                                            <div class="w-100">
+                                                                <a @click="$router.push({name:'admin-inventory-detail-produk-produk_id-edit-barang-barang_id',params:{produk_id:$route.params.produk_id,barang_id:item.id}})">
+                                                                    <div  class="btn btn-outline-warning btn-sm w-100">
+                                                                        Edit
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </b-dropdown-item>
+                                                        <b-dropdown-item>
+                                                            <div class="btn btn-outline-info btn-sm w-100" @click="showModalPostItem(item)">Post</div>
+                                                        </b-dropdown-item>
+                                                        <b-dropdown-item>
+                                                            <div class="btn btn-danger btn-sm text-white w-100" @click="showModalDeleteItem(item)">Hapus</div>
+                                                        </b-dropdown-item>
+                                                        <!-- <b-dropdown-divider></b-dropdown-divider>
+                                                        <b-dropdown-item active>Active action</b-dropdown-item>
+                                                        <b-dropdown-item disabled>Disabled action</b-dropdown-item> -->
+                                                    </b-dropdown>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -172,9 +197,9 @@
             </div>
 
             <ModalNoteInventory :show="isShowModalNoteInventory" :data="currentItem" @close="closeModalNoteInventory" @update="loadData"/>
-
             
             <AdminModalDeleteItem :show="isShowModalDeleteItem" :data="currentItem" @close="closeModalDeleteItem" @update="loadData"/>
+            <AdminModalPostItem :show="isShowModalPostItem" :data="currentItem" @close="closeModalPostItem" @update="loadData"/>
 
             
         </div>
@@ -186,8 +211,7 @@ import { toMonthYearDate } from '../../../../../store/helpers';
 import ApiService from '~/common/api.service';
     export default {
         // page properties go hereexport default {
-        async asyncData ({ params, redirect }) {
-            console.log("redirect",redirect);
+        async asyncData ({ params }) {
             const dateNow = new Date();
             const month = dateNow.getMonth()+1;
             const year = dateNow.getFullYear();
@@ -210,6 +234,7 @@ import ApiService from '~/common/api.service';
 
                 isShowModalNoteInventory: false,
                 isShowModalDeleteItem: false,
+                isShowModalPostItem: false,
                 disabledAfter: new Date(),
                 disabledBefore: new Date(2020,12,1),
                 dataItem: null,
@@ -305,6 +330,14 @@ import ApiService from '~/common/api.service';
             closeModalDeleteItem() {
                 this.currentItem = null;
                 this.isShowModalDeleteItem = false;
+            },
+            showModalPostItem(item) {
+                this.currentItem = Object.assign({},item);
+                this.isShowModalPostItem = true;
+            },
+            closeModalPostItem() {
+                this.currentItem = null;
+                this.isShowModalPostItem = false;
             },
             async datePickerHandler(value){
                 this.isDataReady = false;

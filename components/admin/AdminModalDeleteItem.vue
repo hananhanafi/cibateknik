@@ -10,7 +10,7 @@
                                     <fa :icon="['fas','exclamation-circle']"/>
                                 </div>
                                 <h6>
-                                    Yakin ingin menghapus ?
+                                    Yakin ingin menghapus barang {{ data && data.name }} ?
                                 </h6>
                             </div>
                         </div>
@@ -78,7 +78,6 @@ export default {
     },
     methods: {
         clickOutside() {
-            console.log("Data",this.data);
             this.$emit('close');
         },
         async onSubmit(){

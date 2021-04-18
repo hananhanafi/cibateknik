@@ -9,7 +9,7 @@
             <div class="w-100 text-left">
                 <div class="row">
                     <div class="col">
-                        <b-img class="w-100" src="~/assets/img/person.png" fluid alt="Responsive image"></b-img>
+                        <b-img class="w-100" :src="photoURL(data)" fluid alt="Responsive image"></b-img>
                     </div>
                     <div class="col">
                         <table>
@@ -59,13 +59,24 @@
                             </tr>
                             <tr>
                                 <td>
+                                    Tanggal Lahir
+                                </td>
+                                <td>
+                                    :
+                                </td>
+                                <td>
+                                    {{ data && data.dateOfBirth ? data.dateOfBirth.day+"-"+data.dateOfBirth.month+"-"+data.dateOfBirth.year : '-' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     Tanggal Daftar
                                 </td>
                                 <td>
                                     :
                                 </td>
                                 <td>
-                                    {{ data && data.createdAt }}
+                                    {{ data && formatDate(data.createdAt._seconds) }}
                                 </td>
                             </tr>
                             <tr>
@@ -76,7 +87,7 @@
                                     :
                                 </td>
                                 <td>
-                                    {{ data && data.createdAt }}
+                                    {{ data && formatDate(data.lastLogin._seconds) }}
                                 </td>
                             </tr>
                         </table>
@@ -94,6 +105,7 @@
 </template>
 
 <script>
+import { formatDate } from '../../store/helpers';
 export default {
     props: {
         show: Boolean,
@@ -109,6 +121,13 @@ export default {
     mounted() {
     },
     methods: {
+        photoURL(user) {
+            const url = user ? user.imageUrl : process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+            return url;
+        },
+
+        // helpers
+        formatDate
     }
 };
 </script>

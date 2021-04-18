@@ -56,7 +56,7 @@
                                 <tr v-for="(customer,i) in customers" :key="i">
                                     <th scope="row">{{customer.userID}}</th>
                                     <td>
-                                        <img src="~/assets/img/person.png" class="img-fluid" style="width:40px" alt="Responsive image"> 
+                                        <img :src="photoURL(customer)" class="img-fluid" style="width:40px" alt="Responsive image"> 
                                     </td>
                                     <td>{{customer.firstName + " " + customer.lastName}}</td>
                                     <!-- <td>{{ new Date(customer.createdAt._seconds)}}</td> -->
@@ -139,6 +139,10 @@ import ApiService from '~/common/api.service';
             console.log("cus",this.customers)
         },
         methods: {
+            photoURL(user) {
+                const url = user.imageUrl || process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+                return url;
+            },
             async loadData() {
                 this.isLoadingData = true;
                 await ApiService.query('/users',this.params)

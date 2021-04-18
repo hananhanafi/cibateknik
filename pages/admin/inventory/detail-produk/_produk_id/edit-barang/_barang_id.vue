@@ -147,7 +147,7 @@
                     <div class="w-100 text-right">
                         <ButtonLoading v-if="isSubmitStatus==submitStatuses.loading"/>
                         <div v-else class="text-right">
-                            <b-button id="show-btn"  size="xl"  class=" ml-auto" variant="outline-dark">Batal</b-button>
+                            <a id="show-btn" class="btn btn-default" @click="$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:$route.params.produk_id,barang_id:$route.params.barang_id}})">Batal</a>
                             <b-button id="show-btn" size="xl"  class=" text-white ml-auto"  variant="primary" @click="onSubmit">Simpan</b-button>
                         </div>
                     </div>
@@ -167,8 +167,7 @@ import ApiService from '~/common/api.service';
     export default {
         mixins: [validationMixin],
         // page properties go hereexport default {
-        async asyncData ({ params, redirect }) {
-            console.log("redirect",redirect);
+        async asyncData ({ params }) {
             const postItem = await ApiService.get(`/product/${params.produk_id}/item/${params.barang_id}`);
             
             return {postItem};
@@ -256,8 +255,6 @@ import ApiService from '~/common/api.service';
                     }
                 })
 
-                console.log("form",form);
-
                 return form;
             }
         },
@@ -265,7 +262,7 @@ import ApiService from '~/common/api.service';
             this.dataItem = this.postItem.data.item;
             this.dataProduct = this.postItem.data.product;
             this.formData = this.initFormData;
-            this.images = this.formData.imagesItem || [];
+            this.images = this.dataItem.imagesItem || [];
             this.isDataReady = true;
         },
         methods: {
@@ -284,8 +281,6 @@ import ApiService from '~/common/api.service';
             },
             async onSubmit(){
                 this.$v.$touch();
-                console.log("formdata",this.formData);
-                console.log("VVV",this.$v);
                 if (this.$v.$invalid) {
                     this.isSubmitStatus = SUBMIT_STATUS.pending;
                 } 
@@ -295,15 +290,6 @@ import ApiService from '~/common/api.service';
                     const formattedFormData = this.formatFormData(this.formData);
                     promises.push(
                         ApiService.put(`/product/${this.$route.params.produk_id}/item/${this.$route.params.barang_id}`,formattedFormData)
-                        .then(data=>{
-                            console.log("success",data);
-                        })
-                        .catch(err=>{
-                            console.log("error",err);
-                            this.isSubmitStatus = SUBMIT_STATUS.error;
-                            const response = {...err};
-                            this.errorMessage = response.response.data.message;
-                        })
                     )
 
                     if(this.new_images.length>0){
@@ -314,15 +300,6 @@ import ApiService from '~/common/api.service';
 
                         promises.push (
                             ApiService.postMultiform(`/product/${this.$route.params.produk_id}/item/${this.$route.params.barang_id}/images`,dataImage)
-                            .then((response)=>{
-                                console.log("success",response);
-                            })
-                            .catch(err=>{
-                                this.isSubmitStatus = SUBMIT_STATUS.error;
-                                const response = {...err};
-                                this.errorMessage = response.response.data.message;
-                                console.log("error",err);
-                            })
                         )
                     }
 
@@ -330,15 +307,6 @@ import ApiService from '~/common/api.service';
                         const deletedImages = { deleted_images: this.deleted_images };
                         promises.push (
                             ApiService.post(`/product/${this.$route.params.produk_id}/item/${this.$route.params.barang_id}/images/delete`,deletedImages)
-                            .then((response)=>{
-                                console.log("success",response);
-                            })
-                            .catch(err=>{
-                                this.isSubmitStatus = SUBMIT_STATUS.error;
-                                const response = {...err};
-                                this.errorMessage = response.response.data.message;
-                                console.log("error",err);
-                            })
                         )
                     }
 
@@ -347,8 +315,10 @@ import ApiService from '~/common/api.service';
                         this.isSubmitStatus = SUBMIT_STATUS.success;
                         this.$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:this.$route.params.produk_id}})
 
-                    }catch {
-                        this.isSubmitStatus = SUBMIT_STATUS.error;
+                    }catch(err) {
+                            this.isSubmitStatus = SUBMIT_STATUS.error;
+                            const response = {...err};
+                            this.errorMessage = response.response.data.item || response.response.data.message;
                     }
                 }
             },

@@ -75,9 +75,6 @@ export default {
             }
         }
     },
-    mounted() {
-        console.log("dd",this.formData);
-    },
     methods: {
         filterUpdate() {
             this.$emit('update',this.formData);

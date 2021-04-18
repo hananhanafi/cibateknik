@@ -36,6 +36,11 @@
             <div class="modal-body">
                 <div class="w-100 text-left">
                     <div class="mb-3">
+                        <h3>
+                            {{ data && data.name }}
+                        </h3>
+                    </div>
+                    <div class="mb-3">
                         <div>Tanggal</div>
                         <vue2-datepicker v-model="formData.selectedDate" class="w-100" placeholder="Pilih Bulan Tanggal"
                         :disabled-date="(date) => date > disabledAfter || date < disabledBefore"></vue2-datepicker>
@@ -124,9 +129,6 @@ export default {
             }
         }
     },
-    mounted() {
-        console.log("Submitstatuses",this.submitStatuses);
-    },
     methods: {
         close() {
             this.formData= {
@@ -153,13 +155,11 @@ export default {
         },
         async onSubmit(){
             this.$v.$touch();
-            console.log("VVV",this.$v);
             if (this.$v.$invalid) {
                 this.isSubmitStatus = SUBMIT_STATUS.pending;
             } else {
                 this.isSubmitStatus = SUBMIT_STATUS.loading;
                 const formattedFormData = this.formatFormData(this.formData);
-                console.log("formattedFormData",formattedFormData);
                 await ApiService.post(`/product/${this.$route.params.produk_id}/item/${this.data.id}/stock/update`,formattedFormData)
                 .then(data=>{
                     this.isSubmitStatus = SUBMIT_STATUS.success;
@@ -172,7 +172,6 @@ export default {
                     console.log("error",err);
                 })
             }
-            console.log("formdata",this.formData.selectedDate.getMonth());
         },
     }
 };

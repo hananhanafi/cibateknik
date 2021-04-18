@@ -179,8 +179,6 @@ import ApiService from '~/common/api.service';
         },
         async mounted() {
             await this.loadData();
-            console.log("opt",this.options);
-            console.log("products",this.products);
         },
         methods: {
             orderSelectHandler(value){
@@ -189,7 +187,6 @@ import ApiService from '~/common/api.service';
                 }
             },
             filterHandler(value){
-                console.log("filt",value);
                 this.filters.category = value.category ? value.category.value : null;
                 this.filters.supplier = value.supplier ? value.supplier.value : null;
                 this.filters.brand = value.brand ? value.brand.value : null;

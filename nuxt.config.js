@@ -21,12 +21,19 @@ export default {
   css: [
     // CSS file in the project
     '~/assets/css/main.css',
+    // ...
+    'quill/dist/quill.core.css',
+    // for snow theme
+    'quill/dist/quill.snow.css',
+    // for bubble theme
+    // 'quill/dist/quill.bubble.css'
+    // ...
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     '~/plugins/vue-swiper.js',
-    '~/plugins/api.js','~/plugins/v-calendar','~/plugins/vue2-datepicker','~/plugins/vue2-daterangepicker'],
+    '~/plugins/api.js','~/plugins/v-calendar','~/plugins/vue2-datepicker','~/plugins/vue2-daterangepicker',{ src: '~plugins/nuxt-quill', ssr: false }],
     // "{ src: '~/plugins/vue-datepicker', mode: 'client' }"],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

@@ -35,7 +35,9 @@
                     
                         <div class="d-flex bd-highlight py-3">
                             <div class="p-2 w-100 bd-highlight text-white"><h2>Ciba Teknik</h2></div>
-                            <div class="p-2 flex-shrink-1 bd-highlight"><a  class="btn btn-danger" block @click="hide"> <fa :icon="['fas','times']"/> </a></div>
+                            <div class="p-2 flex-shrink-1 bd-highlight">
+                                <a  class="btn btn-danger rounded-pill" block @click="hide"> <fa :icon="['fas','times']"/> </a>
+                            </div>
                         </div>
                         <ul class="ml-0 pl-0">
                             <li>

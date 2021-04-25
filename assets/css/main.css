@@ -70,6 +70,13 @@ a, a:hover, a:focus, a:active {
     height: 40px;
 }
 
+.horizontal-separator{
+    /* border-top: 1px solid #0F2027; */
+    background-color: #efefef;
+    height: 2px;
+    width: 100%;
+}
+
 .truncate-paragraph{
     -webkit-box-orient: vertical;
     display: block;

@@ -87,18 +87,8 @@ import ApiService from '~/common/api.service';
         },
         mounted() {
             window.addEventListener('resize', this.handleResize);
-            this.loadData();
         },
         methods: {
-            loadData() {
-                ApiService.get('/products')
-                .then((Response)=>{
-                    console.log("res",Response);
-                })
-                .catch(err=>{
-                    console.log("err",err);
-                })
-            },
             handleResize() {
                 this.windowH.width = window.innerWidth;
                 this.windowH.height = window.innerHeight;

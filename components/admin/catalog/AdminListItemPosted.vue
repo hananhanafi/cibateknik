@@ -110,7 +110,7 @@ export default {
             },
             
             filters: {
-                sort: null,
+                order: null,
                 product: null,
             },
             isShowAdminModalDeleteItemPosted: false,
@@ -134,136 +134,136 @@ export default {
                 return this.checkedItemList.length<1;
             }
 
+    },
+    mounted() {
+        // Set the initial datas
+        this.loadOptions();
+        this.loadData();
+    },
+    methods: {
+        checkAllHandler() {
+            if(!this.checkAll){
+                this.checkedItemList =[];
+            }
         },
-        mounted() {
-            // Set the initial datas
-            this.loadOptions();
-            this.loadData();
+        checkedListHandler(data){
+            if(data.isChecked){
+                this.checkedItemList.push(data.value);
+            }else{
+                const index = this.checkedItemList.indexOf(data.value);
+                if (index > -1) {
+                    this.checkedItemList.splice(index, 1);
+                }
+            }
         },
-        methods: {
-            checkAllHandler() {
-                if(!this.checkAll){
-                    this.checkedItemList =[];
-                }
-            },
-            checkedListHandler(data){
-                if(data.isChecked){
-                    this.checkedItemList.push(data.value);
-                }else{
-                    const index = this.checkedItemList.indexOf(data.value);
-                    if (index > -1) {
-                        this.checkedItemList.splice(index, 1);
-                    }
-                }
-            },
-            async loadMore(){
-                this.metaData.current_page++;
-                this.isLoadingData = true;
-                if(this.filters.product){
-                    await ApiService.query('/items-posted/'+this.filters.product.value,this.params)
-                    .then((Response)=>{
-                        if(!this.items){
-                            this.items = Response.data.data;
-                        }else{
-                            this.items = this.items.concat(Response.data.data);
-                        }
-                        this.metaData = Response.data.meta
-                    })
-                    .catch(err=>{
-                        console.log("err",err);
-                    })
-
-                }else{
-                    await ApiService.query('/items-posted',this.params)
-                    .then((Response)=>{
-                        if(!this.items){
-                            this.items = Response.data.data;
-                        }else{
-                            this.items = this.items.concat(Response.data.data);
-                        }
-                        this.metaData = Response.data.meta
-                    })
-                    .catch(err=>{
-                        console.log("err",err);
-                    })
-
-                }
-                this.isLoadingData = false;
-            },
-            async loadData() {
-                this.metaData.current_page = 1;
-                this.isLoadingData = true;
-                if(this.filters.product){
-                    await ApiService.query('/items-posted/'+this.filters.product.value,this.params)
-                    .then((Response)=>{
-                        this.items = Response.data.data;
-                        this.metaData = Response.data.meta
-                    })
-                    .catch(err=>{
-                        console.log("err",err);
-                    })
-
-                }else{
-                    await ApiService.query('/items-posted',this.params)
-                    .then((Response)=>{
-                        this.items = Response.data.data;
-                        this.metaData = Response.data.meta
-                    })
-                    .catch(err=>{
-                        console.log("err",err);
-                    })
-
-                }
-                this.isLoadingData = false;
-            },
-            async loadOptions() {
-                await ApiService.get('/products')
+        async loadMore(){
+            this.metaData.current_page++;
+            this.isLoadingData = true;
+            if(this.filters.product){
+                await ApiService.query('/items-posted/'+this.filters.product.value,this.params)
                 .then((Response)=>{
-                    this.options.product = Response.data.data.map(function(product){
-                        return {
-                            label: product.name,
-                            value: product.productID,
-                        }
-                    });
+                    if(!this.items){
+                        this.items = Response.data.data;
+                    }else{
+                        this.items = this.items.concat(Response.data.data);
+                    }
+                    this.metaData = Response.data.meta
                 })
                 .catch(err=>{
                     console.log("err",err);
                 })
-            },
-            resetData() {
-                this.metaData.current_page = 1;
-                this.items = [];
-                this.loadData();
-            },
 
-            
-            orderSelectHandler(value){
-                if(value){
-                    this.resetData();
-                    // this.loadData();
-                    // if(this.filters.order === 'Terbaru'){
-                    //     // sorting desc by created_at
-                    //     const sorted = this.items.sort((a, b) =>
-                    //         a.createdAt._seconds > b.createdAt._seconds ? -1 : 1
-                    //     );
-                    //     this.items = sorted;
+            }else{
+                await ApiService.query('/items-posted',this.params)
+                .then((Response)=>{
+                    if(!this.items){
+                        this.items = Response.data.data;
+                    }else{
+                        this.items = this.items.concat(Response.data.data);
+                    }
+                    this.metaData = Response.data.meta
+                })
+                .catch(err=>{
+                    console.log("err",err);
+                })
 
-                    // }else {
-                    //     // sorting desc by created_at
-                    //     const sorted = this.items.sort((a, b) =>
-                    //         a.createdAt._seconds < b.createdAt._seconds ? -1 : 1
-                    //     );
-                    //     this.items = sorted;
-                        
-                    // }
-                }
-            },
-            showAdminModalDeleteItemPosted() {
-                this.isShowAdminModalDeleteItemPosted = true;
-            },
-            closeAdminModalDeleteItemPosted() {
-                this.isShowAdminModalDeleteItemPosted = false;
-            },
+            }
+            this.isLoadingData = false;
         },
+        async loadData() {
+            this.metaData.current_page = 1;
+            this.isLoadingData = true;
+            if(this.filters.product){
+                await ApiService.query('/items-posted/'+this.filters.product.value,this.params)
+                .then((Response)=>{
+                    this.items = Response.data.data;
+                    this.metaData = Response.data.meta
+                })
+                .catch(err=>{
+                    console.log("err",err);
+                })
+
+            }else{
+                await ApiService.query('/items-posted',this.params)
+                .then((Response)=>{
+                    this.items = Response.data.data;
+                    this.metaData = Response.data.meta
+                })
+                .catch(err=>{
+                    console.log("err",err);
+                })
+
+            }
+            this.isLoadingData = false;
+        },
+        async loadOptions() {
+            await ApiService.get('/products')
+            .then((Response)=>{
+                this.options.product = Response.data.data.map(function(product){
+                    return {
+                        label: product.name,
+                        value: product.productID,
+                    }
+                });
+            })
+            .catch(err=>{
+                console.log("err",err);
+            })
+        },
+        resetData() {
+            this.metaData.current_page = 1;
+            this.items = [];
+            this.loadData();
+        },
+
+        
+        orderSelectHandler(value){
+            if(value){
+                this.resetData();
+                // this.loadData();
+                // if(this.filters.order === 'Terbaru'){
+                //     // sorting desc by created_at
+                //     const sorted = this.items.sort((a, b) =>
+                //         a.createdAt._seconds > b.createdAt._seconds ? -1 : 1
+                //     );
+                //     this.items = sorted;
+
+                // }else {
+                //     // sorting desc by created_at
+                //     const sorted = this.items.sort((a, b) =>
+                //         a.createdAt._seconds < b.createdAt._seconds ? -1 : 1
+                //     );
+                //     this.items = sorted;
+                    
+                // }
+            }
+        },
+        showAdminModalDeleteItemPosted() {
+            this.isShowAdminModalDeleteItemPosted = true;
+        },
+        closeAdminModalDeleteItemPosted() {
+            this.isShowAdminModalDeleteItemPosted = false;
+        },
+    },
 }
 </script>

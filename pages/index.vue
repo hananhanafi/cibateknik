@@ -12,6 +12,7 @@
                 <div class="d-flex">
                   <BaseInput
                       id="Cari"
+                      v-model="query.search"
                       placeholder="Cari..."
                       class="mb-0 flex-fill"
                       rounded
@@ -42,28 +43,23 @@
             <a href="/cari/rekomendasi" class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></a>
             <h3 class="mb-4" >Rekomendasi</h3>
           </div>
+          
+          <LoadingSpinner :show="isLoadingData.recommendation"/>
           <swiper ref="mySwiper" class="swiper" :options="swiperOption">
-            <swiper-slide><ItemCard/></swiper-slide>
-            <swiper-slide><ItemCard/></swiper-slide>
-            <swiper-slide><ItemCard/></swiper-slide>
-            <swiper-slide><ItemCard/></swiper-slide>
-            <swiper-slide><ItemCard/></swiper-slide>
-            <swiper-slide><ItemCard/></swiper-slide>
-            <swiper-slide><ItemCard/></swiper-slide>
-            <swiper-slide><ItemCard/></swiper-slide>
-            <swiper-slide><ItemCard/></swiper-slide>
-            <swiper-slide><ItemCard/></swiper-slide>
+            <swiper-slide v-for="(item,i) in itemsData.recommendation" :key="i">
+              <UserItemCard :data="item"/>
+            </swiper-slide>
             <div slot="pagination" class="swiper-pagination"></div>
-            <!-- <div slot="button-prev" class="swiper-button-prev btn btn-light rounded-pill" style="width:40px;height:40px">
-              <fa class="" :icon="['fas','chevron-left']" />
-            </div>
-            <div slot="button-next" class="swiper-button-next btn btn-light rounded-pill" style="width:40px;height:40px">
-              <fa class="" :icon="['fas','chevron-right']" />
-            </div> -->
           </swiper>
+
+          <div v-if="error.recommendation.status" class="text-center my-4 py-4">
+              <div class="text-40 text-warning">
+                  <fa :icon="['fas','exclamation-circle']"/>
+              </div>
+              <h3>{{error.recommendation.message || 'error'}}</h3>
+          </div>
         </div>
       </div>
-      
     </div>
 
     <div class="py-5">
@@ -100,12 +96,37 @@
         </swiper>
       </div>
     </div>
+    
+    <div class="container mb-5 mt-sm-5 mt-0 p-4 bg-white shadow-main">
+      <div class="">
+        <div>
+          <a href="/cari/terbaru" class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></a>
+          <h3 class="mb-4" >Terbaru</h3>
+        </div>
+        <LoadingSpinner :show="isLoadingData.newest"/>
+        <swiper ref="mySwiper" class="swiper" :options="swiperOption">
+          <swiper-slide v-for="(item,i) in itemsData.newest" :key="i">
+            <UserItemCard :data="item"/>
+          </swiper-slide>
+          <div slot="pagination" class="swiper-pagination"></div>
+        </swiper>
+
+        <div v-if="error.newest.status" class="text-center my-4 py-4">
+            <div class="text-40 text-warning">
+                <fa :icon="['fas','exclamation-circle']"/>
+            </div>
+            <h3>{{error.newest.message || 'error'}}</h3>
+        </div>
+        
+      </div>
+    </div>
 
 
   </div>
 </template>
 
 <script>
+import ApiService from '~/common/api.service';
     export default {
       // page properties go here
       layout: "user",
@@ -152,9 +173,39 @@
           
           },
           windowH: {
-                  width: 0,
-                  height: 0
-              }
+              width: 0,
+              height: 0
+          },
+
+          query: {
+            search: ''
+          },
+
+          itemsData : {
+            newest: [],
+            recommendation: [],
+            bestSeller: []
+          },
+          isLoadingData : {
+            newest: true,
+            recommendation: true,
+            bestSeller: true
+          },
+          error: {
+            newest: {
+              status: false,
+              message: ''
+            },
+            recommendation: {
+              status: false,
+              message: ''
+            },
+            bestSeller: {
+              status: false,
+              message: ''
+            }
+          }
+
         }
       },
       computed: {
@@ -164,6 +215,7 @@
       },
       created() {
           this.handleResize();
+          this.loadData();
       },
       destroyed() {
           window.removeEventListener('resize', this.handleResize);
@@ -175,8 +227,39 @@
         window.addEventListener('resize', this.handleResize);
       },
       methods: {
+          async loadData() {
+
+              await ApiService.query('/items-posted-newest',{limit:10})
+              .then((Response)=>{ 
+                console.log("Respo",Response);
+                this.itemsData.newest = Response.data.data
+                this.isLoadingData.newest = false;
+              })
+              .catch(err=>{
+                console.log("err",err);
+                this.isLoadingData.newest = false;
+                const response = {...err};
+                this.error.newest.status = true;
+                this.error.newest.message = response.response.data.message;
+              })
+              
+              await ApiService.query('/items-posted-recommendation',{limit:10})
+              .then((Response)=>{ 
+                console.log("Respo",Response);
+                this.itemsData.recommendation = Response.data.data
+                this.isLoadingData.recommendation = false;
+              })
+              .catch(err=>{
+                console.log("err",err);
+                this.isLoadingData.recommendation = false;
+                const response = {...err};
+                this.error.recommendation.status = true;
+                this.error.recommendation.message = response.response.data.message;
+              })
+          },
+
         searchHandler() {
-          this.$router.push('/cari');
+          this.$router.push({name:'cari',query:{search: this.query.search}});
           
         },
         handleResize() {

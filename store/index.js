@@ -13,6 +13,7 @@ const createStore = () => {
             auth: null,
             role: '',
             userInfo: null,
+            isUserVerified: false,
         }),
         plugins: [createPersistedState()],
         mutations: {
@@ -33,6 +34,7 @@ const createStore = () => {
                 state.role = 'user';
             },
             purgeAuth(state){
+                state.token = null;
                 state.auth = null;
                 state.role = '';
                 state.userInfo = null;
@@ -42,8 +44,11 @@ const createStore = () => {
             },
             setUserInfo(state, userInfo) {
                 console.log("settt userInfo",userInfo);
-                state.userInfo = userInfo;
-                Cookie.set('userInfo', userInfo);
+                state.userInfo = userInfo.userCredentials;
+                if(userInfo.isVerified){
+                    state.isUserVerified = userInfo.isVerified;
+                }
+                Cookie.set('userInfo', userInfo.userCredentials);
             },
         },
         actions: {

@@ -118,6 +118,12 @@
                         </div>
                     </form>
                     
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold" >Terbaru</h3>
+                            <div class="horizontal-separator"></div>
+                        </div>
+                    </div>
                     <div v-if="items.length>0" class="bg-white mt-md-4 mt-0 border p-3">
                         <div class="row">
                             <div v-for="(item,i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-4">
@@ -211,19 +217,17 @@ import ApiService from '~/common/api.service';
                 return this.checkedItemList.length<1;
             }
         },
-        async mounted() {
+        mounted() {
             // Set the initial datas
-            await this.loadOptions();
-            this.filters.product = this.$route.query.productID ? this.options.product.find(item=>item.value===this.$route.query.productID) : null;
+            this.loadOptions();
             this.loadData();
-            console.log("opt",this.options);
         },
         methods: {
             async loadMore(){
                 this.metaData.current_page++;
                 this.isLoadingData = true;
                 if(this.filters.product){
-                    await ApiService.query('/items-posted/'+this.filters.product.value,this.params)
+                    await ApiService.query('/items-posted-newest/'+this.filters.product.value,this.params)
                     .then((Response)=>{
                         if(!this.items){
                             this.items = Response.data.data;
@@ -237,7 +241,7 @@ import ApiService from '~/common/api.service';
                     })
 
                 }else{
-                    await ApiService.query('/items-posted',this.params)
+                    await ApiService.query('/items-posted-newest',this.params)
                     .then((Response)=>{
                         if(!this.items){
                             this.items = Response.data.data;
@@ -257,7 +261,7 @@ import ApiService from '~/common/api.service';
                 this.metaData.current_page = 1;
                 this.isLoadingData = true;
                 if(this.filters.product){
-                    await ApiService.query('/items-posted/'+this.filters.product.value,this.params)
+                    await ApiService.query('/items-posted-newest/'+this.filters.product.value,this.params)
                     .then((Response)=>{
                         this.items = Response.data.data;
                         this.metaData = Response.data.meta
@@ -267,7 +271,7 @@ import ApiService from '~/common/api.service';
                     })
 
                 }else{
-                    await ApiService.query('/items-posted',this.params)
+                    await ApiService.query('/items-posted-newest',this.params)
                     .then((Response)=>{
                         this.items = Response.data.data;
                         this.metaData = Response.data.meta

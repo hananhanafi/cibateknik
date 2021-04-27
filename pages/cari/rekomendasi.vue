@@ -16,7 +16,7 @@
                                 <div class="d-flex">
                                     <div class="w-100">
                                         <BaseInput
-                                            id="min"
+                                            id="min-desktop"
                                             v-model="formData.min"
                                             placeholder="Min"
                                             large
@@ -27,7 +27,7 @@
                                     <div class="mx-2">-</div>
                                     <div class="w-100">
                                         <BaseInput
-                                            id="max"
+                                            id="max-desktop"
                                             v-model="formData.max"
                                             placeholder="Max"
                                             large
@@ -36,30 +36,42 @@
                                         />
                                     </div>
                                 </div>
-
                                 <div>
                                     <BaseSelect
-                                    v-model="formData.education"
+                                    v-model="filters.product"
+                                    label="Berdasarkan Produk"
+                                    :options="options.product"
+                                    placeholder="Pilih Produk"
+                                    dense
+                                    />
+                                </div>
+                                <div>
+                                    <BaseSelect
+                                    v-model="filters.order"
                                     label="Urutkan"
-                                    :options="['Harga Termurah', 'Harga Termahal']"
+                                    :options="['Terbaru', 'Terlama']"
                                     placeholder="Pilih urutkan"
-                                    dense/>
+                                    dense
+                                    />
                                 </div>
                             </div>
                             <div class="d-flex">
                                 <div class="flex-fill px-2">
-                                    <button type="button" class="btn btn-danger text-white  rounded-pill w-100">Hapus</button>
+                                    <button type="button" class="btn btn-danger text-white  rounded-pill w-100" @click.prevent="resetFilters">Hapus</button>
                                 </div>
                                 <div class="flex-fill px-2">
-                                    <button type="button" class="btn btn-primary text-white w-100  rounded-pill">Terapkan</button>
+                                    <button type="button" class="btn btn-primary text-white w-100  rounded-pill" @click.prevent="resetData">Terapkan</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- mobile -->
                 <div class=" d-md-none d-flex fixed-top bg-white p-3 border">
                     <BaseInput
                         id="Cari"
+                        v-model="filters.search"
                         placeholder="Cari..."
                         class="mb-0 flex-fill"
                         rounded
@@ -77,67 +89,84 @@
                 </div>
                 
 
+                <!-- desktop -->
                 <div class="fixed-bottom text-center d-md-none d-block" style="bottom:80px">
                     <a class="btn btn-light bg-white border px-4 rounded-pill" type="button" @click="showModalFilterSearchItem">
                     <fa class="" :icon="['fas','filter']" />  Filter</a>
                 </div>
-                <div class="col">
+                <div class="col px-md-3 px-0">
                     
-                    <div class="d-md-flex d-none mb-2 sticky-top border bg-white p-3 " style="top:80px;z-index:900">
-                        <BaseInput
-                            id="Cari"
-                            placeholder="Cari..."
-                            class="mb-0 flex-fill"
-                            rounded
-                        >
-                        <div slot="afterInput" class="position-absolute"
-                            style=" right:12px;
-                                    top: 50%;
-                                    -ms-transform: translateY(-50%);
-                                    transform: translateY(-50%);"
-                        >
-                            <fa class="" :icon="['fas','search']" /> 
-                        </div>
-                        </BaseInput>
-                        <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-pill">Cari</button>
-                    </div>
-                    
-                    <div class="bg-white mt-md-4 mt-0">
-                        <div class="row">
-                            <div class="col">
-                                <h3 class="mb-4 font-weight-bold" >Rekomendasi</h3>
+                    <form @submit.prevent="resetData">
+                        <div class="d-md-flex d-none mb-2 sticky-top border bg-white p-3 " style="top:80px;z-index:900">
+                            <BaseInput
+                                id="Cari-desktop"
+                                v-model="filters.search"
+                                placeholder="Cari..."
+                                class="mb-0 flex-fill"
+                                rounded
+                            >
+                            <div slot="afterInput" class="position-absolute"
+                                style=" right:12px;
+                                        top: 50%;
+                                        -ms-transform: translateY(-50%);
+                                        transform: translateY(-50%);"
+                            >
+                                <fa class="" :icon="['fas','search']" /> 
                             </div>
+                            </BaseInput>
+                            <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-pill" @click="resetData">Cari</button>
                         </div>
+                    </form>
+                    
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold" >Rekomendasi</h3>
+                            <div class="horizontal-separator"></div>
+                        </div>
+                    </div>
+                    <div v-if="items.length>0" class="bg-white mt-md-4 mt-0 border p-3">
                         <div class="row">
-                            <div v-for="(i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-4">
-                                <ItemCard/>
+                            <div v-for="(item,i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-4">
+                                <UserItemCard :data="item"/>
                             </div>
                             <div class="col-12 d-flex">
                                 <div>
-                                    Menampilkan 1 - 10 dari 40 item
+                                    Menampilkan 1 - {{ metaData.last_index || '0' }} dari {{ metaData.total || '0' }} item
                                 </div>
                             </div>
                             <div class="col-12 d-flex">
                                 <div class="ml-auto">
-                                    <button class="btn btn-primary border w-100 rounded-pill">Muat Lagi</button>
+                                    <button v-show="!isLastPage" class="btn btn-primary border w-100" @click.prevent="loadMore">Muat Lagi</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div v-else-if="!isLoadingData" class="text-center my-5 py-5">
+                        <div class="text-40 text-warning">
+                            <fa :icon="['fas','exclamation-circle']"/>
+                        </div>
+                        <h3>Barang tidak ditemukan.</h3>
+                    </div>
+                    <LoadingSpinner v-if="isLoadingData" :show="isLoadingData"/>
+        
                 </div>
             </div>
         </div>
 
         <ModalFilterSearchItem
             :show="isShowModalFilterSearchItem"
-            :data="{}"
+            :data="filters"
+            :options="options"
             @close="closeModalFilterSearchItem"
+            @deleteFilters="resetFilters"
+            @update="resetData"
         />
 
     </div>
 </template>
 
 <script>
+import ApiService from '~/common/api.service';
     export default {
         // page properties go here
         layout: "user",
@@ -148,12 +177,135 @@
                     max: null,
                     last_education: null,
                 },
-                last_educationOptions: [],
-                items: new Array(18),
                 isShowModalFilterSearchItem: false, 
+
+                
+                items: [],
+                isLoadingData: true,
+                metaData: {
+                    first_index: 0,
+                    last_index: 0,
+                    current_page: 1,
+                    first_page: 1,
+                    last_page: 1,
+                    total: 0,
+                },
+                options: {
+                    product: [],
+                    item: [],
+                },
+                
+                filters: {
+                    order: null,
+                    product: null,
+                    search: this.$route.query.search || ''
+                },
             }
         },
+        computed: {
+            params() {
+                return {
+                    search: this.filters.search || null, 
+                    page: this.metaData.current_page, 
+                    order: this.filters.order ? (this.filters.order === 'Terbaru' ? 'desc' : 'asc') : null, 
+                }
+            },
+            isLastPage() {
+                return this.metaData.current_page === this.metaData.last_page;
+            },
+            isEmptyCheckedItemList(){
+                return this.checkedItemList.length<1;
+            }
+        },
+        mounted() {
+            // Set the initial datas
+            this.loadOptions();
+            this.loadData();
+        },
         methods: {
+            async loadMore(){
+                this.metaData.current_page++;
+                this.isLoadingData = true;
+                if(this.filters.product){
+                    await ApiService.query('/items-posted-recommendation/'+this.filters.product.value,this.params)
+                    .then((Response)=>{
+                        if(!this.items){
+                            this.items = Response.data.data;
+                        }else{
+                            this.items = this.items.concat(Response.data.data);
+                        }
+                        this.metaData = Response.data.meta
+                    })
+                    .catch(err=>{
+                        console.log("err",err);
+                    })
+
+                }else{
+                    await ApiService.query('/items-posted-recommendation',this.params)
+                    .then((Response)=>{
+                        if(!this.items){
+                            this.items = Response.data.data;
+                        }else{
+                            this.items = this.items.concat(Response.data.data);
+                        }
+                        this.metaData = Response.data.meta
+                    })
+                    .catch(err=>{
+                        console.log("err",err);
+                    })
+
+                }
+                this.isLoadingData = false;
+            },
+            async loadData() {
+                this.metaData.current_page = 1;
+                this.isLoadingData = true;
+                if(this.filters.product){
+                    await ApiService.query('/items-posted-recommendation/'+this.filters.product.value,this.params)
+                    .then((Response)=>{
+                        this.items = Response.data.data;
+                        this.metaData = Response.data.meta
+                    })
+                    .catch(err=>{
+                        console.log("err",err);
+                    })
+
+                }else{
+                    await ApiService.query('/items-posted-recommendation',this.params)
+                    .then((Response)=>{
+                        this.items = Response.data.data;
+                        this.metaData = Response.data.meta
+                    })
+                    .catch(err=>{
+                        console.log("err",err);
+                    })
+
+                }
+                this.isLoadingData = false;
+            },
+            async loadOptions() {
+                await ApiService.get('/products')
+                .then((Response)=>{
+                    this.options.product = Response.data.data.map(function(product){
+                        return {
+                            label: product.name,
+                            value: product.productID,
+                        }
+                    });
+                })
+                .catch(err=>{
+                    console.log("err",err);
+                })
+            },
+            resetData() {
+                this.metaData.current_page = 1;
+                this.items = [];
+                this.loadData();
+            },
+            resetFilters(){
+                this.filters.order = null;
+                this.filters.product = null;
+            },
             showModalFilterSearchItem() {
                 this.isShowModalFilterSearchItem = true;
             },

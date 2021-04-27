@@ -145,13 +145,14 @@ import ApiService from '~/common/api.service';
                         ApiService.setHeader();
                         await ApiService.get("/user").then(data=>{
                             console.log('data',data);
-                            this.$store.commit('setUserInfo', data.data.userCredentials);
+                            this.$store.commit('setUserInfo', data.data);
                         })
                         this.$router.push('/');
                         this.submitStatus = 'SUCCESS'
                     })
                     .catch(({response})=>{
                         console.log("err",response);
+                        this.$store.commit('purgeAuth');
                         this.submitStatus = 'ERROR'
                         this.showError = true;
                         this.errorMessage = response.data.message;

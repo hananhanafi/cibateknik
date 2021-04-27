@@ -41,11 +41,21 @@
 
                         <div>
                             <BaseSelect
-                            v-model="data.education"
+                            v-model="data.product"
+                            label="Berdasarkan Produk"
+                            :options="options.product"
+                            placeholder="Pilih Produk"
+                            dense
+                            />
+                        </div>
+                        <div>
+                            <BaseSelect
+                            v-model="data.order"
                             label="Urutkan"
-                            :options="['Harga Termurah', 'Harga Termahal']"
+                            :options="['Terbaru', 'Terlama']"
                             placeholder="Pilih urutkan"
-                            dense/>
+                            dense
+                            />
                         </div>
                     </div>
                 </div>
@@ -53,8 +63,8 @@
             
         </div>
         <div class="modal-footer border-top-0 d-flex">
-            <button type="button" class="btn text-dark flex-fill rounded-pill" data-bs-dismiss="modal" @click="$emit('close')">Batal</button>
-            <button type="button" class="btn btn-primary flex-fill rounded-pill" @click="$emit('delete')">Terapkan</button>
+            <button type="button" class="btn btn-outline-danger flex-fill rounded-pill" data-bs-dismiss="modal" @click="$emit('deleteFilters')">Hapus</button>
+            <button type="button" class="btn btn-primary flex-fill rounded-pill" @click="update">Terapkan</button>
         </div>
 
     </Modal>
@@ -67,10 +77,22 @@ export default {
         data: {
             type: Object,
             default: null
+        },
+        options: {
+            type: Object,
+            default() {
+                return {
+                    product: [],
+                    item: [],
+                }
+            }
         }
     },
-    mounted() {
-        console.log("dd",this.data);
+    methods: {
+        update() {
+            this.$emit('update');
+            this.$emit('close');
+        }
     }
 };
 </script>

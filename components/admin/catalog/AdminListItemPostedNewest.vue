@@ -109,7 +109,7 @@ export default {
             },
             
             filters: {
-                sort: null,
+                order: null,
                 product: null,
             },
             isShowAdminModalListItemPostedAddNewestItem: false,

@@ -105,6 +105,14 @@
                                     </div>
                                 </router-link>
                             </div>
+                            <div class="border-bottom">
+                                <a
+                                class="btn w-100 p-4 text-left text-decoration-none" 
+                                @click="logout"
+                                >
+                                    Logout
+                                </a>
+                            </div>
                         </div>
 
                         <!-- desktop version -->
@@ -169,11 +177,21 @@
                                 </router-link>
                             </div>
                         </div>
-
                     </div>
-                    <div v-if="activeComponent == ''" class="col px-md-2 px-0 d-md-block d-none">
+
+                    <div v-if="!isUserVerified" class="col">
+                        <div class="alert alert-danger" role="alert">
+                            <h4 class="alert-heading">Akun belum terverifikasi email</h4>
+                            <p>Silahkan cek email anda untuk melakukan verifikasi.</p>
+                            <hr>
+                            <p class="mb-0">Klik <a class="font-italic font-weight-bold" href="#" @click.prevent="sendEmailVerification">di sini</a> untuk mengirim ulang email verifikasi.</p>
+                        </div>
+                    </div>
+                    <!-- default tab desktop version profile -->
+                    <div v-else-if="activeComponent == ''" class="col px-md-2 px-0 d-md-block d-none">
                         <component :is="profileComponent" ></component>
                     </div>
+                    <!-- mobile -->
                     <div v-else class="col px-md-2 px-0">
                         <div class="d-md-none d-block">
                             <a href="/user/profile" class="btn btn-lg">
@@ -189,6 +207,7 @@
 </template>
 
 <script>
+import ApiService from '~/common/api.service';
     export default {
         middleware: 'authenticated',
         // page properties go here
@@ -218,8 +237,11 @@
             getUserInfo(){
                 return this.$store.state.userInfo;
             },
+            isUserVerified(){
+                return this.$store.state.isUserVerified;
+            },
             photoURL() {
-                const url = this.getUserInfo.imageUrl || process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+                const url = this.getUserInfo ? this.getUserInfo.imageUrl : process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
                 return url;
             }
         },
@@ -234,6 +256,7 @@
             },
         },
         mounted() {
+            console.log("userinfo",this.getUserInfo);
         },
         created() {
             this.profileComponent =  () => import(`./profile_components/my_account`);
@@ -242,11 +265,29 @@
             }
         },
         methods: {
+            async sendEmailVerification() {
+                await ApiService.post('/user/sendemailverivication')
+                .then((response)=>{
+                    console.log("Success",response);
+                    alert("Berhasil mengirim email verifikasi, silahkan lakukan login ulang setelah verifikasi");
+                    this.logout();
+                })
+                .catch(err=>{
+                    console.log("err",err);
+                    alert("Gagal mengirim email verifikasi");
+                })
+
+            },
             change(componentName) {
                 this.dynamic = () => import(`./profile_components/${componentName}`);
                 this.activeComponent = componentName;
                 this.$route.params.tab = componentName;
-            }
+            },
+            logout() {
+            // Code will also be required to invalidate the JWT Cookie on external API
+                this.$store.commit('purgeAuth');
+                this.$router.push('/user/login');
+            },
         },
         head() {
             return {

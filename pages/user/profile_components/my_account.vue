@@ -112,57 +112,22 @@
               "
               />
           </div>
-          
+
           <div class="row">
-            <div class="col-md-4 col-12">
-              <BaseSelect
-              v-model="formData.dateOfBirth.day"
-              label="Tanggal Lahir"
-              :options="['1', '2']"
-              placeholder="Pilih Tanggal Lahir"
-              dense
-              :error="
-                  isSubmitStatus == submitStatuses.pending
-                  ? !$v.formData.dateOfBirth.day.required 
-                      ? 'Tanggal Lahir harus diisi'
-                      : null
-                  : null
-              "
-              />
+            <div class="col-12 mb-2">
+              Tanggal Lahir
             </div>
-            <div class="col-md-4 col-12">
-              <BaseSelect
-              v-model="formData.dateOfBirth.month"
-              label="Bulan Lahir"
-              :options="['1', '2']"
-              placeholder="Pilih Bulan Lahir"
-              dense
-              :error="
-                  isSubmitStatus == submitStatuses.pending
-                  ? !$v.formData.dateOfBirth.month.required 
-                      ? 'Bulan Lahir harus diisi'
-                      : null
-                  : null
-              "
-              />
+            <div class="col-12 mb-2">
+              <vue2-datepicker v-model="formData.selectedDate" class="w-100 border-danger" placeholder="Pilih Tanggal"
+              :disabled-date="(date) => date > disabledAfter || date < disabledBefore"></vue2-datepicker>
             </div>
-            <div class="col-md-4 col-12">
-              <BaseSelect
-              v-model="formData.dateOfBirth.year"
-              label="Tahun Lahir"
-              :options="['2000', '2001']"
-              placeholder="Pilih Tahun Lahir"
-              dense
-              :error="
-                  isSubmitStatus == submitStatuses.pending
-                  ? !$v.formData.dateOfBirth.year.required 
-                      ? 'Tahun Lahir harus diisi'
-                      : null
-                  : null
-              "
-              />
+            <div v-if="isSubmitStatus == submitStatuses.pending && !$v.formData.selectedDate.required " class="col">
+              <div class="text-danger">
+                Tanggal Lahir harus diisi
+              </div>
             </div>
           </div>
+          
 
           <!-- <div class="row">
             <div class="col-lg-4 col-md-12 mt-4">
@@ -206,7 +171,8 @@ const emptyData ={
           month: null,
           year: null,
         },
-        imageUrl : process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+        selectedDate: null,
+        imageUrl : process.env.baseUrl+"/_nuxt/assets/img/dummy.png",
 }
 export default {  
   mixins: [validationMixin],
@@ -216,6 +182,8 @@ export default {
       isSubmitStatus: '',
       submitStatuses: SUBMIT_STATUS,
       photo: null,
+      disabledAfter: new Date(),
+      disabledBefore: new Date(1900,1,1),
     }
   },
   validations: {
@@ -224,18 +192,20 @@ export default {
           lastName :{ required },
           email :{ required },
           gender :{ required },
-          dateOfBirth :{
-            day: {required},
-            month: {required},
-            year: {required},
-          },
-      }
+          // dateOfBirth :{
+          //   day: {required},
+          //   month: {required},
+          //   year: {required},
+          // },
+          selectedDate : {required}
+      },
   },
   computed: {
       formatInitialFormData(){
         return {
           ...emptyData,
-          ...this.getUserInfo
+          ...this.getUserInfo,
+          selectedDate: this.getUserInfo.dateOfBirth ? new Date(this.getUserInfo.dateOfBirth.year,this.getUserInfo.dateOfBirth.month-1,this.getUserInfo.dateOfBirth.day) : null
         }
       },
       getUserInfo(){
@@ -246,7 +216,11 @@ export default {
           firstName : this.formData.firstName || null,
           lastName : this.formData.lastName || null,
           gender : this.formData.gender || null,
-          dateOfBirth : this.formData.dateOfBirth || null,
+          dateOfBirth : {
+            day: this.formData.selectedDate.getDate() || null,
+            month: this.formData.selectedDate.getMonth()+1 || null,
+            year: this.formData.selectedDate.getFullYear() || null,
+          },
         }
       },
       photoURL() {
@@ -258,16 +232,8 @@ export default {
   },
   mounted() {
     this.formData = this.formatInitialFormData;
-
-    // this.loadData();
   },
   methods: {
-    loadData(){
-      ApiService.get('/user')
-      .then(data=>{
-        console.log("dada",data);
-      })
-    },
     async onSubmit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
@@ -291,7 +257,7 @@ export default {
         .then(data=>{
             this.isSubmitStatus = SUBMIT_STATUS.success;
             console.log("success",data);
-            this.$store.commit('setUserInfo', data.data.userCredentials);
+            this.$store.commit('setUserInfo', data.data);
             this.$emit('update');
             // setTimeout(()=>{
             //   this.reset();

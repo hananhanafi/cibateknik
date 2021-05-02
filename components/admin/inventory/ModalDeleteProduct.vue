@@ -33,7 +33,7 @@
                 <fa :icon="['fas','check-circle']"/>
             </div>
             <div class="text-20">
-                Berhasil menghapus data Kategori.
+                Berhasil menghapus data produk.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -47,7 +47,7 @@
                 <fa :icon="['fas','times-circle']"/>
             </div>
             <div class="text-20">
-                Gagal menghapus data Kategori.
+                Gagal menghapus data produk.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { SUBMIT_STATUS } from '../../store/constants';
+import { SUBMIT_STATUS } from '~/store/constants';
 import ApiService from '~/common/api.service';
 export default {
     props: {
@@ -82,7 +82,7 @@ export default {
         },
         async onSubmit(){
             this.isSubmitStatus = SUBMIT_STATUS.loading;
-            await ApiService.delete(`/category/${this.data.categoryID}`)
+            await ApiService.delete(`/product/${this.data.productID}`)
             .then(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.success;
             })

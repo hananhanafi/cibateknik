@@ -67,7 +67,7 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
-import { SUBMIT_STATUS } from '../../store/constants';
+import { SUBMIT_STATUS } from '~/store/constants';
 import ApiService from '~/common/api.service';
 export default {
     mixins: [validationMixin],

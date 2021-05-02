@@ -2,7 +2,7 @@
     <Modal :show="show" centered>
         <div v-if="isSubmitStatus=='' || isSubmitStatus == submitStatus.pending">
             <div class="modal-header border-bottom-0">
-                <h5 id="modalAddProduct" class="modal-title">Tambah Supplier</h5>
+                <h5 id="modalAddProduct" class="modal-title">Tambah Kategori</h5>
                 <button data-bs-dismiss="modal" class="btn-close btn text-danger" type="button" aria-label="Close" @click="closeModal"><fa :icon="['fas','times']" /></button>
             </div>
             <div class="modal-body">
@@ -10,28 +10,14 @@
                     <BaseInput
                         id="name"
                         v-model="formData.name"
-                        label="Nama Supplier"
-                        placeholder="Nama Supplier"
+                        label="Nama Kategori"
+                        placeholder="Nama Kategori"
                         large
                         dense
                         :error="
                             isSubmitStatus == submitStatus.pending
                             ? !$v.formData.name.required 
-                                ? 'Nama Supplier harus diisi'
-                                : null
-                            : null
-                        "
-                    />
-                    
-                    <BaseTextarea
-                        v-model="formData.address"
-                        label="Alamat"
-                        placeholder="Masukkan Alamat"
-                        height="200px"
-                        :error="
-                            isSubmitStatus == submitStatus.pending
-                            ? !$v.formData.address.required 
-                                ? 'Alamat Supplier harus diisi'
+                                ? 'Nama Kategori harus diisi'
                                 : null
                             : null
                         "
@@ -53,7 +39,7 @@
                 <fa :icon="['fas','check-circle']"/>
             </div>
             <div class="text-20">
-                Berhasil menambahkan data Supplier.
+                Berhasil menambahkan data Kategori.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -67,7 +53,7 @@
                 <fa :icon="['fas','times-circle']"/>
             </div>
             <div class="text-20">
-                Gagal menambahkan data Supplier.
+                Gagal menambahkan data Kategori.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -81,7 +67,7 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
-import { SUBMIT_STATUS } from '../../store/constants';
+import { SUBMIT_STATUS } from '~/store/constants';
 import ApiService from '~/common/api.service';
 export default {
     mixins: [validationMixin],
@@ -96,7 +82,6 @@ export default {
         return {
             formData: {
                 name :null,
-                address: null,
             },
             isSubmitStatus: '',
             submitStatus: SUBMIT_STATUS
@@ -105,8 +90,7 @@ export default {
     },
     validations: {
         formData :{
-            name :{ required },
-            address :{ required },
+            name :{ required }
         }
     },
     mounted() {
@@ -116,7 +100,6 @@ export default {
         formatFormData(data) {
             const resultData = {
                 name: data.name ? data.name : null,
-                address: data.address ? data.address : null,
             }
 
             return resultData;
@@ -128,7 +111,7 @@ export default {
             } else {
                 this.isSubmitStatus = SUBMIT_STATUS.loading;
                 const formattedFormData = this.formatFormData(this.formData);
-                await ApiService.post("/supplier",formattedFormData)
+                await ApiService.post("/category",formattedFormData)
                 .then(data=>{
                     this.isSubmitStatus = SUBMIT_STATUS.success;
                     console.log("success",data);
@@ -143,7 +126,6 @@ export default {
         closeModal(){
             // reset data
             this.formData.name = null;
-            this.formData.address = null;
             this.isSubmitStatus = '';
             this.$emit('close');
         }

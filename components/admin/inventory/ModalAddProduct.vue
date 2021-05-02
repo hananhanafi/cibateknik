@@ -2,26 +2,65 @@
     <Modal :show="show" centered>
         <div v-if="isSubmitStatus=='' || isSubmitStatus == submitStatus.pending">
             <div class="modal-header border-bottom-0">
-                <h5 id="modalAddProduct" class="modal-title">Tambah Brand/Merk</h5>
+                <h5 id="modalAddProduct" class="modal-title">{{ data.title || 'Tambah Produk' }}</h5>
                 <button data-bs-dismiss="modal" class="btn-close btn text-danger" type="button" aria-label="Close" @click="closeModal"><fa :icon="['fas','times']" /></button>
             </div>
             <div class="modal-body">
                 <div class="w-100 text-left">
                     <BaseInput
-                        id="name"
                         v-model="formData.name"
-                        label="Nama Brand/Merk"
-                        placeholder="Nama Brand/Merk"
+                        label="Nama Produk"
+                        placeholder="Nama Produk"
                         large
                         dense
                         :error="
                             isSubmitStatus == submitStatus.pending
                             ? !$v.formData.name.required 
-                                ? 'Nama Brand/Merk harus diisi'
+                                ? 'Nama produk harus diisi'
                                 : null
                             : null
                         "
                     />
+                    <BaseSelect
+                    v-model="formData.category"
+                    :options="options.category"
+                    label="Kategori"
+                    placeholder="Pilih Kategori"
+                    dense
+                    />
+                    
+                    <BaseSelect
+                    v-model="formData.brand"
+                    :options="options.brand"
+                    label="Brand/Merk"
+                    placeholder="Pilih Brand/Merk"
+                    dense
+                    />
+
+                    <BaseSelect
+                    v-model="formData.supplier"
+                    :options="options.supplier"
+                    label="Supplier"
+                    placeholder="Pilih Supplier"
+                    dense
+                    />
+
+                    <label>Informasi Tambahan</label>
+                    <div v-for="(info,i) in formData.additionalData" :key="i" class="d-flex">
+                        <BaseInput
+                            v-model="info.name"
+                            placeholder="Informasi tambahan"
+                            class="mr-2 flex-fill"
+                            large
+                            dense
+                        />
+                        <div class="mr-2">
+                            <button type="button"  class="btn btn-primary" @click="addInfo()"><fa :icon="['fas','plus']" /></button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-danger" @click="minInfo(i)"><fa :icon="['fas','minus']" /></button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer border-top-0 d-flex">
@@ -39,7 +78,7 @@
                 <fa :icon="['fas','check-circle']"/>
             </div>
             <div class="text-20">
-                Berhasil memperbarui data Brand/Merk.
+                Berhasil menambahkan data produk.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -53,7 +92,7 @@
                 <fa :icon="['fas','times-circle']"/>
             </div>
             <div class="text-20">
-                Gagal memperbarui data Brand/Merk.
+                Gagal menambahkan data produk.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -67,7 +106,7 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
-import { SUBMIT_STATUS } from '../../store/constants';
+import { SUBMIT_STATUS } from '~/store/constants';
 import ApiService from '~/common/api.service';
 export default {
     mixins: [validationMixin],
@@ -76,12 +115,26 @@ export default {
         data: {
             type: Object,
             default: null
+        },
+        options: {
+            type: Object,
+            default() {
+                return {
+                    category: [],
+                    brand: [],
+                    supplier: []
+                }
+            }
         }
     },
     data() {
         return {
             formData: {
                 name :null,
+                category: null,
+                additionalData: [{
+                    name: null,
+                }],
             },
             isSubmitStatus: '',
             submitStatus: SUBMIT_STATUS
@@ -90,30 +143,29 @@ export default {
     },
     validations: {
         formData :{
-            name :{ required }
+            name :{ required },
         }
-    },
-    watch: {
-        // data(){
-        //     if(!this.data){
-        //         this.formData = {name:null};
-        //     }else{
-        //         this.formData = this.data;
-        //     }
-        // },
-        show(){
-            if(this.show && this.data){
-                this.formData = this.data;
-            }
-        }
-    },
-    mounted() {
-        console.log("SUBMIT_STATUS",this.submitStatus);
     },
     methods: {
+        addInfo(){
+            this.formData.additionalData.push({name:null})
+        },
+        minInfo(index){
+            if(this.formData.additionalData.length>1){
+                this.formData.additionalData.splice(index,1);
+            }
+        },
         formatFormData(data) {
             const resultData = {
                 name: data.name ? data.name : null,
+                category: data.category ? {id:data.category.value,name:data.category.label} : null,
+                brand: data.brand ? {id:data.brand.value,name:data.brand.label} : null,
+                supplier: data.supplier ? {id:data.supplier.value,name:data.supplier.label} : null,
+                additionalData: data.additionalData
+                .filter(item=>item.name!=null)
+                .map(function(item){
+                    return item.name;
+                })
             }
 
             return resultData;
@@ -125,7 +177,7 @@ export default {
             } else {
                 this.isSubmitStatus = SUBMIT_STATUS.loading;
                 const formattedFormData = this.formatFormData(this.formData);
-                await ApiService.put(`/brand/${this.data.brandID}`,formattedFormData)
+                await ApiService.post("/product",formattedFormData)
                 .then(data=>{
                     this.isSubmitStatus = SUBMIT_STATUS.success;
                     console.log("success",data);
@@ -139,6 +191,11 @@ export default {
         },
         closeModal(){
             // reset data
+            this.formData.name = null;
+            this.formData.category = null;
+            this.formData.additionalData = [
+                {name:null}
+            ];
             this.isSubmitStatus = '';
             this.$emit('close');
         }

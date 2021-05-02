@@ -2,7 +2,7 @@
     <Modal :show="show" centered>
         <div v-if="isSubmitStatus=='' || isSubmitStatus == submitStatus.pending">
             <div class="modal-header border-bottom-0">
-                <h5 id="modalAddProduct" class="modal-title">Tambah Kategori</h5>
+                <h5 id="modalAddProduct" class="modal-title">Tambah Brand/Merk</h5>
                 <button data-bs-dismiss="modal" class="btn-close btn text-danger" type="button" aria-label="Close" @click="closeModal"><fa :icon="['fas','times']" /></button>
             </div>
             <div class="modal-body">
@@ -10,14 +10,14 @@
                     <BaseInput
                         id="name"
                         v-model="formData.name"
-                        label="Nama Kategori"
-                        placeholder="Nama Kategori"
+                        label="Nama Brand/Merk"
+                        placeholder="Nama Brand/Merk"
                         large
                         dense
                         :error="
                             isSubmitStatus == submitStatus.pending
                             ? !$v.formData.name.required 
-                                ? 'Nama Kategori harus diisi'
+                                ? 'Nama Brand/Merk harus diisi'
                                 : null
                             : null
                         "
@@ -39,7 +39,7 @@
                 <fa :icon="['fas','check-circle']"/>
             </div>
             <div class="text-20">
-                Berhasil memperbarui data Kategori.
+                Berhasil memperbarui data Brand/Merk.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -53,7 +53,7 @@
                 <fa :icon="['fas','times-circle']"/>
             </div>
             <div class="text-20">
-                Gagal memperbarui data Kategori.
+                Gagal memperbarui data Brand/Merk.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -67,7 +67,7 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
-import { SUBMIT_STATUS } from '../../store/constants';
+import { SUBMIT_STATUS } from '~/store/constants';
 import ApiService from '~/common/api.service';
 export default {
     mixins: [validationMixin],
@@ -94,6 +94,13 @@ export default {
         }
     },
     watch: {
+        // data(){
+        //     if(!this.data){
+        //         this.formData = {name:null};
+        //     }else{
+        //         this.formData = this.data;
+        //     }
+        // },
         show(){
             if(this.show && this.data){
                 this.formData = this.data;
@@ -118,7 +125,7 @@ export default {
             } else {
                 this.isSubmitStatus = SUBMIT_STATUS.loading;
                 const formattedFormData = this.formatFormData(this.formData);
-                await ApiService.put(`/category/${this.data.categoryID}`,formattedFormData)
+                await ApiService.put(`/brand/${this.data.brandID}`,formattedFormData)
                 .then(data=>{
                     this.isSubmitStatus = SUBMIT_STATUS.success;
                     console.log("success",data);
@@ -132,7 +139,6 @@ export default {
         },
         closeModal(){
             // reset data
-            this.formData.name = null;
             this.isSubmitStatus = '';
             this.$emit('close');
         }

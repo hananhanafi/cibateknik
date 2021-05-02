@@ -53,7 +53,7 @@
                 <fa :icon="['fas','check-circle']"/>
             </div>
             <div class="text-20">
-                Berhasil memperbarui data Supplier.
+                Berhasil menambahkan data Supplier.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -67,7 +67,7 @@
                 <fa :icon="['fas','times-circle']"/>
             </div>
             <div class="text-20">
-                Gagal memperbarui data Supplier.
+                Gagal menambahkan data Supplier.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -81,7 +81,7 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
-import { SUBMIT_STATUS } from '../../store/constants';
+import { SUBMIT_STATUS } from '~/store/constants';
 import ApiService from '~/common/api.service';
 export default {
     mixins: [validationMixin],
@@ -96,7 +96,7 @@ export default {
         return {
             formData: {
                 name :null,
-                address :null,
+                address: null,
             },
             isSubmitStatus: '',
             submitStatus: SUBMIT_STATUS
@@ -106,14 +106,7 @@ export default {
     validations: {
         formData :{
             name :{ required },
-            address :{ required }
-        }
-    },
-    watch: {
-        show(){
-            if(this.show && this.data){
-                this.formData = this.data;
-            }
+            address :{ required },
         }
     },
     mounted() {
@@ -135,7 +128,7 @@ export default {
             } else {
                 this.isSubmitStatus = SUBMIT_STATUS.loading;
                 const formattedFormData = this.formatFormData(this.formData);
-                await ApiService.put(`/supplier/${this.data.supplierID}`,formattedFormData)
+                await ApiService.post("/supplier",formattedFormData)
                 .then(data=>{
                     this.isSubmitStatus = SUBMIT_STATUS.success;
                     console.log("success",data);

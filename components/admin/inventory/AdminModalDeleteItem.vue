@@ -1,19 +1,6 @@
 <template>
     <Modal :show="show" centered @clickOutside="clickOutside">
-
-        <div v-if="data && data.isPosted" class="p-2">
-            <div class="text-40 text-success">
-                <fa :icon="['fas','check-circle']"/>
-            </div>
-            <div class="text-20">
-                Barang sudah ada di katalog.
-            </div>
-            
-            <div class="modal-footer border-top-0 d-flex">
-                <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="$emit('close')">Tutup</button>
-            </div>
-        </div>
-        <div v-else-if="isSubmitStatus=='' || isSubmitStatus == submitStatus.pending">
+        <div v-if="isSubmitStatus=='' || isSubmitStatus == submitStatus.pending">
             <div class="modal-body">
                 <div class="w-100 text-left">
                     <div class="row">
@@ -23,7 +10,7 @@
                                     <fa :icon="['fas','exclamation-circle']"/>
                                 </div>
                                 <h6>
-                                    Yakin ingin menampilkan barang {{ data && data.name }} dalam katalog website ?
+                                    Yakin ingin menghapus barang {{ data && data.name }} ?
                                 </h6>
                             </div>
                         </div>
@@ -46,7 +33,7 @@
                 <fa :icon="['fas','check-circle']"/>
             </div>
             <div class="text-20">
-                Berhasil menambah katalog data barang.
+                Berhasil menghapus data barang.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -60,7 +47,7 @@
                 <fa :icon="['fas','times-circle']"/>
             </div>
             <div class="text-20">
-                Gagal menambah katalog data barang.
+                Gagal menghapus data barang.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -71,7 +58,7 @@
 </template>
 
 <script>
-import { SUBMIT_STATUS } from '../../store/constants';
+import { SUBMIT_STATUS } from '~/store/constants';
 import ApiService from '~/common/api.service';
 export default {
     props: {
@@ -95,7 +82,7 @@ export default {
         },
         async onSubmit(){
             this.isSubmitStatus = SUBMIT_STATUS.loading;
-            await ApiService.post(`/product/${this.data.productID}/item/${this.data.id}/post`)
+            await ApiService.delete(`/product/${this.data.productID}/item/${this.data.id}`)
             .then(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.success;
             })

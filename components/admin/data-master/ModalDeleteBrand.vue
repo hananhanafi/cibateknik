@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { SUBMIT_STATUS } from '../../store/constants';
+import { SUBMIT_STATUS } from '~/store/constants';
 import ApiService from '~/common/api.service';
 export default {
     props: {

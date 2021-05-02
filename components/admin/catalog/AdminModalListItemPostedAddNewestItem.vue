@@ -120,7 +120,6 @@
                     <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="closeModal()">Tutup</button>
                 </div>
             </div>
-            <ModalAddPostItem :show="isShowModalAddPostItem" :data="{}" :options="options" @close="closeModalAddPostItem"/>
             
             <AdminModalDeleteItemPosted :show="isShowAdminModalDeleteItemPosted" :data="checkedItemList" @close="closeAdminModalDeleteItemPosted" @update="resetData"/>
         </div>
@@ -158,7 +157,6 @@ export default {
                 sort: null,
                 product: null,
             },
-            isShowModalAddPostItem: false,
             isShowAdminModalDeleteItemPosted: false,
 
             checkedItemList : [],
@@ -326,12 +324,6 @@ export default {
                         
                     // }
                 }
-            },
-            showModalAddPostItem() {
-                this.isShowModalAddPostItem = true;
-            },
-            closeModalAddPostItem() {
-                this.isShowModalAddPostItem = false;
             },
             showAdminModalDeleteItemPosted() {
                 this.isShowAdminModalDeleteItemPosted = true;

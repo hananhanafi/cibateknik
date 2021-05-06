@@ -1,6 +1,6 @@
 <template>
     <Modal :show="show" centered>
-        <LoadingSpinner v-if="isSubmitStatus==submitStatuses.loading"/>
+        <LoadingSpinner v-if="isSubmitStatus==submitStatuses.loading" :show="isSubmitStatus==submitStatuses.loading"/>
         <!-- success -->
         <div v-show="isSubmitStatus==submitStatuses.success" class="px-2">
             <div class="text-40 text-success">

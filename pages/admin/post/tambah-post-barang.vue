@@ -70,6 +70,23 @@
                                     </div>
                                 </div>
                                 
+                                <BaseInput
+                                    id="weight"
+                                    v-model="formData.weight"
+                                    numberonly
+                                    label="Berat(gram)"
+                                    placeholder="Masukkan berat(gram)"
+                                    large
+                                    dense
+                                    :error="
+                                        isSubmitStatus == submitStatuses.pending
+                                        ? !$v.formData.weight.required 
+                                            ? 'Berat(gram) harus diisi'
+                                            : null
+                                        : null
+                                    "
+                                />
+
                                 <Editor :model="formData.description" @updateTextEditor="updateDescription($event)"/>
                             </div>
                             
@@ -117,6 +134,7 @@ import ApiService from '~/common/api.service';
                 formData: {
                     product: null,
                     item: null,
+                    weight: null,
                     description: '',
                 },
                 options: {
@@ -136,6 +154,7 @@ import ApiService from '~/common/api.service';
         formData :{
             product :{ required },
             item :{ required },
+            weight: {required}
         }
     },
         mounted() {
@@ -166,6 +185,7 @@ import ApiService from '~/common/api.service';
                 } else {
                     this.isSubmitStatus = SUBMIT_STATUS.loading;
                     const description = {
+                        weight : this.formData.weight,
                         description : this.formData.description
                     }
                     this.isSubmitStatus = SUBMIT_STATUS.loading;

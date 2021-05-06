@@ -2,7 +2,7 @@
     <div class="text-center">
         <div class="container-fluid">
             <Breadcrumb :data="breadCrumbList"/>
-            <LoadingSpinner v-if="!isDataReady" />
+            <LoadingSpinner v-if="!isDataReady" :show="!isDataReady" />
             <div v-else class="bg-white shadow-sm rounded-8 p-3 text-left"> 
                 <div class="mb-3">
                     <vue2-datepicker v-model="selectedDate" class="h-100 float-right" placeholder="Pilih Bulan"
@@ -146,9 +146,9 @@
                                         <td style="width:100px">Aksi</td>
                                     </tr>
                                     <tr v-for="(item,i) in dataItem" :key="i">
-                                        <td>{{getMonthlyStockItem(item.id).in}}</td>
-                                        <td>{{getMonthlyStockItem(item.id).out}}</td>
-                                        <td>{{getMonthlyStockItem(item.id).stock}}</td>
+                                        <td>{{ getMonthlyStockItem(item.id) ? getMonthlyStockItem(item.id).in : '-'}}</td>
+                                        <td>{{ getMonthlyStockItem(item.id) ? getMonthlyStockItem(item.id).out : '-'}}</td>
+                                        <td>{{ item ? item.stock : '-'}}</td>
                                         <td class="p-1">
                                             <div class="d-flex flex-row bd-highlight">
                                                 <!-- <div class="btn btn-success btn-sm text-white mr-2" @click="showModalNoteInventory(item)">Catat</div>
@@ -213,7 +213,8 @@ import ApiService from '~/common/api.service';
         // page properties go hereexport default {
         async asyncData ({ params }) {
             const dateNow = new Date();
-            const month = dateNow.getMonth()+1;
+            // const month = dateNow.getMonth()+1;
+            const month = 4;
             const year = dateNow.getFullYear();
             const postProductItems = await ApiService.query(`/product/${params.produk_id}/items`,{month,year});
             // return { id: params.produk_id }

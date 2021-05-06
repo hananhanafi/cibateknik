@@ -65,12 +65,12 @@
             </div>
             <div class="col-12 d-flex">
                 <div>
-                    Menampilkan {{ metaData.first_index || '0' }} - {{ metaData.last_index || '0' }} dari {{ metaData.total || '0' }} item
+                    Menampilkan 1 - {{ metaData.last_index || '0' }} dari {{ metaData.total || '0' }} item
                 </div>
             </div>
             <div class="col-12 d-flex">
                 <div class="ml-auto">
-                    <button v-show="!isLastPage" class="btn btn-primary border w-100" @click.prevent="loadMore">Muat Lagi</button>
+                    <button v-show="!isLastPage" :disabled="isLoadingData" class="btn btn-primary border w-100" @click.prevent="loadMore">Muat Lagi</button>
                 </div>
             </div>
         </div>

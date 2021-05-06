@@ -41,7 +41,7 @@
                                 />
                             </div>
                         </div>
-                        <table class="table table-responsive-md">
+                        <table v-if="customers.length>0" class="table table-responsive-md">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
@@ -74,8 +74,16 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div v-else-if="!isLoadingData" class="text-center my-5 py-5">
+                            <div class="text-40 text-warning">
+                                <fa :icon="['fas','exclamation-circle']"/>
+                            </div>
+                            <h3>User/Customer tidak ada.</h3>
+                        </div>
+                        <LoadingSpinner v-if="isLoadingData" :show="isLoadingData"/>
                         <PaginationData :data="metaData" @page-update="pageUpdateHandler($event)"/>
                     </div>
+                    
                 </div>
             </div>
             

@@ -49,6 +49,13 @@
                                     </tr>
                                 </table>
                             </div>
+                            <div class="mb-3 ">
+                                <div class="">
+                                    <div class="text-muted mb-2">
+                                        Berat : {{ dataItem.weight ? toFormatedNumber(dataItem.weight) + ' gram' : '-' }}
+                                    </div>
+                                </div>
+                            </div>
                             <!-- // eslint-disable-next-line vue/no-v-html -->
                             <div v-if="!isEditing"  class="description" v-html="dataItem.description">
                             </div>
@@ -57,6 +64,23 @@
                                 <div v-if="isSubmitStatus==submitStatuses.error" class="alert alert-danger">
                                     {{errorMessage || 'error'}}
                                 </div>
+
+                                <BaseInput
+                                    id="weight"
+                                    v-model="formData.weight"
+                                    numberonly
+                                    label="Berat(gram)"
+                                    placeholder="Masukkan berat(gram)"
+                                    large
+                                    dense
+                                    :error="
+                                        isSubmitStatus == submitStatuses.pending
+                                        ? !$v.formData.weight.required 
+                                            ? 'Berat(gram) harus diisi'
+                                            : null
+                                        : null
+                                    "
+                                />
 
                                 <Editor :model="formData.description" @updateTextEditor="updateDescription($event)"/>
                                 <div class="w-100 text-right mt-3">
@@ -78,10 +102,13 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate';
+import { required } from 'vuelidate/lib/validators';
 import { toFormatedNumber } from '../../../../store/helpers';
 import ApiService from '~/common/api.service';
 import { SUBMIT_STATUS } from '~/store/constants';
     export default {
+        mixins: [validationMixin],
         // page properties go here
         async asyncData ({ params }) {
             const postItem = await ApiService.get(`/item/posted/${params.barang_id}`);
@@ -102,10 +129,16 @@ import { SUBMIT_STATUS } from '~/store/constants';
 
                 isEditing: false,
                 formData: {
+                    weight: null,
                     description: null,
                 },
                 isSubmitStatus: '',
                 submitStatuses: SUBMIT_STATUS,
+            }
+        },
+        validations: {
+            formData :{
+                weight: {required}
             }
         },
         mounted() {
@@ -121,24 +154,31 @@ import { SUBMIT_STATUS } from '~/store/constants';
                 this.formData.description = this.dataItem.description;
             },
             async onSubmit() {
-                this.isSubmitStatus = SUBMIT_STATUS.loading;
-                const formatData = {
-                    description : this.formData.description
+                this.$v.$touch();
+                if (this.$v.$invalid) {
+                    this.isSubmitStatus = SUBMIT_STATUS.pending;
+                } else {
+                    this.isSubmitStatus = SUBMIT_STATUS.loading;
+                    const formatData = {
+                        weight : this.formData.weight,
+                        description : this.formData.description,
+                    }
+                    this.isSubmitStatus = SUBMIT_STATUS.loading;
+                    await ApiService.post(`/item/posted/${this.dataItem.id}/update`,formatData)
+                    .then((response)=>{
+                        console.log("success",response);
+                        this.dataItem.description = response.data.data.description;
+                        this.dataItem.weight = response.data.data.weight;
+                        this.isSubmitStatus = SUBMIT_STATUS.success;
+                        this.isEditing = !this.isEditing;
+                    })
+                    .catch((err)=>{
+                        console.log("error",err);
+                        this.isSubmitStatus = SUBMIT_STATUS.error;
+                        const response = {...err};
+                        this.errorMessage = response.response.data.message;
+                    })
                 }
-                this.isSubmitStatus = SUBMIT_STATUS.loading;
-                await ApiService.post(`/item/posted/${this.dataItem.id}/update`,formatData)
-                .then((response)=>{
-                    console.log("success",response);
-                    this.dataItem.description = response.data.data.description;
-                    this.isSubmitStatus = SUBMIT_STATUS.success;
-                    this.isEditing = !this.isEditing;
-                })
-                .catch((err)=>{
-                    console.log("error",err);
-                    this.isSubmitStatus = SUBMIT_STATUS.error;
-                    const response = {...err};
-                    this.errorMessage = response.response.data.message;
-                })
                 
             },
             updateDescription(value){

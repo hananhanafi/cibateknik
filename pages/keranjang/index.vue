@@ -4,16 +4,19 @@
             <div class=" d-md-none d-flex fixed-top bg-white p-3 border">
                 <h4>Keranjang</h4>
             </div>
-            <div class="bg-white my-5">
+            <div class="d-md-block d-none my-5">
+                <h2>Keranjang</h2>
+            </div>
+
+            <div v-if="cartItems.length>0" class="bg-white my-5">
                 <div>
                     <div class="d-md-block d-none">
-                        <h2>Keranjang</h2>
-                        <div class="shadow-main p-3 my-5 ">
+                        <div class="shadow-main p-3 my-5">
                             <div class="row d-flex align-items-center">
                                 <div class="col">
                                     <div class="form-check">
-                                        <input id="flexCheckDefault" v-model="productsChecked" class="form-check-input" type="checkbox" value="">
-                                        <label class="form-check-label" for="flexCheckDefault">
+                                        <input id="checkall" v-model="checkAll" class="form-check-input" type="checkbox" value="all" @change="checkAllHandler()">
+                                        <label class="form-check-label" for="checkall">
                                             Produk
                                         </label>
                                     </div>
@@ -36,75 +39,18 @@
                     
                     <div class="d-md-none d-block">
                         <div class="form-check">
-                            <input id="flexCheckDefault" v-model="productsChecked" class="form-check-input" type="checkbox" value="">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input id="checkall" v-model="checkAll" class="form-check-input" type="checkbox" value="">
+                            <label class="form-check-label" for="checkall">
                                 Pilih Semua
                             </label>
                         </div>
                     </div>
 
                     
-                    <div v-for="(i) in items" :key="i" class="shadow-main p-3 my-3">
-                        <div class="row d-flex align-items-center">
-                            <div class="col-md col-12">
-                                <div class="form-check d-flex align-items-center">
-                                    <input id="item1" :checked="productsChecked" class="form-check-input align-self-center my-auto" type="checkbox" value="">
-                                    <div class="d-flex align-items-center">
-                                        <div>
-                                            <img src="~/assets/img/item.png" style="width:80px" class="card-img-top d-inline" alt="item">
-                                        </div>
-                                        <div>
-                                            <h5 class="ml-2 mb-1">Produk Bagus Banget</h5>
-                                            <div class="d-md-none d-block ml-2">
-                                                Rp 100.000
-                                                <div class="d-flex">
-                                                    <a class="btn btn-sm btn-dark rounded-pill"> <fa :icon="['fas','minus']" /> </a>
-                                                    
-                                                    <BaseInput
-                                                        id="amount"
-                                                        placeholder="Jumlah"
-                                                        small
-                                                        center
-                                                        numberonly
-                                                        class="mb-0 mx-2 text-center"
-                                                        style="width:80px"
-                                                    />
-
-                                                    <a class="btn btn-sm btn-dark rounded-pill"> <fa :icon="['fas','plus']" /> </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-2 text-center d-md-block d-none">
-                                Rp 100.000
-                            </div>
-                            <div class="col-2 text-center d-md-block d-none">
-                                <div class="d-flex">
-                                    <a class="btn btn-sm btn-dark rounded-pill"> <fa :icon="['fas','minus']" /> </a>
-                                    
-                                    <BaseInput
-                                        id="amount"
-                                        placeholder="Jumlah"
-                                        small
-                                        center
-                                        numberonly
-                                        class="mb-0 mx-2 text-center"
-                                        style="width:80px"
-                                    />
-
-                                    <a class="btn btn-sm btn-dark rounded-pill"> <fa :icon="['fas','plus']" /> </a>
-                                </div>
-                            </div>
-                            <div class="col-2 text-center d-md-block d-none">
-                                Rp 200.000
-                            </div>
-                            <div class="col-md-1 col-12  text-right">
-                                <!-- <a class="btn text-warning" @click="showModalEditItem">Edit</a> -->
-                                <a class="btn text-danger"  @click="showModalDeleteItem"><fa class="text-danger" :icon="['fas','trash']" /> Hapus</a>
-                            </div>
-                        </div>
+                    <div v-for="(item,i) in cartItems" :key="i" class="shadow-main p-3 my-3">
+                        <UserCartItemCard :data="item" :isChecked="checkAll"
+                        @checkedItem="checkedItemHandler($event)"
+                        @delete="deleteItemOnListCart(item)"/>
                     </div>
                 </div>
 
@@ -115,60 +61,110 @@
                             Total :
                         </div>
                         <div class="col text-right">
-                            Rp 1.000.000
+                            Rp {{ toFormatedNumber(getTotalPrice) }}
                         </div>
                     </div>
                 </div>
 
                 <div class="text-right">
-                    <a href="/keranjang/checkout" class="btn btn-primary">Checkout</a>
+                    <button :disabled="checkedItemList.length<1" class="btn btn-primary" @click="checkoutHandler">Checkout</button>
                 </div>
             </div>
+            <div v-else-if="!isLoadingData" class="text-center my-5 py-5">
+                <div class="text-40 text-warning">
+                    <fa :icon="['fas','exclamation-circle']"/>
+                </div>
+                <h3>Keranjang tidak ada barang.</h3>
+            </div>
+        
+            <LoadingSpinner v-if="isLoadingData" :show="isLoadingData"/>
+        
             
         </div>
-        
-        <ModalDeleteItem
-            :show="isShowModalDeleteItem"
-            :data="{}"
-            @close="closeModalDeleteItem"
-        />
-        <ModalEditItem
-            :show="isShowModalEditItem"
-            :data="{}"
-            @close="closeModalEditItem"
-        />
     </div>
 </template>
 
 <script>
+import ApiService from '~/common/api.service';
+import { toFormatedNumber } from '~/store/helpers'
     export default {
         middleware: 'authenticated',
         // page properties go here
         layout: "user",
         data() {
             return {
-                items: new Array(5), 
-                productsChecked: false,
-                isShowModalDeleteItem: false, 
-                isShowModalEditItem: false, 
+                checkAll: false,
+
+                cartItems: [],
+                isLoadingData: true,
+                metaData: {
+                    first_index: 0,
+                    last_index: 0,
+                    current_page: 1,
+                    first_page: 1,
+                    last_page: 1,
+                    total: 0,
+                },
+                checkedItemList : [],
             }
         },
-        methods: {
+        computed: {
+            getTotalPrice() {
+                let total = 0;
                 
-            showModalDeleteItem() {
-                this.isShowModalDeleteItem = true;
-            },
-            closeModalDeleteItem() {
-                this.isShowModalDeleteItem = false;
-            },
-                
-            showModalEditItem() {
-                this.isShowModalEditItem = true;
-            },
-            closeModalEditItem() {
-                this.isShowModalEditItem = false;
-            }
+                this.cartItems.forEach(item => {
+                    const currPrice = item.item.price*item.cart.amount;
+                    total +=currPrice;
+                });
 
+                return total;
+            }
+        },
+        created() {
+            this.loadData();
+        },
+        methods: {
+            checkAllHandler() {
+                if(!this.checkAll){
+                    this.checkedItemList =[];
+                    console.log("data list",this.checkedItemList);
+                }
+            },
+            checkedItemHandler(data){
+                console.log("data",data);
+                if(data.isChecked){
+                    this.checkedItemList.push(data.value);
+                }else{
+                    const index = this.checkedItemList.indexOf(data.value);
+                    if (index > -1) {
+                        this.checkedItemList.splice(index, 1);
+                    }
+                }
+                console.log("data list",this.checkedItemList);
+            },
+            async loadData() {
+                this.isLoadingData = true;
+                await ApiService.get('/user/cart/items')
+                .then((data)=>{
+                    this.cartItems = data.data.data;
+                    console.log("ct",this.cartItems);
+
+                })
+                .catch(err=>{
+                    console.log("err",err);
+                })
+                this.isLoadingData = false;
+            },
+            deleteItemOnListCart(deletedItem){
+                this.cartItems = this.cartItems.filter(item=> {
+                    return item.item.itemID !== deletedItem.item.itemID;
+                })
+            },
+            checkoutHandler(){
+                this.$store.commit('setCheckoutItem', this.checkedItemList);
+                this.$router.push({name:'keranjang-checkout'})
+            },
+            toFormatedNumber
         },
         head() {
             return {

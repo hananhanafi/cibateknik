@@ -2,24 +2,23 @@ import Vue from "vue";
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'http://localhost:5000/cibateknik-dev-api/us-central1/api',
+    baseURL: 'https://api.rajaongkir.com/starter',
     timeout: 50000
 });
+const token = '22cc24097e57c6a74d45e881605e23d0';
 
-const Cookie = process.client ? require('js-cookie') : undefined;
-
-const ApiService = {
+const RajaOngkirApiservice = {
     init() {
         Object.defineProperty(Vue, "$api", {
             value: api
         });
     
-        ApiService.setHeader();
+        RajaOngkirApiservice.setHeader();
     },
 
     
     setHeader() {
-        Vue.$api.defaults.headers.common.Authorization = `Bearer ${Cookie.get('auth')}`;
+        Vue.$api.defaults.headers.common.Authorization = `Bearer ${token}`;
     },
 
     // init api for guest
@@ -27,7 +26,7 @@ const ApiService = {
         Object.defineProperty(Vue, "$api", {
         value: api
         });
-        ApiService.setHeaderUnAuthenticated();
+        RajaOngkirApiservice.setHeaderUnAuthenticated();
     },
 
     
@@ -93,7 +92,7 @@ const ApiService = {
     
     delete(resource) {
         return Vue.$api.delete(resource).catch(error => {
-        throw new Error(`[TEMU] ApiService ${error}`);
+        throw new Error(`[TEMU] RajaOngkirApiservice ${error}`);
         });
     },
     
@@ -112,6 +111,6 @@ const ApiService = {
 }
 
 
-Object.freeze(ApiService);
+Object.freeze(RajaOngkirApiservice);
 
-export default ApiService;
+export default RajaOngkirApiservice;

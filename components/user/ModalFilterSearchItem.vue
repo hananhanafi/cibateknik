@@ -11,11 +11,11 @@
                     <h4>Filter</h4>
                 </div> -->
                 <div>
-                    <label>
+                    <!-- <label>
                         Harga
-                    </label>
+                    </label> -->
                     <div>
-                        <div class="d-flex">
+                        <!-- <div class="d-flex">
                             <div class="w-100">
                                 <BaseInput
                                     id="min"
@@ -37,7 +37,7 @@
                                     numberonly
                                 />
                             </div>
-                        </div>
+                        </div> -->
 
                         <div>
                             <BaseSelect

@@ -28,23 +28,52 @@
                                 Ingin mengirim pesan ?
                             </h4>
                             <div class="">
+                                <BaseInput
+                                    id="name"
+                                    v-model="formData.name"
+                                    label="Nama"
+                                    placeholder="Masukkan Nama Anda"
+                                    class="flex-fill mr-2"
+                                />
+                                <BaseInput
+                                    id="email"
+                                    v-model="formData.email"
+                                    type="email"
+                                    label="Email"
+                                    placeholder="Masukkan Email Anda"
+                                    class="flex-fill mr-2"
+                                />
+                                <BaseInput
+                                    id="title"
+                                    v-model="formData.title"
+                                    label="Judul"
+                                    placeholder="Masukkan Judul Pesan"
+                                    :error="
+                                        isSubmitStatus == submitStatus.pending
+                                        ? !$v.formData.title.required
+                                        ? 'Judul harus diisi'
+                                        : null
+                                        : null
+                                    "
+                                    class="flex-fill mr-2"
+                                />
+                    
+                                <BaseTextarea
+                                    v-model="formData.body"
+                                    label="Pesan"
+                                    placeholder="Masukkan Pesan"
+                                    height="200px"
+                                    :error="
+                                        isSubmitStatus == submitStatus.pending
+                                        ? !$v.formData.body.required 
+                                            ? 'Pesan harus diisi'
+                                            : null
+                                        : null
+                                    "
+                                />
                                 
-                                <b-input-group  class="mb-4">
-                                    <b-form-input v-model="Nama" placeholder="Nama"></b-form-input>
-                                </b-input-group>
-                                <b-input-group  class="mb-4">
-                                    <b-form-input v-model="email" placeholder="Email"></b-form-input>
-                                </b-input-group>
-                                <b-input-group  class="mb-4">
-                                    <b-form-textarea
-                                        id="textarea-default"
-                                        placeholder="Masukkan pesan"
-                                        rows="16"
-                                        max-rows="16"
-                                    ></b-form-textarea>
-                                </b-input-group>
-                                
-                                <button type="button" class="btn btn-light border w-50">Kirim</button>
+                                <LoadingSpinner v-if="isSubmitStatus == submitStatus.loading" :show="isSubmitStatus == submitStatus.loading"/>
+                                <button v-else type="button" class="btn btn-light border w-100" @click.prevent="onSubmit">Kirim</button>
                             </div>
                         </div>
 
@@ -56,9 +85,65 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate';
+import { required } from 'vuelidate/lib/validators';
+import ApiService from '~/common/api.service';
+import { SUBMIT_STATUS } from '~/store/constants';
     export default {
+    mixins: [validationMixin],
         // page properties go here
         layout: "user",
+        data() {
+            return {
+                formData: {
+                    name: null,
+                    email: null,
+                    title: null,
+                    body: null
+                },
+            isSubmitStatus: '',
+            submitStatus: SUBMIT_STATUS
+            }
+        },
+        validations: {
+            formData :{
+                title :{ required },
+                body :{ required },
+            }
+        },
+        methods: {
+            
+            formatFormData(data) {
+                const resultData = {
+                    name: data.name ? data.name : '',
+                    email: data.email ? data.email : '',
+                    title: data.title ? data.title : null,
+                    body: data.body ? data.body : null,
+                }
+
+                return resultData;
+            },
+            async onSubmit(){
+                this.$v.$touch();
+                if (this.$v.$invalid) {
+                    this.isSubmitStatus = SUBMIT_STATUS.pending;
+                } else {
+                    this.isSubmitStatus = SUBMIT_STATUS.loading;
+                    const formattedFormData = this.formatFormData(this.formData);
+                    await ApiService.post("/user/admin-message/send",formattedFormData)
+                    .then(data=>{
+                        this.isSubmitStatus = SUBMIT_STATUS.success;
+                        console.log("success",data);
+                        alert('Berhasil mengirim pesan!');
+                    })
+                    .catch(err=>{
+                        this.isSubmitStatus = SUBMIT_STATUS.error;
+                        console.log("error",err);
+                        alert('Gagal mengirim pesan!');
+                    })
+                }
+            },
+        },
         head() {
             return {
                 title: "Cibateknik - Kontak",

@@ -1,26 +1,25 @@
 <template>
     <Modal :show="show" reference="setting_address" large centered>
 
-        <div v-if="data.hasOwnProperty('title')" class="modal-header border-bottom-0">
-            <h5 id="exampleModalLabel" class="modal-title">{{ data.title }}</h5>
+        <div class="modal-header border-bottom-0">
+            <h5 id="exampleModalLabel" class="modal-title">Atur Alamat Pengiriman</h5>
             <button type="button" class="btn-close btn text-danger" data-bs-dismiss="modal" aria-label="Close"  @click="$emit('close')"><fa :icon="['fas','times']" /></button>
         </div>
         <div class="modal-body">
-            {{ data.message }}
             <div class="float-right">
                 <a class="btn text-primary" @click="$emit('add-address')"><fa :icon="['fas','plus']" /> Tambah Alamat</a>
             </div>
             
             <BaseSelect
-            v-model="formData.education"
-            label="Label Alamat"
-            :options="['Rumah', 'Apartemen']"
-            placeholder="Pilih Label Alamat"
+            v-model="formData.address"
+            label="Alamat"
+            :options="userAddressesOption"
+            placeholder="Pilih Alamat"
             dense/>
         </div>
         <div class="modal-footer border-top-0 d-flex">
             <button type="button" class="btn text-dark flex-fill" data-bs-dismiss="modal" @click="$emit('close')">Batal</button>
-            <button type="button" class="btn bg-main-color text-white flex-fill">Simpan</button>
+            <button class="btn bg-main-color text-white flex-fill" @click="updateAddress">Simpan</button>
         </div>
 
     </Modal>
@@ -33,15 +32,51 @@ export default {
         data: {
             type: Object,
             default: null
+        },
+        options: {
+            type: Array,
+            default() {
+                return [];
+            }
         }
     },
     data() {
         return {
             
             formData: {
-                label: null,
+                address: null,
+            },
+            userAddressesOption: this.options.map(address=>{
+                return{
+                    label: address.label,
+                    value: address
+                }
+            })
+        }
+    },
+    watch: {
+        show() {
+            this.userAddressesOption = this.options.map(address=>{
+                return{
+                    label: address.label,
+                    value: address
+                }
+            })
+            this.formData.address = {
+                label : this.data.label,
+                value: this.data
             }
         }
     },
+    mounted() {
+        console.log("udropte",this.options);
+        console.log("udre",this.userAddressesOption);
+    },
+    methods: {
+        updateAddress(){
+            this.$emit('update-address',this.formData.address);
+            this.$emit('close');
+        }
+    }
 };
 </script>

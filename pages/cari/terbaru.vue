@@ -9,11 +9,11 @@
                             <h4>Filter</h4>
                         </div>
                         <div>
-                            <label>
+                            <!-- <label>
                                 Harga
-                            </label>
+                            </label> -->
                             <div>
-                                <div class="d-flex">
+                                <!-- <div class="d-flex">
                                     <div class="w-100">
                                         <BaseInput
                                             id="min-desktop"
@@ -35,7 +35,7 @@
                                             numberonly
                                         />
                                     </div>
-                                </div>
+                                </div> -->
                                 <div>
                                     <BaseSelect
                                     v-model="filters.product"
@@ -136,7 +136,7 @@
                             </div>
                             <div class="col-12 d-flex">
                                 <div class="ml-auto">
-                                    <button v-show="!isLastPage" class="btn btn-primary border w-100" @click.prevent="loadMore">Muat Lagi</button>
+                                    <button v-show="!isLastPage" :disabled="isLoadingData" class="btn btn-primary border w-100" @click.prevent="loadMore">Muat Lagi</button>
                                 </div>
                             </div>
                         </div>

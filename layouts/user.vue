@@ -14,6 +14,7 @@
                         <b-nav-item href="/"><span :class="{ 'text-white' : isActive('index') }">Beranda</span></b-nav-item>
                         <b-nav-item href="/kontak"><span :class="{ 'text-white' : isActive('kontak') }">Kontak</span></b-nav-item>
                         <b-nav-item href="/tentang"><span :class="{ 'text-white' : isActive('tentang') }">Tentang</span></b-nav-item>
+                        <b-nav-item href="/cari"><span :class="{ 'text-white' : isActive('cari') }">Cari Barang</span></b-nav-item>
                         
                     </b-navbar-nav>
 
@@ -42,6 +43,9 @@
                             </router-link>
                             <router-link class="btn btn-light w-100 text-decoration-none text-dark text-left" :to="{ name: 'user-profile', query: { tab: 'my_order' } }">
                                 Pesanan Saya
+                            </router-link>
+                            <router-link class="btn btn-light w-100 text-decoration-none text-dark text-left" :to="{ name: 'user-profile', query: { tab: 'wishlist' } }">
+                                Wishlist Saya
                             </router-link>
                             <router-link class="btn btn-light w-100 text-decoration-none text-dark text-left" :to="{ name: 'user-profile', query: { tab: 'password' } }">
                                 Ubah Password
@@ -169,8 +173,18 @@ import ApiService from '~/common/api.service';
             }
         },
         created() {
-            // eslint-disable-next-line nuxt/no-globals-in-created
-            window.addEventListener('beforeunload', e => this.beforeunloadFn(e))
+            
+            // window.addEventListener('beforeunload', this.handleUnload);
+
+            if(this.$store.state.auth){
+                const expiredDate = new Date(this.$store.state.auth.expirationTime);
+                const dateNow = new Date();
+
+                if(dateNow>expiredDate){
+                    this.logout();
+                }
+            }
+
         },
         mounted() {
             // console.log("routeparams",this.$route.name);
@@ -184,14 +198,14 @@ import ApiService from '~/common/api.service';
             // })
         },
         destroyed() {
-            window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
+            // window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
         },
         methods: {
-            beforeunloadFn(e) {
-                console.log("refresh or close",e);
-                alert("close");
-            // ...
-            },
+            // handleUnload() {
+            //     console.log("ahai");
+            //     alert("close");
+            //     this.logout();
+            // },
             isActive(name){
                 // console.log("route/",this.$route.name)
                 return this.$route.name.includes(name);
@@ -199,14 +213,13 @@ import ApiService from '~/common/api.service';
             logout() {
             // Code will also be required to invalidate the JWT Cookie on external API
                 this.$store.commit('purgeAuth');
-                this.$router.push('/user/login');
+                this.$router.push('/');
             },
             getRefreshToken() {
                 ApiService.get("/user/token")
                 .then((response)=>{
                     const token = response.data.token;
                     this.$store.commit('setAuthUser', token) // mutating to store for client rendering
-                    Cookie.set('auth', token.token) // saving token in cookie for server rendering
                     ApiService.setHeader();
                 })
             }

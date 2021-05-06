@@ -116,7 +116,7 @@
                 <fa :icon="['fas','check-circle']"/>
             </div>
             <div class="text-20">
-                Berhasil menambahkan alamat.
+                Berhasil memperbarui alamat.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -130,7 +130,7 @@
                 <fa :icon="['fas','times-circle']"/>
             </div>
             <div class="text-20">
-                Gagal menambahkan alamat.
+                Gagal memperbarui alamat.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -146,7 +146,18 @@ import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
 import { SUBMIT_STATUS } from '~/store/constants';
 import ApiService from '~/common/api.service';
+
+const initFormData = {
+                label: null,
+                name: null,
+                phone: null,
+                city: null,
+                zipCode: null,
+                address: null,
+            };
+
 export default {
+
     mixins: [validationMixin],
     props: {
         show: Boolean,
@@ -157,17 +168,17 @@ export default {
     },
     data() {
         return {
-            formData: {
-                label: null,
-                name: null,
-                phone: null,
-                city: null,
-                zipCode: null,
-                address: null,
-            },
+            formData: this.data || initFormData,
             isSubmitStatus: '',
             submitStatus: SUBMIT_STATUS
 
+        }
+    },
+    watch: {
+        show(){
+            if(this.show){
+                this.formData = this.data || initFormData
+            }
         }
     },
     validations: {
@@ -187,6 +198,7 @@ export default {
         formatFormData(data) {
             const resultData = {
                 label: data.label ? data.label : null,
+                isMainAddress: data.isMainAddress ? data.isMainAddress : false,
                 name: data.name ? data.name : null,
                 phone: data.phone ? data.phone : null,
                 city: data.city ? data.city : null,
@@ -197,17 +209,18 @@ export default {
             return resultData;
         },
         async onSubmit(){
+            console.log("fda",this.formData);
             this.$v.$touch();
             if (this.$v.$invalid) {
                 this.isSubmitStatus = SUBMIT_STATUS.pending;
             } else {
                 this.isSubmitStatus = SUBMIT_STATUS.loading;
                 const formattedFormData = this.formatFormData(this.formData);
-                await ApiService.post("/user/address",formattedFormData)
+                await ApiService.put("/user/address/"+this.data.addressID,formattedFormData)
                 .then(data=>{
                     this.isSubmitStatus = SUBMIT_STATUS.success;
                     console.log("success",data);
-                    this.$emit('update',data.data);
+                    this.$emit('update',data.data.data);
                 })
                 .catch(err=>{
                     this.isSubmitStatus = SUBMIT_STATUS.error;

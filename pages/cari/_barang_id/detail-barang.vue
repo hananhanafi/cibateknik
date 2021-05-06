@@ -20,8 +20,7 @@
             <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-pill">Cari</button>
         </div>
 
-        <div class="container mt-md-5 pt-md-0 pt-5">
-            
+        <div class="container mt-md-5 pt-md-0 pt-5 card">
             
             <LoadingSpinner :show="!isDataReady"/>
 
@@ -49,13 +48,6 @@
                                     Rp {{ toFormatedNumber(dataItem.price) }}
                                 </h3>
                             </div>
-                            <div class="mb-3 ">
-                                <div class="">
-                                    <div class="text-muted mb-2">
-                                        Stock : {{ dataItem.stock }}
-                                    </div>
-                                </div>
-                            </div>
                             <div class="mb-3">
                                 <table>
                                     <tr v-for="(text,i) in dataItem.additionalData" :key="i">
@@ -65,46 +57,47 @@
                                     </tr>
                                 </table>
                             </div>
+                            <div class="mb-3 ">
+                                <div class="">
+                                    <div class="text-muted mb-2">
+                                        Stock : {{ dataItem.stock }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 ">
+                                <div class="">
+                                    <div class="text-muted mb-2">
+                                        Berat : {{ dataItem.weight ? toFormatedNumber(dataItem.weight) + ' gram' : '-' }}
+                                    </div>
+                                </div>
+                            </div>
                             <!-- // eslint-disable-next-line vue/no-v-html -->
                             <div class="description" v-html="dataItem.description">
                             </div>
                         </div>
-                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-12">
+                    </div>
+                    <div class="col">
                         <div class="mb-3 ">
-                            <div class="">
-                                <div class="text-muted mb-2">
-                                    Stock : 100
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <a class="btn btn-sm btn-dark rounded-pill"> <fa :icon="['fas','minus']" /> </a>
-                                    
-                                    <BaseInput
-                                        id="amount"
-                                        v-model="formData.amount"
-                                        placeholder="Jumlah"
-                                        small
-                                        center
-                                        numberonly
-                                        class="mb-0 mx-2 text-center"
-                                        style="width:80px"
-                                    />
-
-                                    <a class="btn btn-sm btn-dark rounded-pill"> <fa :icon="['fas','plus']" /> </a>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col pr-1 mb-3">
-                                    <a class="btn btn-dark text-white w-100"> <fa :icon="['fas','plus']" /> Keranjang </a>
+                                    <a class="btn btn-dark text-white w-100" @click.prevent="showModalAddCart"> <fa :icon="['fas','plus']" /> Keranjang </a>
                                 </div>
                                 <div class="col pl-1 mb-3">
                                     <a class="btn btn-outline-dark w-100"> Beli Langsung </a>
                                 </div>
                                 <div class="col-md col-12">
-                                    <a class="btn btn-outline-danger w-100" @click="wished()"><fa class="" :icon="[ formData.isWished ? 'fas' : 'far','heart']" /> Wishlist </a>
+                                    <button v-if="isWished==false" :disabled="isLoadingWishlistButton" class="btn text-danger w-100" @click.prevent="addWishlist"><fa class="" :icon="[ 'far','heart']" /> Wishlist </button>
+                                    <button v-else :disabled="isLoadingWishlistButton" class="btn text-danger w-100" @click.prevent="deleteWishlist"><fa class="" :icon="[ 'fas','heart']" /> Wishlist </button>
                                 </div>
                             </div>
                         </div>
+
                     </div>
+
                 </div>
             </div>
         </div>
@@ -129,6 +122,8 @@
                 </div> -->
                 </swiper>
                 
+                <ModalAddCart :show="isShowModalAddCart" :data="dataItem"  @close="closeModalAddCart"/>
+                
 
                 <div v-if="dataItemsRelated.length<1" class="text-center my-4 py-4">
                     <div class="text-40 text-warning">
@@ -138,6 +133,8 @@
                 </div>
             </div>
         </div>
+        
+
     </div>
 </template>
 
@@ -154,11 +151,10 @@ import ApiService from '~/common/api.service';
         layout: "user",
         data() {
             return {
-                formData: {
-                    amount: 0,
-                    max: null,
-                    isWished: false,
-                },
+                isWished: false,
+                isLoadingWishlistButton: false,
+                dataWishlistItem: [],
+
                 swiperOption: {
                     slidesPerView: 6,
                     spaceBetween: 10,
@@ -203,7 +199,9 @@ import ApiService from '~/common/api.service';
                 isDataReady: false,
                 currentImage: process.env.baseUrl+"/_nuxt/assets/img/logo.png",
                 imageArray : [],
-                dataItemsRelated: []
+                dataItemsRelated: [],
+                
+                isShowModalAddCart: false,
             }
         },
         mounted() {
@@ -213,6 +211,7 @@ import ApiService from '~/common/api.service';
             this.formData = Object.assign({},this.dataItem);
             this.isDataReady = true;
 
+            this.loadWishlistItem();
             this.loadDataRelatedItems();
         },
         methods: {
@@ -228,12 +227,52 @@ import ApiService from '~/common/api.service';
                 })
 
             },
+            async loadWishlistItem() {
+                this.isLoadingWishlistButton = true;
+                await ApiService.query('/user/wishlist')
+                .then((Response)=>{
+                    this.dataWishlistItem = Response.data.listItemID;
+                    
+                    const isItemWished = this.dataWishlistItem.find(item=>{return item === this.dataItem.id});
+                    if(isItemWished){
+                        this.isWished = true;
+                    }else{
+                        this.isWished = false;
+                    }
+                })
+                .catch(err=>{
+                    console.log("err",err);
+                })
+                this.isLoadingWishlistButton = false;
+
+            },
             searchHandler() {
             this.$router.push('/cari');
             
             },
-            wished(){
-                this.formData.isWished = !this.formData.isWished;
+            async addWishlist(){
+                this.isLoadingWishlistButton = true;
+                await ApiService.post('/user/wishlist/add',{itemID: this.dataItem.id})
+                .then((data)=>{
+                    this.isWished = true;
+                    console.log("success",data)
+                })
+                .catch(err=>{
+                    console.error("error",err);
+                })
+                this.isLoadingWishlistButton = false;
+            },
+            async deleteWishlist(){
+                this.isLoadingWishlistButton = true;
+                await ApiService.post('/user/wishlist/delete',{itemID: this.dataItem.id})
+                .then((data)=>{
+                    this.isWished = false;
+                    console.log("success",data)
+                })
+                .catch(err=>{
+                    console.error("error",err);
+                })
+                this.isLoadingWishlistButton = false;
             },
             changeImage(image){
                 this.currentImage = this.photoURL(image);
@@ -241,6 +280,12 @@ import ApiService from '~/common/api.service';
             photoURL(image) {
                 const url = image ? image.imageUrl : process.env.baseUrl+"/_nuxt/assets/img/logo.png"
                 return url;
+            },
+            showModalAddCart() {
+                this.isShowModalAddCart = true;
+            },
+            closeModalAddCart() {
+                this.isShowModalAddCart = false;
             },
             
             toFormatedNumber

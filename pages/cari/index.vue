@@ -9,11 +9,11 @@
                             <h4>Filter</h4>
                         </div>
                         <div>
-                            <label>
+                            <!-- <label>
                                 Harga
-                            </label>
+                            </label> -->
                             <div>
-                                <div class="d-flex">
+                                <!-- <div class="d-flex">
                                     <div class="w-100">
                                         <BaseInput
                                             id="min-desktop"
@@ -35,7 +35,7 @@
                                             numberonly
                                         />
                                     </div>
-                                </div>
+                                </div> -->
                                 <div>
                                     <BaseSelect
                                     v-model="filters.product"
@@ -49,7 +49,7 @@
                                     <BaseSelect
                                     v-model="filters.order"
                                     label="Urutkan"
-                                    :options="['Terbaru', 'Terlama']"
+                                    :options="['Terbaru', 'Terlama', 'Harga Termurah', 'Harga Termahal']"
                                     placeholder="Pilih urutkan"
                                     dense
                                     />
@@ -68,6 +68,7 @@
                 </div>
 
                 <!-- mobile -->
+                <form @submit.prevent="resetData">
                 <div class=" d-md-none d-flex fixed-top bg-white p-3 border">
                     <BaseInput
                         id="Cari"
@@ -80,24 +81,27 @@
                             style=" right:12px;
                                     top: 50%;
                                     -ms-transform: translateY(-50%);
-                                    transform: translateY(-50%);"
+                                    transform: translateY(-50%);
+                                    z-index:3"
+                            @click.prevent="resetData"
                         >
                             <fa class="" :icon="['fas','search']" /> 
                         </div>
                     </BaseInput>
-                    <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-pill">Cari</button>
+                    <!-- <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-pill">Cari</button> -->
                 </div>
+                </form>
                 
-
-                <!-- desktop -->
                 <div class="fixed-bottom text-center d-md-none d-block" style="bottom:80px">
                     <a class="btn btn-light bg-white border px-4 rounded-pill" type="button" @click="showModalFilterSearchItem">
                     <fa class="" :icon="['fas','filter']" />  Filter</a>
                 </div>
+                <!-- mobile -->
+
+                <!-- desktop -->
                 <div class="col px-md-3 px-0">
-                    
                     <form @submit.prevent="resetData">
-                        <div class="d-md-flex d-none mb-2 sticky-top border bg-white p-3 " style="top:80px;z-index:900">
+                        <div class="d-md-flex d-none mb-2 sticky-top border bg-white p-3 shadow-sm" style="top:80px;z-index:900">
                             <BaseInput
                                 id="Cari-desktop"
                                 v-model="filters.search"
@@ -109,16 +113,17 @@
                                 style=" right:12px;
                                         top: 50%;
                                         -ms-transform: translateY(-50%);
-                                        transform: translateY(-50%);"
+                                        transform: translateY(-50%);
+                                        z-index:3"
                             >
                                 <fa class="" :icon="['fas','search']" /> 
                             </div>
                             </BaseInput>
-                            <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-pill" @click="resetData">Cari</button>
+                            <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-pill" @click.prevent="resetData">Cari</button>
                         </div>
                     </form>
                     
-                    <div v-if="items.length>0" class="bg-white mt-md-4 mt-0 border p-3">
+                    <div v-if="items.length>0" class="bg-white mt-md-4 mt-0 border p-3 shadow-sm">
                         <div class="row">
                             <div v-for="(item,i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-4">
                                 <UserItemCard :data="item"/>
@@ -130,7 +135,7 @@
                             </div>
                             <div class="col-12 d-flex">
                                 <div class="ml-auto">
-                                    <button v-show="!isLastPage" class="btn btn-primary border w-100" @click.prevent="loadMore">Muat Lagi</button>
+                                    <button v-show="!isLastPage" :disabled="isLoadingData" class="btn btn-primary border w-100" @click.prevent="loadMore">Muat Lagi</button>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +206,8 @@ import ApiService from '~/common/api.service';
                 return {
                     search: this.filters.search || null, 
                     page: this.metaData.current_page, 
-                    order: this.filters.order ? (this.filters.order === 'Terbaru' ? 'desc' : 'asc') : null, 
+                    order: this.filters.order ? (this.filters.order === 'Terbaru' || this.filters.order === 'Harga Termahal' ? 'desc' : 'asc') : null, 
+                    isOrderByPrice: this.filters.order ? this.filters.order.includes('Harga') ? 1 : 0 : 0,
                 }
             },
             isLastPage() {

@@ -231,7 +231,6 @@ import ApiService from '~/common/api.service';
 
               await ApiService.query('/items-posted-newest',{limit:10})
               .then((Response)=>{ 
-                console.log("Respo",Response);
                 this.itemsData.newest = Response.data.data
                 this.isLoadingData.newest = false;
               })
@@ -245,7 +244,6 @@ import ApiService from '~/common/api.service';
               
               await ApiService.query('/items-posted-recommendation',{limit:10})
               .then((Response)=>{ 
-                console.log("Respo",Response);
                 this.itemsData.recommendation = Response.data.data
                 this.isLoadingData.recommendation = false;
               })

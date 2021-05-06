@@ -9,11 +9,12 @@ const Cookie = process.client ? require('js-cookie') : undefined;
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
-            token: null,
+            // token: null,
             auth: null,
             role: '',
             userInfo: null,
             isUserVerified: false,
+            checkoutItem: [],
         }),
         plugins: [createPersistedState()],
         mutations: {
@@ -28,13 +29,14 @@ const createStore = () => {
             },
             setAuthUser(state, token) {
                 console.log("settt",token);
-                state.token = token;
-                state.auth = token.token;
+                // state.token = token;
+                state.auth = token;
                 Cookie.set('auth', token.token) // saving token in cookie for server rendering
+                Cookie.set('expirationTime', token.expirationTime);
                 state.role = 'user';
             },
             purgeAuth(state){
-                state.token = null;
+                // state.token = null;
                 state.auth = null;
                 state.role = '';
                 state.userInfo = null;
@@ -45,11 +47,19 @@ const createStore = () => {
             setUserInfo(state, userInfo) {
                 console.log("settt userInfo",userInfo);
                 state.userInfo = userInfo.userCredentials;
-                if(userInfo.isVerified){
-                    state.isUserVerified = userInfo.isVerified;
-                }
+                state.isUserVerified = userInfo.isVerified;
                 Cookie.set('userInfo', userInfo.userCredentials);
             },
+            setCheckoutItem(state, item) {
+                console.log("settt item",item);
+                state.checkoutItem = item;
+                Cookie.set('checkoutItem', item);
+            },
+            purgeCheckoutItem(state) {
+                state.checkoutItem = [];
+                Cookie.remove('checkoutItem');
+            },
+
         },
         actions: {
             nuxtServerInit({ commit }, { req }) {

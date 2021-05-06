@@ -13,8 +13,8 @@
         </div>
 
     
-        <div class="row">
-            <div v-for="(i,index) in items" :key="i" class="col-12" >
+        <div v-if="userAddresses.length>0" class="row">
+            <div v-for="(address, i) in userAddresses" :key="i" class="col-12" >
                 <div class="p-3 shadow-main mb-3">
                     <div class="row">
                         <div class="col">
@@ -22,31 +22,31 @@
                                 <tr>
                                     <td>Label</td>
                                     <td class="text-center" width="40px">:</td>
-                                    <td>Rumah <span v-if="index==0" class="text-success"> (Alamat Utama)</span></td>
-                                </tr>
-                                <tr>
-                                    <td>No Telepon</td>
-                                    <td class="text-center">:</td>
-                                    <td>0815158722120</td>
+                                    <td>{{ address.label }} <span v-if="address.isMainAddress && address.isMainAddress === true" class="text-success font-weight-bolder"> (Alamat Utama)</span></td>
                                 </tr>
                                 <tr>
                                     <td>Nama</td>
                                     <td class="text-center">:</td>
-                                    <td>Hanan Hanafi</td>
+                                    <td>{{ address.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>No Telepon</td>
+                                    <td class="text-center">:</td>
+                                    <td>{{ address.phone }}</td>
                                 </tr>
                                 <tr>
                                     <td>Alamat</td>
                                     <td class="text-center">:</td>
-                                    <td class="text-wrap">Jl. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore inventore eius consequuntur molestias eos ducimus, pariatur dolorum quibusdam non rerum ullam nulla nobis sunt sit illum quidem sint libero dolores!</td>
+                                    <td class="text-wrap">{{ address.address }}</td>
                                 </tr>
                             </table>
                         </div>
                         <div class="col-lg-3 col-md-12">
                             <div class="text-center d-flex flex-column h-100">
-                                <a class="btn btn-light border my-3 rounded-pill">Jadikan Utama</a>
+                                <button v-if="!address.isMainAddress" :disabled="isLoadingChangeMainAddress" class="btn btn-light border my-3 rounded-pill" @click.prevent="changeMainAddress(address)">Jadikan Utama</button>
                                 <div class="text-center mt-auto flex-grow-1 d-flex align-items-center">
-                                    <a class="btn text-warning mx-auto"><fa class="text-warning" :icon="['fas','pencil-alt']" /> Edit</a>
-                                    <a class="btn text-danger mx-auto" @click="showModalDeleteItem"><fa class="text-danger" :icon="['fas','trash']" /> Hapus</a>
+                                    <a class="btn text-warning mx-auto" @click="showUserModalEditAddress(address)"><fa class="text-warning" :icon="['fas','pencil-alt']" /> Edit</a>
+                                    <a class="btn text-danger mx-auto" @click="showModalDeleteAddress(address)"><fa class="text-danger" :icon="['fas','trash']" /> Hapus</a>
                                 </div>
                             </div>
                         </div>
@@ -54,62 +54,116 @@
                 </div>
             </div>
         </div>
-
-        
-        <Pagination/>
+        <div v-else-if="!isLoadingData" class="text-center my-5 py-5">
+            <div class="text-40 text-warning">
+                <fa :icon="['fas','exclamation-circle']"/>
+            </div>
+            <h3>Alamat tidak ada.</h3>
+        </div>
+        <div v-if="isLoadingData" class="row">
+            <div class="col">
+                <LoadingSpinner :show="isLoadingData"/>
+            </div>
+        </div>
 
         <UserModalAddAddress
             :show="isShowUserModalAddAddress"
-            :data="dataModal"
             @close="closeUserModalAddAddress"
+            @update="addNewAddress($event)"
         />
-        <ModalDeleteItem
-            :show="isShowModalDeleteItem"
-            :data="{}"
-            @close="closeModalDeleteItem"
+
+        <UserModalEditAddress
+            :show="isShowUserModalEditAddress"
+            :data="currentAddress"
+            @close="closeUserModalEditAddress"
+            @update="updateAddressHandler($event)"
+        />
+        <ModalDeleteAddress
+            :show="isShowModalDeleteAddress"
+            :data="currentAddress"
+            @close="closeModalDeleteAddress"
+            @update="deleteUpdateHandler($event)"
         />
 
     </div>
 </template>
 
 <script>
+import ApiService from '~/common/api.service';
 export default {
     data() {
         return {
-        formData: {
-            username: "hanafihanan",
-            nama: "Hanan Hanafi",
-            email: "hanafihanan@mail.id",
-            sort : null,
-            date: {
-            day: null,
-            month: null,
-            year: null,
-            }
-        },
+        userAddresses: [],
+        isLoadingData: true,
+        currentAddress: null,
         
-        items: new Array(5),
-        dataModal: {
-            title: "Atur Alamat Pengiriman",
-            message: ""
-        },
         isShowUserModalAddAddress: false,
-        isShowModalDeleteItem: false,
+        isShowUserModalEditAddress: false,
+        isShowModalDeleteAddress: false,
             
+        isLoadingChangeMainAddress: false,
         }
     },
+    created() {
+        this.loadData();
+    },
     methods: {
+        deleteUpdateHandler(value) {
+            this.userAddresses = this.userAddresses.filter(address=>{return address.addressID !== value.addressID});
+        },
+        updateAddressHandler(value) {
+            this.userAddresses = this.userAddresses.filter(address=>{return address.addressID !== value.addressID});
+            this.userAddresses.push(value);
+        },
+        addNewAddress(value){
+            this.userAddresses.push(value);
+        },
+        async changeMainAddress(address){
+            this.isLoadingChangeMainAddress = true;
+            await ApiService.post(`/user/main-address/update/${address.addressID}`).then(()=>{
+                const currentMainAddress = this.userAddresses.find(address=>address.isMainAddress===true);
+                currentMainAddress.isMainAddress = false;
+                address.isMainAddress = true;
+            })
+            .catch(err=>{
+                console.log("err",err);
+            })
+            this.isLoadingChangeMainAddress = false;
+
+        },
+        async loadData() {
+            this.isLoadingData = true;
+            await ApiService.query('/user/address')
+            .then((response)=>{
+                this.userAddresses = response.data;
+
+            })
+            .catch(err=>{
+                console.log("err",err);
+            })
+            this.isLoadingData = false;
+        },
         showUserModalAddAddress() {
             this.isShowUserModalAddAddress = true;
         },
         closeUserModalAddAddress() {
             this.isShowUserModalAddAddress = false;
         },
-        showModalDeleteItem() {
-            this.isShowModalDeleteItem = true;
+        showUserModalEditAddress(address) {
+            this.currentAddress = Object.assign({},address);
+            this.isShowUserModalEditAddress = true;
         },
-        closeModalDeleteItem() {
-            this.isShowModalDeleteItem = false;
+        closeUserModalEditAddress() {
+            this.currentAddress = null;
+            this.isShowUserModalEditAddress = false;
+        },
+        showModalDeleteAddress(address) {
+            this.currentAddress = Object.assign({},address);
+            this.isShowModalDeleteAddress = true;
+        },
+        closeModalDeleteAddress() {
+            this.currentAddress = null;
+            this.isShowModalDeleteAddress = false;
         }
     }
 }

@@ -106,50 +106,52 @@
         </div>
         
         
-        <div class="bg-white" >
+        <div class="bg-white position-relative" :style="{minHeight: windowH.height+'px'}">
             <Nuxt />
-            
-            <div class="border-top d-md-block d-none"></div>
-            <div class="container bg-white py-4 text-md-left text-center  d-md-block d-none">
-                <div class="row">
-                    <div class="col">
-                        <div class="bg-white" style="height:40px">
-                            <b-img class="h-100" src="~/assets/img/logov1.png" fluid alt="Responsive image"></b-img>
+            <div class="footer">
+                <div class="border-top d-md-block d-none"></div>
+                <div class="container bg-white py-4 text-md-left text-center  d-md-block d-none">
+                    <div class="row">
+                        <div class="col">
+                            <div class="bg-white" style="height:40px">
+                                <b-img class="h-100" src="~/assets/img/logov1.png" fluid alt="Responsive image"></b-img>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12 my-3">
+                            <a href="/cari" class="mb-2 d-block">
+                                Cari Barang
+                            </a>
+                            <a href="/kontak" class="mb-2 d-block">
+                                Kontak Kami
+                            </a>
+                            <a href="/tentang">
+                                Tentang Kami
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-12 my-3">
+                            <div class="mb-2">
+                                Ikuti Kami
+                            </div>
+                            <div>
+                                <img class="mr-3" src="~/assets/img/media-social/whatsapp.png" fluid alt="Responsive image" style="width:40px"/>
+                                <img class="mr-3" src="~/assets/img/media-social/facebook.png" fluid alt="Responsive image" style="width:40px"/>
+                                <img class="mr-3" src="~/assets/img/media-social/instagram.png" fluid alt="Responsive image" style="width:40px"/>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-9 col-md-12 my-3">
-                        <a href="/cari" class="mb-2 d-block">
-                            Cari Barang
-                        </a>
-                        <a href="/kontak" class="mb-2 d-block">
-                            Kontak Kami
-                        </a>
-                        <a href="/tentang">
-                            Tentang Kami
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-12 my-3">
-                        <div class="mb-2">
-                            Ikuti Kami
-                        </div>
-                        <div>
-                            <img class="mr-3" src="~/assets/img/media-social/whatsapp.png" fluid alt="Responsive image" style="width:40px"/>
-                            <img class="mr-3" src="~/assets/img/media-social/facebook.png" fluid alt="Responsive image" style="width:40px"/>
-                            <img class="mr-3" src="~/assets/img/media-social/instagram.png" fluid alt="Responsive image" style="width:40px"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="container-fluid bg-main-color">
-                <div class="row text-center">
-                    <div class="col-12 text-white pt-4">
-                    <p>© Ciba Teknik 2021</p>
+                <div class="container-fluid bg-main-color">
+                    <div class="row text-center">
+                        <div class="col-12 text-white pt-4">
+                        <p>© Ciba Teknik 2021</p>
+                        </div>
                     </div>
                 </div>
             </div>
+        
         </div>
 
     </div>
@@ -157,10 +159,13 @@
 
 <script>
 import ApiService from '~/common/api.service';
-    const Cookie = process.client ? require('js-cookie') : undefined;
     export default {
         data() {
         return {
+                windowH: {
+                    width: 0,
+                    height: 0
+                },
             }
         },
         computed: {
@@ -174,8 +179,7 @@ import ApiService from '~/common/api.service';
         },
         created() {
             
-            // window.addEventListener('beforeunload', this.handleUnload);
-
+            this.handleResize();
             if(this.$store.state.auth){
                 const expiredDate = new Date(this.$store.state.auth.expirationTime);
                 const dateNow = new Date();
@@ -187,25 +191,16 @@ import ApiService from '~/common/api.service';
 
         },
         mounted() {
-            // console.log("routeparams",this.$route.name);
-            console.log("cookie",Cookie.get('auth'));
-            console.log("state",this.$store.state);
-            // this.$nextTick(function () {
-            // this.getRefreshToken();
-            // window.setInterval(() => {
-            //         this.getRefreshToken();
-            //     },3000000);
-            // })
+            window.addEventListener('resize', this.handleResize);
         },
         destroyed() {
-            // window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
+            window.addEventListener('resize', this.handleResize);
         },
         methods: {
-            // handleUnload() {
-            //     console.log("ahai");
-            //     alert("close");
-            //     this.logout();
-            // },
+            handleResize() {
+                this.windowH.width = window.innerWidth;
+                this.windowH.height = window.innerHeight;
+            },
             isActive(name){
                 // console.log("route/",this.$route.name)
                 return this.$route.name.includes(name);
@@ -253,4 +248,20 @@ ul {
     border-left: 1px solid white;
     height: 40px;
 }
+
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: -300px;
+    width: 100%;
+    background-color: white;
+    margin-top: -300px;
+}
+
+@media only screen and (max-width: 760px) {
+    .footer {
+        bottom: -100px;
+    }
+}
+
 </style>

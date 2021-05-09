@@ -97,7 +97,7 @@
       </div>
     </div>
     
-    <div class="container mb-5 mt-sm-5 mt-0 p-4 bg-white shadow-main">
+    <div class="container pb-5 mt-sm-5 mt-0 p-4 bg-white shadow-main">
       <div class="">
         <div>
           <a href="/cari/terbaru" class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></a>

@@ -1,7 +1,7 @@
 <template>
     <div class="pt-md-5">
         <div class="container px-0">
-            <div class="bg-white my-md-5 p-4 shadow">
+            <div class="bg-white mt-md-5 p-4 shadow">
                 <h2>Tentang</h2>
 
                 <div class="row">

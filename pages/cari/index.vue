@@ -222,7 +222,6 @@ import ApiService from '~/common/api.service';
             await this.loadOptions();
             this.filters.product = this.$route.query.productID ? this.options.product.find(item=>item.value===this.$route.query.productID) : null;
             this.loadData();
-            console.log("opt",this.options);
         },
         methods: {
             async loadMore(){

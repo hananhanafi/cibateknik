@@ -19,7 +19,6 @@ const createStore = () => {
         plugins: [createPersistedState()],
         mutations: {
             setAuthAdmin(state, auth) {
-                console.log("settt",auth);
                 state.auth = auth
                 state.role = 'admin';
                 state.userInfo = null;
@@ -28,7 +27,6 @@ const createStore = () => {
                 ApiService.setHeader();
             },
             setAuthUser(state, token) {
-                console.log("settt",token);
                 // state.token = token;
                 state.auth = token;
                 Cookie.set('auth', token.token) // saving token in cookie for server rendering
@@ -45,13 +43,13 @@ const createStore = () => {
                 ApiService.initUnauthenticated();
             },
             setUserInfo(state, userInfo) {
-                console.log("settt userInfo",userInfo);
                 state.userInfo = userInfo.userCredentials;
-                state.isUserVerified = userInfo.isVerified;
+                if(userInfo.isVerified){
+                    state.isUserVerified = userInfo.isVerified;
+                }
                 Cookie.set('userInfo', userInfo.userCredentials);
             },
             setCheckoutItem(state, item) {
-                console.log("settt item",item);
                 state.checkoutItem = item;
                 Cookie.set('checkoutItem', item);
             },

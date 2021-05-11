@@ -22,33 +22,6 @@
         <!-- loading -->
         <LoadingSpinner :show="isSubmitStatus==submitStatus.loading"/>
 
-        <!-- success -->
-        <div v-show="isSubmitStatus==submitStatus.success" class="px-2 text-center">
-            <div class="text-40 text-success">
-                <fa :icon="['fas','check-circle']"/>
-            </div>
-            <div class="text-20">
-                Berhasil menghapus barang dari keranjang.
-            </div>
-            
-            <div class="modal-footer border-top-0 d-flex">
-                <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click.prevent="close">Tutup</button>
-            </div>
-        </div>
-
-        <!-- error -->
-        <div v-show="isSubmitStatus==submitStatus.error" class="px-2 text-center">
-            <div class="text-40 text-danger">
-                <fa :icon="['fas','times-circle']"/>
-            </div>
-            <div class="text-20">
-                Gagal menghapus barang dari keranjang.
-            </div>
-            
-            <div class="modal-footer border-top-0 d-flex">
-                <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click.prevent="close">Tutup</button>
-            </div>
-        </div>
 
     </Modal>
 </template>
@@ -78,9 +51,6 @@ export default {
             return this.$store.state.userInfo;
         },
     },
-    mounted() {
-        console.log("dd",this.data);
-    },
     methods: {
         
         formatFormData(){
@@ -97,9 +67,13 @@ export default {
             .then(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.success;
                 this.$emit('update');
+                this.$toast.success('Berhasil menghapus barang dari dalam keranjang.',{icon:'check'});
+                this.close();
             })
             .catch(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.error;
+                this.$toast.error('Terjadi error, gagal menghapus barang dari dalam keranjang.',{icon:'error'});
+                this.close();
             })
         },
         close() {

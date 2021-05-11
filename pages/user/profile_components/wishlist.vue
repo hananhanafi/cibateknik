@@ -57,8 +57,6 @@ export default {
           last_page: 1,
           total: 0,
       },
-
-      items: new Array(18)
     }
   },
   computed: {

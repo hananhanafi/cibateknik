@@ -36,59 +36,65 @@ const ApiService = {
     },
 
     query(resource, params) {
-        return Vue.$api.get(resource, { params }).catch((error)=>{
-            const response = {error};
-            if(response.error.response.data.code === "auth/id-token-expired"){
-                alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
-            }
-        });
+        return Vue.$api.get(resource, { params })
+        // .catch((error)=>{
+        //     const response = {error};
+        //     if(response.error.response.data.code === "auth/id-token-expired"){
+        //         alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
+        //     }
+        // });
     },
     
     get(resource, slug = "") {
-        return Vue.$api.get(`${resource}/${slug}`).catch((error)=>{
-            const response = {error};
-            if(response.error.response.data.code === "auth/id-token-expired"){
-                alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
-            }
-        });
+        return Vue.$api.get(`${resource}/${slug}`)
+        // .catch((error)=>{
+        //     const response = {error};
+        //     if(response.error.response.data.code === "auth/id-token-expired"){
+        //         alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
+        //     }
+        // });
     },
     
     getBlob(resource, slug = "") {
         return Vue.$api.get(`${resource}/${slug}`, {
         responseType: "blob"
-        }).catch((error)=>{
-            const response = {error};
-            if(response.error.response.data.code === "auth/id-token-expired"){
-                alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
-            }
-        });
+        })
+        // .catch((error)=>{
+        //     const response = {error};
+        //     if(response.error.response.data.code === "auth/id-token-expired"){
+        //         alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
+        //     }
+        // });
     },
     
     post(resource, params) {
-        return Vue.$api.post(`${resource}`, params).catch((error)=>{
-            const response = {error};
-            if(response.error.response.data.code === "auth/id-token-expired"){
-                alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
-            }
-        });
+        return Vue.$api.post(`${resource}`, params)
+        // .catch((error)=>{
+        //     const response = {error};
+        //     if(response.error.response.data.code === "auth/id-token-expired"){
+        //         alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
+        //     }
+        // });
     },
     
     update(resource, slug, params) {
-        return Vue.$api.put(`${resource}/${slug}`, params).catch((error)=>{
-            const response = {error};
-            if(response.error.response.data.code === "auth/id-token-expired"){
-                alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
-            }
-        });
+        return Vue.$api.put(`${resource}/${slug}`, params)
+        // .catch((error)=>{
+        //     const response = {error};
+        //     if(response.error.response.data.code === "auth/id-token-expired"){
+        //         alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
+        //     }
+        // });
     },
     
     put(resource, params) {
-        return Vue.$api.put(`${resource}`, params).catch((error)=>{
-            const response = {error};
-            if(response.error.response.data.code === "auth/id-token-expired"){
-                alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
-            }
-        });
+        return Vue.$api.put(`${resource}`, params)
+        // .catch((error)=>{
+        //     const response = {error};
+        //     if(response.error.response.data.code === "auth/id-token-expired"){
+        //         alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
+        //     }
+        // });
     },
     
     delete(resource) {
@@ -102,12 +108,13 @@ const ApiService = {
         headers: {
             "Content-Type": "multipart/form-data"
         }
-        }).catch((error)=>{
-            const response = {error};
-            if(response.error.response.data.code === "auth/id-token-expired"){
-                alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
-            }
-        });
+        })
+        // .catch((error)=>{
+        //     const response = {error};
+        //     if(response.error.response.data.code === "auth/id-token-expired"){
+        //         alert("Sesi telah habis, silahkan masukkan ulang akun Anda.");
+        //     }
+        // });
     }
 }
 

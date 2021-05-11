@@ -130,12 +130,11 @@ import ApiService from '~/common/api.service';
                 this.windowH.height = window.innerHeight;
             },
             async login(){
-                console.log('submit!')
                 this.$v.$touch()
                 if (this.$v.$invalid) {
-                    console.log("invalid",this.$v);
                     this.submitStatus = 'ERROR'
                 } else {
+                    this.$toast.show('Logging in...',{icon:'login'})
                     this.submitStatus = 'PENDING'
                     await ApiService.post("/user/login",{email:this.email,password:this.password})
                     .then( async (response)=>{
@@ -144,11 +143,11 @@ import ApiService from '~/common/api.service';
                         this.$store.commit('setAuthUser', token) // mutating to store for client rendering
                         ApiService.setHeader();
                         await ApiService.get("/user").then(data=>{
-                            console.log('data',data);
                             this.$store.commit('setUserInfo', data.data);
                         })
                         this.$router.push('/');
-                        this.submitStatus = 'SUCCESS'
+                        this.submitStatus = 'SUCCESS';
+                        this.$toast.success('Successfully authenticated',{icon:'check'})
                     })
                     .catch(({response})=>{
                         console.log("err",response);
@@ -156,6 +155,7 @@ import ApiService from '~/common/api.service';
                         this.submitStatus = 'ERROR'
                         this.showError = true;
                         this.errorMessage = response.data.message;
+                        this.$toast.error('Error while authenticating',{icon:'error'})
                     })
                     
                 }

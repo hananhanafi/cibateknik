@@ -53,7 +53,7 @@
                                 class="btn w-100 p-4 text-left text-decoration-none" 
                                 :to="{ name: 'user-profile', query: { tab: 'main_address' } }"
                                 >
-                                    Alamat utama
+                                    Alamat Saya
                                     <div class="float-right">
                                         <fa class="" :icon="['fas','chevron-right']"/> 
                                     </div>
@@ -155,7 +155,7 @@
                                 :class="activeComponent === 'main_address' ? 'bg-main-color text-white' : 'text-dark' "
                                 :to="{ name: 'user-profile', query: { tab: 'main_address' } }"
                                 >
-                                    Alamat utama
+                                    Alamat Saya
                                 </router-link>
                             </div>
                             <div>
@@ -224,7 +224,7 @@ import ApiService from '~/common/api.service';
                     my_account : 'Akun Saya',
                     my_order : 'Pesanan Saya',
                     notification : 'Notifikasi',
-                    main_address : 'Alamat Utama',
+                    main_address : 'Alamat Saya',
                     wishlist : 'Wishlist Saya',
                     password : 'Atur Password',
                 }
@@ -254,9 +254,6 @@ import ApiService from '~/common/api.service';
                     this.activeComponent = '';
                 }
             },
-        },
-        mounted() {
-            console.log("userinfo",this.getUserInfo);
         },
         created() {
             this.profileComponent =  () => import(`./profile_components/my_account`);

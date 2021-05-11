@@ -53,26 +53,48 @@
                         />
                     </div>
                 </div>
+                
+                <div>
+                    <BaseSelect
+                    v-model="formData.province"
+                    label="Provinsi"
+                    :options="options.province"
+                    placeholder="Pilih Provinsi"
+                    dense
+                    :error="
+                        isSubmitStatus == submitStatus.pending
+                        ? !$v.formData.province.required 
+                            ? 'Provinsi harus diisi'
+                            : null
+                        : null
+                    "
+                    @input="onProvinceSelected($event)"
+                    />
+                </div>
+
                 <div class="row">
                     <div class="col-lg-8 col-sm-12">
-                        <BaseInput
-                            id="city"
-                            v-model="formData.city"
-                            label="Kota atau Kecamatan Tujuan Pengiriman"
-                            placeholder="Kota atau Kecamatan Tujuan Pengiriman"
-                            :error="
-                                isSubmitStatus == submitStatus.pending
-                                ? !$v.formData.city.required 
-                                    ? 'Kota harus diisi'
-                                    : null
+                        <BaseSelect
+                        v-model="formData.city"
+                        label="Kota"
+                        :disabled="!formData.province"
+                        :options="selectedCityOptions"
+                        placeholder="Pilih Kota"
+                        dense
+                        :error="
+                            isSubmitStatus == submitStatus.pending
+                            ? !$v.formData.city.required 
+                                ? 'Kota harus diisi'
                                 : null
-                            "
+                            : null
+                        "
                         />
                     </div>
                     <div class="col-lg-4 col-sm-12">
                         <BaseInput
                             id="zipCode"
                             v-model="formData.zipCode"
+                            :disabled="!formData.city"
                             label="Kode Pos"
                             placeholder="Kode Pos"
                             :error="
@@ -110,34 +132,6 @@
         <!-- loading -->
         <LoadingSpinner :show="isSubmitStatus==submitStatus.loading"/>
 
-        <!-- success -->
-        <div v-show="isSubmitStatus==submitStatus.success" class="px-2 text-center">
-            <div class="text-40 text-success">
-                <fa :icon="['fas','check-circle']"/>
-            </div>
-            <div class="text-20">
-                Berhasil menambahkan alamat.
-            </div>
-            
-            <div class="modal-footer border-top-0 d-flex">
-                <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="closeModal">Tutup</button>
-            </div>
-        </div>
-
-        <!-- error -->
-        <div v-show="isSubmitStatus==submitStatus.error" class="px-2 text-center">
-            <div class="text-40 text-danger">
-                <fa :icon="['fas','times-circle']"/>
-            </div>
-            <div class="text-20">
-                Gagal menambahkan alamat.
-            </div>
-            
-            <div class="modal-footer border-top-0 d-flex">
-                <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="closeModal">Tutup</button>
-            </div>
-        </div>
-
     </Modal>
 </template>
 
@@ -161,10 +155,16 @@ export default {
                 label: null,
                 name: null,
                 phone: null,
+                province: null,
                 city: null,
                 zipCode: null,
                 address: null,
             },
+            options: {
+                city: [],
+                province: [],
+            },
+            selectedCityOptions: [],
             isSubmitStatus: '',
             submitStatus: SUBMIT_STATUS
 
@@ -175,20 +175,48 @@ export default {
                 label: { required },
                 name: { required },
                 phone: { required },
+                province: { required },
                 city: { required },
                 zipCode: { required },
                 address: { required },
         }
     },
-    mounted() {
-        console.log("dd",this.data);
+    created() {
+        this.loadOptions();
     },
     methods: {
+        async loadOptions() {
+            await ApiService.get('/rajaongkir/data/city-and-province')
+            .then((response)=>{
+                this.options.province = response.data.province.rajaongkir.results.map(function(prv){
+                    return {
+                        label: prv.province,
+                        value: prv.province_id,
+                    }
+                });
+                
+                this.options.city = response.data.city.rajaongkir.results;
+            })
+            .catch(err=>{
+                console.log("err",err);
+            })
+        },
+        onProvinceSelected(value){
+            this.formData.city = null;
+            this.selectedCityOptions = this.options.city.filter(cty=>cty.province_id === value.value )
+            .map(function(cty){
+                    return {
+                        label: cty.city_name,
+                        value: cty.city_id,
+                    }
+                });
+        },
         formatFormData(data) {
             const resultData = {
                 label: data.label ? data.label : null,
                 name: data.name ? data.name : null,
                 phone: data.phone ? data.phone : null,
+                province: data.province ? data.province : null,
                 city: data.city ? data.city : null,
                 zipCode: data.zipCode ? data.zipCode : null,
                 address: data.address ? data.address : null,
@@ -208,10 +236,14 @@ export default {
                     this.isSubmitStatus = SUBMIT_STATUS.success;
                     console.log("success",data);
                     this.$emit('update',data.data);
+                    this.$toast.success('Berhasil menambahkan alamat.',{icon:'check'});
+                    this.closeModal();
                 })
                 .catch(err=>{
                     this.isSubmitStatus = SUBMIT_STATUS.error;
                     console.log("error",err);
+                    this.$toast.error('Terjadi error, gagal menambahkan alamat.',{icon:'error'});
+                    this.closeModal();
                 })
             }
         },

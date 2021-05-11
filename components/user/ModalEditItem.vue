@@ -94,9 +94,6 @@ export default {
                 max: null,
             },
         }
-    },
-    mounted() {
-        console.log("dd",this.data);
     }
 };
 </script>

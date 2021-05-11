@@ -194,14 +194,11 @@ import ApiService from '~/common/api.service'
                 this.windowH.height = window.innerHeight;
             },
             async register(){
-                console.log('submit!')
                 this.$v.$touch()
                 if (this.$v.$invalid) {
-                    console.log("invalid",this.$v);
                     this.submitStatus = 'ERROR'
                 } else {
                     // do your submit logic here
-                    // console.log("submit");
                     this.submitStatus = 'PENDING'
                     // setTimeout(() => {
                     // this.submitStatus = 'OK'

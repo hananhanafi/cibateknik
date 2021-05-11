@@ -68,10 +68,6 @@ export default {
             }
         }
     },
-    mounted() {
-        console.log("udropte",this.options);
-        console.log("udre",this.userAddressesOption);
-    },
     methods: {
         updateAddress(){
             this.$emit('update-address',this.formData.address);

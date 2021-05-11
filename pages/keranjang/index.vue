@@ -17,7 +17,7 @@
                                     <div class="form-check">
                                         <input id="checkall" v-model="checkAll" class="form-check-input" type="checkbox" value="all" @change="checkAllHandler()">
                                         <label class="form-check-label" for="checkall">
-                                            Produk
+                                            Pilih Semua
                                         </label>
                                     </div>
                                 </div>
@@ -30,7 +30,7 @@
                                 <div class="col-2 text-center">
                                     Total Harga
                                 </div>
-                                <div class="col-1 text-center">
+                                <div class="col-3 text-center">
                                     Aksi
                                 </div>
                             </div>
@@ -46,15 +46,15 @@
                         </div>
                     </div>
 
-                    
-                    <div v-for="(item,i) in cartItems" :key="i" class="shadow-main p-3 my-3">
-                        <UserCartItemCard :data="item" :isChecked="checkAll"
-                        @checkedItem="checkedItemHandler($event)"
-                        @delete="deleteItemOnListCart(item)"/>
+                    <div>
+                        <div v-for="(item,i) in cartItems" :key="i" class="shadow-main p-3 my-3">
+                            <UserCartItemCard :data="item" :isChecked="checkAll"
+                            @checkedItem="checkedItemHandler($event)"
+                            @delete="deleteItemOnListCart(item)"/>
+                        </div>
                     </div>
                 </div>
 
-                
                 <div class="shadow-main p-3 mt-5 mb-3 ">
                     <div class="row d-flex align-items-center font-weight-bold">
                         <div class="col-6">
@@ -67,16 +67,20 @@
                 </div>
 
                 <div class="text-right">
-                    <button :disabled="checkedItemList.length<1" class="btn btn-primary" @click="checkoutHandler">Checkout</button>
+                    <button :disabled="checkedItemList.length<1" class="btn btn-primary" @click="checkoutHandler">Pesan</button>
                 </div>
             </div>
+        
             <div v-else-if="!isLoadingData" class="text-center my-5 py-5">
                 <div class="text-40 text-warning">
                     <fa :icon="['fas','exclamation-circle']"/>
                 </div>
-                <h3>Keranjang tidak ada barang.</h3>
+                <h3>Tidak ada barang di keranjang.</h3>
+                <div>
+                    <h5>Ingim mencari barang ?</h5>
+                    <a href="/cari" class="btn btn-primary">Cari Sekarang</a>
+                </div>
             </div>
-        
             <LoadingSpinner v-if="isLoadingData" :show="isLoadingData"/>
         
             
@@ -127,7 +131,6 @@ import { toFormatedNumber } from '~/store/helpers'
             checkAllHandler() {
                 if(!this.checkAll){
                     this.checkedItemList =[];
-                    console.log("data list",this.checkedItemList);
                 }
             },
             checkedItemHandler(data){
@@ -140,14 +143,12 @@ import { toFormatedNumber } from '~/store/helpers'
                         this.checkedItemList.splice(index, 1);
                     }
                 }
-                console.log("data list",this.checkedItemList);
             },
             async loadData() {
                 this.isLoadingData = true;
                 await ApiService.get('/user/cart/items')
                 .then((data)=>{
                     this.cartItems = data.data.data;
-                    console.log("ct",this.cartItems);
 
                 })
                 .catch(err=>{

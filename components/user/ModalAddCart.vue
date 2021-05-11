@@ -1,10 +1,10 @@
 <template>
     <div>
-        <Modal v-if="isLoadingData"  :show="show" centered @clickOutside="close">
+        <Modal v-if="isLoadingData"  :show="show" centered >
             <LoadingSpinner :show="isLoadingData"/>
         </Modal>
 
-        <Modal v-else-if="isLoggedIn == null"  :show="show" centered @clickOutside="close">
+        <Modal v-else-if="isLoggedIn == null"  :show="show" centered >
             <div class="px-2 text-center">
                 <div class="text-40 text-danger">
                     <fa :icon="['fas','exclamation-circle']"/>
@@ -19,7 +19,7 @@
             </div>
         </Modal>
 
-        <Modal v-else extralarge :show="show" centered @clickOutside="close">
+        <Modal v-else extralarge :show="show" centered >
             <div class="modal-header border-bottom-0">
                 <h5 id="exampleModalLabel" class="modal-title">Tambah Barang ke Keranjang</h5>
                 <button data-bs-dismiss="modal" class="btn-close btn text-danger" type="button" aria-label="Close" @click="close"><fa :icon="['fas','times']" /></button>
@@ -106,33 +106,6 @@
             <!-- loading -->
             <LoadingSpinner :show="isSubmitStatus==submitStatus.loading"/>
 
-            <!-- success -->
-            <div v-show="isSubmitStatus==submitStatus.success" class="px-2 text-center">
-                <div class="text-40 text-success">
-                    <fa :icon="['fas','check-circle']"/>
-                </div>
-                <div class="text-20">
-                    Berhasil memperbarui keranjang.
-                </div>
-                
-                <div class="modal-footer border-top-0 d-flex">
-                    <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="close">Tutup</button>
-                </div>
-            </div>
-
-            <!-- error -->
-            <div v-show="isSubmitStatus==submitStatus.error" class="px-2 text-center">
-                <div class="text-40 text-danger">
-                    <fa :icon="['fas','times-circle']"/>
-                </div>
-                <div class="text-20">
-                    Gagal memperbarui keranjang.
-                </div>
-                
-                <div class="modal-footer border-top-0 d-flex">
-                    <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="close">Tutup</button>
-                </div>
-            </div>
 
         </Modal>
     </div>
@@ -184,12 +157,10 @@ export default {
                     await ApiService.query('user/cart',{userID: this.getUserInfo.userID}).then(data=>{
 
                         this.dataUserCart = data.data.itemList;
-                        console.log("formdata",this.formData);
                         const itemInCart = this.dataUserCart.find(item=>{ return item.itemID === this.data.itemID});
                         
                         this.formData.amount = itemInCart!==undefined ? itemInCart.amount : 0;
                         this.isAlreadyInCart = true;
-                        console.log("this.formdata",this.formData);
                     }).catch(err=>{
                         console.error("error",err);
                     })
@@ -228,9 +199,13 @@ export default {
             .then(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.success;
                 this.$emit('update',this.formData.amount);
+                this.$toast.success('Berhasil menambahkan barang ke dalam keranjang.',{icon:'check'});
+                this.close();
             })
             .catch(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.error;
+                this.$toast.error('Terjadi error, gagal menambahkan barang ke dalam keranjang.',{icon:'error'});
+                this.close();
             })
         },
         close() {

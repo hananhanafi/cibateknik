@@ -73,11 +73,32 @@ export default {
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
+    
+    '@nuxtjs/toast',
+
+    'nuxt-material-design-icons'
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {},
-
+  
+  // vuetoasted
+  toast: {
+    position: 'top-right',
+    // iconPack: 'fontawesome',
+    duration:3000,
+    // register: [ // Register custom toasts
+    //   {
+    //     name: 'my-error',
+    //     message: 'Oops...Something went wrong',
+    //     options: {
+    //       iconPack: 'fontAwesome',
+    //       duration:3,
+    //       type: 'error'
+    //     }
+    //   }
+    // ]
+  },
   // Content module configuration (https://go.nuxtjs.dev/config-content)
   content: {},
 

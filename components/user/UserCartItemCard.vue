@@ -35,7 +35,7 @@
         <div class="col-2 text-center d-md-block d-none">
             Rp {{ data.item.price ? toFormatedNumber(data.item.price*data.cart.amount) : '-'  }}
         </div>
-        <div class="col-md-1 col-12  text-right">
+        <div class="col-md-3 col-12  text-right">
             <a class="btn text-warning" @click="showModalAddCart"><fa class="text-warning" :icon="['fas','pencil-alt']" /> Edit</a>
             <a class="btn text-danger"  @click="showModalDeleteItemCart"><fa class="text-danger" :icon="['fas','trash']" /> Hapus</a>
         </div>

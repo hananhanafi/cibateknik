@@ -24,7 +24,6 @@ export default {
     },
     computed: {
         photoURL() {
-            console.log("Datass",this.data);
             const url = this.data.imagesItem ? this.data.imagesItem[0].imageUrl : process.env.baseUrl+"/_nuxt/assets/img/logo.png"
             return url;
         }

@@ -4,7 +4,7 @@
         <div class="row mb-4">
             <div class="col">
                 <div class="flex-fill">
-                <h3>Alamat Utama</h3>
+                <h3>Alamat Saya</h3>
                 </div>
             </div>
             <div class="col-lg-6 col-md-12 text-right">
@@ -39,11 +39,26 @@
                                     <td class="text-center">:</td>
                                     <td class="text-wrap">{{ address.address }}</td>
                                 </tr>
+                                <tr>
+                                    <td>Provinsi</td>
+                                    <td class="text-center">:</td>
+                                    <td class="text-wrap">{{ address.province.label }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Kota</td>
+                                    <td class="text-center">:</td>
+                                    <td class="text-wrap">{{ address.city.label }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Kode Pos</td>
+                                    <td class="text-center">:</td>
+                                    <td class="text-wrap">{{ address.zipCode }}</td>
+                                </tr>
                             </table>
                         </div>
                         <div class="col-lg-3 col-md-12">
                             <div class="text-center d-flex flex-column h-100">
-                                <button v-if="!address.isMainAddress" :disabled="isLoadingChangeMainAddress" class="btn btn-light border my-3 rounded-pill" @click.prevent="changeMainAddress(address)">Jadikan Utama</button>
+                                <button v-if="!address.isMainAddress" :disabled="isLoadingChangeMainAddress" class="btn btn-outline-success border my-3 rounded-pill" @click.prevent="changeMainAddress(address)">Jadikan Utama</button>
                                 <div class="text-center mt-auto flex-grow-1 d-flex align-items-center">
                                     <a class="btn text-warning mx-auto" @click="showUserModalEditAddress(address)"><fa class="text-warning" :icon="['fas','pencil-alt']" /> Edit</a>
                                     <a class="btn text-danger mx-auto" @click="showModalDeleteAddress(address)"><fa class="text-danger" :icon="['fas','trash']" /> Hapus</a>
@@ -124,9 +139,11 @@ export default {
                 const currentMainAddress = this.userAddresses.find(address=>address.isMainAddress===true);
                 currentMainAddress.isMainAddress = false;
                 address.isMainAddress = true;
+                this.$toast.success('Berhasil mengganti alamat utama.',{icon:'check'})
             })
             .catch(err=>{
                 console.log("err",err);
+                this.$toast.error('Gagal mengganti alamat utama.',{icon:'error'})
             })
             this.isLoadingChangeMainAddress = false;
 

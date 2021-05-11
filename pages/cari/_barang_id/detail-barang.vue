@@ -256,9 +256,11 @@ import ApiService from '~/common/api.service';
                 .then((data)=>{
                     this.isWished = true;
                     console.log("success",data)
+                    this.$toast.success('Berhasil menambahkan barang ke dalam wishlist.',{icon:'check'});
                 })
                 .catch(err=>{
                     console.error("error",err);
+                    this.$toast.error('Terjadi error, gagal menambahkan barang ke dalam wishlist.',{icon:'error'});
                 })
                 this.isLoadingWishlistButton = false;
             },
@@ -268,9 +270,11 @@ import ApiService from '~/common/api.service';
                 .then((data)=>{
                     this.isWished = false;
                     console.log("success",data)
+                    this.$toast.success('Berhasil menghapus barang dari wishlist.',{icon:'check'});
                 })
                 .catch(err=>{
                     console.error("error",err);
+                    this.$toast.error('Terjadi error, gagal menghapus barang dari wishlist.',{icon:'error'});
                 })
                 this.isLoadingWishlistButton = false;
             },

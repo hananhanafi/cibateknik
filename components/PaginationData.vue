@@ -50,9 +50,6 @@ export default {
             return this.data.current_page === this.data.last_page;
         }
     },
-    mounted(){
-        console.log("datame",this.data);
-    },
     methods: {
         changePage(page){
             this.$emit("page-update",page);

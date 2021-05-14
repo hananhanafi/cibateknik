@@ -194,12 +194,14 @@ import ApiService from '~/common/api.service';
                         console.log("success",response);
                         this.isSubmitStatus = SUBMIT_STATUS.success;
                         this.$router.push({name:'admin-post'});
+                        this.$toast.success('Berhasil memasukkan data barang ke dalam katalog semua barang.',{icon:'check'});
                     })
                     .catch((err)=>{
                         console.log("error",err);
                         this.isSubmitStatus = SUBMIT_STATUS.error;
                         const response = {...err};
                         this.errorMessage = response.response.data.message;
+                        this.$toast.error('Terjadi error, gagal memasukkan data barang ke dalam katalog semua barang.',{icon:'error'});
                     })
                     
                 }

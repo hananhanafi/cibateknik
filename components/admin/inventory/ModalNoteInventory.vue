@@ -69,7 +69,7 @@
                     />
                             
                     <BaseTextarea
-                        v-model="formData.note"
+                        v-model="formData.description"
                         label="Catatan"
                         placeholder="Masukkan Catatan"
                         height="200px"
@@ -107,7 +107,7 @@ export default {
             formData: {
                 in: '',
                 out: '',
-                note: "",
+                description: "",
                 selectedDate: new Date(),
             },
             disabledAfter: new Date(),
@@ -134,7 +134,7 @@ export default {
             this.formData= {
                 in: '',
                 out: '',
-                note: "",
+                description: "",
                 selectedDate: new Date(),
             }
             this.isSubmitStatus = '';
@@ -147,7 +147,7 @@ export default {
                 year: formData.selectedDate.getFullYear(),
                 in: formData.in ? formData.in : 0,
                 out: formData.out ? formData.out : 0,
-                note: formData.note ? formData.note : '',
+                description: formData.description ? formData.description : '',
             }
 
             return resultData;
@@ -166,10 +166,12 @@ export default {
                     console.log("success",data);
                     // this.$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:this.$route.params.produk_id}})
                     this.$emit('update');
+                    this.$toast.success('Berhasil mencatat stok barang.',{icon:'check'});
                 })
                 .catch(err=>{
                     this.isSubmitStatus = SUBMIT_STATUS.error;
                     console.log("error",err);
+                    this.$toast.error('Terjadi error, gagal mencatat stok barang.',{icon:'error'});
                 })
             }
         },

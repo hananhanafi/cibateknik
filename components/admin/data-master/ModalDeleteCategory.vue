@@ -85,9 +85,11 @@ export default {
             await ApiService.delete(`/category/${this.data.categoryID}`)
             .then(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.success;
+                this.$toast.success('Berhasil menghapus data kategori.',{icon:'check'});
             })
             .catch(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.error;
+                this.$toast.error('Terjadi error, gagal menghapus data kategori.',{icon:'error'});
             })
         },
         

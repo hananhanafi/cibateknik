@@ -93,9 +93,6 @@ export default {
             name :{ required }
         }
     },
-    mounted() {
-        console.log("SUBMIT_STATUS",this.submitStatus);
-    },
     methods: {
         formatFormData(data) {
             const resultData = {
@@ -116,10 +113,12 @@ export default {
                     this.isSubmitStatus = SUBMIT_STATUS.success;
                     console.log("success",data);
                     this.$emit('update');
+                    this.$toast.success('Berhasil menambahkan data brand/merk.',{icon:'check'});
                 })
                 .catch(err=>{
                     this.isSubmitStatus = SUBMIT_STATUS.error;
                     console.log("error",err);
+                    this.$toast.error('Terjadi error, gagal menambahkan data brand/merk.',{icon:'error'});
                 })
             }
         },

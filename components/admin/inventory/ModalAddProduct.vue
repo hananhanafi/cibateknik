@@ -182,10 +182,13 @@ export default {
                     this.isSubmitStatus = SUBMIT_STATUS.success;
                     console.log("success",data);
                     this.$emit('update');
+                    this.$toast.success('Berhasil menambahkan data produk.',{icon:'check'});
+
                 })
                 .catch(err=>{
                     this.isSubmitStatus = SUBMIT_STATUS.error;
                     console.log("error",err);
+                    this.$toast.error('Terjadi error, gagal menambahkan data produk.',{icon:'error'});
                 })
             }
         },
@@ -193,6 +196,8 @@ export default {
             // reset data
             this.formData.name = null;
             this.formData.category = null;
+            this.formData.brand = null;
+            this.formData.supplier = null;
             this.formData.additionalData = [
                 {name:null}
             ];

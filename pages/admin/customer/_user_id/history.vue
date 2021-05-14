@@ -160,7 +160,7 @@ import { formatDate, toFormatedNumber } from '~/store/helpers';
             },
             async loadData() {
                 this.isLoadingData = true;
-                await ApiService.query('/admin/users-order',this.params)
+                await ApiService.query('/admin/user-order/'+this.$route.params.user_id,this.params)
                 .then((Response)=>{
                     this.usersOrder = Response.data.data;
                     this.metaData = Response.data.meta

@@ -45,30 +45,40 @@
                                 <a class="btn btn-primary  mt-1" type="button" @click.prevent="showModalAddCategory">Tambah Kategori</a>
                             </div>
                         </div>
-                        <table class="table table-responsive-md">
-                            <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Nama Kategori</th>
-                                    <th scope="col" class="text-center" width="300px">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(category,i) in categories" :key="i">
-                                    <th scope="row">{{ category.categoryUID || '-' }}</th>
-                                    <td>{{category.name || '-'}}</td>
-                                    <td class="text-center">
-                                        <button class="btn btn-warning btn-sm" @click="showModalEditCategory(category)" >
-                                            Edit Kategori
-                                        </button>
-                                        <button class="btn btn-outline-danger btn-sm" @click="showModalDeleteCategory(category)" >
-                                            Hapus Kategori
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div v-if="categories.length>0" >
+                            <table class="table table-responsive-md">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Nama Kategori</th>
+                                        <th scope="col" class="text-center" width="300px">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(category,i) in categories" :key="i">
+                                        <th scope="row">{{ category.categoryUID || '-' }}</th>
+                                        <td>{{category.name || '-'}}</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-warning btn-sm" @click="showModalEditCategory(category)" >
+                                                <fa :icon="['fas','pencil-alt']"/> Edit
+                                            </button>
+                                            <button class="btn btn-outline-danger btn-sm" @click="showModalDeleteCategory(category)" >
+                                                <fa :icon="['fas','trash']"/> Hapus
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             <PaginationData :data="metaData" @page-update="pageUpdateHandler($event)"/>
+                        </div>
+                        
+                        <LoadingSpinner v-else-if="isLoadingData" :show="isLoadingData"/>
+                        <div v-else class="text-center my-5 py-5">
+                            <div class="text-40 text-warning">
+                                <fa :icon="['fas','exclamation-circle']"/>
+                            </div>
+                            <h3>Kategori tidak ditemukan.</h3>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -154,7 +164,6 @@ import ApiService from '~/common/api.service';
             pageUpdateHandler(page){
                 this.metaData.current_page = page;
                 this.loadData();
-                console.log("Ganti",this.metaData);
             },
             showModalAddCategory() {
                 this.isShowModalAddCategory = true;

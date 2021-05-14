@@ -213,8 +213,7 @@ import ApiService from '~/common/api.service';
         // page properties go hereexport default {
         async asyncData ({ params }) {
             const dateNow = new Date();
-            // const month = dateNow.getMonth()+1;
-            const month = 4;
+            const month = dateNow.getMonth()+1;
             const year = dateNow.getFullYear();
             const postProductItems = await ApiService.query(`/product/${params.produk_id}/items`,{month,year});
             // return { id: params.produk_id }

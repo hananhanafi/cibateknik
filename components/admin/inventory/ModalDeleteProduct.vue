@@ -85,9 +85,12 @@ export default {
             await ApiService.delete(`/product/${this.data.productID}`)
             .then(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.success;
+                this.$emit('update');
+                this.$toast.success('Berhasil menghapus data produk.',{icon:'check'});
             })
             .catch(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.error;
+                    this.$toast.error('Terjadi error, gagal menghapus data barang.',{icon:'error'});
             })
         },
         

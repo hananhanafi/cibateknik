@@ -45,30 +45,41 @@
                                 <a class="btn btn-primary  mt-1" type="button" @click.prevent="showModalAddBrand">Tambah Brand/Merk</a>
                             </div>
                         </div>
-                        <table class="table table-responsive-md">
-                            <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Nama Brand/Merk</th>
-                                    <th scope="col" class="text-center" width="300px">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(brand,i) in brands" :key="i">
-                                    <th scope="row">{{ brand.brandUID || '-' }}</th>
-                                    <td>{{brand.name || '-'}}</td>
-                                    <td class="text-center">
-                                        <button class="btn btn-warning btn-sm" @click="showModalEditBrand(brand)" >
-                                            Edit Brand/Merk
-                                        </button>
-                                        <button class="btn btn-outline-danger btn-sm" @click="showModalDeleteBrand(brand)" >
-                                            Hapus Brand/Merk
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div v-if="brands.length>0" >
+                            <table class="table table-responsive-md">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Nama Brand/Merk</th>
+                                        <th scope="col" class="text-center" width="300px">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(brand,i) in brands" :key="i">
+                                        <th scope="row">{{ brand.brandUID || '-' }}</th>
+                                        <td>{{brand.name || '-'}}</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-warning btn-sm" @click="showModalEditBrand(brand)" >
+                                                <fa :icon="['fas','pencil-alt']"/> Edit
+                                            </button>
+                                            <button class="btn btn-outline-danger btn-sm" @click="showModalDeleteBrand(brand)" >
+                                                <fa :icon="['fas','trash']"/> Hapus
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
                             <PaginationData :data="metaData" @page-update="pageUpdateHandler($event)"/>
+                        </div>
+                        
+                        <LoadingSpinner v-else-if="isLoadingData" :show="isLoadingData"/>
+                        <div v-else class="text-center my-5 py-5">
+                            <div class="text-40 text-warning">
+                                <fa :icon="['fas','exclamation-circle']"/>
+                            </div>
+                            <h3>Produk tidak ditemukan.</h3>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -154,7 +165,6 @@ import ApiService from '~/common/api.service';
             pageUpdateHandler(page){
                 this.metaData.current_page = page;
                 this.loadData();
-                console.log("Ganti",this.metaData);
             },
             showModalAddBrand() {
                 this.isShowModalAddBrand = true;

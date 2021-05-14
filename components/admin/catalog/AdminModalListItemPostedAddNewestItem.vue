@@ -199,9 +199,11 @@ export default {
             .then(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.success;
                 this.$emit('update');
+                this.$toast.success('Berhasil memasukkan data barang ke dalam katalog barang terbaru.',{icon:'check'});
             })
             .catch(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.error;
+                this.$toast.error('Terjadi error, gagal memasukkan data barang ke dalam katalog barang terbaru.',{icon:'error'});
             })
 
             },

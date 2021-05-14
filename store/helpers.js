@@ -5,7 +5,7 @@ export const formatDate = function(dateParams){
     
     const day = date.getDay();
     const dateNumb = date.getDate();
-    const month = date.getMonth();
+    const month = date.getMonth()-1;
     const year = date.getFullYear();
     console.log("Ddd",date);
 
@@ -30,18 +30,18 @@ export const toFormatedNumber = num => {
   return String(num).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 
-// export const toLongDate = function(dateString, delimiter = "/") {
-//   if (!dateString) return null;
-//   var parts = [];
-//   if (typeof dateString == "object") {
-//     parts.push(dateString.getDate());
-//     parts.push(dateString.getMonth() + 1);
-//     parts.push(dateString.getFullYear());
-//   } else {
-//     parts = dateString.split(delimiter);
-//   }
-//   return `${+parts[0]} ${MONTH_NAMES[+parts[1] - 1]} ${parts[2]} `;
-// };
+export const toLongDate = function(dateString, delimiter = "/") {
+  if (!dateString) return null;
+  let parts = [];
+  if (typeof dateString === "object") {
+    parts.push(dateString.getDate());
+    parts.push(dateString.getMonth() + 1);
+    parts.push(dateString.getFullYear());
+  } else {
+    parts = dateString.split(delimiter);
+  }
+  return `${+parts[0]} ${MONTH_NAMES[+parts[1] - 1]} ${parts[2]} `;
+};
 
 // // Parse a longDate string to a Date
 // export const fromLongDate = function(longDateString) {

@@ -65,10 +65,10 @@
                                     
                                     <td class="text-center">
                                         <button class="btn btn-primary btn-sm" @click="showModaldDetailCustomer(customer)" >
-                                            Detail Customer
+                                            <fa :icon="['fas','eye']"/> Detail
                                         </button>
-                                        <button class="btn btn-outline-warning btn-sm" @click="$router.push({name:'admin-customer-history'})" >
-                                            Riwayat Pesanan
+                                        <button class="btn btn-outline-info btn-sm" @click="$router.push({name:'admin-customer-user_id-history',params:{user_id:customer.userID}})" >
+                                            <fa :icon="['fas','history']"/> Riwayat Pesanan
                                         </button>
                                     </td>
                                 </tr>
@@ -144,7 +144,6 @@ import ApiService from '~/common/api.service';
         
         async mounted() {
             await this.loadData();
-            console.log("cus",this.customers)
         },
         methods: {
             photoURL(user) {

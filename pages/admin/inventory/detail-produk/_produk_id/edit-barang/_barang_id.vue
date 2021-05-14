@@ -314,11 +314,13 @@ import ApiService from '~/common/api.service';
                         await Promise.all(promises);
                         this.isSubmitStatus = SUBMIT_STATUS.success;
                         this.$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:this.$route.params.produk_id}})
+                        this.$toast.success('Berhasil mengubah data barang.',{icon:'check'});   
 
                     }catch(err) {
-                            this.isSubmitStatus = SUBMIT_STATUS.error;
-                            const response = {...err};
-                            this.errorMessage = response.response.data.item || response.response.data.message;
+                        this.isSubmitStatus = SUBMIT_STATUS.error;
+                        const response = {...err};
+                        this.errorMessage = response.response.data.item || response.response.data.message;
+                        this.$toast.error('Terjadi error, gagal mengubah data barang.',{icon:'error'});
                     }
                 }
             },

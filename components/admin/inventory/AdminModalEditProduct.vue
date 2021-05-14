@@ -223,10 +223,12 @@ export default {
                     this.isSubmitStatus = SUBMIT_STATUS.success;
                     console.log("success",data);
                     this.$emit('update');
+                    this.$toast.success('Berhasil memperbarui data produk.',{icon:'check'});
                 })
                 .catch(err=>{
                     this.isSubmitStatus = SUBMIT_STATUS.error;
                     console.log("error",err);
+                    this.$toast.error('Terjadi error, gagal memperbarui data barang.',{icon:'error'});
                 })
             }
         },

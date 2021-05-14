@@ -85,9 +85,11 @@ export default {
             await ApiService.delete(`/supplier/${this.data.supplierID}`)
             .then(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.success;
+                this.$toast.success('Berhasil menghapus data supplier.',{icon:'check'});
             })
             .catch(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.error;
+                this.$toast.error('Terjadi error, gagal menghapus data supplier.',{icon:'error'});
             })
         },
         

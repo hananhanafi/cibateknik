@@ -117,7 +117,7 @@ import { formatDate } from '~/store/helpers';
                     total: 0,
                 },
                 filters: {
-                    oder: null
+                    order: null
                 },
 
                 isLoadingData: true,

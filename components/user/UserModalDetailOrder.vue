@@ -6,8 +6,10 @@
             <button data-bs-dismiss="modal" class="btn-close btn text-danger" type="button" aria-label="Close" @click="$emit('close')"><fa :icon="['fas','times']" /></button>
         </div>
         <div class="modal-body">
+            <div v-if="isExpired">
+                EXPIRED
+            </div>
             <div class="w-100">
-                
                 <div class="mb-3">
                     <table class="text-nowrap">
                         <tr>
@@ -24,10 +26,11 @@
                             <td>Status Pesanan</td>
                             <td class="text-center" width="40px">:</td>
                             <td>
-                                <span v-if="data.statusOrder=='PENDING'" class="font-weight-bold text-danger">Memesan</span>
-                                <span v-else-if="data.statusOrder=='PACKING'" class="font-weight-bold text-warning">Dikemas</span>
-                                <span v-else-if="data.statusOrder=='SHIPPING'" class="font-weight-bold text-info">Dikirim</span>
-                                <span v-else-if="data.statusOrder=='DONE'" class="font-weight-bold text-success">Selesai</span>
+                                <span v-if="data && data.statusOrder=='PENDING'" class="font-weight-bold text-warning">Memesan</span>
+                                <span v-else-if="data && data.statusOrder=='EXPIRED'" class="font-weight-bold text-danger">Pesanan Expired</span>
+                                <span v-else-if="data && data.statusOrder=='PACKING'" class="font-weight-bold text-primary">Dikemas</span>
+                                <span v-else-if="data && data.statusOrder=='SHIPPING'" class="font-weight-bold text-info">Dikirim</span>
+                                <span v-else-if="data && data.statusOrder=='DONE'" class="font-weight-bold text-success">Selesai</span>
                             </td>
                         </tr>
                         <tr v-if="data.invoice">
@@ -35,14 +38,22 @@
                             <td class="text-center" width="40px">:</td>
                             <td>
                                 <span v-if="data.invoice.status=='PENDING'">
-                                    <span class="font-weight-bold text-danger">Belum dibayar
+                                    <span class="font-weight-bold text-warning">Belum dibayar 
+                                        <div>
+                                            ( Bayar sebelum {{ data.invoice && formateDateTime(data.invoice.expiry_date) }} )
+                                        </div>
                                     </span>
-                                    <!-- <a :href="data.invoice.invoice_url" target="_blank" class="btn btn-sm btn-outline-primary">
-                                        Bayar
-                                    </a> -->
+                                </span>
+                                <span v-else-if="data.invoice.status=='EXPIRED'">
+                                    <span class="font-weight-bold text-danger">Invoice Expired
+                                    </span>
                                 </span>
                                 <span v-else-if="data.invoice.status=='PAID'">
-                                    <span class="font-weight-bold text-success">Sudah dibayar</span>
+                                    <span class="font-weight-bold text-success">Sudah dibayar
+                                        <div>
+                                            ( Telah dibayar pada {{ data.invoice && formateDateTime(data.invoice.paid_at) }} )
+                                        </div>
+                                    </span>
                                 </span>
 
                             </td>
@@ -210,7 +221,7 @@
 </template>
 
 <script>
-import { formatDate, toFormatedNumber } from '~/store/helpers';
+import { formatDate, toFormatedNumber, toLongDate } from '~/store/helpers';
 export default {
     props: {
         show: Boolean,
@@ -223,6 +234,11 @@ export default {
         return {
         }
     },
+    computed: {
+        isExpired() {
+            return this.data.invoice && this.data.invoice.status === 'EXPIRED';
+        }
+    },
     mounted() {
     },
     methods: {
@@ -233,8 +249,18 @@ export default {
             const url = item.imagesItem ? item.imagesItem[0].imageUrl : process.env.baseUrl+"/_nuxt/assets/img/logo.png"
             return url;
         },
+        formateDateTime(dateParam){
+            const date = new Date(dateParam);
+            const formattedDate = this.toLongDate(date);
+            const hour = date.getHours();
+            const minute = date.getMinutes();
+
+
+            return formattedDate+ " " + hour+":"+minute;
+        },
         // helpers
         formatDate,
+        toLongDate,
         toFormatedNumber
     }
 };

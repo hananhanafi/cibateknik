@@ -24,15 +24,15 @@
                                     </h4>
                                     
                                     
-                                    <button type="button" class="btn bg-white border text-dark w-100" >
+                                    <button type="button" class="btn bg-white shadow text-dark w-100" @click="googleSignIn" >
                                         <img class="mr-3 h-100" src="~/assets/img/media-social/google.png" fluid alt="Responsive image"/> Masuk Dengan Google    
                                     </button>
 
-                                    <div class="py-2"></div>
+                                    <!-- <div class="py-2"></div>
 
-                                    <button type="button" class="btn text-white w-100"  style="background-color:#4267B2" >
+                                    <button type="button" class="btn shadow text-white w-100"  style="background-color:#4267B2" @click="facebookSignIn" >
                                         <img class="mr-3" src="~/assets/img/media-social/facebook-square.png" fluid alt="Responsive image"/> Masuk Dengan Facebook    
-                                    </button>
+                                    </button> -->
                                     
                                     <div class="py-2"></div>
 
@@ -58,7 +58,8 @@
 
 <script>
 
-
+import firebase from 'firebase'
+import ApiService from '~/common/api.service';
 
     export default {
         middleware: 'notAuthenticated',
@@ -73,7 +74,8 @@
                 email: null,
                 password: null,
                 showError: false,
-                errorMessage :null
+                errorMessage :null,
+                provider: null,
             }
         },
         created() {
@@ -89,6 +91,88 @@
             handleResize() {
                 this.windowH.width = window.innerWidth;
                 this.windowH.height = window.innerHeight;
+            },
+            formatDataUser(user){
+                const dataUser = {
+                    name: user.displayName,
+                    email: user.email,
+                    phoneNumber: user.phoneNumber,
+                    photoURL: user.photoURL,
+                }
+
+                return dataUser;
+            },
+            googleSignIn () {
+                this.provider = new firebase.auth.GoogleAuthProvider()
+                firebase.auth()
+                .signInWithPopup(this.provider)
+                .then(async (result) => {
+                    /** @type {firebase.auth.OAuthCredential} */
+                    const credential = result.credential;
+                    // This gives you a Google Access Token. You can use it to access the Google API.
+                    const token = credential.accessToken;
+                    // The signed-in user info.
+                    const user = result.user;
+                    // ...
+                    console.log("credential",credential);
+                    console.log("token",token);
+                    console.log("user",user);
+                    console.log("this.provider",this.provider);
+
+                    let newAuth;
+                    await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+                        // Send token to your backend via HTTPS
+                        // ...
+                        const dateNow = new Date();
+                        newAuth = {
+                            token: idToken,
+                            signInProvider: credential.signInMethod,
+                            authTime: dateNow,
+                            
+                        }
+                    }).catch(function(error) {
+                        // Handle error
+                        console.log("Err",error);
+                        this.$toast.error('Error while authenticating',{icon:'error'})
+                    });
+
+                    const dataUser = this.formatDataUser(user);
+                    await ApiService.post(`/user/signin/google/${user.uid}`,dataUser)
+                    .then(async(response)=>{
+                        this.$store.commit('setAuthUser', newAuth);
+                        ApiService.setHeader();
+                        await ApiService.get("/user").then(data=>{
+                            this.$store.commit('setUserInfo', data.data);
+                            this.$toast.success('Successfully authenticated',{icon:'check'})
+                            this.$router.push('/');
+                        })
+                        .catch(({response})=>{
+                            console.log("err",response);
+                            this.$store.commit('purgeAuth');
+                            this.$toast.error('Error while authenticating',{icon:'error'})
+                        })
+
+
+                        console.log('success',response);
+                    })
+                    .catch(({response})=>{
+                        console.log("err",response);
+                        this.$store.commit('purgeAuth');
+                        this.$toast.error('Error while authenticating',{icon:'error'})
+                    })
+                }).catch((error) => {
+                    // Handle Errors here.
+                    // const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // // The email of the user's account used.
+                    // const email = error.email;
+                    // // The firebase.auth.AuthCredential type that was used.
+                    // const credential = error.credential;
+                    // // ...
+
+                    console.log("Err",error);
+                    this.$toast.error(errorMessage,{icon:'error'})
+                });
             },
         },
         head() {

@@ -76,7 +76,7 @@
                                     :
                                 </td>
                                 <td>
-                                    {{ dataUser && dataUser.firstName + " " +  dataUser && dataUser.lastName }}
+                                    {{ dataUser && dataUser.name }}
                                 </td>
                             </tr>
                             <tr>

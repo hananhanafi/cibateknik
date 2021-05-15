@@ -21,7 +21,7 @@
                                     :
                                 </td>
                                 <td>
-                                    {{ data && data.firstName + " " +  data && data.lastName }}
+                                    {{ data && data.name }}
                                 </td>
                             </tr>
                             <tr>

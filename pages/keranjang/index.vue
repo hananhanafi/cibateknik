@@ -77,7 +77,7 @@
                 </div>
                 <h3>Tidak ada barang di keranjang.</h3>
                 <div>
-                    <h5>Ingim mencari barang ?</h5>
+                    <h5>Ingin mencari barang ?</h5>
                     <a href="/cari" class="btn btn-primary">Cari Sekarang</a>
                 </div>
             </div>

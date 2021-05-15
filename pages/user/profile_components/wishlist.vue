@@ -77,10 +77,8 @@ export default {
         this.isLoadingData = true;
         await ApiService.query('/user/wishlist/items',this.params)
         .then((response)=>{
-            console.log("ct",response.data);
             this.wishlistItems = response.data.data;
             this.metaData = response.data.meta
-            console.log("this.wishlistItems",this.wishlistItems);
 
         })
         .catch(err=>{

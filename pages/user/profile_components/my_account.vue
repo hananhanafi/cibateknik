@@ -57,29 +57,14 @@
 
           <div>
             <BaseInput
-                id="firstName"
-                v-model="formData.firstName"
-                label="Nama Awal"
-                placeholder="Nama Awal"
+                id="name"
+                v-model="formData.name"
+                label="Nama"
+                placeholder="Nama"
                 :error="
                     isSubmitStatus == submitStatuses.pending
-                    ? !$v.formData.firstName.required 
-                        ? 'Nama Awal harus diisi'
-                        : null
-                    : null
-                "
-            />
-          </div>
-          <div>
-            <BaseInput
-                id="lastName"
-                v-model="formData.lastName"
-                label="Nama Akhir"
-                placeholder="Nama Akhir"
-                :error="
-                    isSubmitStatus == submitStatuses.pending
-                    ? !$v.formData.lastName.required 
-                        ? 'Nama Akhir harus diisi'
+                    ? !$v.formData.name.required 
+                        ? 'Nama harus diisi'
                         : null
                     : null
                 "
@@ -162,8 +147,7 @@ import { required } from 'vuelidate/lib/validators';
 import { SUBMIT_STATUS } from '../../../store/constants';
 import ApiService from '~/common/api.service';
 const emptyData ={
-        firstName: '',
-        lastName: '',
+        name: '',
         email: "hanafihanan@mail.id",
         gender : null,
         dateOfBirth: {
@@ -172,7 +156,7 @@ const emptyData ={
           year: null,
         },
         selectedDate: null,
-        imageUrl : process.env.baseUrl+"/_nuxt/assets/img/dummy.png",
+        photoURL : process.env.baseUrl+"/_nuxt/assets/img/dummy.png",
 }
 export default {  
   mixins: [validationMixin],
@@ -188,8 +172,7 @@ export default {
   },
   validations: {
       formData :{
-          firstName :{ required },
-          lastName :{ required },
+          name :{ required },
           email :{ required },
           gender :{ required },
           // dateOfBirth :{
@@ -213,8 +196,7 @@ export default {
       },
       formatFormData(){
         return {
-          firstName : this.formData.firstName || null,
-          lastName : this.formData.lastName || null,
+          name : this.formData.name || null,
           gender : this.formData.gender || null,
           dateOfBirth : {
             day: this.formData.selectedDate.getDate() || null,
@@ -224,10 +206,10 @@ export default {
         }
       },
       photoURL() {
-        const url = this.formData.imageUrl || process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+        const url = this.formData.photoURL || process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
         return url;
 
-        // return this.formData.imageUrl || process.env.baseUrl+"/_nuxt/assets/img/dummy.png";
+        // return this.formData.photoURL || process.env.baseUrl+"/_nuxt/assets/img/dummy.png";
       }
   },
   mounted() {
@@ -278,7 +260,7 @@ export default {
                 objectURL: URL.createObjectURL(file),
                 file,
             };
-            this.formData.imageUrl = this.photo.objectURL;
+            this.formData.photoURL = this.photo.objectURL;
         });
     },
     addFile(e) {
@@ -290,13 +272,13 @@ export default {
                 objectURL: URL.createObjectURL(file),
                 file,
             };
-            this.formData.imageUrl = this.photo.objectURL;
+            this.formData.photoURL = this.photo.objectURL;
         });
 
     },
     deletePhoto(){
         this.photo = null;
-        // this.formData.imageUrl = null;
+        // this.formData.photoURL = null;
     },
     reset() {
       // this.$nuxt.refresh();

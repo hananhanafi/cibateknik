@@ -13,7 +13,6 @@ const createStore = () => {
             auth: null,
             role: '',
             userInfo: null,
-            isUserVerified: false,
             checkoutItem: [],
         }),
         plugins: [createPersistedState()],
@@ -27,11 +26,40 @@ const createStore = () => {
                 ApiService.setHeader();
             },
             setAuthUser(state, token) {
-                // state.token = token;
-                state.auth = token;
-                Cookie.set('auth', token.token) // saving token in cookie for server rendering
-                Cookie.set('expirationTime', token.expirationTime);
-                state.role = 'user';
+                if(token.signInProvider === 'password'){
+                    // state.token = token;
+                    console.log("Totok",token);
+                    const newAuth = {
+                        authTime: token.authTime,
+                        claims: token.claims,
+                        token: token.token,
+                        expirationTime: token.expirationTime,
+                        signInProvider: token.signInProvider
+                    }
+                    state.auth = newAuth;
+                    Cookie.set('auth', newAuth.token) // saving token in cookie for server rendering
+                    Cookie.set('expirationTime', newAuth.expirationTime);
+                    state.role = 'user';
+
+                }else {
+                    console.log("lainnih,token",token);
+
+                    const expiredAuth = token.authTime.setHours(token.authTime.getHours()+1);
+
+                    const newAuth = {
+                        authTime: token.authTime,
+                        token: token.token,
+                        expirationTime: new Date(expiredAuth),
+                        signInProvider: token.signInProvider
+                    }
+
+                    console.log("newaut",newAuth);
+                    state.auth = newAuth;
+                    Cookie.set('auth', newAuth.token) // saving token in cookie for server rendering
+                    Cookie.set('expirationTime', newAuth.expirationTime);
+                    state.role = 'user';
+
+                }
             },
             purgeAuth(state){
                 // state.token = null;
@@ -44,9 +72,6 @@ const createStore = () => {
             },
             setUserInfo(state, userInfo) {
                 state.userInfo = userInfo.userCredentials;
-                if(userInfo.isVerified){
-                    state.isUserVerified = userInfo.isVerified;
-                }
                 Cookie.set('userInfo', userInfo.userCredentials);
             },
             setCheckoutItem(state, item) {

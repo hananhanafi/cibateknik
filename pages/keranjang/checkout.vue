@@ -294,6 +294,7 @@ import { toFormatedNumber } from '~/store/helpers';
                 isLoadingData: true,
                 userAddresses: [],
                 currentMainAddress: {},
+                isLoadingChangeMainAddress: false,
 
                 courier: null,
                 ShipmentOptions: [
@@ -358,6 +359,7 @@ import { toFormatedNumber } from '~/store/helpers';
                 const result = {
                     address : this.currentMainAddress,
                     shipment: this.shipmentCost,
+                    courier: this.courier,
                     amount: this.getTotalBill,
                     items: this.getCheckoutItem,
                     totalItemsWeight: this.getTotalWeight,
@@ -380,7 +382,6 @@ import { toFormatedNumber } from '~/store/helpers';
         methods: {
             async checkout() {
                 this.$v.$touch();
-                console.log("checkut,",this.$v)
                 if (this.$v.$invalid) {
                     this.checkoutStatus = SUBMIT_STATUS.pending;
                 } else {
@@ -389,13 +390,12 @@ import { toFormatedNumber } from '~/store/helpers';
                     const formattedCheckoutData = this.formatCheckoutData;
                     await ApiService.post(`/user/checkout/invoice/create/${this.getUserInfo.userID}`,formattedCheckoutData)
                     .then((response)=>{
-                        console.log("res",response);
                         this.$toast.success('Berhasil memesan barang, periksa pesanan Anda di menu profil',{icon:'check'});
                         this.dataCheckout = response.data.data;
                         this.checkoutStatus = SUBMIT_STATUS.success;
                     })
                     .catch((err)=>{
-                        console.log("gagal",err);
+                        console.log("failed",err);
                         this.checkoutStatus = SUBMIT_STATUS.error;
                     })
 
@@ -428,10 +428,12 @@ import { toFormatedNumber } from '~/store/helpers';
                 this.currentMainAddress = this.userAddresses.find(address=>address.isMainAddress===true);
             },
             updateMainAddress(value){
+                this.isLoadingChangeMainAddress = true;
                 this.courier = null;
                 this.shipmentServices = null;
                 this.shipmentCost = null;
                 this.currentMainAddress = value.value;
+                this.isLoadingChangeMainAddress = false;
             },
             addNewAddress(value){
                 this.userAddresses.push(value);

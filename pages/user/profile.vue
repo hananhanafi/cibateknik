@@ -238,10 +238,16 @@ import ApiService from '~/common/api.service';
                 return this.$store.state.userInfo;
             },
             isUserVerified(){
-                return this.$store.state.isUserVerified;
+                if(this.$store.state.auth && this.$store.state.auth.signInProvider!=='password'){
+                    return true
+                }else if(this.$store.state.auth) {
+                    return this.$store.state.auth.claims.email_verified;
+                }
+
+                return false;
             },
             photoURL() {
-                const url = this.getUserInfo ? this.getUserInfo.imageUrl : process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+                const url = this.getUserInfo ? this.getUserInfo.photoURL : process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
                 return url;
             }
         },

@@ -30,7 +30,7 @@
                     <b-navbar-nav v-if="getUserInfo">
                         <b-nav-item-dropdown right>
                             <template #button-content>
-                                <img class="img-fluid rounded-pill" :src="photoURL" style="width:40px;height:40px"> {{getUserInfo.firstName + " " + getUserInfo.lastName }}
+                                <img class="img-fluid rounded-pill" :src="photoURL" style="width:40px;height:40px"> {{getUserInfo.name }}
                             </template>
                             
                             <!-- <b-dropdown-item>
@@ -58,7 +58,6 @@
                             <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
-
             </b-navbar>
         </div>
         <div class="fixed-bottom d-md-none d-block bg-white mx-2 mb-2 rounded-pill border" style="z-index:999;font-size:12px">
@@ -159,6 +158,7 @@
 
 <script>
 import ApiService from '~/common/api.service';
+
     export default {
         data() {
         return {
@@ -173,13 +173,22 @@ import ApiService from '~/common/api.service';
                 return this.$store.state.userInfo;
             },
             photoURL() {
-                const url = this.getUserInfo.imageUrl || process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+                const url = this.getUserInfo.photoURL || process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
                 return url;
             }
         },
         created() {
             
             this.handleResize();
+            // console.log("cookexptime",Cookie.get('expirationTime'));
+            // console.log("cookexptime",this.$store.state.auth.expirationTime);
+
+            const dateNow = new Date();
+            console.log("Datenow1",dateNow);
+            const newDate = dateNow.setHours(dateNow.getHours()+1);
+            console.log("Datenow",dateNow);
+            console.log("newDate",newDate);
+            console.log("newDate",new Date(newDate));
             if(this.$store.state.auth){
                 const expiredDate = new Date(this.$store.state.auth.expirationTime);
                 const dateNow = new Date();

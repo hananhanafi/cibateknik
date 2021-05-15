@@ -62,9 +62,11 @@ export default {
                     value: address
                 }
             })
-            this.formData.address = {
-                label : this.data.label,
+            if(this.data){
+                this.formData.address = {
+                    label : this.data.label,
                 value: this.data
+                }
             }
         }
     },

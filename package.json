@@ -34,6 +34,7 @@
     "chart.js": "^2.9.4",
     "cookieparser": "^0.1.0",
     "core-js": "^3.6.5",
+    "firebase": "^8.6.1",
     "js-cookie": "^2.2.1",
     "material-design-icons": "^3.0.1",
     "nuxt": "^2.14.12",

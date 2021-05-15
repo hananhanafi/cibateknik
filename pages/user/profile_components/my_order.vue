@@ -7,6 +7,15 @@
           <h3>Pesanan</h3>
         </div>
       </div>
+      <div class="col-lg-3 col-md-12">
+        <BaseSelect
+        v-model="filters.statusOrder"
+        :options="statusOrderOptions"
+        placeholder="Pilih Status Pesanan"
+        dense
+        @input="orderSelectHandler($event)"
+        />
+      </div>
       <div class="col-lg-2 col-md-12">
         <BaseSelect
         v-model="filters.order"
@@ -36,13 +45,15 @@
               <th scope="row">{{ order.id }}</th>
               <td>{{ formatDate(order.createdAt._seconds) }}</td>
               <td>
-                <span v-if="order.statusOrder=='PENDING'" class="font-weight-bold text-danger">Memesan</span>
-                <span v-else-if="order.statusOrder=='PACKING'" class="font-weight-bold text-warning">Dikemas</span>
+                <span v-if="order.statusOrder=='PENDING'" class="font-weight-bold text-warning">Memesan</span>
+                <span v-else-if="order.statusOrder=='EXPIRED'" class="font-weight-bold text-danger">Pesanan Expired</span>
+                <span v-else-if="order.statusOrder=='PACKING'" class="font-weight-bold text-primary">Dikemas</span>
                 <span v-else-if="order.statusOrder=='SHIPPING'" class="font-weight-bold text-info">Dikirim</span>
                 <span v-else-if="order.statusOrder=='DONE'" class="font-weight-bold text-success">Selesai</span>
               </td>
               <td>
-                <span v-if="order.invoice.status=='PENDING'" class="font-weight-bold text-danger">Belum dibayar</span>
+                <span v-if="order.invoice.status=='PENDING'" class="font-weight-bold text-warning">Belum dibayar</span>
+                <span v-else-if="order.invoice.status=='EXPIRED'" class="font-weight-bold text-danger">Invoice Expired</span>
                 <span v-else-if="order.invoice.status=='PAID'" class="font-weight-bold text-success">Sudah dibayar</span>
               </td>
               <td width="20%">
@@ -86,7 +97,8 @@ export default {
   data() {
     return {
       filters: {
-          oder: null
+          order: null,
+          statusOrder: null,
       },
       userOrders: [],
       currentOrder: {},
@@ -100,6 +112,28 @@ export default {
       },
       isLoadingData: true,
 
+      statusOrderOptions: [
+        {
+          label: 'Meemensan',
+          value: 'PENDING',
+        },
+        {
+          label: 'Dikemas',
+          value: 'PACKING',
+        },
+        {
+          label: 'Dikirim',
+          value: 'SHIPPING',
+        },
+        {
+          label: 'Selesai',
+          value: 'DONE',
+        },
+        {
+          label: 'Expired',
+          value: 'EXPIRED',
+        },
+      ],
       
       items: new Array(10),
       isShowUserModalDetailOrder: false, 
@@ -111,6 +145,7 @@ export default {
         return {
             page: this.metaData.current_page, 
             order: this.filters.order ? (this.filters.order === 'Terbaru' ? 'desc' : 'asc') : null, 
+            statusOrder: this.filters.statusOrder ? this.filters.statusOrder.value : null, 
         }
     },
     isLastPage() {

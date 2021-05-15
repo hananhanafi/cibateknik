@@ -14,37 +14,22 @@
                         <div class="p-3 text-medium">
                             <h2 class="font-weight-bold" >Daftar</h2>
                             <form @submit.prevent="register">
-                                <div class="d-flex">
-                                    <BaseInput
-                                        id="firstName"
-                                        v-model="formData.firstName"
-                                        label="Nama Depan"
-                                        placeholder="Masukkan nama depan Anda"
-                                        :error="
-                                            submitStatus == 'ERROR'
-                                            ? !$v.formData.firstName.required
-                                            ? 'Nama Depan harus diisi'
-                                            : null
-                                            : null
-                                        "
-                                        class="flex-fill mr-2"
-                                    />
-                                    <BaseInput
-                                        id="lastName"
-                                        v-model="formData.lastName"
-                                        label="Nama Akhir"
-                                        placeholder="Masukkan nama akhir Anda"
-                                        :error="
-                                            submitStatus == 'ERROR'
-                                            ? !$v.formData.lastName.required
-                                            ? 'Nama Akhir harus diisi'
-                                            : null
-                                            : null
-                                        "
-                                        class="flex-fill"
-                                    />
-                                </div>
                                 
+                                <BaseInput
+                                    id="name"
+                                    v-model="formData.name"
+                                    label="Nama"
+                                    placeholder="Masukkan Nama Anda"
+                                    :error="
+                                        submitStatus == 'ERROR'
+                                        ? !$v.formData.name.required
+                                        ? 'Nama harus diisi'
+                                        : null
+                                        : null
+                                    "
+                                    class="flex-fill mr-2"
+                                />
+
                                 <BaseInput
                                     id="email"
                                     v-model="formData.email"
@@ -155,8 +140,7 @@ import ApiService from '~/common/api.service'
                     height: 0
                 },
                 formData: {
-                    firstName: null,
-                    lastName: null,
+                    name: null,
                     email: null,
                     phoneNumber: null,
                     address: null,
@@ -170,8 +154,7 @@ import ApiService from '~/common/api.service'
         },
         validations: {
             formData: {
-                firstName: {required},
-                lastName: {required},
+                name: {required},
                 email: {required},
                 phoneNumber: {required},
                 address: {required},

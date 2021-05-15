@@ -32,7 +32,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    '~/plugins/vue-swiper.js',
+    '~/plugins/vue-swiper.js','~/plugins/firebase.js',
     '~/plugins/api.js','~/plugins/v-calendar','~/plugins/vue2-datepicker','~/plugins/vue2-daterangepicker',{ src: '~plugins/nuxt-quill', ssr: false }],
     // "{ src: '~/plugins/vue-datepicker', mode: 'client' }"],
 

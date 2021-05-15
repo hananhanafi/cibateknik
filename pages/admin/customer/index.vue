@@ -58,7 +58,7 @@
                                     <td>
                                         <img :src="photoURL(customer)" class="img-fluid" style="width:40px" alt="Responsive image"> 
                                     </td>
-                                    <td>{{customer.firstName + " " + customer.lastName}}</td>
+                                    <td>{{customer.name}}</td>
                                     <!-- <td>{{ new Date(customer.createdAt._seconds)}}</td> -->
                                     <td>{{ formatDate(customer.createdAt._seconds) }}</td>
                                     <td>{{ formatDate(customer.lastLogin._seconds) || '-' }}</td>

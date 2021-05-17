@@ -4,7 +4,7 @@
             
             <Breadcrumb :data="breadCrumbList"/>
             
-            <div class="row">
+            <div class="row w-100" style="overflow-x:auto">
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div style="background: linear-gradient(75.38deg, #1AE3D9 3.3%, #5C7CE9 100%);height:200px" class="w-100 shadow-sm text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
@@ -22,6 +22,23 @@
                         </div>  
                     </div>
                 </div>
+                <!-- <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div style="background: linear-gradient(75.38deg, #8E2DE2 3.3%, #4A00E0 100%);height:200px" class="w-100 shadow-sm text-white rounded-8 p-3 mb-4">
+                        <div class="row h-100 align-items-center">
+                            <div  class="col text-left">
+                                <div style="font-size:4em">
+                                    100
+                                </div>
+                                <div class="font-weight-bold font-weight-bold">
+                                    <div>Total Barang Terjual</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <fa  style="font-size:500%" :icon="['fas','coins']"  />
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div style="background: linear-gradient(75.38deg, #41E296 3.3%, #3BB5B5 100%);height:200px" class="w-100 shadow-sm text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
@@ -39,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12">
+                <!-- <div class="col-lg-3 col-md-6 col-sm-12">
                     <div style="background: linear-gradient(75.38deg, #F5509F 3.3%, #FE6F70 100%);height:200px" class="w-100 shadow-sm text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
                             <div  class="col text-left">
@@ -55,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div style="background: linear-gradient(75.38deg, #FFD941 3.3%, #FF8154 100%);height:200px" class="w-100 shadow-sm text-white rounded-8 p-3 mb-4">
                         <div class="row h-100 align-items-center">
@@ -69,6 +86,23 @@
                             </div>
                             <div class="col">
                                 <fa  style="font-size:500%" :icon="['fas','users']"  />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div style="background: linear-gradient(75.38deg, #F5509F 3.3%, #FE6F70 100%);height:200px" class="w-100 shadow-sm text-white rounded-8 p-3 mb-4">
+                        <div class="row h-100 align-items-center">
+                            <div  class="col text-left">
+                                <div style="font-size:4em">
+                                    100
+                                </div>
+                                <div class="font-weight-bold font-weight-bold">
+                                    <div>Total Pengguna Online</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <fa  style="font-size:500%" :icon="['fas','coins']"  />
                             </div>
                         </div>
                     </div>
@@ -139,7 +173,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
+
+            <div class="row">
 
                 <div class="col-lg-3 col-12 mb-4">
                     <div class="bg-white p-3 text-left rounded-8 h-100 shadow-sm">
@@ -212,12 +249,11 @@
                         </div>
                     </div>
                 </div>
-
-                <AdminListUserOrder/>
-
-                
             </div>
 
+
+            <AdminListUserOrder/>
+            
         </div>
     </div>
 </template>

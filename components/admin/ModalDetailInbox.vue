@@ -13,11 +13,11 @@
                             <h4>{{ data.title }}</h4>
                             
                             <div class="flex-fill text-muted ml-4 text-right">
-                                {{ formatDate(data.createdAt._seconds) }}
+                                {{ formatDateTime(data.createdAt._seconds) }}
                             </div>
                         </div>
-                        <div>Dari : {{ data.name || 'Anonim'}}</div>
-                        <p>{{ data.body }}</p>
+                        <div>Dari : {{ data.data && data.data.name || data.notification_type === 'message' ? 'Anonim' : 'Sistem'}}</div>
+                        <p>{{ data.description }}</p>
 
                     </div>
                 </div>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { formatDate } from '~/store/helpers';
+import { formatDateTime } from '~/store/helpers';
 export default {
     props: {
         show: Boolean,
@@ -52,7 +52,7 @@ export default {
             this.$emit('close');
         },
         // helpers
-        formatDate
+        formatDateTime
     }
 };
 </script>

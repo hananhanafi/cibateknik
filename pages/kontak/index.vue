@@ -130,16 +130,16 @@ import { SUBMIT_STATUS } from '~/store/constants';
                 } else {
                     this.isSubmitStatus = SUBMIT_STATUS.loading;
                     const formattedFormData = this.formatFormData(this.formData);
-                    await ApiService.post("/user/admin-message/send",formattedFormData)
+                    await ApiService.post("/user/admin-notification/send",formattedFormData)
                     .then(data=>{
                         this.isSubmitStatus = SUBMIT_STATUS.success;
                         console.log("success",data);
-                        alert('Berhasil mengirim pesan!');
+                        this.$toast.success('Berhasil mengirim pesan.',{icon:'check'});
                     })
                     .catch(err=>{
                         this.isSubmitStatus = SUBMIT_STATUS.error;
                         console.log("error",err);
-                        alert('Gagal mengirim pesan!');
+                        this.$toast.error('Terjadi error, gagal mengirim pesan.',{icon:'error'});
                     })
                 }
             },

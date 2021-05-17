@@ -6,7 +6,7 @@
                 <h5 id="exampleModalLabel" class="modal-title">Hapus pesan</h5>
                 <button type="button" class="btn-close btn text-danger" data-bs-dismiss="modal" aria-label="Close">x</button>
             </div> -->
-            <div class="modal-body">
+            <div class="modal-body text-center">
                 Yakin ingin menghapus pesan ?
             </div>
             <div class="modal-footer border-top-0 d-flex">
@@ -81,7 +81,7 @@ export default {
     methods: {
         async onSubmit(){
             this.isSubmitStatus = SUBMIT_STATUS.loading;
-            await ApiService.delete(`/user/admin-notification/delete/${this.data.id}`)
+            await ApiService.delete(`/user/${this.getUserInfo.userID}/notification/delete/${this.data.id}`)
             .then((response)=>{
                 console.log("res",response);
                 this.isSubmitStatus = SUBMIT_STATUS.success;

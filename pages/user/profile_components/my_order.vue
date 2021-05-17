@@ -7,7 +7,7 @@
           <h3>Pesanan</h3>
         </div>
       </div>
-      <div class="col-lg-3 col-md-12">
+      <!-- <div class="col-lg-3 col-md-12">
         <BaseSelect
         v-model="filters.statusOrder"
         :options="statusOrderOptions"
@@ -15,7 +15,7 @@
         dense
         @input="orderSelectHandler($event)"
         />
-      </div>
+      </div> -->
       <div class="col-lg-2 col-md-12">
         <BaseSelect
         v-model="filters.order"
@@ -114,7 +114,7 @@ export default {
 
       statusOrderOptions: [
         {
-          label: 'Meemensan',
+          label: 'Memesan',
           value: 'PENDING',
         },
         {

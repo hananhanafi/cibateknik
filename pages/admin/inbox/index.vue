@@ -16,10 +16,10 @@
                         />
                     </div>
 
-                    <div class="ml-auto d-flex align-items-center">
+                    <!-- <div class="ml-auto d-flex align-items-center">
                         <a class="btn btn-sm text-danger" @click="showModalDeleteMessage"><fa class="text-danger" :icon="['fas','trash']" /> Hapus Semua</a>
 
-                    </div>
+                    </div> -->
                 </div>
                 <div class="container-fluid">
                     
@@ -160,7 +160,7 @@ import { formatDate } from '~/store/helpers';
             },
             async loadData() {
                 this.isLoadingData = true;
-                await ApiService.query('/admin/messages',this.params)
+                await ApiService.query('/admin/notifications',this.params)
                 .then((response)=>{
                     this.inboxMessages = response.data.data;
                     this.metaData = response.data.meta
@@ -174,7 +174,7 @@ import { formatDate } from '~/store/helpers';
             async loadMore() {
                 this.metaData.current_page++;
                 this.isLoadingData = true;
-                await ApiService.query('/admin/messages',this.params)
+                await ApiService.query('/admin/notifications',this.params)
                 .then((response)=>{
                     this.inboxMessages = this.inboxMessages.concat(response.data.data);
                     this.metaData = response.data.meta

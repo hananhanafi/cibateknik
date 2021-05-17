@@ -7,10 +7,22 @@ export const formatDate = function(dateParams){
     const dateNumb = date.getDate();
     const month = date.getMonth()-1;
     const year = date.getFullYear();
-    console.log("Ddd",date);
-
     
     return DAY_NAMES[day] + ", " + dateNumb  + " " + MONTH_NAMES[month+1] + " " + year;
+};
+
+export const formatDateTime = function(dateParams){
+  const date = new Date(dateParams*1000);
+  
+  const day = date.getDay();
+  const dateNumb = date.getDate();
+  const month = date.getMonth()-1;
+  const year = date.getFullYear();
+
+  const hour = date.getHours() < 10 ? '0'+date.getHours() : date.getHours() ;
+  const minute = date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes();
+  
+  return DAY_NAMES[day] + ", " + dateNumb  + " " + MONTH_NAMES[month+1] + " " + year + " " + hour + ":" + minute;
 };
 
 export const toMonthYearDate = function(dateParams){

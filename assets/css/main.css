@@ -87,6 +87,18 @@ a, a:hover, a:focus, a:active {
     -webkit-line-clamp: 2;
 }
 
+.c-pointer{
+    cursor: pointer;
+}
+
+.text-8{
+    font-size: 8px;
+}
+
+.text-10{
+    font-size: 10px;
+}
+
 .text-12{
     font-size: 12px;
 }

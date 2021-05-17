@@ -14,8 +14,8 @@
                         <b-button v-b-toggle.sidebar-no-header class="bg-primary-dark"><fa :icon="['fas','bars']"/></b-button>
                     </b-nav-item>
                 </b-navbar-nav>
-                
                 <b-navbar-nav class="ml-auto">
+                    <AdminNotifications/>
                     <b-nav-item-dropdown right>
                         <template #button-content>
                             <img src="~/assets/img/person.png" class="img-fluid rounded-circle h-100" style="width:40px" alt="Responsive image"> Hanan Hanafi

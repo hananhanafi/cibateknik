@@ -27,6 +27,9 @@
                         <b-nav-item href="/user/register">Daftar</b-nav-item>
                         <b-nav-item href="/user/login">Masuk</b-nav-item>
                     </b-navbar-nav>
+
+                    <UserNotifications v-if="getUserInfo"/>
+
                     <b-navbar-nav v-if="getUserInfo">
                         <b-nav-item-dropdown right>
                             <template #button-content>
@@ -44,6 +47,9 @@
                             <router-link class="btn btn-light w-100 text-decoration-none text-dark text-left" :to="{ name: 'user-profile', query: { tab: 'my_order' } }">
                                 Pesanan Saya
                             </router-link>
+                            <router-link class="btn btn-light w-100 text-decoration-none text-dark text-left" :to="{ name: 'user-profile', query: { tab: 'main_address' } }">
+                                Alamat Saya
+                            </router-link>
                             <router-link class="btn btn-light w-100 text-decoration-none text-dark text-left" :to="{ name: 'user-profile', query: { tab: 'wishlist' } }">
                                 Wishlist Saya
                             </router-link>
@@ -60,7 +66,14 @@
                     </b-navbar-nav>
             </b-navbar>
         </div>
+
+        <UserNotifications v-if="getUserInfo"/>
+        
+        <!-- bottom nav for mobile -->
         <div class="fixed-bottom d-md-none d-block bg-white mx-2 mb-2 rounded-pill border" style="z-index:999;font-size:12px">
+
+            
+
             <div class="d-flex">
                 <router-link class="flex-fill text-center text-decoration-none py-2" 
                             :class="{ 'text-primary' : isActive('index') }" 
@@ -102,9 +115,10 @@
                     </div>
                 </router-link>
             </div>
+
         </div>
         
-        
+        <!-- footer -->
         <div class="bg-white position-relative" :style="{minHeight: windowH.height+'px'}">
             <Nuxt />
             <div class="footer">

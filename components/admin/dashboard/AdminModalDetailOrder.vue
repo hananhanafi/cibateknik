@@ -64,7 +64,7 @@
                         <h4>Info Customer</h4>
                     </div>
                     <div class="col-4">
-                        <b-img class="w-100" :src="photoURL(dataUser)" fluid alt="Responsive image"></b-img>
+                        <b-img class="w-100" :src="userPhotoURL(dataUser)" fluid alt="Responsive image"></b-img>
                     </div>
                     <div class="col">
                         <table>
@@ -348,6 +348,10 @@ export default {
         },
         clickOutside() {
             this.$emit('close');
+        },
+        userPhotoURL(item) {
+            const url = item.photoURL ? item.photoURL : process.env.baseUrl+"/_nuxt/assets/img/logo.png"
+            return url;
         },
         photoURL(item) {
             const url = item.imagesItem ? item.imagesItem[0].imageUrl : process.env.baseUrl+"/_nuxt/assets/img/logo.png"

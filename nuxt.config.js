@@ -86,7 +86,7 @@ export default {
   toast: {
     position: 'top-right',
     // iconPack: 'fontawesome',
-    duration:3000,
+    duration:5000,
     // register: [ // Register custom toasts
     //   {
     //     name: 'my-error',

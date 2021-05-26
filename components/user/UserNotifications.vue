@@ -29,6 +29,10 @@
                                         <div>
                                             {{ notification.description }}
                                         </div>
+                                        <div v-if="notification.notification_type==='order' && notification.data && notification.data.statusOrder==='SHIPPING'" class="alert alert-warning">
+                                            Nomor Resi : {{ notification.data.receiptNumber }}
+                                        </div>
+
                                         <a v-if="notification.notification_type==='order' && notification.data && notification.data.invoice.status=='PENDING'" class="btn btn-sm btn-primary w-100" @click.prevent="goToPayment(notification)">Bayar</a>
                                     </div>
                                 </div>
@@ -137,10 +141,10 @@ export default {
     created() {
         // eslint-disable-next-line nuxt/no-globals-in-created
         window.addEventListener('beforeunload', this.loadNotif);
+        this.loadNotif();
     },
     mounted() {
         this.loadNotif();
-        console.log("NONOTif");
     },
     destroyed() {
         window.removeEventListener('beforeunload', this.loadNotif)
@@ -150,7 +154,6 @@ export default {
             window.open(notification.data.invoice.invoice_url, '_blank');
         },
         async setReadNotification(notification){
-            console.log("READ");
             await ApiService.post(`/user/${this.getUserInfo.userID}/notification/${notification.id}/read`)
             .then((data)=>{
                 console.log("success",data);
@@ -177,16 +180,13 @@ export default {
             })
         },
         toggleShowNotif(){
-            console.log("route",this.$route)
             this.showNotification = !this.showNotification;
             if(this.showNotification){
                 this.loadNotif();
             }
-            console.log("shonotif",this.showNotification);
         },
         async loadNotif(){
             this.isLoadingData = true;
-            console.log("LOADNOTIF");
 
             await ApiService.get(`/user/unread-notifications/${this.getUserInfo.userID}`).then(data=>{
                 this.userNotifications = data.data;

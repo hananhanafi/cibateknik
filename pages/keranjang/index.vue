@@ -163,7 +163,7 @@ import { toFormatedNumber } from '~/store/helpers'
             },
             checkoutHandler(){
                 this.$store.commit('setCheckoutItem', this.checkedItemList);
-                this.$router.push({name:'keranjang-checkout'})
+                this.$router.push({name:'keranjang-checkout'});
             },
             toFormatedNumber
         },

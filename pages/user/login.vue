@@ -39,9 +39,9 @@
                                         <div v-if="submitStatus == 'ERROR' && !$v.password.required" class="text-danger mb-2">Password harus diisi</div>
 
                                         <div class="text-center mt-2 mb-2">
-                                            <ButtonLoading v-if="submitStatus=='PENDING'" class="btn btn-lg bg-main-color btn-dark w-100"/>
+                                            <ButtonLoading v-if="submitStatus=='PENDING'" class="btn btn-lg btn-primary w-100"/>
 
-                                            <button v-else type="submit" class="btn btn-lg bg-main-color btn-dark w-100" @click.prevent="login()" >Masuk</button>
+                                            <button v-else type="submit" class="btn btn-lg btn-primary w-100" @click.prevent="login()" >Masuk</button>
                                         </div>
                                         
                                         <div v-if="showError" class="text-danger">{{errorMessage}}</div>
@@ -155,7 +155,7 @@ import ApiService from '~/common/api.service';
 
                         this.$router.push('/');
                         this.submitStatus = 'SUCCESS';
-                        this.$toast.success('Successfully authenticated',{icon:'check'})
+                        this.$toast.success('Autentikasi berhasil',{icon:'check'})
                     })
                     .catch(({response})=>{
                         console.log("err",response);

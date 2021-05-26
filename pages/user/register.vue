@@ -13,19 +13,19 @@
                             </a>
                         </div> 
                         <div>
-                            <div class="bg-white shadow" 
+                            <div class="bg-white shadow rounded-8" 
                             >
                                 <div class="p-md-5 p-4 text-medium">
                                     <h2 class="font-weight-bold" >Daftar</h2>
                                     
-                                    <a href="/user/daftar-akun" type="button" class="btn btn-lg bg-main-color btn-dark w-100" >Daftar Akun</a>
+                                    <a href="/user/daftar-akun" type="button" class="btn btn-lg btn-primary w-100 rounded-8" >Daftar Akun</a>
                                     <h4 class="my-3 text-center">
                                         Atau
                                     </h4>
                                     
                                     
                                     <button type="button" class="btn bg-white shadow text-dark w-100" @click="googleSignIn" >
-                                        <img class="mr-3 h-100" src="~/assets/img/media-social/google.png" fluid alt="Responsive image"/> Masuk Dengan Google    
+                                        <img class="mr-3 h-100 rounded-8" src="~/assets/img/media-social/google.png" fluid alt="Responsive image"/> Masuk Dengan Google    
                                     </button>
 
                                     <!-- <div class="py-2"></div>

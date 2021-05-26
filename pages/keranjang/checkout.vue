@@ -157,7 +157,7 @@
                                 <div>
                                     <BaseSelect
                                     v-model="courier"
-                                    :disabled="!currentMainAddress && isLoadingChangeMainAddress && isLoadingData"
+                                    :disabled="!currentMainAddress || isLoadingChangeMainAddress || isLoadingData"
                                     label="Jasa Pengiriman"
                                     :options="ShipmentOptions"
                                     placeholder="Pilih Jasa Pengiriman"
@@ -203,7 +203,7 @@
                                 </div>
                                 <div class="row d-flex align-items-center mb-2">
                                     <div class="col-6">
-                                        Total Harga Barang ( {{ getCheckoutItem.length+1 }} Barang ) :
+                                        Total Harga Barang ( {{ getTotalOrderItem }} Barang ) :
                                     </div>
                                     <div class="col text-right">
                                         Rp {{ toFormatedNumber(getTotalPrice) }}
@@ -319,6 +319,16 @@ import { toFormatedNumber } from '~/store/helpers';
             getCheckoutItem(){
                 return this.$store.state.checkoutItem;
             },
+            getTotalOrderItem() {
+                let total = 0;
+                
+                this.getCheckoutItem.forEach(item => {
+                    const currAmount = parseInt(item.cart.amount) || 0;
+                    total +=currAmount;
+                });
+
+                return total;
+            },
             getTotalPrice() {
                 let total = 0;
                 
@@ -364,6 +374,7 @@ import { toFormatedNumber } from '~/store/helpers';
                     items: this.getCheckoutItem,
                     totalItemsWeight: this.getTotalWeight,
                     totalItemsPrice: this.getTotalPrice,
+                    totalItemsOrder: this.getTotalOrderItem,
                     payer_email: this.getUserInfo.email
                 }
                 return result;

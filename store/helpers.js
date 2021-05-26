@@ -55,6 +55,21 @@ export const toLongDate = function(dateString, delimiter = "/") {
   return `${+parts[0]} ${MONTH_NAMES[+parts[1] - 1]} ${parts[2]} `;
 };
 
+
+export const toLongDateWithDay = function(dateString, delimiter = "/") {
+  if (!dateString) return null;
+  let parts = [];
+  if (typeof dateString === "object") {
+    parts.push(dateString.getDate());
+    parts.push(dateString.getMonth() + 1);
+    parts.push(dateString.getFullYear());
+    parts.push(dateString.getDay());
+  } else {
+    parts = dateString.split(delimiter);
+  }
+  return `${DAY_NAMES[parts[3]-1]}, ${+parts[0]} ${MONTH_NAMES[+parts[1] - 1]} ${parts[2]} `;
+};
+
 // // Parse a longDate string to a Date
 // export const fromLongDate = function(longDateString) {
 //   const parts = longDateString.split(" ");

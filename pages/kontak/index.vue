@@ -1,7 +1,7 @@
 <template>
     <div class="pt-md-5">
         <div class="container px-0">
-            <div class="bg-white p-4 mt-md-5 shadow">
+            <div class="bg-white p-4 mt-md-5 shadow rounded-8">
                 <h2>Kontak</h2>
 
                 <div class="row">
@@ -9,13 +9,13 @@
                         <h4 class="mt-5">Hubungi Kami :</h4>
                         <div class="row">
                             <div class="col-lg-4 col-md-12">
-                                <button type="button" class="btn btn-success w-100 mb-4"><fa :icon="['fab','whatsapp']" />  Whatsapp</button>
+                                <button type="button" class="btn btn-success w-100 mb-4 shadow"><fa :icon="['fab','whatsapp']" />  Whatsapp</button>
                             </div>
                             <div class="col-lg-4 col-md-12">
-                                <button type="button" class="btn btn-primary w-100 mb-4"><fa :icon="['fab','facebook']" /> Facebook</button>
+                                <button type="button" class="btn btn-primary w-100 mb-4 shadow"><fa :icon="['fab','facebook']" /> Facebook</button>
                             </div>
                             <div class="col-lg-4 col-md-12">
-                                <button type="button" class="btn btn-danger w-100 mb-4"><fa :icon="['fab','instagram']" /> Instagram</button>
+                                <button type="button" class="btn btn-danger w-100 mb-4 shadow"><fa :icon="['fab','instagram']" /> Instagram</button>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                                 />
                                 
                                 <LoadingSpinner v-if="isSubmitStatus == submitStatus.loading" :show="isSubmitStatus == submitStatus.loading"/>
-                                <button v-else type="button" class="btn btn-light border w-100" @click.prevent="onSubmit">Kirim</button>
+                                <button v-else type="button" class="btn btn-light border w-100 shadow" @click.prevent="onSubmit">Kirim</button>
                             </div>
                         </div>
 

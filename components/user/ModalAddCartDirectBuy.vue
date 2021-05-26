@@ -97,9 +97,7 @@
 
                 <div class="modal-footer border-top-0 d-flex">
                     <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="close">Batal</button>
-                    <button v-if="isAlreadyInCart && formData.amount==0" type="button" class="btn btn-danger flex-fill"  @click="onSubmit">Hapus</button>
-
-                    <button v-else type="button" class="btn btn-primary flex-fill" :disabled="!formData.amount"  @click="onSubmit">Simpan</button>
+                    <button type="button" class="btn btn-primary flex-fill" :disabled="!formData.amount"  @click="onSubmit">Beli Langsung</button>
                 </div>
             </div>
             
@@ -194,21 +192,16 @@ export default {
                 amount: this.formData.amount
             }
         },
-        async onSubmit(){
+        onSubmit(){
             const formattedFormData = this.formatFormData();
-            this.isSubmitStatus = SUBMIT_STATUS.loading;
-            await ApiService.post(`/user/cart/add`, formattedFormData)
-            .then(()=>{
-                this.isSubmitStatus = SUBMIT_STATUS.success;
-                this.$emit('update',this.formData.amount);
-                this.$toast.success('Berhasil menambahkan barang ke dalam keranjang.',{icon:'check'});
-                this.close();
-            })
-            .catch(()=>{
-                this.isSubmitStatus = SUBMIT_STATUS.error;
-                this.$toast.error('Terjadi error, gagal menambahkan barang ke dalam keranjang.',{icon:'error'});
-                this.close();
-            })
+            this.$store.commit('setCheckoutItem', [{
+                    cart: {
+                        amount: formattedFormData.amount,
+                        itemID: formattedFormData.itemID
+                    },
+                    item: this.data
+                }]);
+            this.$router.push({name:'keranjang-checkout'});
         },
         close() {
             this.formData = {

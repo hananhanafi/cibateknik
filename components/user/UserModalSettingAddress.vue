@@ -10,12 +10,22 @@
                 <a class="btn text-primary" @click="$emit('add-address')"><fa :icon="['fas','plus']" /> Tambah Alamat</a>
             </div>
             
-            <BaseSelect
-            v-model="formData.address"
-            label="Alamat"
-            :options="userAddressesOption"
-            placeholder="Pilih Alamat"
-            dense/>
+            <div v-if="userAddressesOption.length>0">
+                <BaseSelect
+                v-model="formData.address"
+                label="Alamat"
+                :options="userAddressesOption"
+                placeholder="Pilih Alamat"
+                dense/>
+            </div>
+
+            
+            <div v-else class="text-center my-5 py-5">
+                <div class="text-40 text-warning">
+                    <fa :icon="['fas','exclamation-circle']"/>
+                </div>
+                <h6>Alamat tidak ada, silahkan tambahkan alamat pengiriman Anda.</h6>
+            </div>
         </div>
         <div class="modal-footer border-top-0 d-flex">
             <button type="button" class="btn text-dark flex-fill" data-bs-dismiss="modal" @click="$emit('close')">Batal</button>

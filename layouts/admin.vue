@@ -18,7 +18,7 @@
                     <AdminNotifications/>
                     <b-nav-item-dropdown right>
                         <template #button-content>
-                            <img src="~/assets/img/person.png" class="img-fluid rounded-circle h-100" style="width:40px" alt="Responsive image"> Hanan Hanafi
+                            <img src="~/assets/img/logo-square-white.png" class="img-fluid rounded-circle h-100" style="width:40px" alt="Responsive image"> Admin
                         </template>
                         <b-dropdown-item href="#" @click="logout">Sign Out</b-dropdown-item>
                     </b-nav-item-dropdown>
@@ -52,7 +52,7 @@
                                 <div class="w-100">
                                     <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/inventory"
                                     :class="{ 'active-menu' : isActive('admin-inventory') }">
-                                        <fa :icon="['fas','boxes']"/> Inventory
+                                        <fa :icon="['fas','boxes']"/> Persediaan
                                     </NuxtLink>
                                 </div>
                             </li>
@@ -147,7 +147,15 @@ const Cookie = process.client ? require('js-cookie') : undefined;
             window.addEventListener('resize', this.handleResize);
             console.log("cookie",Cookie.get('auth'));
             console.log("state",this.$store.state);
-            console.log("rt",this.$route)
+            console.log("rt",this.$route);
+            if(this.$store.state.auth){
+                const expiredDate = new Date(this.$store.state.auth.expirationTime);
+                const dateNow = new Date();
+
+                if(dateNow>expiredDate){
+                    this.logout();
+                }
+            }
         },
         methods: {
             isActive(name){

@@ -1,6 +1,6 @@
 <template>
 <router-link :to="{ name: 'cari-barang_id-detail-barang', params: {barang_id: data.id}}">
-    <div class="card" style="cursor:pointer" >
+    <div class="card rounded-8" style="cursor:pointer" >
         <div class="img-container">
             <img :src="photoURL" class="" 
             alt="Responsive image"> 

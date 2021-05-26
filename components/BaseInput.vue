@@ -17,6 +17,7 @@
         :class="{ 
                   'form-control-sm': small !== undefined, 
                   'rounded-pill': rounded !== undefined ,
+                  'rounded-8': rounded8 !== undefined ,
                   'text-center': center !== undefined ,
                   'is-invalid': error !== undefined && error !== null ,
                 }"
@@ -81,6 +82,10 @@ export default {
       default: undefined
     },
     rounded: {
+      type: Boolean,
+      default: undefined
+    },
+    rounded8: {
       type: Boolean,
       default: undefined
     },

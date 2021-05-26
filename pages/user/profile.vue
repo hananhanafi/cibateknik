@@ -203,6 +203,14 @@
                 </div>
             </div>
         </div>
+
+        <!-- modalloading -->
+        <Modal :show="isLoading" centered>
+            <!-- loading -->
+            <LoadingSpinner :show="isLoading"/>
+
+        </Modal>
+
     </div>
 </template>
 
@@ -227,7 +235,8 @@ import ApiService from '~/common/api.service';
                     main_address : 'Alamat Saya',
                     wishlist : 'Wishlist Saya',
                     password : 'Atur Password',
-                }
+                },
+                isLoading:false,
             }
         },
         computed: {
@@ -247,7 +256,7 @@ import ApiService from '~/common/api.service';
                 return false;
             },
             photoURL() {
-                const url = this.getUserInfo ? this.getUserInfo.photoURL : process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+                const url = this.getUserInfo.photoURL || process.env.baseUrl+"/_nuxt/assets/img/-square-white.png"
                 return url;
             }
         },
@@ -266,6 +275,7 @@ import ApiService from '~/common/api.service';
             if(this.$route.query.tab){
                 this.change(this.$route.query.tab);
             }
+            console.log("F",this.getUserInfo);
         },
         methods: {
             async sendEmailVerification() {
@@ -286,10 +296,21 @@ import ApiService from '~/common/api.service';
                 this.activeComponent = componentName;
                 this.$route.params.tab = componentName;
             },
-            logout() {
+            async logout() {
+                this.isLoading = true;
             // Code will also be required to invalidate the JWT Cookie on external API
-                this.$store.commit('purgeAuth');
-                this.$router.push('/user/login');
+                await ApiService.post(`/user/logout/${this.getUserInfo.userID}`).then(()=>{
+                    this.$store.commit('purgeAuth');
+                    this.$router.push('/user/login');
+                    this.$toast.success('Berhasil keluar',{icon:'check'})
+
+                }).catch(()=>{
+                    this.$store.commit('purgeAuth');
+                    this.$router.push('/user/login');
+                    this.$toast.error('Error while logout',{icon:'error'})
+
+                })
+                this.isLoading = false;
             },
         },
         head() {

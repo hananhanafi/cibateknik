@@ -148,3 +148,7 @@ a, a:hover, a:focus, a:active {
     object-fit: cover;
     left: 0;
 }
+
+.table-align-top tr td{
+    vertical-align: top;
+}

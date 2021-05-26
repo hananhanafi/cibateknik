@@ -15,7 +15,7 @@
                       v-model="query.search"
                       placeholder="Cari..."
                       class="mb-0 flex-fill"
-                      rounded
+                      rounded8
                   >
                   <div slot="afterInput" class="position-absolute"
                       style=" right:12px;
@@ -26,7 +26,7 @@
                       <fa class="" :icon="['fas','search']" /> 
                   </div>
                   </BaseInput>
-                  <button class="btn bg-main-color text-white px-4 ml-3 rounded-pill" type="button" @click="searchHandler">Cari</button>
+                  <button class="btn bg-main-color text-white px-4 ml-3 rounded-8" type="button" @click="searchHandler">Cari</button>
 
                 </div>
             </div>
@@ -37,26 +37,26 @@
         
     </div>
     <div class="position-relative">
-      <div class="container shadow-main p-4 position-absolute bg-white" style="top:-80px;left:0;right:0">
+      <div class="container shadow-main p-4 position-absolute bg-white rounded-8" style="top:-80px;left:0;right:0">
         <div class="">
           <div>
-            <a href="/cari/rekomendasi" class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></a>
-            <h3 class="mb-4" >Rekomendasi</h3>
+            <!-- <a href="/cari/rekomendasi" class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></a> -->
+            <h3 class="mb-4" >Terlaris</h3>
           </div>
           
-          <LoadingSpinner :show="isLoadingData.recommendation"/>
+          <LoadingSpinner :show="isLoadingData.bestSeller"/>
           <swiper ref="mySwiper" class="swiper" :options="swiperOption">
-            <swiper-slide v-for="(item,i) in itemsData.recommendation" :key="i">
+            <swiper-slide v-for="(item,i) in itemsData.bestSeller" :key="i">
               <UserItemCard :data="item"/>
             </swiper-slide>
             <div slot="pagination" class="swiper-pagination"></div>
           </swiper>
 
-          <div v-if="error.recommendation.status" class="text-center my-4 py-4">
+          <div v-if="error.bestSeller.status" class="text-center my-4 py-4">
               <div class="text-40 text-warning">
                   <fa :icon="['fas','exclamation-circle']"/>
               </div>
-              <h3>{{error.recommendation.message || 'error'}}</h3>
+              <h3>{{error.bestSeller.message || 'error'}}</h3>
           </div>
         </div>
       </div>
@@ -69,35 +69,31 @@
     <div class="py-5">
     </div>
     
-    <div class="container mb-5 mt-sm-5 mt-0 p-4 bg-white shadow-main">
+    <div class="container mb-5 mt-sm-5 mt-0 p-4 bg-white shadow-main rounded-8">
       <div class="">
         <div>
-          <div class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></div>
-          <h3 class="mb-4" >Produk Terlaris</h3>
+          <a href="/cari/rekomendasi" class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></a>
+          <h3 class="mb-4" >Rekomendasi</h3>
         </div>
+        
+        <LoadingSpinner :show="isLoadingData.recommendation"/>
         <swiper ref="mySwiper" class="swiper" :options="swiperOption">
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
-          <swiper-slide><ItemCard/></swiper-slide>
+          <swiper-slide v-for="(item,i) in itemsData.recommendation" :key="i">
+            <UserItemCard :data="item"/>
+          </swiper-slide>
           <div slot="pagination" class="swiper-pagination"></div>
-          <!-- <div slot="button-prev" class="swiper-button-prev btn btn-light rounded-pill" style="width:40px;height:40px">
-            <fa class="" :icon="['fas','chevron-left']" />
-          </div>
-          <div slot="button-next" class="swiper-button-next btn btn-light rounded-pill" style="width:40px;height:40px">
-            <fa class="" :icon="['fas','chevron-right']" />
-          </div> -->
         </swiper>
+
+        <div v-if="error.recommendation.status" class="text-center my-4 py-4">
+            <div class="text-40 text-warning">
+                <fa :icon="['fas','exclamation-circle']"/>
+            </div>
+            <h3>{{error.recommendation.message || 'error'}}</h3>
+        </div>
       </div>
     </div>
     
-    <div class="container pb-5 mt-sm-5 mt-0 p-4 bg-white shadow-main">
+    <div class="container pb-5 mt-sm-5 mt-0 p-4 bg-white shadow-main rounded-8">
       <div class="">
         <div>
           <a href="/cari/terbaru" class="float-right">Lihat semua  <fa :icon="['fas','eye']" /></a>
@@ -228,6 +224,19 @@ import ApiService from '~/common/api.service';
       },
       methods: {
           async loadData() {
+
+              await ApiService.query('/item/posted/data/top-selling-item',{limit:10})
+              .then((Response)=>{ 
+                this.itemsData.bestSeller = Response.data
+                this.isLoadingData.bestSeller = false;
+              })
+              .catch(err=>{
+                console.log("err",err);
+                this.isLoadingData.bestSeller = false;
+                const response = {...err};
+                this.error.bestSeller.status = true;
+                this.error.bestSeller.message = response.response.data.message;
+              })
 
               await ApiService.query('/items-posted-newest',{limit:10})
               .then((Response)=>{ 

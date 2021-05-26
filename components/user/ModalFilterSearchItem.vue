@@ -63,8 +63,8 @@
             
         </div>
         <div class="modal-footer border-top-0 d-flex">
-            <button type="button" class="btn btn-outline-danger flex-fill rounded-pill" data-bs-dismiss="modal" @click="$emit('deleteFilters')">Hapus</button>
-            <button type="button" class="btn btn-primary flex-fill rounded-pill" @click="update">Terapkan</button>
+            <button type="button" class="btn btn-outline-danger flex-fill rounded-8" data-bs-dismiss="modal" @click="$emit('deleteFilters')">Hapus</button>
+            <button type="button" class="btn btn-primary flex-fill rounded-8" @click="update">Terapkan</button>
         </div>
 
     </Modal>

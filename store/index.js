@@ -18,11 +18,12 @@ const createStore = () => {
         plugins: [createPersistedState()],
         mutations: {
             setAuthAdmin(state, auth) {
+                console.log("setauth admin",auth);
                 state.auth = auth
                 state.role = 'admin';
                 state.userInfo = null;
                  // saving token in cookie for server rendering
-                Cookie.set('auth', auth)
+                Cookie.set('auth', auth.token)
                 ApiService.setHeader();
             },
             setAuthUser(state, token) {

@@ -156,7 +156,7 @@ const emptyData ={
           year: null,
         },
         selectedDate: null,
-        photoURL : process.env.baseUrl+"/_nuxt/assets/img/dummy.png",
+        photoURL : process.env.baseUrl+"/_nuxt/assets/img/logo.png",
 }
 export default {  
   mixins: [validationMixin],
@@ -206,7 +206,7 @@ export default {
         }
       },
       photoURL() {
-        const url = this.formData.photoURL || process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+        const url = this.formData.photoURL || process.env.baseUrl+"/_nuxt/assets/img/logo.png"
         return url;
 
         // return this.formData.photoURL || process.env.baseUrl+"/_nuxt/assets/img/dummy.png";

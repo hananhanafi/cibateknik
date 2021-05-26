@@ -87,7 +87,7 @@
                                     <a class="btn btn-dark text-white w-100" @click.prevent="showModalAddCart"> <fa :icon="['fas','plus']" /> Keranjang </a>
                                 </div>
                                 <div class="col pl-1 mb-3">
-                                    <a class="btn btn-outline-dark w-100"> Beli Langsung </a>
+                                    <a class="btn btn-outline-dark w-100" @click.prevent="showModalAddCartDirectBuy"> Beli Langsung </a>
                                 </div>
                                 <div class="col-md col-12">
                                     <button v-if="isWished==false" :disabled="isLoadingWishlistButton" class="btn text-danger w-100" @click.prevent="addWishlist"><fa class="" :icon="[ 'far','heart']" /> Wishlist </button>
@@ -122,7 +122,6 @@
                 </div> -->
                 </swiper>
                 
-                <ModalAddCart :show="isShowModalAddCart" :data="dataItem"  @close="closeModalAddCart"/>
                 
 
                 <div v-if="dataItemsRelated.length<1" class="text-center my-4 py-4">
@@ -135,6 +134,9 @@
         </div>
         
 
+        <ModalAddCart :show="isShowModalAddCart" :data="dataItem"  @close="closeModalAddCart"/>
+        
+        <ModalAddCartDirectBuy :show="isShowModalAddCartDirectBuy" :data="dataItem"  @close="closeModalAddCartDirectBuy"/>
     </div>
 </template>
 
@@ -202,7 +204,13 @@ import ApiService from '~/common/api.service';
                 dataItemsRelated: [],
                 
                 isShowModalAddCart: false,
+                isShowModalAddCartDirectBuy: false,
             }
+        },
+        computed: {
+            getUserInfo(){
+                return this.$store.state.userInfo;
+            },
         },
         mounted() {
             this.dataItem = this.postItem.data;
@@ -251,18 +259,23 @@ import ApiService from '~/common/api.service';
             
             },
             async addWishlist(){
-                this.isLoadingWishlistButton = true;
-                await ApiService.post('/user/wishlist/add',{itemID: this.dataItem.id})
-                .then((data)=>{
-                    this.isWished = true;
-                    console.log("success",data)
-                    this.$toast.success('Berhasil menambahkan barang ke dalam wishlist.',{icon:'check'});
-                })
-                .catch(err=>{
-                    console.error("error",err);
-                    this.$toast.error('Terjadi error, gagal menambahkan barang ke dalam wishlist.',{icon:'error'});
-                })
-                this.isLoadingWishlistButton = false;
+                if(this.getUserInfo){
+                    this.isLoadingWishlistButton = true;
+                    await ApiService.post('/user/wishlist/add',{itemID: this.dataItem.id})
+                    .then((data)=>{
+                        this.isWished = true;
+                        console.log("success",data)
+                        this.$toast.success('Berhasil menambahkan barang ke dalam wishlist.',{icon:'check'});
+                    })
+                    .catch(err=>{
+                        console.error("error",err);
+                        this.$toast.error('Terjadi error, gagal menambahkan barang ke dalam wishlist.',{icon:'error'});
+                    })
+                    this.isLoadingWishlistButton = false;
+                } else{
+                    this.$toast.error('Silahkan login terlebih dahulu.',{icon:'error'});
+                    this.$router.push({name:'user-login'});
+                }
             },
             async deleteWishlist(){
                 this.isLoadingWishlistButton = true;
@@ -290,6 +303,13 @@ import ApiService from '~/common/api.service';
             },
             closeModalAddCart() {
                 this.isShowModalAddCart = false;
+            },
+            
+            showModalAddCartDirectBuy() {
+                this.isShowModalAddCartDirectBuy = true;
+            },
+            closeModalAddCartDirectBuy() {
+                this.isShowModalAddCartDirectBuy = false;
             },
             
             toFormatedNumber

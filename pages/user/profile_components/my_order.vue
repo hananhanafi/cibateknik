@@ -76,15 +76,17 @@
     
     <PaginationData :data="metaData" @page-update="pageUpdateHandler($event)"/>
 
-    <ModalDeleteItem
-        :show="isShowModalDeleteItem"
-        :data="{}"
-        @close="closeModalDeleteItem"
-    />
     <UserModalDetailOrder
         :show="isShowUserModalDetailOrder"
         :data="currentOrder"
         @close="closeUserModalDetailOrder"
+        @done-order="showModalDoneOrder()"
+    />
+    <ModalDoneOrder
+        :show="isShowModalDoneOrder"
+        :data="currentOrder"
+        @close="closeModalDoneOrder"
+        @update="doneOrderHandler($event)"
     />
 
   </div>
@@ -137,7 +139,7 @@ export default {
       
       items: new Array(10),
       isShowUserModalDetailOrder: false, 
-      isShowModalDeleteItem: false, 
+      isShowModalDoneOrder: false, 
     }
   },
   computed: {
@@ -188,16 +190,29 @@ export default {
           this.isShowUserModalDetailOrder = true;
       },
       closeUserModalDetailOrder() {
-          this.currentOrder = {};
           this.isShowUserModalDetailOrder = false;
       },
-      showModalDeleteItem() {
-          this.isShowModalDeleteItem = true;
+      async showModalDoneOrder() {
+          await this.closeAllModal();
+          this.isShowModalDoneOrder = true;
       },
-      closeModalDeleteItem() {
-          this.isShowModalDeleteItem = false;
+      async closeModalDoneOrder() {
+        await this.closeAllModal();
+        this.showUserModalDetailOrder(this.currentOrder);
       },
+      closeAllModal(){
+          this.isShowUserModalDetailOrder = false;
+          this.isShowModalDoneOrder = false;
+      },
+      doneOrderHandler(newOrder){
+          this.isShowUserModalDetailOrder = false;
+          this.isShowModalDoneOrder = false;
+          
+          const updatedOrder = this.userOrders.find((order)=>{ return order.id === newOrder.id});
 
+          updatedOrder.statusOrder = newOrder.statusOrder;
+          updatedOrder.invoice = newOrder.invoice;
+      },
         // helpers
         formatDate
 

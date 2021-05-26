@@ -32,6 +32,9 @@
                 {{ notification.description }}
               </div>
               
+              <div v-if="notification.notification_type==='order' && notification.data && notification.data.statusOrder==='SHIPPING'" class="alert alert-warning">
+                Nomor Resi : {{ notification.data.receiptNumber }}
+              </div>
               <a v-if="notification.notification_type==='order' && notification.data && notification.data.invoice.status=='PENDING'" class="btn btn-sm btn-primary w-100" @click.prevent="goToPayment(notification)">Bayar</a>
             </div>
             <div class="col-lg-3 col-md-12 text-center d-flex align-self-center">

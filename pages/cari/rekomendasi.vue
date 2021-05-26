@@ -57,10 +57,10 @@
                             </div>
                             <div class="d-flex">
                                 <div class="flex-fill px-2">
-                                    <button type="button" class="btn btn-danger text-white  rounded-pill w-100" @click.prevent="resetFilters">Hapus</button>
+                                    <button type="button" class="btn btn-danger text-white  rounded-8 w-100" @click.prevent="resetFilters">Hapus</button>
                                 </div>
                                 <div class="flex-fill px-2">
-                                    <button type="button" class="btn btn-primary text-white w-100  rounded-pill" @click.prevent="resetData">Terapkan</button>
+                                    <button type="button" class="btn btn-primary text-white w-100  rounded-8" @click.prevent="resetData">Terapkan</button>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                         v-model="filters.search"
                         placeholder="Cari..."
                         class="mb-0 flex-fill"
-                        rounded
+                        rounded8
                     >
                         <div slot="afterInput" class="position-absolute"
                             style=" right:12px;
@@ -85,13 +85,13 @@
                             <fa class="" :icon="['fas','search']" /> 
                         </div>
                     </BaseInput>
-                    <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-pill">Cari</button>
+                    <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-8">Cari</button>
                 </div>
                 
 
                 <!-- desktop -->
                 <div class="fixed-bottom text-center d-md-none d-block" style="bottom:80px">
-                    <a class="btn btn-light bg-white border px-4 rounded-pill" type="button" @click="showModalFilterSearchItem">
+                    <a class="btn btn-light bg-white border px-4 rounded-8" type="button" @click="showModalFilterSearchItem">
                     <fa class="" :icon="['fas','filter']" />  Filter</a>
                 </div>
                 <div class="col px-md-3 px-0">
@@ -103,7 +103,7 @@
                                 v-model="filters.search"
                                 placeholder="Cari..."
                                 class="mb-0 flex-fill"
-                                rounded
+                                rounded8
                             >
                             <div slot="afterInput" class="position-absolute"
                                 style=" right:12px;
@@ -114,7 +114,7 @@
                                 <fa class="" :icon="['fas','search']" /> 
                             </div>
                             </BaseInput>
-                            <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-pill" @click="resetData">Cari</button>
+                            <button type="button" class="btn bg-main-color text-white px-4 ml-3 rounded-8" @click="resetData">Cari</button>
                         </div>
                     </form>
                     

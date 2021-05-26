@@ -54,11 +54,11 @@
                                 Wishlist Saya
                             </router-link>
                             <router-link class="btn btn-light w-100 text-decoration-none text-dark text-left" :to="{ name: 'user-profile', query: { tab: 'password' } }">
-                                Ubah Password
+                                Atur Password
                             </router-link>
 
                             <!-- <b-dropdown-item>
-                                <router-link class="text-decoration-none text-dark" :to="{ name: 'user-profile', params: { tab: 'password' } }">Ubah Password</router-link>
+                                <router-link class="text-decoration-none text-dark" :to="{ name: 'user-profile', params: { tab: 'password' } }">Atur Password</router-link>
                             </b-dropdown-item> -->
                             
                             <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
@@ -167,6 +167,13 @@
         
         </div>
 
+        <!-- modalloading -->
+        <Modal :show="isLoading" centered>
+            <!-- loading -->
+            <LoadingSpinner :show="isLoading"/>
+
+        </Modal>
+
     </div>
 </template>
 
@@ -180,6 +187,7 @@ import ApiService from '~/common/api.service';
                     width: 0,
                     height: 0
                 },
+                isLoading: false,
             }
         },
         computed: {
@@ -187,7 +195,7 @@ import ApiService from '~/common/api.service';
                 return this.$store.state.userInfo;
             },
             photoURL() {
-                const url = this.getUserInfo.photoURL || process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+                const url = this.getUserInfo.photoURL || process.env.baseUrl+"/_nuxt/assets/img/logo.png"
                 return url;
             }
         },
@@ -215,6 +223,8 @@ import ApiService from '~/common/api.service';
         },
         mounted() {
             window.addEventListener('resize', this.handleResize);
+            console.log("mount");
+            this.getRefreshToken();
         },
         destroyed() {
             window.addEventListener('resize', this.handleResize);
@@ -228,10 +238,21 @@ import ApiService from '~/common/api.service';
                 // console.log("route/",this.$route.name)
                 return this.$route.name.includes(name);
             },
-            logout() {
+            async logout() {
+                this.isLoading = true;
             // Code will also be required to invalidate the JWT Cookie on external API
-                this.$store.commit('purgeAuth');
-                this.$router.push('/');
+                await ApiService.post(`/user/logout/${this.getUserInfo.userID}`).then(()=>{
+                    this.$store.commit('purgeAuth');
+                    this.$router.push('/user/login');
+                    this.$toast.success('Berhasil keluar',{icon:'check'})
+
+                }).catch(()=>{
+                    this.$store.commit('purgeAuth');
+                    this.$router.push('/user/login');
+                    this.$toast.error('Error while logout',{icon:'error'})
+
+                })
+                this.isLoading = false;
             },
             getRefreshToken() {
                 ApiService.get("/user/token")

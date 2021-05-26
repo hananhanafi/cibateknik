@@ -77,6 +77,13 @@
         </div> 
       </div>
     </div>
+
+    <!-- modalloading -->
+    <Modal :show="isLoading" centered>
+        <!-- loading -->
+        <LoadingSpinner :show="isLoading"/>
+
+    </Modal>
   </div>
 </template>
 
@@ -97,6 +104,7 @@ export default {
       isSubmitStatus: '',
       submitStatuses: SUBMIT_STATUS,
       errors: null,
+      isLoading: false,
     }
   },
   validations: {
@@ -131,7 +139,7 @@ export default {
         await ApiService.post(`/user/password/update`,formattedFormData)
         .then(()=>{
             this.isSubmitStatus = SUBMIT_STATUS.success;
-            this.$toast.success('Berhasil memperbarui password, silahkan masuk kembali denganp password baru.',{icon:'check'});
+            this.$toast.success('Berhasil memperbarui password, silahkan masuk kembali dengan password baru.',{icon:'check'});
             this.logout();
         })
         .catch(err=>{
@@ -143,11 +151,24 @@ export default {
       
 
     },
-      logout() {
-      // Code will also be required to invalidate the JWT Cookie on external API
-          this.$store.commit('purgeAuth');
-          this.$router.push('/user/login');
-      },
+    logout() {
+        this.isLoading = true;
+        this.$store.commit('purgeAuth');
+        this.$router.push('/user/login');
+        //  // Code will also be required to invalidate the JWT Cookie on external API
+        // await ApiService.post(`/user/logout/${this.getUserInfo.userID}`).then(()=>{
+        //     this.$store.commit('purgeAuth');
+        //     this.$router.push('/user/login');
+        //     this.$toast.success('Berhasil keluar',{icon:'check'})
+
+        // }).catch(()=>{
+        //     this.$store.commit('purgeAuth');
+        //     this.$router.push('/user/login');
+        //     this.$toast.error('Error while logout',{icon:'error'})
+
+        // })
+        this.isLoading = false;
+    },
   }
 }
 </script>

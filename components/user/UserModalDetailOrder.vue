@@ -11,7 +11,7 @@
             </div>
             <div class="w-100">
                 <div class="mb-3">
-                    <table class="text-nowrap">
+                    <table class="text-nowrap table-align-top">
                         <tr>
                             <td>ID Pesanan</td>
                             <td class="text-center" width="40px">:</td>
@@ -29,7 +29,12 @@
                                 <span v-if="data && data.statusOrder=='PENDING'" class="font-weight-bold text-warning">Memesan</span>
                                 <span v-else-if="data && data.statusOrder=='EXPIRED'" class="font-weight-bold text-danger">Pesanan Expired</span>
                                 <span v-else-if="data && data.statusOrder=='PACKING'" class="font-weight-bold text-primary">Dikemas</span>
-                                <span v-else-if="data && data.statusOrder=='SHIPPING'" class="font-weight-bold text-info">Dikirim</span>
+                                <span v-else-if="data && data.statusOrder=='SHIPPING'" class="font-weight-bold text-info">Dikirim
+                                    <div class="alert alert-warning">
+                                        Nomor Resi : {{ data.receiptNumber }}
+                                    </div>
+
+                                </span>
                                 <span v-else-if="data && data.statusOrder=='DONE'" class="font-weight-bold text-success">Selesai</span>
                             </td>
                         </tr>
@@ -214,7 +219,8 @@
         <div class="modal-footer border-top-0 d-flex">
             <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="$emit('close')">Tutup</button>
 
-            <a v-if="data.invoice && data.invoice.status=='PENDING'" :href="data.invoice.invoice_url" target="_blank" class="btn btn-primary flex-fill">Bayar</a>
+            <a v-if="data.invoice && data.statusOrder=='PENDING'" :href="data.invoice.invoice_url" target="_blank" class="btn btn-primary flex-fill">Bayar</a>
+            <a v-if="data.invoice && data.statusOrder=='SHIPPING'"  class="btn btn-primary flex-fill" @click="$emit('done-order')">Barang Diterima</a>
         </div>
 
     </Modal>

@@ -292,17 +292,17 @@ import ApiService from '~/common/api.service';
                             });
                             await ApiService.postMultiform(`/product/${this.$route.params.produk_id}/item/${responseItem.id}/images`,dataImage)
                             .then((response)=>{
+                                this.$toast.success('Berhasil menambahkan data barang.',{icon:'check'});
                                 console.log("success",response);
                                 this.isSubmitStatus = SUBMIT_STATUS.success;
                                 this.$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:this.$route.params.produk_id}});
-                                this.$toast.success('Berhasil menambahkan data barang.',{icon:'check'});
                             })
                             .catch(err=>{
                                 this.isSubmitStatus = SUBMIT_STATUS.error;
+                                this.$toast.error('Terjadi error, gagal menambahkan data barang.',{icon:'error'});
                                 const response = {...err};
                                 this.errorMessage = response.response.data.message;
                                 console.log("error",err);
-                                this.$toast.error('Terjadi error, gagal menambahkan data barang.',{icon:'error'});
                             })
                         }else {
                             this.isSubmitStatus = SUBMIT_STATUS.success;

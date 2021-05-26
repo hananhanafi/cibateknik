@@ -81,7 +81,7 @@
                                     </tr>
                                     <tr v-for="(item,i) in dataItem" :key="i">
                                         <td><div style="min-height:18px;white-space:nowrap">{{item.name}}</div></td>
-                                        <td v-for="(additional,j) in dataProduct.additionalData" :key="j" class="text-center">{{item.additionalData[additional] || '-'}}</td>
+                                        <td v-for="(additional,j) in dataProduct.additionalData" :key="j" class="text-center" style="white-space:nowrap">{{item.additionalData[additional] || '-'}}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -174,9 +174,9 @@
                                                                 </a>
                                                             </div>
                                                         </b-dropdown-item>
-                                                        <b-dropdown-item>
+                                                        <!-- <b-dropdown-item>
                                                             <div class="btn btn-outline-info btn-sm w-100" @click="showModalPostItem(item)">Post</div>
-                                                        </b-dropdown-item>
+                                                        </b-dropdown-item> -->
                                                         <b-dropdown-item>
                                                             <div class="btn btn-danger btn-sm text-white w-100" @click="showModalDeleteItem(item)">Hapus</div>
                                                         </b-dropdown-item>
@@ -193,6 +193,8 @@
                         </td>
                     </tr>
                 </table>
+                <div class="border-bottom"></div>
+                <AdminListItemHistory :isDataRefreshed="isDataRefreshed"/>
 
             </div>
 
@@ -242,6 +244,7 @@ import ApiService from '~/common/api.service';
                 dataItemMonthlyStock: null,
                 dataItemDailyStock: null,
                 isDataReady: false,
+                isDataRefreshed: false,
                 currentItem: null,
 
                 filters: {
@@ -286,6 +289,7 @@ import ApiService from '~/common/api.service';
                 }
             },
             async loadData() {
+                this.isDataRefreshed = true;
                 const postProductItems = await ApiService.query(`/product/${this.$route.params.produk_id}/items`,this.params);
                 // return { id: params.produk_id }
                 // return {postProductItems};
@@ -294,6 +298,7 @@ import ApiService from '~/common/api.service';
                 this.dataProduct = this.postProductItems.data.data.product;
                 this.dataItemMonthlyStock = this.postProductItems.data.data.items_monthly_stock;
                 this.dataItemDailyStock = this.postProductItems.data.data.items_daily_stock;
+                this.isDataRefreshed = false;
             },
             setDate(dateParams) {
                 

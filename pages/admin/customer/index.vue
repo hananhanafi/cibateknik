@@ -147,7 +147,7 @@ import ApiService from '~/common/api.service';
         },
         methods: {
             photoURL(user) {
-                const url = user.imageUrl || process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+                const url = user.photoURL || process.env.baseUrl+"/_nuxt/assets/img/logo-square-white.png"
                 return url;
             },
             async loadData() {

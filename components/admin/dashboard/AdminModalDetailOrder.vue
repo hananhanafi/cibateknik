@@ -8,7 +8,7 @@
         <div class="modal-body">
 
             <div v-if="data" class="mb-3">
-                <table class="text-nowrap">
+                <table class="text-nowrap table-align-top">
                     <tr>
                         <td>ID Pesanan</td>
                         <td class="text-center" width="40px">:</td>

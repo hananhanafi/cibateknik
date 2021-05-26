@@ -160,6 +160,13 @@ export default {
     },
     methods: {
         async datePickerRangeChangedHandler(e){
+            this.barChartData.labels = [];
+            this.barChartData.datasets[0].data = [];
+            this.barChartData.datasets[1].data = [];
+            this.barChartData.datasets[2].data = [];
+            this.barChartData.datasets[3].data = [];
+            this.barChartData.datasets[4].data = [];
+
             const start = new Date(e[0]);
             const end = new Date(e[1]);
             this.chartLabel = [];

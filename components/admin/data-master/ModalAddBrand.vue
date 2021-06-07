@@ -2,7 +2,7 @@
     <Modal :show="show" centered>
         <div v-if="isSubmitStatus=='' || isSubmitStatus == submitStatus.pending">
             <div class="modal-header border-bottom-0">
-                <h5 id="modalAddProduct" class="modal-title">Tambah Brand/Merk</h5>
+                <h5 id="modalAddProduct" class="modal-title">Tambah Brand</h5>
                 <button data-bs-dismiss="modal" class="btn-close btn text-danger" type="button" aria-label="Close" @click="closeModal"><fa :icon="['fas','times']" /></button>
             </div>
             <div class="modal-body">
@@ -10,14 +10,14 @@
                     <BaseInput
                         id="name"
                         v-model="formData.name"
-                        label="Nama Brand/Merk"
-                        placeholder="Nama Brand/Merk"
+                        label="Nama Brand"
+                        placeholder="Nama Brand"
                         large
                         dense
                         :error="
                             isSubmitStatus == submitStatus.pending
                             ? !$v.formData.name.required 
-                                ? 'Nama Brand/Merk harus diisi'
+                                ? 'Nama Brand harus diisi'
                                 : null
                             : null
                         "
@@ -39,7 +39,7 @@
                 <fa :icon="['fas','check-circle']"/>
             </div>
             <div class="text-20">
-                Berhasil menambahkan data Brand/Merk.
+                Berhasil menambahkan data Brand.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -53,7 +53,7 @@
                 <fa :icon="['fas','times-circle']"/>
             </div>
             <div class="text-20">
-                Gagal menambahkan data Brand/Merk.
+                Gagal menambahkan data Brand.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -113,12 +113,12 @@ export default {
                     this.isSubmitStatus = SUBMIT_STATUS.success;
                     console.log("success",data);
                     this.$emit('update');
-                    this.$toast.success('Berhasil menambahkan data brand/merk.',{icon:'check'});
+                    this.$toast.success('Berhasil menambahkan data Brand.',{icon:'check'});
                 })
                 .catch(err=>{
                     this.isSubmitStatus = SUBMIT_STATUS.error;
                     console.log("error",err);
-                    this.$toast.error('Terjadi error, gagal menambahkan data brand/merk.',{icon:'error'});
+                    this.$toast.error('Terjadi error, gagal menambahkan data Brand.',{icon:'error'});
                 })
             }
         },

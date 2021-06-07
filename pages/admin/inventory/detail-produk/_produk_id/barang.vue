@@ -291,8 +291,7 @@ import ApiService from '~/common/api.service';
             async loadData() {
                 this.isDataRefreshed = true;
                 const postProductItems = await ApiService.query(`/product/${this.$route.params.produk_id}/items`,this.params);
-                // return { id: params.produk_id }
-                // return {postProductItems};
+                
                 this.postProductItems = postProductItems;
                 this.dataItem = this.postProductItems.data.data.items;
                 this.dataProduct = this.postProductItems.data.data.product;

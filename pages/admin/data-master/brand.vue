@@ -5,7 +5,7 @@
             <Breadcrumb :data="breadCrumbList"/>
             <div class="bg-white shadow-sm rounded-8 p-2 text-left ">
                 <div class="mb-3 p-2">
-                    <h1>Daftar Brand/Merk</h1>
+                    <h1>Daftar Brand</h1>
                 </div>
                 <div class="container-fluid">
                     <div class="col">
@@ -15,7 +15,7 @@
                                     <BaseInput
                                         id="Cari"    
                                         v-model="formData.search"
-                                        placeholder="Cari Brand/Merk..."
+                                        placeholder="Cari Brand..."
                                         class="mb-0"
                                     >
                                         <div slot="afterInput" class="position-absolute" style=" right:12px;
@@ -42,7 +42,7 @@
                             </div>
                             
                             <div class="ml-auto mb-2 text-right">
-                                <a class="btn btn-primary  mt-1" type="button" @click.prevent="showModalAddBrand">Tambah Brand/Merk</a>
+                                <a class="btn btn-primary  mt-1" type="button" @click.prevent="showModalAddBrand">Tambah Brand</a>
                             </div>
                         </div>
                         <div v-if="brands.length>0" >
@@ -50,7 +50,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
-                                        <th scope="col">Nama Brand/Merk</th>
+                                        <th scope="col">Nama Brand</th>
                                         <th scope="col" class="text-center" width="300px">Aksi</th>
                                     </tr>
                                 </thead>
@@ -105,7 +105,7 @@ import ApiService from '~/common/api.service';
         data() {
             return {
                 breadCrumbList: [
-                    {name:"Daftar Brand/Merk",link:"/admin/data-master/brand"}
+                    {name:"Daftar Brand",link:"/admin/data-master/brand"}
                 ],
                 brands : [],
                 formData: {
@@ -137,9 +137,7 @@ import ApiService from '~/common/api.service';
                     order: this.formData.order ? (this.formData.order === 'Terbaru' ? 'desc' : 'asc') : null, 
                 }
             }
-
         },
-        
         mounted() {
             // Set the initial number of items
             this.loadData();

@@ -31,8 +31,8 @@
                     <BaseSelect
                     v-model="formData.brand"
                     :options="options.brand"
-                    label="Brand/Merk"
-                    placeholder="Pilih Brand/Merk"
+                    label="Merek"
+                    placeholder="Pilih Merek"
                     dense
                     />
 
@@ -208,7 +208,6 @@ export default {
                     return item;
                 })
             }
-
             return resultData;
         },
         async onSubmit(){

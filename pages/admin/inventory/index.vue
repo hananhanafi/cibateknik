@@ -6,7 +6,6 @@
                 <div class="mb-3 p-2">
                     <h1>Daftar Produk</h1>
                 </div>
-
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col">
@@ -41,16 +40,6 @@
                                     @input="orderSelectHandler($event)"
                                     />
                                 </div>
-                                <!-- <div class="ml-auto mb-2 mr-2" style="width:160px">
-                                    <BaseSelect
-                                    v-model="filters.category"
-                                    :options="options.category"
-                                    placeholder="Pilih Kategori"
-                                    dense
-                                    @input="categorySelectHandler($event)"
-                                    />
-                                </div> -->
-                                
                                 <div class="ml-auto mb-2 text-right">
                                     <button class="btn btn-outline-primary  mt-1 mr-2" type="button" @click.prevent="showModalFilterSearchProduct">Filter</button>
                                 </div>
@@ -62,12 +51,12 @@
                                 <table class="table table-responsive-md">
                                     <thead>
                                         <tr>
-                                        <th scope="col">ID Produk</th>
-                                        <th scope="col">Nama Produk</th>
-                                        <th scope="col">Kategori Produk</th>
-                                        <th scope="col">Brand/Merk</th>
-                                        <th scope="col">Supplier</th>
-                                        <th scope="col" class="text-center" width="300px">Aksi</th>
+                                            <th scope="col">ID Produk</th>
+                                            <th scope="col">Nama Produk</th>
+                                            <th scope="col">Kategori Produk</th>
+                                            <th scope="col">Merek</th>
+                                            <th scope="col">Supplier</th>
+                                            <th scope="col" class="text-center" width="300px">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -91,7 +80,6 @@
                                         </tr>
                                     </tbody>
                                 </table>
-
                                 <PaginationData :data="metaData" @page-update="pageUpdateHandler($event)"/>
                             </div>
 
@@ -108,11 +96,14 @@
                 </div>
             </div>
 
-            <ModalAddProduct :show="isShowModalAddProduct" :data="{title:'Tambah Produk'}" :options="options" @close="closeModalAddProduct" @update="loadData"/>
+            <ModalAddProduct :show="isShowModalAddProduct" :data="{title:'Tambah Produk'}" :options="options" 
+            @close="closeModalAddProduct" @update="loadData"/>
             
-            <AdminModalEditProduct :show="isShowAdminModalEditProduct" :data="currentProduct" :options="options" @close="closeAdminModalEditProduct" @update="loadData"/>
+            <AdminModalEditProduct :show="isShowAdminModalEditProduct" :data="currentProduct" :options="options" 
+            @close="closeAdminModalEditProduct" @update="loadData"/>
 
-            <ModalDeleteProduct :show="isShowModalDeleteProduct" :data="currentProduct" @close="closeModalDeleteProduct" @update="loadData"/>
+            <ModalDeleteProduct :show="isShowModalDeleteProduct" :data="currentProduct" 
+            @close="closeModalDeleteProduct" @update="loadData"/>
 
             <ModalFilterSearchProduct :show="isShowModalFilterSearchProduct" :data="currentProduct" :options="options" @close="closeModalFilterSearchProduct" @update="filterHandler($event)"/>
             
@@ -202,12 +193,6 @@ import ApiService from '~/common/api.service';
                 .then((Response)=>{
                     this.products = Response.data.data;
                     this.metaData = Response.data.meta
-                    // this.first_index = this.meta.first_index;
-                    // this.last_index = this.meta.last_index;
-                    // this.current_page = this.meta.current_page;
-                    // this.first_page = this.meta.first_page;
-                    // this.last_page = this.meta.last_page;
-                    // this.total = this.meta.total;
                 })
                 .catch(err=>{
                     console.log("err",err);

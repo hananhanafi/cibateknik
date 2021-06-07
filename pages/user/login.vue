@@ -175,7 +175,6 @@ import ApiService from '~/common/api.service';
                     phoneNumber: user.phoneNumber,
                     photoURL: user.photoURL,
                 }
-
                 return dataUser;
             },
             googleSignIn () {
@@ -186,19 +185,13 @@ import ApiService from '~/common/api.service';
                     /** @type {firebase.auth.OAuthCredential} */
                     const credential = result.credential;
                     // This gives you a Google Access Token. You can use it to access the Google API.
-                    const token = credential.accessToken;
+                    // const token = credential.accessToken;
                     // The signed-in user info.
                     const user = result.user;
-                    // ...
-                    console.log("credential",credential);
-                    console.log("token",token);
-                    console.log("user",user);
-                    console.log("this.provider",this.provider);
 
                     let newAuth;
                     await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
                         // Send token to your backend via HTTPS
-                        // ...
                         const dateNow = new Date();
                         newAuth = {
                             token: idToken,
@@ -227,7 +220,6 @@ import ApiService from '~/common/api.service';
                             this.$store.commit('purgeAuth');
                             this.$toast.error('Error while authenticating',{icon:'error'})
                         })
-
 
                         console.log('success',response);
                     })

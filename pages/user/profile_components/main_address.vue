@@ -153,7 +153,6 @@ export default {
             await ApiService.query('/user/address')
             .then((response)=>{
                 this.userAddresses = response.data;
-
             })
             .catch(err=>{
                 console.log("err",err);

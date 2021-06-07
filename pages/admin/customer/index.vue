@@ -156,12 +156,6 @@ import ApiService from '~/common/api.service';
                 .then((Response)=>{
                     this.customers = Response.data.data;
                     this.metaData = Response.data.meta
-                    // this.first_index = this.meta.first_index;
-                    // this.last_index = this.meta.last_index;
-                    // this.current_page = this.meta.current_page;
-                    // this.first_page = this.meta.first_page;
-                    // this.last_page = this.meta.last_page;
-                    // this.total = this.meta.total;
                 })
                 .catch(err=>{
                     console.log("err",err);

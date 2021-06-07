@@ -33,7 +33,7 @@
                 <fa :icon="['fas','check-circle']"/>
             </div>
             <div class="text-20">
-                Berhasil menghapus data Brand/Merk.
+                Berhasil menghapus data Brand.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -47,7 +47,7 @@
                 <fa :icon="['fas','times-circle']"/>
             </div>
             <div class="text-20">
-                Gagal menghapus data Brand/Merk.
+                Gagal menghapus data Brand.
             </div>
             
             <div class="modal-footer border-top-0 d-flex">
@@ -85,11 +85,11 @@ export default {
             await ApiService.delete(`/brand/${this.data.brandID}`)
             .then(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.success;
-                    this.$toast.success('Berhasil menghapus data brand/merk.',{icon:'check'});
+                    this.$toast.success('Berhasil menghapus data Brand.',{icon:'check'});
             })
             .catch(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.error;
-                this.$toast.error('Terjadi error, gagal menghapus data brand/merk.',{icon:'error'});
+                this.$toast.error('Terjadi error, gagal menghapus data Brand.',{icon:'error'});
             })
         },
         

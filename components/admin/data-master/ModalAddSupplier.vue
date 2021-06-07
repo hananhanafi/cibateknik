@@ -115,7 +115,6 @@ export default {
                 name: data.name ? data.name : null,
                 address: data.address ? data.address : null,
             }
-
             return resultData;
         },
         async onSubmit(){

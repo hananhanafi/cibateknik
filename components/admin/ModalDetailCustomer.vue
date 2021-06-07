@@ -46,7 +46,7 @@
                                     {{ data && data.phoneNumber }}
                                 </td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td>
                                     Alamat
                                 </td>
@@ -56,7 +56,7 @@
                                 <td>
                                     {{ data && data.address }}
                                 </td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <td>
                                     Tanggal Lahir
@@ -122,7 +122,7 @@ export default {
     },
     methods: {
         photoURL(user) {
-            const url = user ? user.imageUrl : process.env.baseUrl+"/_nuxt/assets/img/dummy.png"
+            const url = user ? user.photoURL : process.env.baseUrl+"/_nuxt/assets/img/logo-square-white.png"
             return url;
         },
 

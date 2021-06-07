@@ -33,8 +33,6 @@
             
           </div>
         </div>
-
-        
     </div>
     <div class="position-relative">
       <div class="container shadow-main p-4 position-absolute bg-white rounded-8" style="top:-80px;left:0;right:0">
@@ -113,11 +111,8 @@
             </div>
             <h3>{{error.newest.message || 'error'}}</h3>
         </div>
-        
       </div>
     </div>
-
-
   </div>
 </template>
 
@@ -223,47 +218,46 @@ import ApiService from '~/common/api.service';
         window.addEventListener('resize', this.handleResize);
       },
       methods: {
-          async loadData() {
+        async loadData() {
+            await ApiService.query('/item/posted/data/top-selling-item',{limit:10})
+            .then((Response)=>{ 
+              this.itemsData.bestSeller = Response.data
+              this.isLoadingData.bestSeller = false;
+            })
+            .catch(err=>{
+              console.log("err",err);
+              this.isLoadingData.bestSeller = false;
+              const response = {...err};
+              this.error.bestSeller.status = true;
+              this.error.bestSeller.message = response.response.data.message;
+            })
 
-              await ApiService.query('/item/posted/data/top-selling-item',{limit:10})
-              .then((Response)=>{ 
-                this.itemsData.bestSeller = Response.data
-                this.isLoadingData.bestSeller = false;
-              })
-              .catch(err=>{
-                console.log("err",err);
-                this.isLoadingData.bestSeller = false;
-                const response = {...err};
-                this.error.bestSeller.status = true;
-                this.error.bestSeller.message = response.response.data.message;
-              })
-
-              await ApiService.query('/items-posted-newest',{limit:10})
-              .then((Response)=>{ 
-                this.itemsData.newest = Response.data.data
-                this.isLoadingData.newest = false;
-              })
-              .catch(err=>{
-                console.log("err",err);
-                this.isLoadingData.newest = false;
-                const response = {...err};
-                this.error.newest.status = true;
-                this.error.newest.message = response.response.data.message;
-              })
-              
-              await ApiService.query('/items-posted-recommendation',{limit:10})
-              .then((Response)=>{ 
-                this.itemsData.recommendation = Response.data.data
-                this.isLoadingData.recommendation = false;
-              })
-              .catch(err=>{
-                console.log("err",err);
-                this.isLoadingData.recommendation = false;
-                const response = {...err};
-                this.error.recommendation.status = true;
-                this.error.recommendation.message = response.response.data.message;
-              })
-          },
+            await ApiService.query('/items-posted-newest',{limit:10})
+            .then((Response)=>{ 
+              this.itemsData.newest = Response.data.data
+              this.isLoadingData.newest = false;
+            })
+            .catch(err=>{
+              console.log("err",err);
+              this.isLoadingData.newest = false;
+              const response = {...err};
+              this.error.newest.status = true;
+              this.error.newest.message = response.response.data.message;
+            })
+            
+            await ApiService.query('/items-posted-recommendation',{limit:10})
+            .then((Response)=>{ 
+              this.itemsData.recommendation = Response.data.data
+              this.isLoadingData.recommendation = false;
+            })
+            .catch(err=>{
+              console.log("err",err);
+              this.isLoadingData.recommendation = false;
+              const response = {...err};
+              this.error.recommendation.status = true;
+              this.error.recommendation.message = response.response.data.message;
+            })
+        },
 
         searchHandler() {
           this.$router.push({name:'cari',query:{search: this.query.search}});

@@ -90,7 +90,7 @@ export default {
             })
             .catch(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.error;
-                    this.$toast.error('Terjadi error, gagal menghapus data barang.',{icon:'error'});
+                this.$toast.error('Terjadi error, gagal menghapus data barang.',{icon:'error'});
             })
         },
         

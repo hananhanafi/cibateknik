@@ -113,8 +113,6 @@ export default {
           newPassword: { required },
           newPasswordConfirmation: { required, sameAsPassword: sameAs('newPassword') },
       },
-
-
   },
   computed: {
     formatFormData(){
@@ -126,15 +124,12 @@ export default {
     },
   },
   methods: {
-    
     async onSubmit() {
       this.$v.$touch();
-
       if (this.$v.$invalid) {
           this.isSubmitStatus = SUBMIT_STATUS.pending;
       } else {
         this.isSubmitStatus = SUBMIT_STATUS.loading;
-
         const formattedFormData = this.formatFormData;
         await ApiService.post(`/user/password/update`,formattedFormData)
         .then(()=>{
@@ -148,8 +143,6 @@ export default {
             this.errors = response.err.response.data;
         })
       }
-      
-
     },
     logout() {
         this.isLoading = true;

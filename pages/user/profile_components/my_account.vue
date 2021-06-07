@@ -241,17 +241,12 @@ export default {
             console.log("success",data);
             this.$store.commit('setUserInfo', data.data);
             this.$emit('update');
-            // setTimeout(()=>{
-            //   this.reset();
-            // },3000)
         })
         .catch(err=>{
             this.isSubmitStatus = SUBMIT_STATUS.error;
             console.log("error",err);
         })
       }
-      
-
     },
     
     addPhoto(files) {

@@ -2,7 +2,7 @@
     <Modal :show="show" centered>
         <div v-if="isSubmitStatus=='' || isSubmitStatus == submitStatus.pending">
             <div class="modal-header border-bottom-0">
-                <h5 id="modalAddProduct" class="modal-title">Tambah Kategori</h5>
+                <h5 id="modalAddProduct" class="modal-title">Edit Kategori</h5>
                 <button data-bs-dismiss="modal" class="btn-close btn text-danger" type="button" aria-label="Close" @click="closeModal"><fa :icon="['fas','times']" /></button>
             </div>
             <div class="modal-body">
@@ -105,7 +105,6 @@ export default {
             const resultData = {
                 name: data.name ? data.name : null,
             }
-
             return resultData;
         },
         async onSubmit(){

@@ -138,7 +138,6 @@ import ApiService from '~/common/api.service';
             }
 
         },
-        
         mounted() {
             // Set the initial number of items
             this.loadData();

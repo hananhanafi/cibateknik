@@ -8,14 +8,14 @@
                             <h2 class="font-weight-bold text-" >Login Admin</h2>
                             <form>
                                 <b-input-group>
-                                    <b-form-input v-model="email" type="email" class="mb-2" :class="submitStatus == 'ERROR' && !$v.email.required ? 'is-invalid' : ''" placeholder="Email"></b-form-input>
-                                    </b-input-group>
+                                    <b-form-input v-model="email" type="email" class="mb-2" 
+                                    :class="submitStatus == 'ERROR' && !$v.email.required ? 'is-invalid' : ''" placeholder="Email"></b-form-input>
+                                </b-input-group>
                                 <div v-if="submitStatus == 'ERROR' && !$v.email.required" class="text-danger mb-2">Email harus diisi</div>
-                                
+
                                 <b-input-group>
                                     <b-form-input v-model="password" class="mb-2 w-100"  :class="submitStatus == 'ERROR' && !$v.password.required ? 'is-invalid' : ''" placeholder="Password" :type="showPassword ? 'text' : 'password' ">
-                                    </b-form-input>
-                                    
+                                    </b-form-input>                                    
                                     <div class="float-right position-absolute" style="right:0;z-index:999">
                                         <b-button pill variant="outline-lighr" @click="showPassword=!showPassword">
                                             <fa  :icon="['fas',showPassword ? 'eye-slash': 'eye']"  />
@@ -25,8 +25,8 @@
                                 <div v-if="submitStatus == 'ERROR' && !$v.password.required" class="text-danger mb-2">Password harus diisi</div>
 
                                 <div class="text-center my-2">
-                                    <b-button v-if="!isLoadingSubmit" type="submit"  class="w-50" style="background: linear-gradient(88.49deg, #41E296 0%, #3BB7B4 100%);" @click.prevent="postLogin">Masuk</b-button>
-                                    
+                                    <b-button v-if="!isLoadingSubmit" type="submit"  class="w-50" 
+                                    style="background: linear-gradient(88.49deg, #41E296 0%, #3BB7B4 100%);" @click.prevent="postLogin">Masuk</b-button>
                                     <ButtonLoading v-else class="w-50 text-white" style="background: linear-gradient(88.49deg, #41E296 0%, #3BB7B4 100%);"/>
                                 </div>
                                 
@@ -34,7 +34,6 @@
                                     {{ errorMessage }}
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>

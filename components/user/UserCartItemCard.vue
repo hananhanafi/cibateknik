@@ -105,7 +105,7 @@ export default {
             this.data.cart.amount = value;
         },
         deleteUpdateHandler() {
-            this.$emit('delete');
+            this.$emit('delete',this.data);
         },
         showModalAddCart() {
             this.isShowModalAddCart = true;

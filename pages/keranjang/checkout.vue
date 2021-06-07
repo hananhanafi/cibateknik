@@ -409,13 +409,10 @@ import { toFormatedNumber } from '~/store/helpers';
                         console.log("failed",err);
                         this.checkoutStatus = SUBMIT_STATUS.error;
                     })
-
-
                 }
             },
             async getShippingFee() {
                 if(this.courier){
-
                     this.isLoadingGetShipmentServices = true;
                     const origin = 152; 
                     const destination = this.currentMainAddress.city.value; 

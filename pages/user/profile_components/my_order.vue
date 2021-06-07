@@ -178,7 +178,6 @@ export default {
           .then((response)=>{
               this.userOrders = response.data.data;
               this.metaData = response.data.meta
-
           })
           .catch(err=>{
               console.log("err",err);

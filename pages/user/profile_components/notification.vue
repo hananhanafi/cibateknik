@@ -137,7 +137,8 @@ export default {
       },
       async loadNotif(){
           this.isLoadingData = true;
-          await ApiService.query(`/user/notifications/${this.getUserInfo.userID}`,this.params).then(response=>{
+          await ApiService.query(`/user/notifications/${this.getUserInfo.userID}`,this.params)
+          .then(response=>{
               this.userNotifications = response.data.data;
               this.metaData = response.data.meta
           })

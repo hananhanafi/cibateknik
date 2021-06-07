@@ -221,7 +221,6 @@ export default {
                 zipCode: data.zipCode ? data.zipCode : null,
                 address: data.address ? data.address : null,
             }
-
             return resultData;
         },
         async onSubmit(){

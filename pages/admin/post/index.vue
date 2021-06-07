@@ -1,19 +1,18 @@
 <template>
     <div class="container">
         <Breadcrumb :data="breadCrumbList"/>
-        
+
         <AdminListItemPosted/>
-        
+
         <div class="horizontal-separator my-4">
         </div>
 
         <AdminListItemPostedNewest/>
-        
+
         <div class="horizontal-separator my-4">
         </div>
 
         <AdminListItemPostedRecommendation/>
-
 
     </div>
 </template>

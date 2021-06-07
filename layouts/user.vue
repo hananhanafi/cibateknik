@@ -211,7 +211,7 @@ import ApiService from '~/common/api.service';
             console.log("Datenow",dateNow);
             console.log("newDate",newDate);
             console.log("newDate",new Date(newDate));
-            if(this.$store.state.auth){
+            if(this.$store.state.auth && this.$store.state.role === 'user' ){
                 const expiredDate = new Date(this.$store.state.auth.expirationTime);
                 const dateNow = new Date();
 

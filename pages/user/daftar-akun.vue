@@ -179,11 +179,7 @@ import ApiService from '~/common/api.service'
                 if (this.$v.$invalid) {
                     this.submitStatus = 'ERROR'
                 } else {
-                    // do your submit logic here
                     this.submitStatus = 'PENDING'
-                    // setTimeout(() => {
-                    // this.submitStatus = 'OK'
-                    // }, 500)
                     await ApiService.post("/user/signup",this.formData)
                     .then((response)=>{
                         console.log("res",response); 

@@ -136,7 +136,6 @@ import ApiService from '~/common/api.service';
                     order: this.formData.order ? (this.formData.order === 'Terbaru' ? 'desc' : 'asc') : null, 
                 }
             }
-
         },
         
         mounted() {

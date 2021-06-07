@@ -3,7 +3,7 @@
 
         <div v-if="isSubmitStatus=='' || isSubmitStatus == submitStatus.pending">
             <div class="modal-header border-bottom-0">
-                <h5 id="exampleModalLabel" class="modal-title">Tambah Alamat Pengiriman</h5>
+                <h5 id="exampleModalLabel" class="modal-title">Edit Alamat Pengiriman</h5>
                 <button type="button" class="btn-close btn text-danger" data-bs-dismiss="modal" aria-label="Close"  @click="$emit('close')"><fa :icon="['fas','times']" /></button>
             </div>
             <div  class="modal-body">

@@ -32,8 +32,8 @@
                     <BaseSelect
                     v-model="formData.brand"
                     :options="options.brand"
-                    label="Brand/Merk"
-                    placeholder="Pilih Brand/Merk"
+                    label="Merek"
+                    placeholder="Pilih Merek"
                     dense
                     />
 
@@ -167,7 +167,6 @@ export default {
                     return item.name;
                 })
             }
-
             return resultData;
         },
         async onSubmit(){
@@ -183,7 +182,6 @@ export default {
                     console.log("success",data);
                     this.$emit('update');
                     this.$toast.success('Berhasil menambahkan data produk.',{icon:'check'});
-
                 })
                 .catch(err=>{
                     this.isSubmitStatus = SUBMIT_STATUS.error;

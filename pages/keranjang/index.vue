@@ -50,7 +50,7 @@
                         <div v-for="(item,i) in cartItems" :key="i" class="shadow-main p-3 my-3">
                             <UserCartItemCard :data="item" :isChecked="checkAll"
                             @checkedItem="checkedItemHandler($event)"
-                            @delete="deleteItemOnListCart(item)"/>
+                            @delete="deleteItemOnListCart($event)"/>
                         </div>
                     </div>
                 </div>

@@ -268,13 +268,10 @@ import ApiService from '~/common/api.service';
                 } else {
                     this.isSubmitStatus = SUBMIT_STATUS.loading;
                     const formattedFormData = this.formatFormData(this.formData);
-                    
                     const responseItem = await ApiService.post(`/product/${this.$route.params.produk_id}/item`,formattedFormData)
                     .then(data=>{
-                        // this.isSubmitStatus = SUBMIT_STATUS.success;
                         console.log("success",data);
                         return data.data;
-                        // this.$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:this.$route.params.produk_id}})
                     })
                     .catch(err=>{
                         this.isSubmitStatus = SUBMIT_STATUS.error;
@@ -283,7 +280,6 @@ import ApiService from '~/common/api.service';
                         this.reset();
                         console.log("error",err);
                     })
-
                     if(responseItem){
                         const dataImage = new FormData();
                         if(this.images.length>0){
@@ -307,7 +303,6 @@ import ApiService from '~/common/api.service';
                         }else {
                             this.isSubmitStatus = SUBMIT_STATUS.success;
                             this.$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:this.$route.params.produk_id}});
-
                         }
                     }
                 }

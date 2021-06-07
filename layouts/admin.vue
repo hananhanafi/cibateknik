@@ -68,7 +68,7 @@
                                     <div class="w-100">
                                         <NuxtLink class="btn btn-block text-left menu-item-link py-3" to="/admin/data-master/brand"
                                         :class="{ 'active-menu' : isActive('admin-data-master-brand') }">
-                                            Data Brand/Merk <span class="float-right"><fa :icon="['fas','arrow-right']"/></span>
+                                            Data Brand <span class="float-right"><fa :icon="['fas','arrow-right']"/></span>
                                         </NuxtLink>
                                     </div>
                                     <div class="w-100">

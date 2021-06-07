@@ -56,7 +56,7 @@ export default {
         formatFormData(){
             return {
                 userID: this.getUserInfo.userID,
-                itemID: this.data.itemID,
+                itemID: this.data.item.itemID,
                 amount: 0
             }
         },

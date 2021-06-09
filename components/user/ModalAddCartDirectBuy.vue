@@ -10,7 +10,7 @@
                     <fa :icon="['fas','exclamation-circle']"/>
                 </div>
                 <div class="text-20">
-                    Silahkan masuk terlebih dahulu untuk meyimpan barang dalam keranjang.
+                    Silahkan masuk terlebih dahulu untuk beli langsung barang.
                 </div>
                 
                 <div class="modal-footer border-top-0 d-flex">
@@ -21,7 +21,7 @@
 
         <Modal v-else extralarge :show="show" centered >
             <div class="modal-header border-bottom-0">
-                <h5 id="exampleModalLabel" class="modal-title">Tambah Barang ke Keranjang</h5>
+                <h5 id="exampleModalLabel" class="modal-title">Beli Langsung</h5>
                 <button data-bs-dismiss="modal" class="btn-close btn text-danger" type="button" aria-label="Close" @click="close"><fa :icon="['fas','times']" /></button>
             </div>
             <div v-if="isSubmitStatus=='' || isSubmitStatus == submitStatus.pending">
@@ -66,6 +66,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="mb-3">
+                                        <div class="text-muted">
+                                            Berat : {{ data.weight ? toFormatedNumber(data.weight) + ' gram' : '-' }}
+                                        </div>
+                                    </div>
 
                                     <!-- // eslint-disable-next-line vue/no-v-html -->
                                     <div class="description mb-3" v-html="data.description">
@@ -81,7 +86,7 @@
                                             placeholder="Jumlah"
                                             small
                                             center
-                                            numberonly
+                                            type="number"
                                             class="mb-0 mx-2 text-center"
                                             style="width:80px"
                                         />
@@ -150,7 +155,6 @@ export default {
             if(this.show){
                 this.imageArray = this.data.imagesItem || [];
                 this.currentImage = this.photoURL(this.imageArray[0]);
-                console.log("show",this.getUserInfo);
                 if(this.getUserInfo){
                     await ApiService.query('user/cart',{userID: this.getUserInfo.userID}).then(data=>{
 
@@ -170,20 +174,29 @@ export default {
                     this.$router.push({name:'user-login'});
                 }
             }
+        },
+        "formData.amount"(){
+            if(this.formData.amount>this.data.stock){
+                this.formData.amount = this.data.stock;
+                this.$toast.error('Barang yang dipesan tidak bisa melebihi stok.',{icon:'error'});
+            }
+            if(this.formData.amount<1){
+                this.formData.amount = 0;
+            }
         }
     },
     mounted() {
     },
     methods: {
         plusAmount() {
-            if(this.formData.amount<this.data.stock){
-                this.formData.amount++;
-            }
+            this.formData.amount++;
+            // if(this.formData.amount<this.data.stock){
+            // }
         },
         minusAmount() {
-            if(this.formData.amount>0){
-                this.formData.amount--;
-            }
+            this.formData.amount--;
+            // if(this.formData.amount>0){
+            // }
         },
         formatFormData(){
             return {

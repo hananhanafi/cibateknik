@@ -57,11 +57,15 @@
                                 Atur Password
                             </router-link>
 
+                            <a class="btn btn-light w-100 text-decoration-none text-dark text-left" @click="logout">
+                                Keluar
+                            </a>
+
                             <!-- <b-dropdown-item>
                                 <router-link class="text-decoration-none text-dark" :to="{ name: 'user-profile', params: { tab: 'password' } }">Atur Password</router-link>
                             </b-dropdown-item> -->
                             
-                            <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
+                            <!-- <b-dropdown-item class="px-2" @click="logout()">Keluar</b-dropdown-item> -->
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
             </b-navbar>
@@ -202,13 +206,9 @@ import ApiService from '~/common/api.service';
         created() {
             
             this.handleResize();
-            // console.log("cookexptime",Cookie.get('expirationTime'));
-            // console.log("cookexptime",this.$store.state.auth.expirationTime);
 
             const dateNow = new Date();
-            console.log("Datenow1",dateNow);
             const newDate = dateNow.setHours(dateNow.getHours()+1);
-            console.log("Datenow",dateNow);
             console.log("newDate",newDate);
             console.log("newDate",new Date(newDate));
             if(this.$store.state.auth && this.$store.state.role === 'user' ){
@@ -223,7 +223,6 @@ import ApiService from '~/common/api.service';
         },
         mounted() {
             window.addEventListener('resize', this.handleResize);
-            console.log("mount");
             this.getRefreshToken();
         },
         destroyed() {

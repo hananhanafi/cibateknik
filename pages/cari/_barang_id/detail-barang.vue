@@ -24,7 +24,7 @@
             
             <LoadingSpinner :show="!isDataReady"/>
 
-            <div v-if="isDataReady" class="bg-white my-5">
+            <div v-if="isDataReady" class="bg-white py-3">
                 <div class="row mb-3">
                     <div class="col-12">
                         <a class="btn mb-2" @click="searchHandler"><fa class="" :icon="['fas','arrow-left']" /> Kembali ke Pencarian </a>
@@ -49,6 +49,9 @@
                                 </h3>
                             </div>
                             <div class="mb-3">
+                                Merek : {{ dataItem.product.brand.name || '-' }}
+                            </div>
+                            <div class="mb-3">
                                 <table>
                                     <tr v-for="(text,i) in dataItem.additionalData" :key="i">
                                         <td>{{ i }} </td>
@@ -57,18 +60,14 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="mb-3 ">
-                                <div class="">
-                                    <div class="text-muted mb-2">
-                                        Stock : {{ dataItem.stock }}
-                                    </div>
+                            <div class="mb-3">
+                                <div class="text-muted">
+                                    Stock : {{ dataItem.stock  || '0' }}
                                 </div>
                             </div>
-                            <div class="mb-3 ">
-                                <div class="">
-                                    <div class="text-muted mb-2">
-                                        Berat : {{ dataItem.weight ? toFormatedNumber(dataItem.weight) + ' gram' : '-' }}
-                                    </div>
+                            <div class="mb-3">
+                                <div class="text-muted">
+                                    Berat : {{ dataItem.weight ? toFormatedNumber(dataItem.weight) + ' gram' : '-' }}
                                 </div>
                             </div>
                             <!-- // eslint-disable-next-line vue/no-v-html -->
@@ -81,7 +80,7 @@
                     <div class="col-lg-4 col-md-12">
                     </div>
                     <div class="col">
-                        <div class="mb-3 ">
+                        <div class="mb-3">
                             <div class="row">
                                 <div class="col pr-1 mb-3">
                                     <a class="btn btn-dark text-white w-100" @click.prevent="showModalAddCart"> <fa :icon="['fas','plus']" /> Keranjang </a>
@@ -299,14 +298,22 @@ import ApiService from '~/common/api.service';
                 return url;
             },
             showModalAddCart() {
-                this.isShowModalAddCart = true;
+                if(this.dataItem.stock<1){
+                    this.$toast.error('Maaf stok barang sedang kosong',{icon:'error'});
+                }else{
+                    this.isShowModalAddCart = true;
+                }
             },
             closeModalAddCart() {
                 this.isShowModalAddCart = false;
             },
             
             showModalAddCartDirectBuy() {
-                this.isShowModalAddCartDirectBuy = true;
+                if(this.dataItem.stock<1){
+                    this.$toast.error('Maaf stok barang sedang kosong',{icon:'error'});
+                }else{
+                    this.isShowModalAddCartDirectBuy = true;
+                }
             },
             closeModalAddCartDirectBuy() {
                 this.isShowModalAddCartDirectBuy = false;

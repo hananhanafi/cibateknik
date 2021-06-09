@@ -140,17 +140,19 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="80px">Masuk</td>
-                                        <td width="80px">Keluar</td>
-                                        <td width="80px">Stok</td>
-                                        <td style="width:100px">Aksi</td>
+                                        <td class="text-center" width="40px">Masuk</td>
+                                        <td class="text-center" width="40px">Keluar</td>
+                                        <td class="text-center" width="40px">Terjual</td>
+                                        <td class="text-center" width="40px">Stok</td>
+                                        <td class="text-center" style="width:40px">Aksi</td>
                                     </tr>
                                     <tr v-for="(item,i) in dataItem" :key="i">
-                                        <td>{{ getMonthlyStockItem(item.id) ? getMonthlyStockItem(item.id).in : '-'}}</td>
-                                        <td>{{ getMonthlyStockItem(item.id) ? getMonthlyStockItem(item.id).out : '-'}}</td>
-                                        <td>{{ item ? item.stock : '-'}}</td>
+                                        <td class="text-center">{{ getMonthlyStockItem(item.id) ? getMonthlyStockItem(item.id).in : '0'}}</td>
+                                        <td class="text-center">{{ getMonthlyStockItem(item.id) ? getMonthlyStockItem(item.id).out : '0'}}</td>
+                                        <td class="text-center">{{ item.itemSold || '0'}}</td>
+                                        <td class="text-center">{{ item ? item.stock : '-'}}</td>
                                         <td class="p-1">
-                                            <div class="d-flex flex-row bd-highlight">
+                                            <div class="d-flex flex-row bd-highlight justify-content-center">
                                                 <!-- <div class="btn btn-success btn-sm text-white mr-2" @click="showModalNoteInventory(item)">Catat</div>
                                                 <div class="mr-2">
                                                     <a @click="$router.push({name:'admin-inventory-detail-produk-produk_id-edit-barang-barang_id',params:{produk_id:$route.params.produk_id,barang_id:item.id}})">

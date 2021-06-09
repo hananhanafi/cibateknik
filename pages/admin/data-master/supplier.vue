@@ -163,7 +163,6 @@ import ApiService from '~/common/api.service';
             pageUpdateHandler(page){
                 this.metaData.current_page = page;
                 this.loadData();
-                console.log("Ganti",this.metaData);
             },
             showModalAddSupplier() {
                 this.isShowModalAddSupplier = true;

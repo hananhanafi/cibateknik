@@ -29,7 +29,6 @@ const createStore = () => {
             setAuthUser(state, token) {
                 if(token.signInProvider === 'password'){
                     // state.token = token;
-                    console.log("Totok",token);
                     const newAuth = {
                         authTime: token.authTime,
                         claims: token.claims,

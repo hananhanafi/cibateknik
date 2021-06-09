@@ -55,7 +55,16 @@
                     </div>
                 </div>
 
-                <div class="shadow-main p-3 mt-5 mb-3 ">
+                <div class="p-3 mt-5">
+                    <div class="row d-flex align-items-center font-weight-bold">
+                        <div class="col-12 text-right">
+                            Berat Pesanan : 
+                            {{ getTotalWeight ? toFormatedNumber(getTotalWeight) + ' gram' : '-' }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shadow-main p-3 mb-3 ">
                     <div class="row d-flex align-items-center font-weight-bold">
                         <div class="col-6">
                             Total :
@@ -122,7 +131,17 @@ import { toFormatedNumber } from '~/store/helpers'
                 });
 
                 return total;
-            }
+            },
+            getTotalWeight() {
+                let total = 0;
+                
+                this.checkedItemList.forEach(item => {
+                    const currWeight = parseInt(item.item.weight) * parseInt(item.cart.amount) || 0;
+                    total +=currWeight;
+                });
+
+                return total;
+            },
         },
         created() {
             this.loadData();
@@ -157,13 +176,19 @@ import { toFormatedNumber } from '~/store/helpers'
                 this.isLoadingData = false;
             },
             deleteItemOnListCart(deletedItem){
-                this.cartItems = this.cartItems.filter(item=> {
-                    return item.item.itemID !== deletedItem.item.itemID;
-                })
+                console.log("deleteditem",deletedItem);
+                this.loadData();
+                // this.cartItems = this.cartItems.filter(item=> {
+                //     return item.item.itemID !== deletedItem.item.itemID;
+                // });
             },
             checkoutHandler(){
-                this.$store.commit('setCheckoutItem', this.checkedItemList);
-                this.$router.push({name:'keranjang-checkout'});
+                if(this.getTotalWeight>30000){
+                    this.$toast.error('Berat barang yang dipesan tidak boleh lebih dari 30kg atau 30.000 gram.',{icon:'error'});
+                }else{
+                    this.$store.commit('setCheckoutItem', this.checkedItemList);
+                    this.$router.push({name:'keranjang-checkout'});
+                }
             },
             toFormatedNumber
         },

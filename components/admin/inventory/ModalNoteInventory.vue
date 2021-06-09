@@ -53,7 +53,7 @@
                         class="mr-2 flex-fill"
                         large
                         dense
-                        numberonly
+                        type="number"
                     />
 
                     
@@ -65,7 +65,7 @@
                         class="mr-2 flex-fill"
                         large
                         dense
-                        numberonly
+                        type="number"
                     />
                             
                     <BaseTextarea
@@ -105,8 +105,8 @@ export default {
     data() {
         return {
             formData: {
-                in: '',
-                out: '',
+                in: 0,
+                out: 0,
                 description: "",
                 selectedDate: new Date(),
             },
@@ -123,8 +123,28 @@ export default {
             inAndOut: {
                 required() {
                     return (
-                        (this.formData.in !== "" || this.formData.out !== "") && ( this.formData.in !== 0 && this.formData.out !== 0 )
+                        (this.formData.in !== "" || this.formData.out !== "") && ( this.formData.in !== 0 || this.formData.out !== 0 )
                     );
+                }
+            }
+        }
+    },
+    watch: {
+        "formData.out"(){
+            if(this.data){
+                if(this.formData.out>this.data.stock){
+                    this.formData.out = this.data.stock;
+                this.$toast.error('Jumlah barang keluar tidak dapat melebihi stok.',{icon:'error'});
+                }
+                if(this.formData.out<1){
+                    this.formData.out = 0;
+                }
+            }
+        },
+        "formData.in"(){
+            if(this.data){
+                if(this.formData.in<1){
+                    this.formData.in = 0;
                 }
             }
         }

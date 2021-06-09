@@ -135,7 +135,6 @@ export default {
     },
     mounted() {
         this.loadNotif();
-        console.log("NONOTif");
     },
     destroyed() {
         window.removeEventListener('beforeunload', this.loadNotif)
@@ -145,7 +144,6 @@ export default {
             window.open(notification.data.invoice.invoice_url, '_blank');
         },
         async setReadNotification(notification){
-            console.log("READ");
             await ApiService.post(`/admin/notification/${notification.id}/read`)
             .then((data)=>{
                 console.log("success",data);
@@ -177,7 +175,6 @@ export default {
             if(this.showNotification){
                 this.loadNotif();
             }
-            console.log("shonotif",this.showNotification);
         },
         async loadNotif(){
             this.isLoadingData = true;

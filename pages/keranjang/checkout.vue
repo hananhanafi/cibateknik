@@ -152,7 +152,7 @@
                                     Jasa pengiriman belum diatur.
                                 </div>
                                 <div class="float-right">
-                                    Berat pengiriman : {{ getTotalWeight }} gram
+                                    Berat pengiriman : {{ getTotalWeight ? toFormatedNumber(getTotalWeight) + ' gram' : '-' }}
                                 </div>
                                 <div>
                                     <BaseSelect
@@ -162,7 +162,7 @@
                                     :options="ShipmentOptions"
                                     placeholder="Pilih Jasa Pengiriman"
                                     dense
-                                    @input="getShippingFee"
+                                    @input="getShippingPackage"
                                     />
                                 </div>
 
@@ -343,7 +343,7 @@ import { toFormatedNumber } from '~/store/helpers';
                 let total = 0;
                 
                 this.getCheckoutItem.forEach(item => {
-                    const currWeight = parseInt(item.item.weight) || 0;
+                    const currWeight = parseInt(item.item.weight) * parseInt(item.cart.amount) || 0;
                     total +=currWeight;
                 });
 
@@ -385,7 +385,7 @@ import { toFormatedNumber } from '~/store/helpers';
             // window.addEventListener('beforeunload', this.deleteCheckoutItem);
             await this.loadData();
             this.getMainAddress();
-            // this.getShippingFee();
+            // this.getShippingPackage();
         },
         destroyed() {
             window.removeEventListener('beforeunload', this.deleteCheckoutItem)
@@ -411,7 +411,7 @@ import { toFormatedNumber } from '~/store/helpers';
                     })
                 }
             },
-            async getShippingFee() {
+            async getShippingPackage() {
                 if(this.courier){
                     this.isLoadingGetShipmentServices = true;
                     const origin = 152; 

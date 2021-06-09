@@ -2,7 +2,7 @@
     <div class="row d-flex align-items-center">
         <div class="col-md col-12">
             <div class="form-check d-flex align-items-center">
-                <input id="item1" v-model="checkBox" :checked="productsChecked" class="form-check-input align-self-center my-auto" type="checkbox" :value="data" @change="checkboxUpdate(data)">
+                <input id="item1" v-model="checkBox" :disabled="checkStock" :checked="productsChecked" class="form-check-input align-self-center my-auto" type="checkbox" :value="data" @change="checkboxUpdate(data)">
                 <router-link :to="{ name: 'cari-barang_id-detail-barang', params: {barang_id: data.item.id}}" target="_blank">
                     <div class="d-flex align-items-center">
                         <div>
@@ -38,6 +38,12 @@
         <div class="col-md-3 col-12  text-right">
             <a class="btn text-warning" @click="showModalAddCart"><fa class="text-warning" :icon="['fas','pencil-alt']" /> Edit</a>
             <a class="btn text-danger"  @click="showModalDeleteItemCart"><fa class="text-danger" :icon="['fas','trash']" /> Hapus</a>
+        </div>
+
+        <div v-if="checkStock" class="col-12">
+            <div class="alert alert-danger">
+                Stok persediaan barang telah habis atau kurang dari jumlah barang dalam keranjang.
+            </div>
         </div>
         
         <ModalDeleteItemCart
@@ -77,20 +83,31 @@ export default {
         photoURL() {
             const url = this.data.item.imagesItem ? this.data.item.imagesItem[0].imageUrl : process.env.baseUrl+"/_nuxt/assets/img/logo.png"
             return url;
-        }
+        },
+        checkStock() {
+            return this.data.item.stock<this.data.cart.amount;
+        },
+        qtyItemCart(){
+            if(this.checkStock){
+                return '0';
+            }else{
+                return this.data.cart.amount;
+            }
+        },
     },
     watch: {
         isChecked(){
-            const value = this.data;
-            if(!this.checkBox && this.isChecked){
-                const data = {
-                    value,
-                    isChecked: this.isChecked
+            if(!this.checkStock){
+                const value = this.data;
+                if(!this.checkBox && this.isChecked){
+                    const data = {
+                        value,
+                        isChecked: this.isChecked
+                    }
+                    this.$emit('checkedItem', data);
                 }
-                this.$emit('checkedItem', data);
+                this.checkBox = this.isChecked;
             }
-            this.checkBox = this.isChecked;
-            
         }
     },
     methods: {
@@ -102,7 +119,11 @@ export default {
             this.$emit('checkedItem', data);
         },
         updateHandler(value) {
-            this.data.cart.amount = value;
+            if(value===0){
+                this.$emit('delete',this.data);
+            }else{
+                this.data.cart.amount = value;
+            }
         },
         deleteUpdateHandler() {
             this.$emit('delete',this.data);

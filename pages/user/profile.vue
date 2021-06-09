@@ -275,7 +275,6 @@ import ApiService from '~/common/api.service';
             if(this.$route.query.tab){
                 this.change(this.$route.query.tab);
             }
-            console.log("F",this.getUserInfo);
         },
         methods: {
             async sendEmailVerification() {

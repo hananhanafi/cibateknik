@@ -67,7 +67,7 @@
                                             <td>{{product.brand ? product.brand.name : '-'}}</td>
                                             <td>{{product.supplier ? product.supplier.name : '-'}}</td>
                                             <td class="text-center">
-                                                <b-button variant="success" size="sm"  @click.prevent="$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:product.productID}})">
+                                                <b-button variant="success" size="sm"  @click="$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:product.productID}})">
                                                     <fa :icon="['fas','eye']"/> Inventaris
                                                 </b-button>
                                                 <b-button variant="outline-warning" size="sm"  @click.prevent="showAdminModalEditProduct(product)">

@@ -145,9 +145,6 @@ const Cookie = process.client ? require('js-cookie') : undefined;
         },
         mounted() {
             window.addEventListener('resize', this.handleResize);
-            console.log("cookie",Cookie.get('auth'));
-            console.log("state",this.$store.state);
-            console.log("rt",this.$route);
             if(this.$store.state.auth){
                 const expiredDate = new Date(this.$store.state.auth.expirationTime);
                 const dateNow = new Date();

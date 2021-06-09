@@ -264,7 +264,6 @@ import ApiService from '~/common/api.service';
           
         },
         handleResize() {
-          console.log("RESIZE")
             this.windowH.width = window.innerWidth;
             this.windowH.height = window.innerHeight;
         },

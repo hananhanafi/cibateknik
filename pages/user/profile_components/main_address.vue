@@ -7,7 +7,7 @@
                 <h3>Alamat Saya</h3>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-12 text-right">
+            <div v-if="!isLoadingData" class="col-lg-6 col-md-12 text-right">
                 <a class="btn text-primary" @click="showUserModalAddAddress" ><fa :icon="['fas','plus']" /> Tambah Alamat</a>
             </div>
         </div>

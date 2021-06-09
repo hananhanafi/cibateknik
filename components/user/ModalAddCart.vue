@@ -66,6 +66,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="mb-3">
+                                        <div class="text-muted">
+                                            Berat : {{ data.weight ? toFormatedNumber(data.weight) + ' gram' : '-' }}
+                                        </div>
+                                    </div>
 
                                     <!-- // eslint-disable-next-line vue/no-v-html -->
                                     <div class="description mb-3" v-html="data.description">
@@ -81,7 +86,7 @@
                                             placeholder="Jumlah"
                                             small
                                             center
-                                            numberonly
+                                            type="number"
                                             class="mb-0 mx-2 text-center"
                                             style="width:80px"
                                         />
@@ -152,7 +157,6 @@ export default {
             if(this.show){
                 this.imageArray = this.data.imagesItem || [];
                 this.currentImage = this.photoURL(this.imageArray[0]);
-                console.log("show",this.getUserInfo);
                 if(this.getUserInfo){
                     await ApiService.query('user/cart',{userID: this.getUserInfo.userID}).then(data=>{
 
@@ -172,20 +176,29 @@ export default {
                     this.$router.push({name:'user-login'});
                 }
             }
+        },
+        "formData.amount"(){
+            if(this.formData.amount>this.data.stock){
+                this.formData.amount = this.data.stock;
+                this.$toast.error('Barang yang dipesan tidak bisa melebihi stok.',{icon:'error'});
+            }
+            if(this.formData.amount<1){
+                this.formData.amount = 0;
+            }
         }
     },
     mounted() {
     },
     methods: {
         plusAmount() {
-            if(this.formData.amount<this.data.stock){
-                this.formData.amount++;
-            }
+            this.formData.amount++;
+            // if(this.formData.amount<this.data.stock){
+            // }
         },
         minusAmount() {
-            if(this.formData.amount>0){
-                this.formData.amount--;
-            }
+            this.formData.amount--;
+            // if(this.formData.amount>0){
+            // }
         },
         formatFormData(){
             return {
@@ -201,7 +214,11 @@ export default {
             .then(()=>{
                 this.isSubmitStatus = SUBMIT_STATUS.success;
                 this.$emit('update',this.formData.amount);
-                this.$toast.success('Berhasil menambahkan barang ke dalam keranjang.',{icon:'check'});
+                if(this.isAlreadyInCart){
+                    this.$toast.success('Berhasil menghapus barang dari dalam keranjang.',{icon:'check'});
+                }else{
+                    this.$toast.success('Berhasil menambahkan barang ke dalam keranjang.',{icon:'check'});
+                }
                 this.close();
             })
             .catch(()=>{

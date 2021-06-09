@@ -13,6 +13,8 @@
             <div v-if="userAddressesOption.length>0">
                 <BaseSelect
                 v-model="formData.address"
+                name="address"
+                class="select-address"
                 label="Alamat"
                 :options="userAddressesOption"
                 placeholder="Pilih Alamat"

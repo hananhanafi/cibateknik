@@ -13,6 +13,8 @@
                 
                 <BaseSelect
                 v-model="formData.category"
+                name="category"
+                class="select-category"
                 :options="options.category"
                 label="Kategori"
                 placeholder="Pilih Kategori"
@@ -22,6 +24,8 @@
                 
                 <BaseSelect
                 v-model="formData.brand"
+                name="brand"
+                class="select-brand"
                 :options="options.brand"
                 label="Merek"
                 placeholder="Pilih Merek"
@@ -31,6 +35,8 @@
                 
                 <BaseSelect
                 v-model="formData.supplier"
+                name="supplier"
+                class="select-supplier"
                 :options="options.supplier"
                 label="Supplier"
                 placeholder="Pilih Supplier"

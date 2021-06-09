@@ -157,6 +157,8 @@
                                 <div>
                                     <BaseSelect
                                     v-model="courier"
+                                    name="courir"
+                                    class="select-courir"
                                     :disabled="!currentMainAddress || isLoadingChangeMainAddress || isLoadingData"
                                     label="Jasa Pengiriman"
                                     :options="ShipmentOptions"

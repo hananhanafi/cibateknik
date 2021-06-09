@@ -57,6 +57,8 @@
                 <div>
                     <BaseSelect
                     v-model="formData.province"
+                    name="province"
+                    class="select-province"
                     label="Provinsi"
                     :options="options.province"
                     placeholder="Pilih Provinsi"
@@ -76,6 +78,8 @@
                     <div class="col-lg-8 col-sm-12">
                         <BaseSelect
                         v-model="formData.city"
+                        name="city"
+                        class="select-city"
                         label="Kota"
                         :disabled="!formData.province"
                         :options="selectedCityOptions"

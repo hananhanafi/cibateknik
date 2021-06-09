@@ -10,6 +10,8 @@
                         
                     <BaseSelect
                         v-model="formData.product"
+                        name="product"
+                        class="select-product"
                         label="Nama Produk"
                         :options="options.product"
                         placeholder="Pilih Produk"
@@ -27,6 +29,8 @@
                     <BaseSelect
                         v-show="formData.product"
                         v-model="formData.item"
+                        name="item"
+                        class="select-item"
                         label="Nama Barang"
                         :options="options.item"
                         placeholder="Pilih Barang"

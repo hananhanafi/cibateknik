@@ -39,6 +39,8 @@
                                 <div>
                                     <BaseSelect
                                     v-model="filters.product"
+                                    name="product"
+                                    class="select-product"
                                     label="Berdasarkan Produk"
                                     :options="options.product"
                                     placeholder="Pilih Produk"
@@ -48,6 +50,8 @@
                                 <div>
                                     <BaseSelect
                                     v-model="filters.order"
+                                    name="order"
+                                    class="select-order"
                                     label="Urutkan"
                                     :options="['Terbaru', 'Terlama', 'Harga Termurah', 'Harga Termahal']"
                                     placeholder="Pilih urutkan"

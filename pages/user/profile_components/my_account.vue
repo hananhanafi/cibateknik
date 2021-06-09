@@ -84,6 +84,8 @@
           <div>
               <BaseSelect
               v-model="formData.gender"
+              name="gender"
+              class="select-gender"
               label="Jenis Kelamin"
               :options="['Laki-laki', 'Perempuan']"
               placeholder="Pilih Jenis Kelamin"

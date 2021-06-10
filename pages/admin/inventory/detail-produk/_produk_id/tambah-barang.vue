@@ -161,7 +161,7 @@
                     <div class="w-100 text-right">
                         <ButtonLoading v-if="isSubmitStatus==submitStatuses.loading"/>
                         <div v-else class="text-right">
-                            <b-button id="show-btn"  size="xl"  class=" ml-auto" variant="outline-dark">Batal</b-button>
+                            <b-button id="show-btn"  size="xl"  class=" ml-auto" variant="outline-dark" @click="$router.push({name:'admin-inventory-detail-produk-produk_id-barang',params:{produk_id:$route.params.produk_id}})" >Batal</b-button>
                             <b-button id="show-btn"  size="xl"  class=" text-white ml-auto" variant="primary" @click.prevent="onSubmit">Simpan</b-button>
                         </div>
                     </div>

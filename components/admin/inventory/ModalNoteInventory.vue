@@ -33,57 +33,59 @@
                 <h5 id="exampleModalLabel" class="modal-title">Catat Barang</h5>
                 <button data-bs-dismiss="modal" class="btn-close btn text-danger" type="button" aria-label="Close" @click="close"><fa :icon="['fas','times']" /></button>
             </div>
-            <div class="modal-body">
-                <div class="w-100 text-left">
-                    <div class="mb-3">
-                        <h3>
-                            {{ data && data.name }}
-                        </h3>
-                    </div>
-                    <div class="mb-3">
-                        <div>Tanggal</div>
-                        <vue2-datepicker v-model="formData.selectedDate" class="w-100" placeholder="Pilih Bulan Tanggal"
-                        :disabled-date="(date) => date > disabledAfter || date < disabledBefore"></vue2-datepicker>
-                    </div>
-                    <BaseInput
-                        id="in"
-                        v-model="formData.in"
-                        label="Jumlah Barang Masuk"
-                        placeholder="Jumlah Barang Masuk"
-                        class="mr-2 flex-fill"
-                        large
-                        dense
-                        type="number"
-                    />
+            <form @submit.prevent="onSubmit">
+                <div class="modal-body">
+                    <div class="w-100 text-left">
+                        <div class="mb-3">
+                            <h3>
+                                {{ data && data.name }}
+                            </h3>
+                        </div>
+                        <div class="mb-3">
+                            <div>Tanggal</div>
+                            <vue2-datepicker v-model="formData.selectedDate" class="w-100" placeholder="Pilih Bulan Tanggal"
+                            :disabled-date="(date) => date > disabledAfter || date < disabledBefore"></vue2-datepicker>
+                        </div>
+                        <BaseInput
+                            id="in"
+                            v-model="formData.in"
+                            label="Jumlah Barang Masuk"
+                            placeholder="Jumlah Barang Masuk"
+                            class="mr-2 flex-fill"
+                            large
+                            dense
+                            type="number"
+                        />
 
+                        
+                        <BaseInput
+                            id="out"
+                            v-model="formData.out"
+                            label="Jumlah Barang Keluar"
+                            placeholder="Jumlah Barang Keluar"
+                            class="mr-2 flex-fill"
+                            large
+                            dense
+                            type="number"
+                        />
+                                
+                        <BaseTextarea
+                            v-model="formData.description"
+                            label="Catatan"
+                            placeholder="Masukkan Catatan"
+                            height="200px"
+                        />
+                    </div>
+                    <div v-show="isSubmitStatus == submitStatuses.pending && !$v.formData.inAndOut.required " class="alert alert-danger">
+                        Jumlah barang masuk atau barang keluar tidak boleh kosong
+                    </div>
                     
-                    <BaseInput
-                        id="out"
-                        v-model="formData.out"
-                        label="Jumlah Barang Keluar"
-                        placeholder="Jumlah Barang Keluar"
-                        class="mr-2 flex-fill"
-                        large
-                        dense
-                        type="number"
-                    />
-                            
-                    <BaseTextarea
-                        v-model="formData.description"
-                        label="Catatan"
-                        placeholder="Masukkan Catatan"
-                        height="200px"
-                    />
                 </div>
-                <div v-show="isSubmitStatus == submitStatuses.pending && !$v.formData.inAndOut.required " class="alert alert-danger">
-                    Jumlah barang masuk atau barang keluar tidak boleh kosong
+                <div class="modal-footer border-top-0 d-flex">
+                    <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="close">Batal</button>
+                    <button type="button" class="btn btn-primary flex-fill" @click="onSubmit">Simpan</button>
                 </div>
-                
-            </div>
-            <div class="modal-footer border-top-0 d-flex">
-                <button type="button" class="btn btn-outline-danger flex-fill" data-bs-dismiss="modal" @click="close">Batal</button>
-                <button type="button" class="btn btn-primary flex-fill" @click="onSubmit">Simpan</button>
-            </div>
+            </form>
         </div>
     </Modal>
 </template>
@@ -123,7 +125,10 @@ export default {
             inAndOut: {
                 required() {
                     return (
-                        (this.formData.in !== "" || this.formData.out !== "") && ( this.formData.in !== 0 || this.formData.out !== 0 )
+                        // (this.formData.in !== "" && this.formData.out !== "") || ( this.formData.in !== 0 && this.formData.out !== 0 ) || 
+                        // (this.formdata.in !== "" && this.formdata.out !== 0 ) || (this.formdata.in !== 0 && this.formData.out!== "")
+                        // (this.formData.in || this.formData.out) && (this.formData.in && this.formData.out !== 0) && (this.formData.out && this.formData.in!==0) && (this.formData.in !== 0 && this.formData.out !== 0)
+                        (this.formData.in || this.formData.out) || (this.formData.in && this.formData.out !== 0) || (this.formData.out && this.formData.in !== 0) 
                     );
                 }
             }

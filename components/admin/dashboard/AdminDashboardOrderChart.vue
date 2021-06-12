@@ -25,7 +25,7 @@
             </div>
 
             <div v-else class="m-3 mt-5 ">
-                <line-chart :data="barChartData" :options="barChartOptions" class="w-100" />
+                <line-chart id="order-chart" :data="barChartData" :options="barChartOptions" class="w-100" />
             </div>
 
         </div>

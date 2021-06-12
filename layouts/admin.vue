@@ -20,7 +20,7 @@
                         <template #button-content>
                             <img src="~/assets/img/logo-square-white.png" class="img-fluid rounded-circle h-100" style="width:40px" alt="Responsive image"> Admin
                         </template>
-                        <b-dropdown-item href="#" @click="logout">Sign Out</b-dropdown-item>
+                        <b-dropdown-item href="#" @click="logout">Keluar</b-dropdown-item>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
 

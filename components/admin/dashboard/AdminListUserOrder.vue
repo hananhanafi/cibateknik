@@ -16,7 +16,7 @@
                 </div>
                 
                 <div v-if="usersOrder.length>0"  class="table-responsive">
-                    <table class="table">
+                    <table id="order-list" class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Nomor</th>

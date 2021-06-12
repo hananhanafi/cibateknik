@@ -25,7 +25,7 @@
                                 <div v-if="submitStatus == 'ERROR' && !$v.password.required" class="text-danger mb-2">Password harus diisi</div>
 
                                 <div class="text-center my-2">
-                                    <b-button v-if="!isLoadingSubmit" type="submit"  class="w-50" 
+                                    <b-button v-if="!isLoadingSubmit" id="btn-login-admin" type="submit"  class="w-50" 
                                     style="background: linear-gradient(88.49deg, #41E296 0%, #3BB7B4 100%);" @click.prevent="postLogin">Masuk</b-button>
                                     <ButtonLoading v-else class="w-50 text-white" style="background: linear-gradient(88.49deg, #41E296 0%, #3BB7B4 100%);"/>
                                 </div>

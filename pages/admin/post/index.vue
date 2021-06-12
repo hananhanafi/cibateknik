@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div id="catalog-list" class="container">
         <Breadcrumb :data="breadCrumbList"/>
 
         <AdminListItemPosted/>

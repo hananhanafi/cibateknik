@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div v-if="suppliers.length>0" >
-                            <table class="table table-responsive-md">
+                            <table id="supplier" class="table table-responsive-md">
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>

@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     
-                    <table v-if="usersOrder.length>0" class="table table-responsive-md">
+                    <table v-if="usersOrder.length>0" class="table table-responsive-md" id="customer-history-order">
                         <thead>
                             <tr>
                                 <th scope="col">Nomor</th>

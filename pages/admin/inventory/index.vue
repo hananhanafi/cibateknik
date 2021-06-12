@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                             <div v-if="products.length>0">
-                                <table class="table table-responsive-md">
+                                <table id="product" class="table table-responsive-md">
                                     <thead>
                                         <tr>
                                             <th scope="col">ID Produk</th>

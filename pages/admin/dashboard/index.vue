@@ -1,6 +1,6 @@
 <template>
     <div class="text-center">
-        <div class="container-fluid px-md-5">
+        <div id="admin-dashboard" class="container-fluid px-md-5">
             
             <Breadcrumb :data="breadCrumbList"/>
 

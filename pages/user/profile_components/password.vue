@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow p-4 h-100 d-flex flex-column">
+  <div id="user-password" class="shadow p-4 h-100 d-flex flex-column">
     <div class="mb-5">
       <h3>Atur Password</h3>
     </div>

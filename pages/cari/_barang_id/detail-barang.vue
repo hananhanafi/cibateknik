@@ -1,5 +1,5 @@
 <template>
-    <div class="pt-md-5">
+    <div id="detail-item" class="pt-md-5">
         
         <div class=" d-md-none d-flex fixed-top bg-white p-3 border">
             <BaseInput
@@ -89,8 +89,8 @@
                                     <a class="btn btn-outline-dark w-100" @click.prevent="showModalAddCartDirectBuy"> Beli Langsung </a>
                                 </div>
                                 <div class="col-md col-12">
-                                    <button v-if="isWished==false" :disabled="isLoadingWishlistButton" class="btn text-danger w-100" @click.prevent="addWishlist"><fa class="" :icon="[ 'far','heart']" /> Wishlist </button>
-                                    <button v-else :disabled="isLoadingWishlistButton" class="btn text-danger w-100" @click.prevent="deleteWishlist"><fa class="" :icon="[ 'fas','heart']" /> Wishlist </button>
+                                    <button v-if="isWished==false" id="btn-add-wishlist" :disabled="isLoadingWishlistButton" class="btn text-danger w-100 btn-wishlist" @click.prevent="addWishlist"><fa class="" :icon="[ 'far','heart']" /> Wishlist </button>
+                                    <button v-else :disabled="isLoadingWishlistButton" class="btn text-danger w-100 btn-wishlist" @click.prevent="deleteWishlist"><fa class="" :icon="[ 'fas','heart']" /> Wishlist </button>
                                 </div>
                             </div>
                         </div>

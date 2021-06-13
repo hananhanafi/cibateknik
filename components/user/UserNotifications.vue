@@ -1,6 +1,6 @@
 <template>
     <div class="notif-container">
-        <a class="btn notif-btn p-3" @click.prevent="toggleShowNotif">
+        <a id="btn-notif" class="btn notif-btn p-3" @click.prevent="toggleShowNotif">
             <fa class="text-20 text-primary" :icon="['fas','bell']"/>
             <fa v-if="unReadNotificationCounter>0" class="text-8 text-danger position-absolute" :icon="['fas','circle']"/>
         </a>

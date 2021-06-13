@@ -13,7 +13,7 @@
                 <div class="bg-white shadow rounded-8" style="width:600px">
                     <div class="p-3 text-medium">
                         <h2 class="font-weight-bold" >Daftar</h2>
-                        <form @submit.prevent="register">
+                        <form id="user-register" @submit.prevent="register">
                             
                             <BaseInput
                                 id="name"
@@ -192,7 +192,7 @@ import ApiService from '~/common/api.service'
                         this.submitStatus = 'ERROR'
                         this.showError = true;
                         this.errorMessage = response.data.message;
-                        this.$toast.error('Terjadi error saat daftar, mohon coba lagi nanti',{icon:'error'})
+                        this.$toast.error(response.data.email || 'Terjadi error saat daftar, mohon coba lagi nanti',{icon:'error'})
                     })
                     
                 }

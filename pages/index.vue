@@ -26,7 +26,7 @@
                       <fa class="" :icon="['fas','search']" /> 
                   </div>
                   </BaseInput>
-                  <button class="btn bg-main-color text-white px-4 ml-3 rounded-8" type="button" @click="searchHandler">Cari</button>
+                  <button id="btn-search" class="btn bg-main-color text-white px-4 ml-3 rounded-8" type="button" @click="searchHandler">Cari</button>
 
                 </div>
             </div>

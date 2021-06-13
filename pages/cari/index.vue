@@ -127,10 +127,10 @@
                         </div>
                     </form>
                     
-                    <div v-if="items.length>0" class="bg-white mt-md-4 mt-0 border p-3">
+                    <div v-if="items.length>0" id="item-list" class="bg-white mt-md-4 mt-0 border p-3">
                         <div class="row">
                             <div v-for="(item,i) in items" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-3">
-                                <UserItemCard :data="item"/>
+                                <UserItemCard :id="item.itemID" :data="item"/>
                             </div>
                             <div class="col-12 d-flex">
                                 <div>
